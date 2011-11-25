@@ -7,17 +7,16 @@
  */
 package org.modelversioning.emfprofile.util;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-import org.modelversioning.emfprofile.*;
+import org.modelversioning.emfprofile.EMFProfilePackage;
+import org.modelversioning.emfprofile.Profile;
+import org.modelversioning.emfprofile.Stereotype;
 
 /**
  * <!-- begin-user-doc -->
