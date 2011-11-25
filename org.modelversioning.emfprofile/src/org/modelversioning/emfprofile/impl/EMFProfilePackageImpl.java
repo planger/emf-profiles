@@ -165,6 +165,24 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getStereotype_LowerBound() {
+		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStereotype_UpperBound() {
+		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMFProfileFactory getEMFProfileFactory() {
 		return (EMFProfileFactory)getEFactoryInstance();
 	}
@@ -195,6 +213,8 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		createEReference(stereotypeEClass, STEREOTYPE__BASE);
 		createEAttribute(stereotypeEClass, STEREOTYPE__ICON_PATH);
 		createEAttribute(stereotypeEClass, STEREOTYPE__META_BASE);
+		createEAttribute(stereotypeEClass, STEREOTYPE__LOWER_BOUND);
+		createEAttribute(stereotypeEClass, STEREOTYPE__UPPER_BOUND);
 	}
 
 	/**
@@ -250,6 +270,8 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		initEReference(getStereotype_Base(), theEcorePackage.getEClass(), null, "base", null, 0, -1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStereotype_IconPath(), ecorePackage.getEString(), "iconPath", null, 0, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStereotype_MetaBase(), theEcorePackage.getEBoolean(), "metaBase", "false", 1, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStereotype_LowerBound(), ecorePackage.getEInt(), "lowerBound", "0", 0, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStereotype_UpperBound(), ecorePackage.getEInt(), "upperBound", "-1", 0, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(stereotypeEClass, ecorePackage.getEBoolean(), "isApplicable", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);

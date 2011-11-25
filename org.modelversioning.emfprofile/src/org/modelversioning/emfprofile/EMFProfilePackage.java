@@ -415,13 +415,31 @@ public interface EMFProfilePackage extends EPackage {
 	int STEREOTYPE__META_BASE = EcorePackage.ECLASS_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Lower Bound</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEREOTYPE__LOWER_BOUND = EcorePackage.ECLASS_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEREOTYPE__UPPER_BOUND = EcorePackage.ECLASS_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Stereotype</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STEREOTYPE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 3;
+	int STEREOTYPE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 5;
 
 
 	/**
@@ -487,6 +505,28 @@ public interface EMFProfilePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getStereotype_MetaBase();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.modelversioning.emfprofile.Stereotype#getLowerBound <em>Lower Bound</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Lower Bound</em>'.
+	 * @see org.modelversioning.emfprofile.Stereotype#getLowerBound()
+	 * @see #getStereotype()
+	 * @generated
+	 */
+	EAttribute getStereotype_LowerBound();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.modelversioning.emfprofile.Stereotype#getUpperBound <em>Upper Bound</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Upper Bound</em>'.
+	 * @see org.modelversioning.emfprofile.Stereotype#getUpperBound()
+	 * @see #getStereotype()
+	 * @generated
+	 */
+	EAttribute getStereotype_UpperBound();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -561,6 +601,22 @@ public interface EMFProfilePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute STEREOTYPE__META_BASE = eINSTANCE.getStereotype_MetaBase();
+
+		/**
+		 * The meta object literal for the '<em><b>Lower Bound</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STEREOTYPE__LOWER_BOUND = eINSTANCE.getStereotype_LowerBound();
+
+		/**
+		 * The meta object literal for the '<em><b>Upper Bound</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STEREOTYPE__UPPER_BOUND = eINSTANCE.getStereotype_UpperBound();
 
 	}
 

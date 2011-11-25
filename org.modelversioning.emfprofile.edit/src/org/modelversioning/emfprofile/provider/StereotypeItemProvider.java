@@ -69,6 +69,8 @@ public class StereotypeItemProvider
 			addBasePropertyDescriptor(object);
 			addIconPathPropertyDescriptor(object);
 			addMetaBasePropertyDescriptor(object);
+			addLowerBoundPropertyDescriptor(object);
+			addUpperBoundPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -140,6 +142,50 @@ public class StereotypeItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Lower Bound feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addLowerBoundPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Stereotype_lowerBound_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Stereotype_lowerBound_feature", "_UI_Stereotype_type"),
+				 EMFProfilePackage.Literals.STEREOTYPE__LOWER_BOUND,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Upper Bound feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addUpperBoundPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Stereotype_upperBound_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Stereotype_upperBound_feature", "_UI_Stereotype_type"),
+				 EMFProfilePackage.Literals.STEREOTYPE__UPPER_BOUND,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns Stereotype.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -178,6 +224,8 @@ public class StereotypeItemProvider
 		switch (notification.getFeatureID(Stereotype.class)) {
 			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
 			case EMFProfilePackage.STEREOTYPE__META_BASE:
+			case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
+			case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

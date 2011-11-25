@@ -31,6 +31,8 @@ import org.modelversioning.emfprofile.Stereotype;
  *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getBase <em>Base</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getIconPath <em>Icon Path</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#isMetaBase <em>Meta Base</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getLowerBound <em>Lower Bound</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getUpperBound <em>Upper Bound</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,6 +82,46 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	 * @ordered
 	 */
 	protected boolean metaBase = META_BASE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getLowerBound() <em>Lower Bound</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLowerBound()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int LOWER_BOUND_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getLowerBound() <em>Lower Bound</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLowerBound()
+	 * @generated
+	 * @ordered
+	 */
+	protected int lowerBound = LOWER_BOUND_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getUpperBound() <em>Upper Bound</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUpperBound()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int UPPER_BOUND_EDEFAULT = -1;
+
+	/**
+	 * The cached value of the '{@link #getUpperBound() <em>Upper Bound</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUpperBound()
+	 * @generated
+	 * @ordered
+	 */
+	protected int upperBound = UPPER_BOUND_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -145,6 +187,48 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 		metaBase = newMetaBase;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.STEREOTYPE__META_BASE, oldMetaBase, metaBase));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getLowerBound() {
+		return lowerBound;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLowerBound(int newLowerBound) {
+		int oldLowerBound = lowerBound;
+		lowerBound = newLowerBound;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.STEREOTYPE__LOWER_BOUND, oldLowerBound, lowerBound));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getUpperBound() {
+		return upperBound;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUpperBound(int newUpperBound) {
+		int oldUpperBound = upperBound;
+		upperBound = newUpperBound;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.STEREOTYPE__UPPER_BOUND, oldUpperBound, upperBound));
 	}
 
 	/**
@@ -232,6 +316,10 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 				return getIconPath();
 			case EMFProfilePackage.STEREOTYPE__META_BASE:
 				return isMetaBase();
+			case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
+				return getLowerBound();
+			case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
+				return getUpperBound();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -254,6 +342,12 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 			case EMFProfilePackage.STEREOTYPE__META_BASE:
 				setMetaBase((Boolean)newValue);
 				return;
+			case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
+				setLowerBound((Integer)newValue);
+				return;
+			case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
+				setUpperBound((Integer)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -274,6 +368,12 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 			case EMFProfilePackage.STEREOTYPE__META_BASE:
 				setMetaBase(META_BASE_EDEFAULT);
 				return;
+			case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
+				setLowerBound(LOWER_BOUND_EDEFAULT);
+				return;
+			case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
+				setUpperBound(UPPER_BOUND_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -291,6 +391,10 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 				return ICON_PATH_EDEFAULT == null ? iconPath != null : !ICON_PATH_EDEFAULT.equals(iconPath);
 			case EMFProfilePackage.STEREOTYPE__META_BASE:
 				return metaBase != META_BASE_EDEFAULT;
+			case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
+				return lowerBound != LOWER_BOUND_EDEFAULT;
+			case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
+				return upperBound != UPPER_BOUND_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -308,6 +412,10 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 		result.append(iconPath);
 		result.append(", metaBase: ");
 		result.append(metaBase);
+		result.append(", lowerBound: ");
+		result.append(lowerBound);
+		result.append(", upperBound: ");
+		result.append(upperBound);
 		result.append(')');
 		return result.toString();
 	}
