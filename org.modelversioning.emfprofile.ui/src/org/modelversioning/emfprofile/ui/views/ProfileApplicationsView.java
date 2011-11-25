@@ -113,6 +113,9 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	/** This is the one adapter factory used for providing views of the model. */
 	protected ComposedAdapterFactory adapterFactory;
 
+	/** Validate stereotype application action */
+	private Action validateStereotypeApplicationAction;
+
 	/** Save stereotype application action */
 	private Action saveStereotypeApplicationAction;
 
@@ -304,6 +307,13 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 				showError("Error while saving profile application resource", e);
 			}
 		}
+	}
+
+	/**
+	 * Saves all currently loaded profile applications.
+	 */
+	public void validateAll() {
+		currentProfileFacade.validateAll();
 	}
 
 	/**
@@ -634,12 +644,26 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
+		manager.add(validateStereotypeApplicationAction);
+		manager.add(new Separator());
 		manager.add(saveStereotypeApplicationAction);
 		manager.add(saveAllStereotypeApplicationsAction);
 		manager.add(new Separator());
 	}
 
 	private void makeActions() {
+		validateStereotypeApplicationAction = new Action() {
+			public void run() {
+				validateAll();
+			}
+		};
+		validateStereotypeApplicationAction.setText("Validate");
+		validateStereotypeApplicationAction
+				.setToolTipText("Validate profile application");
+		validateStereotypeApplicationAction
+				.setImageDescriptor(EMFProfileUIPlugin
+						.getImageDescriptor(EMFProfileUIPlugin.IMG_VALIDATE));
+
 		saveStereotypeApplicationAction = new Action() {
 			public void run() {
 				save();

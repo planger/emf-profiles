@@ -68,6 +68,9 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 
 	/** The image for demonstrate action. */
 	public static final String IMG_STEREOTYPE_DEFAULT = "stereotype"; //$NON-NLS-1$
+	
+	/** The image for demonstrate action. */
+	public static final String IMG_VALIDATE = "validate"; //$NON-NLS-1$
 
 	/** The shared instance. */
 	private static EMFProfileUIPlugin plugin;
@@ -421,6 +424,7 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 	@Override
 	protected void initializeImageRegistry(ImageRegistry registry) {
 		registerImage(registry, IMG_STEREOTYPE_DEFAULT, "Stereotype.gif"); //$NON-NLS-1$
+		registerImage(registry, IMG_VALIDATE, "validate.png"); //$NON-NLS-1$
 	}
 
 	/**

@@ -14,6 +14,7 @@ package org.modelversioning.emfprofile;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -338,5 +339,12 @@ public interface IProfileFacade {
 	 *            stereotype application to remove.
 	 */
 	void removeStereotypeApplication(StereotypeApplication stereotypeApplication);
+
+	/**
+	 * Validates the entire profile application.
+	 * 
+	 * @return the validation result.
+	 */
+	IStatus validateAll();
 
 }

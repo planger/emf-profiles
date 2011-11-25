@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.ECollections;
@@ -31,6 +32,9 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.emf.validation.model.EvaluationMode;
+import org.eclipse.emf.validation.service.IBatchValidator;
+import org.eclipse.emf.validation.service.ModelValidationService;
 import org.modelversioning.emfprofile.IProfileFacade;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
@@ -38,6 +42,7 @@ import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 import org.modelversioning.emfprofileapplication.util.ProfileImportResolver;
+import org.modelversioning.emfprofileapplication.validation.ValidationDelegateClientSelector;
 
 /**
  * Implements the {@link IProfileFacade}.
@@ -658,6 +663,22 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	@Override
 	public void unload() {
 		// noop
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public IStatus validateAll() {
+		ValidationDelegateClientSelector.running = true;
+		IBatchValidator validator = (IBatchValidator) ModelValidationService
+				.getInstance().newValidator(EvaluationMode.BATCH);
+		validator.setIncludeLiveConstraints(true);
+		validator.setReportSuccesses(true);
+		IStatus status = validator
+				.validate(getProfileApplications(profileApplicationResource));
+		ValidationDelegateClientSelector.running = false;
+		return status;
 	}
 
 }
