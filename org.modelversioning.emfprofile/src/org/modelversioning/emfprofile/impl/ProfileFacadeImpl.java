@@ -216,11 +216,48 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	@Override
 	public EList<Stereotype> getApplicableStereotypes(EObject eObject) {
 		EList<Stereotype> applicableStereotypes = new BasicEList<Stereotype>();
+
+		// check applicability concerning type
 		for (Profile profile : profiles) {
 			applicableStereotypes.addAll(profile
 					.getApplicableStereotypes(eObject.eClass()));
 		}
+
+		// check applicability for each
+		for (Stereotype stereotype : new BasicEList<Stereotype>(
+				applicableStereotypes)) {
+			if (!isApplicable(stereotype, eObject)) {
+				applicableStereotypes.remove(stereotype);
+			}
+		}
 		return applicableStereotypes;
+	}
+
+	/**
+	 * Specifies whether the <code>stereotype</code> is applicable to
+	 * <code>eObject</code>.
+	 * 
+	 * @param stereotype
+	 *            to check.
+	 * @param eObject
+	 *            to check.
+	 * @return <code>true</code> if applicable, otherwise <code>false</code>.
+	 */
+	public boolean isApplicable(Stereotype stereotype, EObject eObject) {
+		if (stereotype.isApplicable(eObject)) {
+
+			// check upperBound of stereotype
+			if (stereotype.getUpperBound() != -1) {
+				EList<StereotypeApplication> appliedStereotypes = getAppliedStereotypes(
+						stereotype, eObject);
+				if (appliedStereotypes.size() >= stereotype.getUpperBound()) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -228,6 +265,10 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 */
 	@Override
 	public StereotypeApplication apply(Stereotype stereotype, EObject eObject) {
+		if (!isApplicable(stereotype, eObject)) {
+			throw new IllegalArgumentException(
+					"Stereotype is not applicable to the object.");
+		}
 		StereotypeApplication stereotypeApplication = createStereotypeApplication(stereotype);
 		apply(stereotypeApplication, eObject);
 		return stereotypeApplication;
@@ -239,6 +280,12 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	@Override
 	public StereotypeApplication apply(Stereotype stereotype,
 			EList<EObject> eObjects) {
+		for (EObject eObject : eObjects) {
+			if (!isApplicable(stereotype, eObject)) {
+				throw new IllegalArgumentException(
+						"Stereotype is not applicable to all objects.");
+			}
+		}
 		StereotypeApplication stereotypeApplication = createStereotypeApplication(stereotype);
 		apply(stereotypeApplication, eObjects);
 		return stereotypeApplication;
@@ -470,6 +517,29 @@ public class ProfileFacadeImpl implements IProfileFacade {
 				if (resolvedEquals(appliedToObject, eObject)) {
 					appliedStereotypes.add(stereotypeApplication);
 				}
+			}
+		}
+		return appliedStereotypes;
+	}
+
+	/**
+	 * Returns all stereotypes currently applied to the specified
+	 * <code>eObject</code> (list of {@link StereotypeApplication}s) that are of
+	 * the type <code>stereotype</code>.
+	 * 
+	 * @param stereotype
+	 *            the stereotype to filter stereotype applications.
+	 * @param eObject
+	 *            to get applied stereotypes for.
+	 * @return the list of {@link StereotypeApplication}s.
+	 */
+	private EList<StereotypeApplication> getAppliedStereotypes(
+			Stereotype stereotype, EObject eObject) {
+		EList<StereotypeApplication> appliedStereotypes = getAppliedStereotypes(eObject);
+		for (StereotypeApplication application : new BasicEList<StereotypeApplication>(
+				appliedStereotypes)) {
+			if (application.eClass() != stereotype) {
+				appliedStereotypes.remove(application);
 			}
 		}
 		return appliedStereotypes;
