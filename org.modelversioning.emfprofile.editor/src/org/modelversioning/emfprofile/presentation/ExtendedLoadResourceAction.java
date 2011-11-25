@@ -1,5 +1,9 @@
 /**
- * 
+ * Copyright (c) 2010 modelversioning.org
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
  */
 package org.modelversioning.emfprofile.presentation;
 
@@ -29,20 +33,17 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 /**
  * @author Konrad Wieland
+ * @author <a href="mailto:langer@big.tuwien.ac.at>Philip Langer</a>
  * 
  */
 public class ExtendedLoadResourceAction extends LoadResourceAction {
 
 	private Shell shell;
-
-	// EditingDomain domain
-	// =((IEditingDomainProvider)activeEditorPart).getEditingDomain();
 
 	@Override
 	public EditingDomain getEditingDomain() {
@@ -51,12 +52,10 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 
 	public ExtendedLoadResourceAction() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ExtendedLoadResourceAction(EditingDomain domain) {
 		super(domain);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -67,32 +66,6 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 	@Override
 	public void run() {
 		// super.run();
-
-		// ExtendedLoadResourceDialog loadResourceDialog =
-		// new ExtendedLoadResourceDialog
-		// (shell, domain);
-		//
-		// if (loadResourceDialog.open() == Window.OK &&
-		// !loadResourceDialog.getRegisteredPackages().isEmpty())
-		// {
-		// String source = EcoreEditorPlugin.INSTANCE.getSymbolicName();
-		// BasicDiagnostic diagnosic =
-		// new BasicDiagnostic(Diagnostic.INFO, source, 0,
-		// EcoreEditorPlugin.INSTANCE.getString("_UI_RuntimePackageDetail_message"),
-		// null);
-		// for (EPackage ePackage : loadResourceDialog.getRegisteredPackages())
-		// {
-		// diagnosic.add(new BasicDiagnostic(Diagnostic.INFO, source, 0,
-		// ePackage.getNsURI(), null));
-		// }
-		// new DiagnosticDialog
-		// (shell,
-		// EcoreEditorPlugin.INSTANCE.getString("_UI_Information_title"),
-		// EcoreEditorPlugin.INSTANCE.getString("_UI_RuntimePackageHeader_message"),
-		// diagnosic,
-		// Diagnostic.INFO).open();
-		// }
-
 		ElementListSelectionDialog dialog = new ElementListSelectionDialog(
 				shell, new LabelProvider() {
 					public Image getImage(Object element) {
@@ -106,8 +79,6 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 		dialog.setMessage("Select a String (* = any string, ? = any char):");
 		dialog.setElements(getRegistryEntries());
 
-		// dialog.setMultipleSelection(true);
-
 		if (dialog.open() == Dialog.OK) {
 
 			Object firstResult = dialog.getFirstResult();
@@ -115,16 +86,7 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 				if (firstResult instanceof String) {
 
 					String testURI = firstResult.toString();
-					System.out.println("TestURI: "+testURI);
-					
 					URI packageURI = getRegistryEntryURI(firstResult);
-					
-					
-					
-					System.out.println("PackageURI "+packageURI);
-					
-
-					// String testURI = packageURI.toString();
 
 					if (getEditingDomain() != null) {
 						ResourceSet resourceSet = getEditingDomain()
@@ -133,23 +95,18 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 								true);
 						try {
 							resource.load(Collections.emptyMap());
-							// TODO check which URI we actually need
 
 							resource.setURI(URI.createURI((String) firstResult,
 									true));
-							
-							
+
 							EObject eObject = resource.getContents().get(0);
 							if (eObject instanceof EPackage) {
-								//resourceSet.getPackageRegistry().put(
-									//	((EPackage) eObject).getNsURI(),
-										//eObject);
-								//TEST
-								resourceSet.getPackageRegistry().put(testURI, eObject);
+								resourceSet.getPackageRegistry().put(testURI,
+										eObject);
 							}
 
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							// TODO log and show error
 							e.printStackTrace();
 						}
 
@@ -164,7 +121,6 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getURIConverter().getURIMap()
 				.putAll(EcorePlugin.computePlatformURIMap());
-		StringBuffer uris = new StringBuffer();
 		Map<String, URI> ePackageNsURItoGenModelLocationMap = EcorePlugin
 				.getEPackageNsURIToGenModelLocationMap();
 		URI location = ePackageNsURItoGenModelLocationMap
@@ -177,13 +133,11 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 			for (EPackage ePackage : getAllPackages(resourceIt)) {
 				if (firstResult.equals(ePackage.getNsURI())) {
 					realURI = resourceIt.getURI();
-					
+
 					break;
 				}
 			}
 		}
-
-		System.out.println("RealURI: " + realURI);
 		return realURI;
 
 	}
@@ -212,7 +166,6 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		super.update();
 	}
 
@@ -222,22 +175,15 @@ public class ExtendedLoadResourceAction extends LoadResourceAction {
 	}
 
 	@Override
-	public void setActiveEditor(IEditorPart editorPart) {
-		super.setActiveEditor(editorPart);
-	}
-
-	@Override
 	public void setActiveWorkbenchPart(IWorkbenchPart workbenchPart) {
 		super.setActiveWorkbenchPart(workbenchPart);
 		System.out.println("WorkbenchPart: " + workbenchPart);
 	}
 
 	public Object[] getRegistryEntries() {
-
 		Object[] result = EPackage.Registry.INSTANCE.keySet().toArray(
 				new Object[EPackage.Registry.INSTANCE.size()]);
 		Arrays.sort(result);
-
 		return result;
 	}
 }
