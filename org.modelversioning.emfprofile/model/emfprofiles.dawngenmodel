@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dawngenmodel:DawnGMFGenerator xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:dawngenmodel="http://www.eclipse.org/emf/cdo/dawn/2010/GenModel" fragmentName="org.modelversioning.emfprofile.diagram.dawn" dawnEditorClassName="DawnEMFProfileDiagramEditor" dawnDocumentProviderClassName="DawnEMFProfileDocumentProvider" dawnEditorUtilClassName="DawnEMFProfileDiagramEditorUtil" dawnCreationWizardClassName="DawnEMFProfileCreationWizard" dawnCanonicalEditingPolicyClassName="DawnProfileCanonicalEditPolicy" dawnDiagramEditPartClassName="DawnProfileEditPart" dawnEditPartFactoryClassName="DawnEMFProfileEditPartFactory" dawnEditPartProviderClassName="DawnEMFProfileEditPartProvider" dawnEditPolicyProviderClassName="DawnEMFProfileEditPolicyProvider">
+  <GMFGenEditorGenerator href="emfprofiles.gmfgen#/"/>
+</dawngenmodel:DawnGMFGenerator>

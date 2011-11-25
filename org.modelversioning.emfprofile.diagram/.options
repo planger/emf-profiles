@@ -1,0 +1,7 @@
+# Tracing options for the org.modelversioning.emfprofile.diagram plug-in
+
+# Common issues
+org.modelversioning.emfprofile.diagram/debug=false
+
+# Visual IDs
+org.modelversioning.emfprofile.diagram/debug/visualID=false

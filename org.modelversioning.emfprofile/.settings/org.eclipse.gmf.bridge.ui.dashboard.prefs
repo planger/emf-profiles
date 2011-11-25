@@ -1,0 +1,9 @@
+#Mon Dec 06 14:36:43 CET 2010
+eclipse.preferences.version=1
+gmf_dashboard/domainGenerationModel=platform\:/resource/org.modelversioning.emfprofile/model/emfprofiles.genmodel
+gmf_dashboard/domainModel=platform\:/resource/org.modelversioning.emfprofile/model/emfprofiles.ecore
+gmf_dashboard/generationModel=platform\:/resource/org.modelversioning.emfprofile/model/emfprofiles.gmfgen
+gmf_dashboard/graphicalDefinitionModel=platform\:/resource/org.modelversioning.emfprofile/model/emfprofiles.gmfgraph
+gmf_dashboard/mappingModel=platform\:/resource/org.modelversioning.emfprofile/model/emfprofiles.gmfmap
+gmf_dashboard/option_rcp=*
+gmf_dashboard/toolingDefinitionModel=platform\:/resource/org.modelversioning.emfprofile/model/emfprofiles.gmftool

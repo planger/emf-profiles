@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="org.modelversioning.emfprofile.ui.register.emfprofile_diagram"
+            nameFilter="*.emfprofile_diagram"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.RegisterProfileAction"
+               id="org.modelversioning.emfprofile.ui.registerProfile.diagram"
+               label="Register EMF Profile">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.modelversioning.emfprofile.ui.register.emfprofile"
+            nameFilter="*.emfprofile"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.RegisterProfileAction"
+               id="org.modelversioning.emfprofile.ui.registerProfile.diagram"
+               label="Register EMF Profile">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.modelversioning.emfprofile.ui.objectContribution2"
+            objectClass="org.eclipse.core.runtime.IAdaptable">
+         <menu
+               id="org.modelversioning.emfprofile.ui.emfProfilesMenu"
+               label="EMF Profiles"
+               path="additions">
+            <groupMarker
+                  name="group1">
+            </groupMarker>
+         </menu>
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.ApplyProfileAction"
+               enablesFor="1"
+               id="org.modelversioning.emfprofile.ui.applyProfile"
+               label="Apply Profile"
+               menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
+         </action>
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.LoadProfileApplicationAction"
+               enablesFor="1"
+               id="org.modelversioning.emfprofile.ui.importProfileAction"
+               label="Load Profile Application"
+               menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
+         </action>
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.UnloadProfileApplicationAction"
+               enablesFor="1"
+               id="org.modelversioning.emfprofile.ui.unloadProfileaction"
+               label="Unload Profile Application"
+               menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
+         </action>
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.ApplyStereotypeAction"
+               enablesFor="1"
+               id="org.modelversioning.emfprofile.ui.applyStereotypeAction"
+               label="Apply Stereotype"
+               menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.modelversioning.emfprofile.ui"
+            name="EMF Profiles">
+      </category>
+      <view
+            category="org.modelversioning.emfprofile.ui"
+            class="org.modelversioning.emfprofile.ui.views.ProfileApplicationsView"
+            icon="icons/sample.gif"
+            id="org.modelversioning.emfprofile.ui.views.ProfileApplicationsView"
+            name="Profile Applications">
+      </view>
+   </extension>
+   <extension
+         id="org.modelversioning.emfprofiles.gmfprofiledecorator"
+         name="gmfprofiledecorator"
+         point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
+      <decoratorProvider
+               class="org.modelversioning.emfprofile.ui.gmfdecorator.GMFProfileDecoratorProvider">
+         <Priority
+               name="High">
+         </Priority>
+      </decoratorProvider>
+   </extension>
+
+</plugin>

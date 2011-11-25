@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:id="_tkq4oGqQEeCHRc0jG79cZA"
+    name="diff-provider-test1" nsURI="http://www.modelversioning.org/diff-provider-test1"
+    nsPrefix="test1">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_tkq4oWqQEeCHRc0jG79cZA" name="Company_renamed">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_tkq4omqQEeCHRc0jG79cZA"
+        name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_tkq4pGqQEeCHRc0jG79cZA"
+        name="partOf"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_tkq4pmqQEeCHRc0jG79cZA" name="ChainIsMore"/>
+  <eSubpackages xmi:id="_tkq4p2qQEeCHRc0jG79cZA" name="cars" nsURI="http://cars.com"
+      nsPrefix="cars">
+    <eClassifiers xsi:type="ecore:EClass" xmi:id="_tkq4qGqQEeCHRc0jG79cZA" name="Car_rename">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_tkq4qWqQEeCHRc0jG79cZA"
+          name="model" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_tkq4q2qQEeCHRc0jG79cZA"
+          name="horsePowers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" xmi:id="_tkq4rWqQEeCHRc0jG79cZA" name="CarManufactor">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_tkq4rmqQEeCHRc0jG79cZA"
+          name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_tkq4sGqQEeCHRc0jG79cZA"
+          name="produced" upperBound="-1" eType="#_tkq4qGqQEeCHRc0jG79cZA"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages xmi:id="_tkq4smqQEeCHRc0jG79cZA" name="persons" nsURI="http://persons.com"
+      nsPrefix="persons">
+    <eClassifiers xsi:type="ecore:EClass" xmi:id="_tkq4s2qQEeCHRc0jG79cZA" name="Person">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_tkq4tGqQEeCHRc0jG79cZA"
+          name="firstName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_tkq4tmqQEeCHRc0jG79cZA"
+          name="lastName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_tkq4uGqQEeCHRc0jG79cZA"
+          name="birthDay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_tkq4umqQEeCHRc0jG79cZA"
+          name="worksFor" eType="#_tkq4oWqQEeCHRc0jG79cZA"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_tkq4vGqQEeCHRc0jG79cZA"
+          name="drivesCars" upperBound="-1" eType="#_tkq4qGqQEeCHRc0jG79cZA"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>
