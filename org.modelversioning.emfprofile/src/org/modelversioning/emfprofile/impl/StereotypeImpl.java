@@ -333,7 +333,8 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 					currentApplicationCount++;
 				}
 			}
-			int realUpperBound = getUpperBound(eObject.eClass());
+			int realUpperBound = isMetaBase() ? getUpperBound(eObject.eClass()
+					.eClass()) : getUpperBound(eObject.eClass());
 			if (realUpperBound < -1) {
 				return false;
 			} else {

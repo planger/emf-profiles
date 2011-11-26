@@ -343,17 +343,33 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 *            to find or create {@link ProfileApplication} for.
 	 * @return found or created {@link ProfileApplication}.
 	 */
-	private ProfileApplication findOrCreateProfileApplication(Profile profile) {
+	private ProfileApplication findOrCreateProfileApplication(
+			final Profile profile) {
 		boolean found = false;
 		ProfileApplication profileApplication = null;
 		for (EObject eObject : profileApplicationResource.getContents()) {
 			if (eObject instanceof ProfileApplication) {
 				found = true;
 				profileApplication = (ProfileApplication) eObject;
+				final ProfileApplication finalProfileApplication = profileApplication;
 				if (!hasProfileImport(profileApplication, profile)) {
-					profileApplication.getImportedProfiles().add(
-							createProfileImport(profile));
+					if (requireTransaction()) {
+						TransactionalEditingDomain domain = getTransactionalEditingDomain();
+						domain.getCommandStack().execute(
+								new RecordingCommand(domain) {
+									@Override
+									protected void doExecute() {
+										finalProfileApplication
+												.getImportedProfiles()
+												.add(createProfileImport(profile));
+									}
+								});
+					} else {
+						finalProfileApplication.getImportedProfiles().add(
+								createProfileImport(profile));
+					}
 				}
+				profileApplication = finalProfileApplication;
 			}
 		}
 		if (!found) {
@@ -389,8 +405,12 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			Profile profile) {
 		for (ProfileImport profileImport : profileApplication
 				.getImportedProfiles()) {
-			if (profileImport.getNsURI().equals(profile.getNsURI())) {
-				return true;
+			try {
+				if (profileImport.getNsURI().equals(profile.getNsURI())) {
+					return true;
+				}
+			} catch (NullPointerException npe) {
+				return false;
 			}
 		}
 		return false;
