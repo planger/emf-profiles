@@ -24,6 +24,7 @@ import org.modelversioning.emfprofile.Profile;
  *   <li>{@link org.modelversioning.emfprofile.Profile#isApplicable(org.eclipse.emf.ecore.EPackage) <em>Is Applicable</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Profile#getApplicableStereotypes(org.eclipse.emf.ecore.EClass) <em>Get Applicable Stereotypes</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Profile#getStereotypes() <em>Get Stereotypes</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Profile#getStereotype(java.lang.String) <em>Get Stereotype</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -133,6 +134,19 @@ public class ProfileTest extends TestCase {
 	 * @generated
 	 */
 	public void testGetStereotypes() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Profile#getStereotype(java.lang.String) <em>Get Stereotype</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Profile#getStereotype(java.lang.String)
+	 * @generated
+	 */
+	public void testGetStereotype__String() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();

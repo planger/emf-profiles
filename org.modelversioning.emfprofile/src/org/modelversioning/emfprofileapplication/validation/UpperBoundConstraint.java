@@ -8,6 +8,7 @@
 package org.modelversioning.emfprofileapplication.validation;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.EMFEventType;
@@ -31,10 +32,18 @@ public class UpperBoundConstraint extends AbstractModelConstraint {
 	public IStatus validate(IValidationContext ctx) {
 		EObject eObj = ctx.getTarget();
 		EMFEventType eType = ctx.getEventType();
-		
-		// TODO ctx.getTarget is instance of ProfileApplication
 
 		if (eType == EMFEventType.NULL) {
+			if (eObj instanceof ProfileApplication) {
+				ProfileApplication profileApplication = (ProfileApplication) eObj;
+				for (StereotypeApplication stereotypeApp : profileApplication
+						.getStereotypeApplications()) {
+					EClass eClass = stereotypeApp.eClass();
+					System.out.println(eClass);
+
+				}
+			}
+
 			if (eObj instanceof Stereotype
 					&& eObj instanceof StereotypeApplication) {
 				int upperBound = ((Stereotype) eObj).getUpperBound();

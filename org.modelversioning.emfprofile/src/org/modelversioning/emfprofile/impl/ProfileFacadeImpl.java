@@ -249,20 +249,26 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * @return <code>true</code> if applicable, otherwise <code>false</code>.
 	 */
 	public boolean isApplicable(Stereotype stereotype, EObject eObject) {
-		if (stereotype.isApplicable(eObject)) {
+		return stereotype.isApplicable(eObject,
+				cast(getAppliedStereotypes(eObject)));
+	}
 
-			// check upperBound of stereotype
-			if (stereotype.getUpperBound() != -1) {
-				EList<StereotypeApplication> appliedStereotypes = getAppliedStereotypes(
-						stereotype, eObject);
-				if (appliedStereotypes.size() >= stereotype.getUpperBound()) {
-					return false;
-				}
+	/**
+	 * Converts a list of {@link StereotypeApplication} to a list of
+	 * {@link Stereotype}.
+	 * 
+	 * @param applications
+	 *            to convert.
+	 * @return the converted list.
+	 */
+	private EList<Stereotype> cast(EList<StereotypeApplication> applications) {
+		EList<Stereotype> stereotypes = new BasicEList<Stereotype>();
+		for (StereotypeApplication application : applications) {
+			if (application.eClass() instanceof Stereotype) {
+				stereotypes.add((Stereotype) application.eClass());
 			}
-
-			return true;
 		}
-		return false;
+		return stereotypes;
 	}
 
 	/**

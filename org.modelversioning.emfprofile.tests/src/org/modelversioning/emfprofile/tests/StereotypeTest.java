@@ -23,6 +23,10 @@ import org.modelversioning.emfprofile.Stereotype;
  * <ul>
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#isApplicable(org.eclipse.emf.ecore.EClass) <em>Is Applicable</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#isApplicable(org.eclipse.emf.ecore.EObject) <em>Is Applicable</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#isApplicable(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.util.EList) <em>Is Applicable</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#getProfile() <em>Get Profile</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#getLowerBound(org.eclipse.emf.ecore.EClass) <em>Get Lower Bound</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#getUpperBound(org.eclipse.emf.ecore.EClass) <em>Get Upper Bound</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -119,6 +123,58 @@ public class StereotypeTest extends TestCase {
 	 * @generated
 	 */
 	public void testIsApplicable__EObject() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Stereotype#isApplicable(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.util.EList) <em>Is Applicable</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Stereotype#isApplicable(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	public void testIsApplicable__EObject_EList() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Stereotype#getProfile() <em>Get Profile</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Stereotype#getProfile()
+	 * @generated
+	 */
+	public void testGetProfile() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Stereotype#getLowerBound(org.eclipse.emf.ecore.EClass) <em>Get Lower Bound</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Stereotype#getLowerBound(org.eclipse.emf.ecore.EClass)
+	 * @generated
+	 */
+	public void testGetLowerBound__EClass() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Stereotype#getUpperBound(org.eclipse.emf.ecore.EClass) <em>Get Upper Bound</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Stereotype#getUpperBound(org.eclipse.emf.ecore.EClass)
+	 * @generated
+	 */
+	public void testGetUpperBound__EClass() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();

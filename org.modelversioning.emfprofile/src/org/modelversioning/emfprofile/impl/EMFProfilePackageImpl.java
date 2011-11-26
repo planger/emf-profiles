@@ -279,7 +279,17 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		op = addEOperation(stereotypeEClass, ecorePackage.getEBoolean(), "isApplicable", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEObject(), "eObject", 1, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(stereotypeEClass, ecorePackage.getEBoolean(), "isApplicable", 1, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEObject(), "eObject", 1, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getStereotype(), "appliedStereotypes", 0, -1, IS_UNIQUE, !IS_ORDERED);
+
 		addEOperation(stereotypeEClass, this.getProfile(), "getProfile", 1, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(stereotypeEClass, ecorePackage.getEInt(), "getLowerBound", 1, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(stereotypeEClass, ecorePackage.getEInt(), "getUpperBound", 1, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

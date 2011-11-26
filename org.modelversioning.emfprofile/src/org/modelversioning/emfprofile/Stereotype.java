@@ -178,12 +178,45 @@ public interface Stereotype extends EClass {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Specifies whether this stereotype is applicable to <code>eObject</code>, given
+	 * that the specified list of <code>appliedStereotypes</code> already is applied
+	 * to <code>eObject</code>.
+	 * <!-- end-user-doc -->
+	 * @model required="true" eObjectRequired="true" appliedStereotypesMany="true" appliedStereotypesOrdered="false"
+	 * @generated
+	 */
+	boolean isApplicable(EObject eObject, EList<Stereotype> appliedStereotypes);
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" required="true"
 	 * @generated
 	 */
 	Profile getProfile();
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * Returns the upper bound of this stereotype for the specified <code>eClass</code>.
+	 * If this stereotype is directly and indirectly not applicable to <code>eClass</code>,
+	 * this method returns <code>-2</code>.
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 * @generated
+	 */
+	int getLowerBound(EClass eClass);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Returns the upper bound of this stereotype for the specified <code>eClass</code>.
+	 * If this stereotype is directly and indirectly not applicable to <code>eClass</code>,
+	 * this method returns <code>-2</code>.
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 * @generated
+	 */
+	int getUpperBound(EClass eClass);
+
 	/**
 	 * Returns a list of all (inherited and direct) base classes.
 	 * 
