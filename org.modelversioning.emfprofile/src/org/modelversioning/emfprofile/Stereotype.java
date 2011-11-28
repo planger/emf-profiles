@@ -34,15 +34,14 @@ public interface Stereotype extends EClass {
 	 * Returns the value of the '<em><b>Icon Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Icon Path</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * The path of to an icon for this stereotype.
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Icon Path</em>' attribute.
 	 * @see #setIconPath(String)
 	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getStereotype_IconPath()
 	 * @model
-	 * @generated
+	 * @generated NOT
 	 */
 	String getIconPath();
 
@@ -57,19 +56,20 @@ public interface Stereotype extends EClass {
 	void setIconPath(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Meta Base</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Meta Base</b></em>' attribute. The
+	 * default value is <code>"false"</code>. <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Meta Base</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * Specifies whether this stereotype is a <em>meta stereotype</em> (i.e., is
+	 * applicable to all instances of instances of {@link EClass}) or whether it
+	 * is a usual stereotype.
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Meta Base</em>' attribute.
 	 * @see #setMetaBase(boolean)
 	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getStereotype_MetaBase()
 	 * @model default="false" required="true"
-	 * @generated
+	 * @generated NOT
 	 */
 	boolean isMetaBase();
 
@@ -89,7 +89,7 @@ public interface Stereotype extends EClass {
 	 * <code>eClass</code>.
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 * @generated
+	 * @generated NOT
 	 */
 	boolean isApplicable(EClass eClass);
 
@@ -99,7 +99,7 @@ public interface Stereotype extends EClass {
 	 * <code>eClass</code>.
 	 * <!-- end-user-doc -->
 	 * @model required="true" eObjectRequired="true"
-	 * @generated
+	 * @generated NOT
 	 */
 	boolean isApplicable(EObject eObject);
 
@@ -110,7 +110,7 @@ public interface Stereotype extends EClass {
 	 * to <code>eObject</code>.
 	 * <!-- end-user-doc -->
 	 * @model required="true" eObjectRequired="true" appliedStereotypesMany="true" appliedStereotypesOrdered="false"
-	 * @generated
+	 * @generated NOT
 	 */
 	boolean isApplicable(EObject eObject, EList<Stereotype> appliedStereotypes);
 
@@ -129,7 +129,7 @@ public interface Stereotype extends EClass {
 	 * this method returns <code>-2</code>.
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 * @generated
+	 * @generated NOT
 	 */
 	int getLowerBound(EClass eClass);
 
@@ -140,9 +140,27 @@ public interface Stereotype extends EClass {
 	 * this method returns <code>-2</code>.
 	 * <!-- end-user-doc -->
 	 * @model required="true"
-	 * @generated
+	 * @generated NOT
 	 */
 	int getUpperBound(EClass eClass);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * All classes for which a this and all super stereotypes contain an {@link #getExtensions() extension}.
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 * @generated
+	 */
+	EList<EClass> getAllExtensibleClasses();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * All classes for which a this stereotype contains an {@link #getExtensions() extension}.
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" ordered="false"
+	 * @generated
+	 */
+	EList<EClass> getExtensibleClasses();
 
 	/**
 	 * Returns the value of the '<em><b>Extensions</b></em>' containment reference list.
@@ -157,12 +175,5 @@ public interface Stereotype extends EClass {
 	 * @generated
 	 */
 	EList<Extension> getExtensions();
-
-	/**
-	 * Returns a list of all (inherited and direct) base classes.
-	 * 
-	 * @return a list of all (inherited and direct) base classes.
-	 */
-	EList<EClass> getAllBaseClasses();
 
 } // Stereotype

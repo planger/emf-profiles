@@ -32,26 +32,31 @@ import org.modelversioning.emfprofile.Stereotype;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getIconPath <em>Icon Path</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#isMetaBase <em>Meta Base</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getExtensions <em>Extensions</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getIconPath
+ * <em>Icon Path</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#isMetaBase <em>
+ * Meta Base</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getExtensions
+ * <em>Extensions</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class StereotypeImpl extends EClassImpl implements Stereotype {
 	/**
-	 * The default value of the '{@link #getIconPath() <em>Icon Path</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getIconPath() <em>Icon Path</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getIconPath()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final String ICON_PATH_EDEFAULT = null;
 	/**
-	 * The cached value of the '{@link #getIconPath() <em>Icon Path</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getIconPath() <em>Icon Path</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getIconPath()
 	 * @generated
 	 * @ordered
@@ -59,8 +64,9 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	protected String iconPath = ICON_PATH_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isMetaBase() <em>Meta Base</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #isMetaBase() <em>Meta Base</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isMetaBase()
 	 * @generated
 	 * @ordered
@@ -68,8 +74,9 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	protected static final boolean META_BASE_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isMetaBase() <em>Meta Base</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #isMetaBase() <em>Meta Base</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isMetaBase()
 	 * @generated
 	 * @ordered
@@ -77,9 +84,9 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	protected boolean metaBase = META_BASE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getExtensions() <em>Extensions</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getExtensions() <em>Extensions</em>}'
+	 * containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getExtensions()
 	 * @generated
 	 * @ordered
@@ -88,6 +95,7 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected StereotypeImpl() {
@@ -96,6 +104,7 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -105,6 +114,7 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getIconPath() {
@@ -113,17 +123,21 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setIconPath(String newIconPath) {
 		String oldIconPath = iconPath;
 		iconPath = newIconPath;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.STEREOTYPE__ICON_PATH, oldIconPath, iconPath));
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					EMFProfilePackage.STEREOTYPE__ICON_PATH, oldIconPath,
+					iconPath));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isMetaBase() {
@@ -132,32 +146,16 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setMetaBase(boolean newMetaBase) {
 		boolean oldMetaBase = metaBase;
 		metaBase = newMetaBase;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.STEREOTYPE__META_BASE, oldMetaBase, metaBase));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public EList<EClass> getAllBaseClasses() {
-		EList<EClass> allBaseClasses = new BasicEList<EClass>();
-		// collect direct super stereotypes
-		for (EClass superClass : this.getEAllSuperTypes()) {
-			if (superClass instanceof Stereotype) {
-				Stereotype superStereotype = (Stereotype) superClass;
-				allBaseClasses.addAll(superStereotype.getAllBaseClasses());
-			}
-		}
-		// add direct base classes
-		if (base != null) {
-			allBaseClasses.addAll(base);
-		}
-		return ECollections.unmodifiableEList(allBaseClasses);
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					EMFProfilePackage.STEREOTYPE__META_BASE, oldMetaBase,
+					metaBase));
 	}
 
 	/**
@@ -169,7 +167,7 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 		if (this.isAbstract()) {
 			return false;
 		}
-		EList<EClass> allBaseClasses = getAllBaseClasses();
+		EList<EClass> allBaseClasses = getAllExtensibleClasses();
 		for (EClass baseClass : allBaseClasses) {
 			if (!metaBase) {
 				if (baseClass.getName().equals(eClass.getName())
@@ -249,22 +247,76 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	 * @generated NOT
 	 */
 	public int getLowerBound(EClass eClass) {
-		if (getBase().contains(eClass)) {
-			return -1; // TODO fix after refactoring
+		Extension extension = getExtensionForClass(eClass);
+		if (extension != null) {
+			return extension.getLowerBound();
 		} else {
-			EList<Stereotype> superStereotypes = getSuperStereotypes();
-			if (superStereotypes.size() > 0) {
-				for (Stereotype superStereotype : superStereotypes) {
-					int bound = superStereotype.getLowerBound(eClass);
-					if (bound != -2) {
-						return bound;
-					}
-				}
-			}
+			return -2;
 		}
-		return -2;
 	}
 
+	/**
+	 * Returns the direct or indirect {@link Extension} of this stereotype
+	 * having the specified <code>eClass</code> as target.
+	 * 
+	 * @param eClass
+	 *            to search extension for.
+	 * @return the found {@link Extension} or <code>null</code>.
+	 */
+	private Extension getExtensionForClass(EClass eClass) {
+		// search for direct extension
+		for (Extension extension : getExtensions()) {
+			if (eClass.equals(extension.getTarget())) {
+				return extension;
+			}
+		}
+		// search in super stereotypes
+		EList<Stereotype> superStereotypes = getSuperStereotypes();
+		for (Stereotype superStereotype : superStereotypes) {
+			Extension extension = getExtensionForClass(eClass, superStereotype);
+			if (extension != null) {
+				return extension;
+			}
+		}
+		// search in super super** stereotypes
+		EList<Stereotype> allSuperStereotypes = new BasicEList<Stereotype>(
+				getAllSuperStereotypes());
+		allSuperStereotypes.removeAll(superStereotypes);
+		for (Stereotype superStereotype : allSuperStereotypes) {
+			Extension extension = getExtensionForClass(eClass, superStereotype);
+			if (extension != null) {
+				return extension;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Searches for an {@link Extension} having the specified
+	 * <code>eClass</code> as {@link Extension#getTarget() target} in the
+	 * specified <code>stereotype</code>.
+	 * 
+	 * @param eClass
+	 *            target to search for.
+	 * @param stereotype
+	 *            to search in.
+	 * 
+	 * @return the found {@link Extension} or <code>null</code>.
+	 */
+	private Extension getExtensionForClass(EClass eClass, Stereotype stereotype) {
+		for (Extension extension : stereotype.getExtensions()) {
+			if (eClass.equals(extension.getTarget())) {
+				return extension;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns all <em>direct</em> super stereotypes.
+	 * 
+	 * @return all direct super stereotypes.
+	 */
 	private EList<Stereotype> getSuperStereotypes() {
 		EList<Stereotype> superStereotypes = new BasicEList<Stereotype>();
 		EList<EClass> superTypes = this.getESuperTypes();
@@ -273,7 +325,23 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 				superStereotypes.add((Stereotype) eClass);
 			}
 		}
-		return superStereotypes;
+		return ECollections.unmodifiableEList(superStereotypes);
+	}
+
+	/**
+	 * Returns all <em>direct</em> and <em>indirect</em> super stereotypes.
+	 * 
+	 * @return all super stereotypes.
+	 */
+	private EList<Stereotype> getAllSuperStereotypes() {
+		EList<Stereotype> superStereotypes = new BasicEList<Stereotype>();
+		EList<EClass> superTypes = this.getEAllSuperTypes();
+		for (EClass eClass : superTypes) {
+			if (eClass instanceof Stereotype) {
+				superStereotypes.add((Stereotype) eClass);
+			}
+		}
+		return ECollections.unmodifiableEList(superStereotypes);
 	}
 
 	/**
@@ -282,159 +350,182 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	 * @generated NOT
 	 */
 	public int getUpperBound(EClass eClass) {
-		if (containsInBase(eClass)) {
-			return -1; // TODO fix after refactoring
+		Extension extension = getExtensionForClass(eClass);
+		if (extension != null) {
+			return extension.getUpperBound();
 		} else {
-			EList<Stereotype> superStereotypes = getSuperStereotypes();
-			if (superStereotypes.size() > 0) {
-				for (Stereotype superStereotype : superStereotypes) {
-					int bound = superStereotype.getUpperBound(eClass);
-					if (bound != -2) {
-						return bound;
-					}
-				}
-			}
+			return -2;
 		}
-		return -2;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public EList<EClass> getAllExtensibleClasses() {
+		EList<EClass> allExtensibleClasses = new BasicEList<EClass>();
+		// add direct extensible classes
+		allExtensibleClasses.addAll(getExtensibleClasses());
+		// collect extensible classes of super stereotypes
+		for (Stereotype superStereotype : this.getSuperStereotypes()) {
+			allExtensibleClasses.addAll(superStereotype
+					.getAllExtensibleClasses());
+		}
+		return ECollections.unmodifiableEList(allExtensibleClasses);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public EList<EClass> getExtensibleClasses() {
+		EList<EClass> extensibleClasses = new BasicEList<EClass>();
+		for (Extension extension : getExtensions()) {
+			extensibleClasses.add(extension.getTarget());
+		}
+		return ECollections.unmodifiableEList(extensibleClasses);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtensions()).basicAdd(otherEnd, msgs);
+		case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getExtensions())
+					.basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
-				return ((InternalEList<?>)getExtensions()).basicRemove(otherEnd, msgs);
+		case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+			return ((InternalEList<?>) getExtensions()).basicRemove(otherEnd,
+					msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Extension> getExtensions() {
 		if (extensions == null) {
-			extensions = new EObjectContainmentWithInverseEList<Extension>(Extension.class, this, EMFProfilePackage.STEREOTYPE__EXTENSIONS, EMFProfilePackage.EXTENSION__SOURCE);
+			extensions = new EObjectContainmentWithInverseEList<Extension>(
+					Extension.class, this,
+					EMFProfilePackage.STEREOTYPE__EXTENSIONS,
+					EMFProfilePackage.EXTENSION__SOURCE);
 		}
 		return extensions;
 	}
 
-	private boolean containsInBase(EClass eClass) {
-		if (getBase().contains(eClass)) {
-			return true;
-		} else {
-			for (EClass superEClass : eClass.getEAllSuperTypes()) {
-				if (getBase().contains(superEClass)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
-				return getIconPath();
-			case EMFProfilePackage.STEREOTYPE__META_BASE:
-				return isMetaBase();
-			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
-				return getExtensions();
+		case EMFProfilePackage.STEREOTYPE__ICON_PATH:
+			return getIconPath();
+		case EMFProfilePackage.STEREOTYPE__META_BASE:
+			return isMetaBase();
+		case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+			return getExtensions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
-				setIconPath((String)newValue);
-				return;
-			case EMFProfilePackage.STEREOTYPE__META_BASE:
-				setMetaBase((Boolean)newValue);
-				return;
-			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
-				getExtensions().clear();
-				getExtensions().addAll((Collection<? extends Extension>)newValue);
-				return;
+		case EMFProfilePackage.STEREOTYPE__ICON_PATH:
+			setIconPath((String) newValue);
+			return;
+		case EMFProfilePackage.STEREOTYPE__META_BASE:
+			setMetaBase((Boolean) newValue);
+			return;
+		case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+			getExtensions().clear();
+			getExtensions().addAll((Collection<? extends Extension>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
-				setIconPath(ICON_PATH_EDEFAULT);
-				return;
-			case EMFProfilePackage.STEREOTYPE__META_BASE:
-				setMetaBase(META_BASE_EDEFAULT);
-				return;
-			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
-				getExtensions().clear();
-				return;
+		case EMFProfilePackage.STEREOTYPE__ICON_PATH:
+			setIconPath(ICON_PATH_EDEFAULT);
+			return;
+		case EMFProfilePackage.STEREOTYPE__META_BASE:
+			setMetaBase(META_BASE_EDEFAULT);
+			return;
+		case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+			getExtensions().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
-				return ICON_PATH_EDEFAULT == null ? iconPath != null : !ICON_PATH_EDEFAULT.equals(iconPath);
-			case EMFProfilePackage.STEREOTYPE__META_BASE:
-				return metaBase != META_BASE_EDEFAULT;
-			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
-				return extensions != null && !extensions.isEmpty();
+		case EMFProfilePackage.STEREOTYPE__ICON_PATH:
+			return ICON_PATH_EDEFAULT == null ? iconPath != null
+					: !ICON_PATH_EDEFAULT.equals(iconPath);
+		case EMFProfilePackage.STEREOTYPE__META_BASE:
+			return metaBase != META_BASE_EDEFAULT;
+		case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+			return extensions != null && !extensions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (iconPath: ");

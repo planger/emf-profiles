@@ -326,6 +326,10 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		op = addEOperation(stereotypeEClass, ecorePackage.getEInt(), "getUpperBound", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		addEOperation(stereotypeEClass, theEcorePackage.getEClass(), "getAllExtensibleClasses", 0, -1, !IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(stereotypeEClass, theEcorePackage.getEClass(), "getExtensibleClasses", 0, -1, IS_UNIQUE, !IS_ORDERED);
+
 		initEClass(extensionEClass, Extension.class, "Extension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getExtension_Source(), this.getStereotype(), this.getStereotype_Extensions(), "source", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExtension_Target(), theEcorePackage.getEClass(), null, "target", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

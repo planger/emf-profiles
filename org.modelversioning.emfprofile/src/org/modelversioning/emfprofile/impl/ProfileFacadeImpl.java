@@ -564,7 +564,7 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 *            to get applied stereotypes for.
 	 * @return the list of {@link StereotypeApplication}s.
 	 */
-	private EList<StereotypeApplication> getAppliedStereotypes(
+	protected EList<StereotypeApplication> getAppliedStereotypes(
 			Stereotype stereotype, EObject eObject) {
 		EList<StereotypeApplication> appliedStereotypes = getAppliedStereotypes(eObject);
 		for (StereotypeApplication application : new BasicEList<StereotypeApplication>(

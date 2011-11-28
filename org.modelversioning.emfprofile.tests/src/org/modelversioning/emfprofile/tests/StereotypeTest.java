@@ -27,6 +27,8 @@ import org.modelversioning.emfprofile.Stereotype;
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#getProfile() <em>Get Profile</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#getLowerBound(org.eclipse.emf.ecore.EClass) <em>Get Lower Bound</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#getUpperBound(org.eclipse.emf.ecore.EClass) <em>Get Upper Bound</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#getAllExtensibleClasses() <em>Get All Extensible Classes</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#getExtensibleClasses() <em>Get Extensible Classes</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -175,6 +177,32 @@ public class StereotypeTest extends TestCase {
 	 * @generated
 	 */
 	public void testGetUpperBound__EClass() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Stereotype#getAllExtensibleClasses() <em>Get All Extensible Classes</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Stereotype#getAllExtensibleClasses()
+	 * @generated
+	 */
+	public void testGetAllExtensibleClasses() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Stereotype#getExtensibleClasses() <em>Get Extensible Classes</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Stereotype#getExtensibleClasses()
+	 * @generated
+	 */
+	public void testGetExtensibleClasses() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();
