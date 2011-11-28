@@ -103,8 +103,11 @@ public class EMFProfileEditPartFactory implements EditPartFactory {
 			case EEnumLiteralsEditPart.VISUAL_ID:
 				return new EEnumLiteralsEditPart(view);
 
-			case StereotypeBaseEditPart.VISUAL_ID:
-				return new StereotypeBaseEditPart(view);
+			case ExtensionEditPart.VISUAL_ID:
+				return new ExtensionEditPart(view);
+
+			case ExtensionLowerBoundUpperBoundEditPart.VISUAL_ID:
+				return new ExtensionLowerBoundUpperBoundEditPart(view);
 
 			case EClassESuperTypesEditPart.VISUAL_ID:
 				return new EClassESuperTypesEditPart(view);

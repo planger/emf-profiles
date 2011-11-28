@@ -9,8 +9,7 @@
       itemSemanticEditPolicyClassName="ProfileItemSemanticEditPolicy"
       canonicalEditPolicyClassName="ProfileCanonicalEditPolicy"
       iconProviderPriority="Low"
-      validationProviderPriority="Low"
-      synchronized="false">
+      validationProviderPriority="Low">
     <diagramRunTimeClass
         href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Diagram"/>
     <elementType
@@ -19,8 +18,6 @@
     <viewmap
         xsi:type="gmfgen:FigureViewmap"
         figureQualifiedClassName="org.eclipse.draw2d.FreeformLayer"/>
-    <containsShortcutsTo>ecore</containsShortcutsTo>
-    <shortcutsProvidedFor>ecore</shortcutsProvidedFor>
     <domainDiagramElement
         href="emfprofiles.genmodel#//emfprofile/Profile"/>
     <childNodes
@@ -501,16 +498,17 @@
       </labels>
     </topLevelNodes>
     <links
-        visualID="4001"
-        editPartClassName="StereotypeBaseEditPart"
-        itemSemanticEditPolicyClassName="StereotypeBaseItemSemanticEditPolicy"
-        notationViewFactoryClassName="StereotypeBaseViewFactory"
-        createCommandClassName="StereotypeBaseCreateCommand"
-        reorientCommandClassName="StereotypeBaseReorientCommand">
+        visualID="4004"
+        editPartClassName="ExtensionEditPart"
+        itemSemanticEditPolicyClassName="ExtensionItemSemanticEditPolicy"
+        notationViewFactoryClassName="ExtensionViewFactory"
+        createCommandClassName="ExtensionCreateCommand"
+        reorientCommandClassName="ExtensionReorientCommand">
       <diagramRunTimeClass
           href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Edge"/>
       <elementType
-          xsi:type="gmfgen:SpecializationType"/>
+          xsi:type="gmfgen:MetamodelType"
+          editHelperClassName="ExtensionEditHelper"/>
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="SolidLineWDstClosedArrow"
@@ -520,10 +518,45 @@
             fixedForeground="true"/>
       </viewmap>
       <modelFacet
-          xsi:type="gmfgen:FeatureLinkModelFacet">
-        <metaFeature
-            href="emfprofiles.genmodel#//emfprofile/Stereotype/base"/>
+          xsi:type="gmfgen:TypeLinkModelFacet">
+        <metaClass
+            href="emfprofiles.genmodel#//emfprofile/Extension"/>
+        <containmentMetaFeature
+            href="emfprofiles.genmodel#//emfprofile/Stereotype/extensions"/>
+        <childMetaFeature
+            href="emfprofiles.genmodel#//emfprofile/Stereotype/extensions"/>
+        <sourceMetaFeature
+            href="emfprofiles.genmodel#//emfprofile/Extension/source"/>
+        <targetMetaFeature
+            href="emfprofiles.genmodel#//emfprofile/Extension/target"/>
       </modelFacet>
+      <labels
+          visualID="6003"
+          editPartClassName="ExtensionLowerBoundUpperBoundEditPart"
+          itemSemanticEditPolicyClassName="ExtensionLowerBoundUpperBoundItemSemanticEditPolicy"
+          notationViewFactoryClassName="ExtensionLowerBoundUpperBoundViewFactory"
+          alignment="SOURCE">
+        <diagramRunTimeClass
+            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+        <viewmap
+            xsi:type="gmfgen:FigureViewmap"
+            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel">
+          <attributes
+              xsi:type="gmfgen:LabelOffsetAttributes"
+              x="10"
+              y="10"/>
+        </viewmap>
+        <modelFacet
+            xsi:type="gmfgen:FeatureLabelModelFacet"
+            parser="//@labelParsers/@implementations.0"
+            viewPattern="{0}..{1,choice,-2#?|-1#*|-1&lt;{1}}"
+            editPattern="{0}..{1}">
+          <metaFeatures
+              href="emfprofiles.genmodel#//emfprofile/Extension/lowerBound"/>
+          <metaFeatures
+              href="emfprofiles.genmodel#//emfprofile/Extension/upperBound"/>
+        </modelFacet>
+      </labels>
     </links>
     <links
         visualID="4002"
@@ -803,8 +836,6 @@
             xsi:type="gmfgen:ToolEntry"
             title="Extension"
             description="Create new Extension Relationship"
-            largeIconPath="/org.modelversioning.emfprofile.edit/icons/full/obj16/Extension.gif"
-            smallIconPath="/org.modelversioning.emfprofile.edit/icons/full/obj16/Extension.gif"
             genLinks="//@diagram/@links.0"/>
       </groups>
       <groups
@@ -1149,13 +1180,11 @@
       extensibleViaService="true">
     <implementations
         xsi:type="gmfgen:PredefinedParser"
-        uses="//@diagram/@childNodes.0/@labelModelFacet //@diagram/@topLevelNodes.0/@labels.0/@modelFacet //@diagram/@childNodes.1/@labelModelFacet //@diagram/@childNodes.2/@labelModelFacet //@diagram/@topLevelNodes.1/@labels.0/@modelFacet //@diagram/@childNodes.3/@labels.0/@modelFacet //@diagram/@topLevelNodes.2/@labels.0/@modelFacet //@diagram/@childNodes.4/@labelModelFacet //@diagram/@topLevelNodes.3/@labels.0/@modelFacet //@diagram/@topLevelNodes.4/@labels.0/@modelFacet //@diagram/@topLevelNodes.4/@labels.1/@modelFacet //@diagram/@links.2/@labels.0/@modelFacet //@diagram/@links.2/@labels.1/@modelFacet"/>
+        uses="//@diagram/@childNodes.0/@labelModelFacet //@diagram/@topLevelNodes.0/@labels.0/@modelFacet //@diagram/@childNodes.1/@labelModelFacet //@diagram/@childNodes.2/@labelModelFacet //@diagram/@topLevelNodes.1/@labels.0/@modelFacet //@diagram/@childNodes.3/@labels.0/@modelFacet //@diagram/@topLevelNodes.2/@labels.0/@modelFacet //@diagram/@childNodes.4/@labelModelFacet //@diagram/@topLevelNodes.3/@labels.0/@modelFacet //@diagram/@topLevelNodes.4/@labels.0/@modelFacet //@diagram/@topLevelNodes.4/@labels.1/@modelFacet //@diagram/@links.0/@labels.0/@modelFacet //@diagram/@links.2/@labels.0/@modelFacet //@diagram/@links.2/@labels.1/@modelFacet"/>
   </labelParsers>
   <contextMenus
       context="//@diagram">
     <items
         xsi:type="gmfgen:LoadResourceAction"/>
-    <items
-        xsi:type="gmfgen:CreateShortcutAction"/>
   </contextMenus>
 </gmfgen:GenEditorGenerator>

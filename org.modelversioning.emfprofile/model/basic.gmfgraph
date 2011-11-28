@@ -81,4 +81,6 @@
       name="LabelWOIcon"
       figure="LabelFigure"
       elementIcon="false"/>
+  <labels
+      name="ExtensionMultiplicity"/>
 </gmfgraph:Canvas>

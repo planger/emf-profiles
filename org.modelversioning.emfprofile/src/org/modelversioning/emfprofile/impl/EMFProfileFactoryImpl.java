@@ -10,12 +10,13 @@ package org.modelversioning.emfprofile.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.modelversioning.emfprofile.*;
+import org.modelversioning.emfprofile.EMFProfileFactory;
+import org.modelversioning.emfprofile.EMFProfilePackage;
+import org.modelversioning.emfprofile.Extension;
+import org.modelversioning.emfprofile.Profile;
+import org.modelversioning.emfprofile.Stereotype;
 
 /**
  * <!-- begin-user-doc -->
@@ -63,6 +64,7 @@ public class EMFProfileFactoryImpl extends EFactoryImpl implements EMFProfileFac
 		switch (eClass.getClassifierID()) {
 			case EMFProfilePackage.PROFILE: return createProfile();
 			case EMFProfilePackage.STEREOTYPE: return createStereotype();
+			case EMFProfilePackage.EXTENSION: return createExtension();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -86,6 +88,16 @@ public class EMFProfileFactoryImpl extends EFactoryImpl implements EMFProfileFac
 	public Stereotype createStereotype() {
 		StereotypeImpl stereotype = new StereotypeImpl();
 		return stereotype;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Extension createExtension() {
+		ExtensionImpl extension = new ExtensionImpl();
+		return extension;
 	}
 
 	/**

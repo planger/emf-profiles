@@ -7,9 +7,7 @@ import java.util.List;
 import org.eclipse.gef.Tool;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
-import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
-import org.eclipse.gef.palette.PaletteSeparator;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
@@ -103,12 +101,11 @@ public class EMFProfilePaletteFactory {
 				Messages.Extension3CreationTool_title,
 				Messages.Extension3CreationTool_desc,
 				Collections
-						.singletonList(EMFProfileElementTypes.StereotypeBase_4001));
+						.singletonList(EMFProfileElementTypes.Extension_4004));
 		entry.setId("createExtension3CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(EMFProfileDiagramEditorPlugin
-				.findImageDescriptor("/org.modelversioning.emfprofile.edit/icons/full/obj16/Extension.gif")); //$NON-NLS-1$
-		entry.setLargeIcon(EMFProfileDiagramEditorPlugin
-				.findImageDescriptor("/org.modelversioning.emfprofile.edit/icons/full/obj16/Extension.gif")); //$NON-NLS-1$
+		entry.setSmallIcon(EMFProfileElementTypes
+				.getImageDescriptor(EMFProfileElementTypes.Extension_4004));
+		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
 

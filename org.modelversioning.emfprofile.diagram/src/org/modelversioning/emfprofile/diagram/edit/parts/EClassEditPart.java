@@ -13,8 +13,6 @@ import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -333,7 +331,7 @@ public class EClassEditPart extends ShapeNodeEditPart {
 	 */
 	public List<IElementType> getMARelTypesOnTarget() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(3);
-		types.add(EMFProfileElementTypes.StereotypeBase_4001);
+		types.add(EMFProfileElementTypes.Extension_4004);
 		types.add(EMFProfileElementTypes.EClassESuperTypes_4002);
 		types.add(EMFProfileElementTypes.EReference_4003);
 		return types;
@@ -344,7 +342,7 @@ public class EClassEditPart extends ShapeNodeEditPart {
 	 */
 	public List<IElementType> getMATypesForSource(IElementType relationshipType) {
 		LinkedList<IElementType> types = new LinkedList<IElementType>();
-		if (relationshipType == EMFProfileElementTypes.StereotypeBase_4001) {
+		if (relationshipType == EMFProfileElementTypes.Extension_4004) {
 			types.add(EMFProfileElementTypes.Stereotype_2001);
 		} else if (relationshipType == EMFProfileElementTypes.EClassESuperTypes_4002) {
 			types.add(EMFProfileElementTypes.Stereotype_2001);
@@ -378,19 +376,6 @@ public class EClassEditPart extends ShapeNodeEditPart {
 			}
 		}
 		return super.getTargetEditPart(request);
-	}
-
-	/**
-	 * @generated
-	 */
-	protected void handleNotificationEvent(Notification event) {
-		if (event.getNotifier() == getModel()
-				&& EcorePackage.eINSTANCE.getEModelElement_EAnnotations()
-						.equals(event.getFeature())) {
-			handleMajorSemanticChange();
-		} else {
-			super.handleNotificationEvent(event);
-		}
 	}
 
 	/**

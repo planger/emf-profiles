@@ -18,7 +18,7 @@ import org.modelversioning.emfprofile.diagram.edit.parts.EClass2EditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EClassESuperTypesEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EPackageContentsEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceEditPart;
-import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeBaseEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionEditPart;
 import org.modelversioning.emfprofile.diagram.part.EMFProfileVisualIDRegistry;
 import org.modelversioning.emfprofile.diagram.providers.EMFProfileElementTypes;
 
@@ -74,12 +74,10 @@ public class EPackageItemSemanticEditPolicy extends
 								.hasNext();) {
 							Edge incomingLink = (Edge) it.next();
 							if (EMFProfileVisualIDRegistry
-									.getVisualID(incomingLink) == StereotypeBaseEditPart.VISUAL_ID) {
-								DestroyReferenceRequest r = new DestroyReferenceRequest(
-										incomingLink.getSource().getElement(),
-										null, incomingLink.getTarget()
-												.getElement(), false);
-								cmd.add(new DestroyReferenceCommand(r));
+									.getVisualID(incomingLink) == ExtensionEditPart.VISUAL_ID) {
+								DestroyElementRequest r = new DestroyElementRequest(
+										incomingLink.getElement(), false);
+								cmd.add(new DestroyElementCommand(r));
 								cmd.add(new DeleteCommand(getEditingDomain(),
 										incomingLink));
 								continue;

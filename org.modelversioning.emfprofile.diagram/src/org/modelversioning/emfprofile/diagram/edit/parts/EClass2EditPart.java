@@ -323,7 +323,7 @@ public class EClass2EditPart extends ShapeNodeEditPart {
 	 */
 	public List<IElementType> getMARelTypesOnTarget() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(3);
-		types.add(EMFProfileElementTypes.StereotypeBase_4001);
+		types.add(EMFProfileElementTypes.Extension_4004);
 		types.add(EMFProfileElementTypes.EClassESuperTypes_4002);
 		types.add(EMFProfileElementTypes.EReference_4003);
 		return types;
@@ -334,7 +334,7 @@ public class EClass2EditPart extends ShapeNodeEditPart {
 	 */
 	public List<IElementType> getMATypesForSource(IElementType relationshipType) {
 		LinkedList<IElementType> types = new LinkedList<IElementType>();
-		if (relationshipType == EMFProfileElementTypes.StereotypeBase_4001) {
+		if (relationshipType == EMFProfileElementTypes.Extension_4004) {
 			types.add(EMFProfileElementTypes.Stereotype_2001);
 		} else if (relationshipType == EMFProfileElementTypes.EClassESuperTypes_4002) {
 			types.add(EMFProfileElementTypes.Stereotype_2001);

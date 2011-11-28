@@ -28,8 +28,8 @@ import org.modelversioning.emfprofile.diagram.edit.parts.EEnumLiteralEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EOperationEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EPackageEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.ProfileEditPart;
-import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeBaseEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeEditPart;
 import org.modelversioning.emfprofile.diagram.part.EMFProfileDiagramEditorPlugin;
 
@@ -106,7 +106,8 @@ public class EMFProfileElementTypes {
 	/**
 	 * @generated
 	 */
-	public static final IElementType StereotypeBase_4001 = getElementType("org.modelversioning.emfprofile.diagram.StereotypeBase_4001"); //$NON-NLS-1$
+	public static final IElementType Extension_4004 = getElementType("org.modelversioning.emfprofile.diagram.Extension_4004"); //$NON-NLS-1$
+
 	/**
 	 * @generated
 	 */
@@ -254,8 +255,8 @@ public class EMFProfileElementTypes {
 			elements.put(EEnumLiteral_3003,
 					EcorePackage.eINSTANCE.getEEnumLiteral());
 
-			elements.put(StereotypeBase_4001,
-					EMFProfilePackage.eINSTANCE.getStereotype_Base());
+			elements.put(Extension_4004,
+					EMFProfilePackage.eINSTANCE.getExtension());
 
 			elements.put(EClassESuperTypes_4002,
 					EcorePackage.eINSTANCE.getEClass_ESuperTypes());
@@ -290,7 +291,7 @@ public class EMFProfileElementTypes {
 			KNOWN_ELEMENT_TYPES.add(EOperation_3005);
 			KNOWN_ELEMENT_TYPES.add(EClass_3002);
 			KNOWN_ELEMENT_TYPES.add(EEnumLiteral_3003);
-			KNOWN_ELEMENT_TYPES.add(StereotypeBase_4001);
+			KNOWN_ELEMENT_TYPES.add(Extension_4004);
 			KNOWN_ELEMENT_TYPES.add(EClassESuperTypes_4002);
 			KNOWN_ELEMENT_TYPES.add(EReference_4003);
 		}
@@ -324,8 +325,8 @@ public class EMFProfileElementTypes {
 			return EClass_3002;
 		case EEnumLiteralEditPart.VISUAL_ID:
 			return EEnumLiteral_3003;
-		case StereotypeBaseEditPart.VISUAL_ID:
-			return StereotypeBase_4001;
+		case ExtensionEditPart.VISUAL_ID:
+			return Extension_4004;
 		case EClassESuperTypesEditPart.VISUAL_ID:
 			return EClassESuperTypes_4002;
 		case EReferenceEditPart.VISUAL_ID:

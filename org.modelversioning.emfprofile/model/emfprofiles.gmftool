@@ -19,16 +19,7 @@
       <tools
           xsi:type="gmftool:CreationTool"
           title="Extension"
-          description="Create new Extension Relationship">
-        <smallIcon
-            xsi:type="gmftool:BundleImage"
-            path="icons\full\obj16\Extension.gif"
-            bundle="org.modelversioning.emfprofile.edit"/>
-        <largeIcon
-            xsi:type="gmftool:BundleImage"
-            path="icons\full\obj16\Extension.gif"
-            bundle="org.modelversioning.emfprofile.edit"/>
-      </tools>
+          description="Create new Extension Relationship"/>
     </tools>
     <tools
         xsi:type="gmftool:ToolGroup"

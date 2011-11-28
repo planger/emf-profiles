@@ -33,6 +33,8 @@ import org.modelversioning.emfprofile.diagram.edit.parts.EPackageNameEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceLowerBoundUpperBoundEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceNameEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionLowerBoundUpperBoundEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.ProfileEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeNameEditPart;
@@ -131,8 +133,7 @@ public class EMFProfileVisualIDRegistry {
 		}
 		String containerModelID = org.modelversioning.emfprofile.diagram.part.EMFProfileVisualIDRegistry
 				.getModelID(containerView);
-		if (!ProfileEditPart.MODEL_ID.equals(containerModelID)
-				&& !"ecore".equals(containerModelID)) { //$NON-NLS-1$
+		if (!ProfileEditPart.MODEL_ID.equals(containerModelID)) {
 			return -1;
 		}
 		int containerVisualID;
@@ -222,8 +223,7 @@ public class EMFProfileVisualIDRegistry {
 	public static boolean canCreateNode(View containerView, int nodeVisualID) {
 		String containerModelID = org.modelversioning.emfprofile.diagram.part.EMFProfileVisualIDRegistry
 				.getModelID(containerView);
-		if (!ProfileEditPart.MODEL_ID.equals(containerModelID)
-				&& !"ecore".equals(containerModelID)) { //$NON-NLS-1$
+		if (!ProfileEditPart.MODEL_ID.equals(containerModelID)) {
 			return false;
 		}
 		int containerVisualID;
@@ -344,6 +344,11 @@ public class EMFProfileVisualIDRegistry {
 				return true;
 			}
 			break;
+		case ExtensionEditPart.VISUAL_ID:
+			if (ExtensionLowerBoundUpperBoundEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
 		case EReferenceEditPart.VISUAL_ID:
 			if (EReferenceNameEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
@@ -362,6 +367,10 @@ public class EMFProfileVisualIDRegistry {
 	public static int getLinkWithClassVisualID(EObject domainElement) {
 		if (domainElement == null) {
 			return -1;
+		}
+		if (EMFProfilePackage.eINSTANCE.getExtension().isSuperTypeOf(
+				domainElement.eClass())) {
+			return ExtensionEditPart.VISUAL_ID;
 		}
 		if (EcorePackage.eINSTANCE.getEReference().isSuperTypeOf(
 				domainElement.eClass())) {

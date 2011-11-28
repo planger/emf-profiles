@@ -13,6 +13,7 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.ParserService;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
+import org.modelversioning.emfprofile.EMFProfilePackage;
 import org.modelversioning.emfprofile.diagram.edit.parts.EAttribute2EditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EAttributeEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EClassName2EditPart;
@@ -25,6 +26,7 @@ import org.modelversioning.emfprofile.diagram.edit.parts.EOperationEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EPackageNameEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceLowerBoundUpperBoundEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceNameEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionLowerBoundUpperBoundEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeNameEditPart;
 import org.modelversioning.emfprofile.diagram.parsers.MessageFormatParser;
 import org.modelversioning.emfprofile.diagram.part.EMFProfileVisualIDRegistry;
@@ -242,6 +244,28 @@ public class EMFProfileParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
+	private IParser extensionLowerBoundUpperBound_6003Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getExtensionLowerBoundUpperBound_6003Parser() {
+		if (extensionLowerBoundUpperBound_6003Parser == null) {
+			EAttribute[] features = new EAttribute[] {
+					EMFProfilePackage.eINSTANCE.getExtension_LowerBound(),
+					EMFProfilePackage.eINSTANCE.getExtension_UpperBound() };
+			MessageFormatParser parser = new MessageFormatParser(features);
+			parser.setViewPattern("{0}..{1,choice,-2#?|-1#*|-1<{1}}"); //$NON-NLS-1$
+			parser.setEditorPattern("{0}..{1,choice,-2#?|-1#*|-1<{1}}"); //$NON-NLS-1$
+			parser.setEditPattern("{0}..{1}"); //$NON-NLS-1$
+			extensionLowerBoundUpperBound_6003Parser = parser;
+		}
+		return extensionLowerBoundUpperBound_6003Parser;
+	}
+
+	/**
+	 * @generated
+	 */
 	private IParser eReferenceName_6001Parser;
 
 	/**
@@ -306,6 +330,8 @@ public class EMFProfileParserProvider extends AbstractProvider implements
 			return getEClassName_5003Parser();
 		case EEnumLiteralEditPart.VISUAL_ID:
 			return getEEnumLiteral_3003Parser();
+		case ExtensionLowerBoundUpperBoundEditPart.VISUAL_ID:
+			return getExtensionLowerBoundUpperBound_6003Parser();
 		case EReferenceNameEditPart.VISUAL_ID:
 			return getEReferenceName_6001Parser();
 		case EReferenceLowerBoundUpperBoundEditPart.VISUAL_ID:

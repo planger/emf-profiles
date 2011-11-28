@@ -8,7 +8,6 @@
 package org.modelversioning.emfprofileapplication;
 
 import org.eclipse.emf.ecore.EObject;
-
 import org.modelversioning.emfprofile.Profile;
 
 /**

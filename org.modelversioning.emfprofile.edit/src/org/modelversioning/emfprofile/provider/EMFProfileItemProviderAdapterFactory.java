@@ -123,6 +123,29 @@ public class EMFProfileItemProviderAdapterFactory extends EMFProfileAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.modelversioning.emfprofile.Extension} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ExtensionItemProvider extensionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.modelversioning.emfprofile.Extension}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createExtensionAdapter() {
+		if (extensionItemProvider == null) {
+			extensionItemProvider = new ExtensionItemProvider(this);
+		}
+
+		return extensionItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -223,6 +246,7 @@ public class EMFProfileItemProviderAdapterFactory extends EMFProfileAdapterFacto
 	public void dispose() {
 		if (profileItemProvider != null) profileItemProvider.dispose();
 		if (stereotypeItemProvider != null) stereotypeItemProvider.dispose();
+		if (extensionItemProvider != null) extensionItemProvider.dispose();
 	}
 
 }

@@ -1,9 +1,7 @@
 package org.modelversioning.emfprofile.diagram.edit.parts;
 
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.gef.EditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ListCompartmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeCompartmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
@@ -12,6 +10,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ResizableCompartmentEditP
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.notation.View;
+import org.modelversioning.emfprofile.diagram.edit.policies.EPackageContentsCanonicalEditPolicy;
 import org.modelversioning.emfprofile.diagram.edit.policies.EPackageContentsItemSemanticEditPolicy;
 import org.modelversioning.emfprofile.diagram.part.Messages;
 
@@ -62,6 +61,8 @@ public class EPackageContentsEditPart extends ShapeCompartmentEditPart {
 				new CreationEditPolicy());
 		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
 				new DragDropEditPolicy());
+		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
+				new EPackageContentsCanonicalEditPolicy());
 	}
 
 	/**

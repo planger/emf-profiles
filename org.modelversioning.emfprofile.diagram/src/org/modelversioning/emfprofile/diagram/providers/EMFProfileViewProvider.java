@@ -22,7 +22,6 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.FigureUtilities;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.type.core.IHintedType;
-import org.eclipse.gmf.runtime.notation.Connector;
 import org.eclipse.gmf.runtime.notation.DecorationNode;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
@@ -67,8 +66,9 @@ import org.modelversioning.emfprofile.diagram.edit.parts.EPackageNameEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceLowerBoundUpperBoundEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceNameEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionLowerBoundUpperBoundEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.ProfileEditPart;
-import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeBaseEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeNameEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeTaggedValueCompEditPart;
@@ -298,9 +298,9 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 		IElementType elementType = getSemanticElementType(semanticAdapter);
 		String elementTypeHint = ((IHintedType) elementType).getSemanticHint();
 		switch (EMFProfileVisualIDRegistry.getVisualID(elementTypeHint)) {
-		case StereotypeBaseEditPart.VISUAL_ID:
-			return createStereotypeBase_4001(containerView, index, persisted,
-					preferencesHint);
+		case ExtensionEditPart.VISUAL_ID:
+			return createExtension_4004(getSemanticElement(semanticAdapter),
+					containerView, index, persisted, preferencesHint);
 		case EClassESuperTypesEditPart.VISUAL_ID:
 			return createEClassESuperTypes_4002(containerView, index,
 					persisted, preferencesHint);
@@ -641,8 +641,8 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	public Edge createStereotypeBase_4001(View containerView, int index,
-			boolean persisted, PreferencesHint preferencesHint) {
+	public Edge createExtension_4004(EObject domainElement, View containerView,
+			int index, boolean persisted, PreferencesHint preferencesHint) {
 		Edge edge = NotationFactory.eINSTANCE.createEdge();
 		edge.getStyles().add(NotationFactory.eINSTANCE.createRoutingStyle());
 		edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
@@ -656,8 +656,8 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 		edge.setBendpoints(bendpoints);
 		ViewUtil.insertChildView(containerView, edge, index, persisted);
 		edge.setType(EMFProfileVisualIDRegistry
-				.getType(StereotypeBaseEditPart.VISUAL_ID));
-		edge.setElement(null);
+				.getType(ExtensionEditPart.VISUAL_ID));
+		edge.setElement(domainElement);
 		// initializePreferences
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
@@ -682,6 +682,15 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 					NotationPackage.eINSTANCE.getRoutingStyle_Routing(),
 					routing);
 		}
+		Node label6003 = createLabel(
+				edge,
+				EMFProfileVisualIDRegistry
+						.getType(ExtensionLowerBoundUpperBoundEditPart.VISUAL_ID));
+		label6003.setLayoutConstraint(NotationFactory.eINSTANCE
+				.createLocation());
+		Location location6003 = (Location) label6003.getLayoutConstraint();
+		location6003.setX(10);
+		location6003.setY(10);
 		return edge;
 	}
 

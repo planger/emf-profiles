@@ -388,22 +388,13 @@ public interface EMFProfilePackage extends EPackage {
 	int STEREOTYPE__EALL_GENERIC_SUPER_TYPES = EcorePackage.ECLASS__EALL_GENERIC_SUPER_TYPES;
 
 	/**
-	 * The feature id for the '<em><b>Base</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STEREOTYPE__BASE = EcorePackage.ECLASS_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Icon Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STEREOTYPE__ICON_PATH = EcorePackage.ECLASS_FEATURE_COUNT + 1;
+	int STEREOTYPE__ICON_PATH = EcorePackage.ECLASS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Meta Base</b></em>' attribute.
@@ -412,25 +403,16 @@ public interface EMFProfilePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STEREOTYPE__META_BASE = EcorePackage.ECLASS_FEATURE_COUNT + 2;
+	int STEREOTYPE__META_BASE = EcorePackage.ECLASS_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Lower Bound</b></em>' attribute.
+	 * The feature id for the '<em><b>Extensions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STEREOTYPE__LOWER_BOUND = EcorePackage.ECLASS_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STEREOTYPE__UPPER_BOUND = EcorePackage.ECLASS_FEATURE_COUNT + 4;
+	int STEREOTYPE__EXTENSIONS = EcorePackage.ECLASS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Stereotype</em>' class.
@@ -439,7 +421,63 @@ public interface EMFProfilePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STEREOTYPE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 5;
+	int STEREOTYPE_FEATURE_COUNT = EcorePackage.ECLASS_FEATURE_COUNT + 3;
+
+
+	/**
+	 * The meta object id for the '{@link org.modelversioning.emfprofile.impl.ExtensionImpl <em>Extension</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.impl.ExtensionImpl
+	 * @see org.modelversioning.emfprofile.impl.EMFProfilePackageImpl#getExtension()
+	 * @generated
+	 */
+	int EXTENSION = 2;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION__SOURCE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION__TARGET = 1;
+
+	/**
+	 * The feature id for the '<em><b>Lower Bound</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION__LOWER_BOUND = 2;
+
+	/**
+	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION__UPPER_BOUND = 3;
+
+	/**
+	 * The number of structural features of the '<em>Extension</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION_FEATURE_COUNT = 4;
 
 
 	/**
@@ -474,17 +512,6 @@ public interface EMFProfilePackage extends EPackage {
 	EClass getStereotype();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.modelversioning.emfprofile.Stereotype#getBase <em>Base</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Base</em>'.
-	 * @see org.modelversioning.emfprofile.Stereotype#getBase()
-	 * @see #getStereotype()
-	 * @generated
-	 */
-	EReference getStereotype_Base();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.modelversioning.emfprofile.Stereotype#getIconPath <em>Icon Path</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -507,26 +534,69 @@ public interface EMFProfilePackage extends EPackage {
 	EAttribute getStereotype_MetaBase();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.modelversioning.emfprofile.Stereotype#getLowerBound <em>Lower Bound</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.modelversioning.emfprofile.Stereotype#getExtensions <em>Extensions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Extensions</em>'.
+	 * @see org.modelversioning.emfprofile.Stereotype#getExtensions()
+	 * @see #getStereotype()
+	 * @generated
+	 */
+	EReference getStereotype_Extensions();
+
+	/**
+	 * Returns the meta object for class '{@link org.modelversioning.emfprofile.Extension <em>Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Extension</em>'.
+	 * @see org.modelversioning.emfprofile.Extension
+	 * @generated
+	 */
+	EClass getExtension();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.modelversioning.emfprofile.Extension#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Source</em>'.
+	 * @see org.modelversioning.emfprofile.Extension#getSource()
+	 * @see #getExtension()
+	 * @generated
+	 */
+	EReference getExtension_Source();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.modelversioning.emfprofile.Extension#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see org.modelversioning.emfprofile.Extension#getTarget()
+	 * @see #getExtension()
+	 * @generated
+	 */
+	EReference getExtension_Target();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.modelversioning.emfprofile.Extension#getLowerBound <em>Lower Bound</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Lower Bound</em>'.
-	 * @see org.modelversioning.emfprofile.Stereotype#getLowerBound()
-	 * @see #getStereotype()
+	 * @see org.modelversioning.emfprofile.Extension#getLowerBound()
+	 * @see #getExtension()
 	 * @generated
 	 */
-	EAttribute getStereotype_LowerBound();
+	EAttribute getExtension_LowerBound();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.modelversioning.emfprofile.Stereotype#getUpperBound <em>Upper Bound</em>}'.
+	 * Returns the meta object for the attribute '{@link org.modelversioning.emfprofile.Extension#getUpperBound <em>Upper Bound</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Upper Bound</em>'.
-	 * @see org.modelversioning.emfprofile.Stereotype#getUpperBound()
-	 * @see #getStereotype()
+	 * @see org.modelversioning.emfprofile.Extension#getUpperBound()
+	 * @see #getExtension()
 	 * @generated
 	 */
-	EAttribute getStereotype_UpperBound();
+	EAttribute getExtension_UpperBound();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -579,14 +649,6 @@ public interface EMFProfilePackage extends EPackage {
 		EClass STEREOTYPE = eINSTANCE.getStereotype();
 
 		/**
-		 * The meta object literal for the '<em><b>Base</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference STEREOTYPE__BASE = eINSTANCE.getStereotype_Base();
-
-		/**
 		 * The meta object literal for the '<em><b>Icon Path</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -603,12 +665,46 @@ public interface EMFProfilePackage extends EPackage {
 		EAttribute STEREOTYPE__META_BASE = eINSTANCE.getStereotype_MetaBase();
 
 		/**
+		 * The meta object literal for the '<em><b>Extensions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STEREOTYPE__EXTENSIONS = eINSTANCE.getStereotype_Extensions();
+
+		/**
+		 * The meta object literal for the '{@link org.modelversioning.emfprofile.impl.ExtensionImpl <em>Extension</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.modelversioning.emfprofile.impl.ExtensionImpl
+		 * @see org.modelversioning.emfprofile.impl.EMFProfilePackageImpl#getExtension()
+		 * @generated
+		 */
+		EClass EXTENSION = eINSTANCE.getExtension();
+
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXTENSION__SOURCE = eINSTANCE.getExtension_Source();
+
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXTENSION__TARGET = eINSTANCE.getExtension_Target();
+
+		/**
 		 * The meta object literal for the '<em><b>Lower Bound</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute STEREOTYPE__LOWER_BOUND = eINSTANCE.getStereotype_LowerBound();
+		EAttribute EXTENSION__LOWER_BOUND = eINSTANCE.getExtension_LowerBound();
 
 		/**
 		 * The meta object literal for the '<em><b>Upper Bound</b></em>' attribute feature.
@@ -616,7 +712,7 @@ public interface EMFProfilePackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute STEREOTYPE__UPPER_BOUND = eINSTANCE.getStereotype_UpperBound();
+		EAttribute EXTENSION__UPPER_BOUND = eINSTANCE.getExtension_UpperBound();
 
 	}
 

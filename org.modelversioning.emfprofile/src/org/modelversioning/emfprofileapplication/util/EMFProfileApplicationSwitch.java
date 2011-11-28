@@ -11,8 +11,10 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
-import org.modelversioning.emfprofileapplication.*;
+import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
+import org.modelversioning.emfprofileapplication.ProfileApplication;
+import org.modelversioning.emfprofileapplication.ProfileImport;
+import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
  * <!-- begin-user-doc -->

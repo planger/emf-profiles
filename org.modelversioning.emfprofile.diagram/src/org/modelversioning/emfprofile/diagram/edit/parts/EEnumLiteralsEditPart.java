@@ -10,6 +10,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ResizableCompartmentEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.modelversioning.emfprofile.diagram.edit.policies.EEnumLiteralsCanonicalEditPolicy;
 import org.modelversioning.emfprofile.diagram.edit.policies.EEnumLiteralsItemSemanticEditPolicy;
 import org.modelversioning.emfprofile.diagram.part.Messages;
 
@@ -67,6 +68,8 @@ public class EEnumLiteralsEditPart extends ListCompartmentEditPart {
 				new CreationEditPolicy());
 		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
 				new DragDropEditPolicy());
+		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
+				new EEnumLiteralsCanonicalEditPolicy());
 	}
 
 	/**

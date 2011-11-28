@@ -29,6 +29,7 @@ import org.modelversioning.emfprofile.diagram.edit.parts.EOperationEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EPackageContentsEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EPackageEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.ProfileEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeTaggedValueCompEditPart;
@@ -348,6 +349,10 @@ public class EMFProfileDiagramContentInitializer {
 					}
 					continueLinkCreation = true;
 					switch (nextLinkDescriptor.getVisualID()) {
+					case ExtensionEditPart.VISUAL_ID:
+						additionalDescriptors.addAll(EMFProfileDiagramUpdater
+								.getExtension_4004OutgoingLinks(edge));
+						break;
 					case EReferenceEditPart.VISUAL_ID:
 						additionalDescriptors.addAll(EMFProfileDiagramUpdater
 								.getEReference_4003OutgoingLinks(edge));

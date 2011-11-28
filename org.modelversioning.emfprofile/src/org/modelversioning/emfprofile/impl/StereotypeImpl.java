@@ -10,15 +10,19 @@ package org.modelversioning.emfprofile.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.modelversioning.emfprofile.EMFProfilePackage;
+import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
 
@@ -28,45 +32,26 @@ import org.modelversioning.emfprofile.Stereotype;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getBase <em>
- * Base</em>}</li>
- * <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getIconPath
- * <em>Icon Path</em>}</li>
- * <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#isMetaBase <em>
- * Meta Base</em>}</li>
- * <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getLowerBound
- * <em>Lower Bound</em>}</li>
- * <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getUpperBound
- * <em>Upper Bound</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getIconPath <em>Icon Path</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#isMetaBase <em>Meta Base</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.impl.StereotypeImpl#getExtensions <em>Extensions</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class StereotypeImpl extends EClassImpl implements Stereotype {
 	/**
-	 * The cached value of the '{@link #getBase() <em>Base</em>}' reference
-	 * list. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getBase()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<EClass> base;
-
-	/**
-	 * The default value of the '{@link #getIconPath() <em>Icon Path</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #getIconPath() <em>Icon Path</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getIconPath()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final String ICON_PATH_EDEFAULT = null;
 	/**
-	 * The cached value of the '{@link #getIconPath() <em>Icon Path</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getIconPath() <em>Icon Path</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getIconPath()
 	 * @generated
 	 * @ordered
@@ -74,9 +59,8 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	protected String iconPath = ICON_PATH_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isMetaBase() <em>Meta Base</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The default value of the '{@link #isMetaBase() <em>Meta Base</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isMetaBase()
 	 * @generated
 	 * @ordered
@@ -84,9 +68,8 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	protected static final boolean META_BASE_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isMetaBase() <em>Meta Base</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #isMetaBase() <em>Meta Base</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isMetaBase()
 	 * @generated
 	 * @ordered
@@ -94,48 +77,17 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	protected boolean metaBase = META_BASE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getLowerBound() <em>Lower Bound</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getLowerBound()
+	 * The cached value of the '{@link #getExtensions() <em>Extensions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExtensions()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int LOWER_BOUND_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getLowerBound() <em>Lower Bound</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getLowerBound()
-	 * @generated
-	 * @ordered
-	 */
-	protected int lowerBound = LOWER_BOUND_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getUpperBound() <em>Upper Bound</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getUpperBound()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int UPPER_BOUND_EDEFAULT = -1;
-
-	/**
-	 * The cached value of the '{@link #getUpperBound() <em>Upper Bound</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getUpperBound()
-	 * @generated
-	 * @ordered
-	 */
-	protected int upperBound = UPPER_BOUND_EDEFAULT;
+	protected EList<Extension> extensions;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected StereotypeImpl() {
@@ -144,7 +96,6 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -154,20 +105,6 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EList<EClass> getBase() {
-		if (base == null) {
-			base = new EObjectResolvingEList<EClass>(EClass.class, this,
-					EMFProfilePackage.STEREOTYPE__BASE);
-		}
-		return base;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getIconPath() {
@@ -176,21 +113,17 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setIconPath(String newIconPath) {
 		String oldIconPath = iconPath;
 		iconPath = newIconPath;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					EMFProfilePackage.STEREOTYPE__ICON_PATH, oldIconPath,
-					iconPath));
+			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.STEREOTYPE__ICON_PATH, oldIconPath, iconPath));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public boolean isMetaBase() {
@@ -199,62 +132,13 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setMetaBase(boolean newMetaBase) {
 		boolean oldMetaBase = metaBase;
 		metaBase = newMetaBase;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					EMFProfilePackage.STEREOTYPE__META_BASE, oldMetaBase,
-					metaBase));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public int getLowerBound() {
-		return lowerBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setLowerBound(int newLowerBound) {
-		int oldLowerBound = lowerBound;
-		lowerBound = newLowerBound;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					EMFProfilePackage.STEREOTYPE__LOWER_BOUND, oldLowerBound,
-					lowerBound));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public int getUpperBound() {
-		return upperBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setUpperBound(int newUpperBound) {
-		int oldUpperBound = upperBound;
-		upperBound = newUpperBound;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					EMFProfilePackage.STEREOTYPE__UPPER_BOUND, oldUpperBound,
-					upperBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.STEREOTYPE__META_BASE, oldMetaBase, metaBase));
 	}
 
 	/**
@@ -366,7 +250,7 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	 */
 	public int getLowerBound(EClass eClass) {
 		if (getBase().contains(eClass)) {
-			return getLowerBound();
+			return -1; // TODO fix after refactoring
 		} else {
 			EList<Stereotype> superStereotypes = getSuperStereotypes();
 			if (superStereotypes.size() > 0) {
@@ -399,7 +283,7 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	 */
 	public int getUpperBound(EClass eClass) {
 		if (containsInBase(eClass)) {
-			return getUpperBound();
+			return -1; // TODO fix after refactoring
 		} else {
 			EList<Stereotype> superStereotypes = getSuperStereotypes();
 			if (superStereotypes.size() > 0) {
@@ -412,6 +296,47 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 			}
 		}
 		return -2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtensions()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+				return ((InternalEList<?>)getExtensions()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Extension> getExtensions() {
+		if (extensions == null) {
+			extensions = new EObjectContainmentWithInverseEList<Extension>(Extension.class, this, EMFProfilePackage.STEREOTYPE__EXTENSIONS, EMFProfilePackage.EXTENSION__SOURCE);
+		}
+		return extensions;
 	}
 
 	private boolean containsInBase(EClass eClass) {
@@ -429,124 +354,93 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case EMFProfilePackage.STEREOTYPE__BASE:
-			return getBase();
-		case EMFProfilePackage.STEREOTYPE__ICON_PATH:
-			return getIconPath();
-		case EMFProfilePackage.STEREOTYPE__META_BASE:
-			return isMetaBase();
-		case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
-			return getLowerBound();
-		case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
-			return getUpperBound();
+			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
+				return getIconPath();
+			case EMFProfilePackage.STEREOTYPE__META_BASE:
+				return isMetaBase();
+			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+				return getExtensions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case EMFProfilePackage.STEREOTYPE__BASE:
-			getBase().clear();
-			getBase().addAll((Collection<? extends EClass>) newValue);
-			return;
-		case EMFProfilePackage.STEREOTYPE__ICON_PATH:
-			setIconPath((String) newValue);
-			return;
-		case EMFProfilePackage.STEREOTYPE__META_BASE:
-			setMetaBase((Boolean) newValue);
-			return;
-		case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
-			setLowerBound((Integer) newValue);
-			return;
-		case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
-			setUpperBound((Integer) newValue);
-			return;
+			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
+				setIconPath((String)newValue);
+				return;
+			case EMFProfilePackage.STEREOTYPE__META_BASE:
+				setMetaBase((Boolean)newValue);
+				return;
+			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+				getExtensions().clear();
+				getExtensions().addAll((Collection<? extends Extension>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case EMFProfilePackage.STEREOTYPE__BASE:
-			getBase().clear();
-			return;
-		case EMFProfilePackage.STEREOTYPE__ICON_PATH:
-			setIconPath(ICON_PATH_EDEFAULT);
-			return;
-		case EMFProfilePackage.STEREOTYPE__META_BASE:
-			setMetaBase(META_BASE_EDEFAULT);
-			return;
-		case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
-			setLowerBound(LOWER_BOUND_EDEFAULT);
-			return;
-		case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
-			setUpperBound(UPPER_BOUND_EDEFAULT);
-			return;
+			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
+				setIconPath(ICON_PATH_EDEFAULT);
+				return;
+			case EMFProfilePackage.STEREOTYPE__META_BASE:
+				setMetaBase(META_BASE_EDEFAULT);
+				return;
+			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+				getExtensions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case EMFProfilePackage.STEREOTYPE__BASE:
-			return base != null && !base.isEmpty();
-		case EMFProfilePackage.STEREOTYPE__ICON_PATH:
-			return ICON_PATH_EDEFAULT == null ? iconPath != null
-					: !ICON_PATH_EDEFAULT.equals(iconPath);
-		case EMFProfilePackage.STEREOTYPE__META_BASE:
-			return metaBase != META_BASE_EDEFAULT;
-		case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
-			return lowerBound != LOWER_BOUND_EDEFAULT;
-		case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
-			return upperBound != UPPER_BOUND_EDEFAULT;
+			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
+				return ICON_PATH_EDEFAULT == null ? iconPath != null : !ICON_PATH_EDEFAULT.equals(iconPath);
+			case EMFProfilePackage.STEREOTYPE__META_BASE:
+				return metaBase != META_BASE_EDEFAULT;
+			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+				return extensions != null && !extensions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (iconPath: ");
 		result.append(iconPath);
 		result.append(", metaBase: ");
 		result.append(metaBase);
-		result.append(", lowerBound: ");
-		result.append(lowerBound);
-		result.append(", upperBound: ");
-		result.append(upperBound);
 		result.append(')');
 		return result.toString();
 	}

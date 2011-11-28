@@ -9,17 +9,17 @@ package org.modelversioning.emfprofile.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
-import org.modelversioning.emfprofile.*;
+import org.modelversioning.emfprofile.EMFProfilePackage;
+import org.modelversioning.emfprofile.Extension;
+import org.modelversioning.emfprofile.Profile;
+import org.modelversioning.emfprofile.Stereotype;
 
 /**
  * <!-- begin-user-doc -->
@@ -86,6 +86,10 @@ public class EMFProfileAdapterFactory extends AdapterFactoryImpl {
 				return createStereotypeAdapter();
 			}
 			@Override
+			public Adapter caseExtension(Extension object) {
+				return createExtensionAdapter();
+			}
+			@Override
 			public Adapter caseEModelElement(EModelElement object) {
 				return createEModelElementAdapter();
 			}
@@ -150,6 +154,20 @@ public class EMFProfileAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStereotypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.modelversioning.emfprofile.Extension <em>Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.modelversioning.emfprofile.Extension
+	 * @generated
+	 */
+	public Adapter createExtensionAdapter() {
 		return null;
 	}
 

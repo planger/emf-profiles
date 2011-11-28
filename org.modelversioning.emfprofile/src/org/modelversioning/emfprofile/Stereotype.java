@@ -8,7 +8,6 @@
 package org.modelversioning.emfprofile;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
@@ -20,11 +19,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.modelversioning.emfprofile.Stereotype#getBase <em>Base</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#getIconPath <em>Icon Path</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#isMetaBase <em>Meta Base</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.Stereotype#getLowerBound <em>Lower Bound</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.Stereotype#getUpperBound <em>Upper Bound</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#getExtensions <em>Extensions</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,22 +30,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Stereotype extends EClass {
-	/**
-	 * Returns the value of the '<em><b>Base</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecore.EClass}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Base</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base</em>' reference list.
-	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getStereotype_Base()
-	 * @model
-	 * @generated
-	 */
-	EList<EClass> getBase();
-
 	/**
 	 * Returns the value of the '<em><b>Icon Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -101,60 +82,6 @@ public interface Stereotype extends EClass {
 	 * @generated
 	 */
 	void setMetaBase(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Lower Bound</b></em>' attribute.
-	 * The default value is <code>"0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Lower Bound</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Lower Bound</em>' attribute.
-	 * @see #setLowerBound(int)
-	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getStereotype_LowerBound()
-	 * @model default="0"
-	 * @generated
-	 */
-	int getLowerBound();
-
-	/**
-	 * Sets the value of the '{@link org.modelversioning.emfprofile.Stereotype#getLowerBound <em>Lower Bound</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Lower Bound</em>' attribute.
-	 * @see #getLowerBound()
-	 * @generated
-	 */
-	void setLowerBound(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Upper Bound</b></em>' attribute.
-	 * The default value is <code>"-1"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Upper Bound</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Upper Bound</em>' attribute.
-	 * @see #setUpperBound(int)
-	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getStereotype_UpperBound()
-	 * @model default="-1"
-	 * @generated
-	 */
-	int getUpperBound();
-
-	/**
-	 * Sets the value of the '{@link org.modelversioning.emfprofile.Stereotype#getUpperBound <em>Upper Bound</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Upper Bound</em>' attribute.
-	 * @see #getUpperBound()
-	 * @generated
-	 */
-	void setUpperBound(int value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -216,6 +143,20 @@ public interface Stereotype extends EClass {
 	 * @generated
 	 */
 	int getUpperBound(EClass eClass);
+
+	/**
+	 * Returns the value of the '<em><b>Extensions</b></em>' containment reference list.
+	 * The list contents are of type {@link org.modelversioning.emfprofile.Extension}.
+	 * It is bidirectional and its opposite is '{@link org.modelversioning.emfprofile.Extension#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Extensions</em>' containment reference list.
+	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getStereotype_Extensions()
+	 * @see org.modelversioning.emfprofile.Extension#getSource
+	 * @model opposite="source" containment="true"
+	 * @generated
+	 */
+	EList<Extension> getExtensions();
 
 	/**
 	 * Returns a list of all (inherited and direct) base classes.

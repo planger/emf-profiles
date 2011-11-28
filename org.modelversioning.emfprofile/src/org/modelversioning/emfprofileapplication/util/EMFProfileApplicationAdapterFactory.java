@@ -9,12 +9,12 @@ package org.modelversioning.emfprofileapplication.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.modelversioning.emfprofileapplication.*;
+import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
+import org.modelversioning.emfprofileapplication.ProfileApplication;
+import org.modelversioning.emfprofileapplication.ProfileImport;
+import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
  * <!-- begin-user-doc -->

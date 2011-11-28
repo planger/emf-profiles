@@ -25,7 +25,6 @@ import org.modelversioning.emfprofile.diagram.edit.parts.EClassEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EDataTypeEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EEnumEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EPackageContentsEditPart;
-import org.modelversioning.emfprofile.diagram.edit.parts.EPackageEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.ProfileEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeEditPart;
 import org.modelversioning.emfprofile.diagram.part.EMFProfileDiagramEditorPlugin;

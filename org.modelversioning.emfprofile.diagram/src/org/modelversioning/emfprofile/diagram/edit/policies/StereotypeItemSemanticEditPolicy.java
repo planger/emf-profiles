@@ -21,12 +21,12 @@ import org.modelversioning.emfprofile.diagram.edit.commands.EClassESuperTypesCre
 import org.modelversioning.emfprofile.diagram.edit.commands.EClassESuperTypesReorientCommand;
 import org.modelversioning.emfprofile.diagram.edit.commands.EReferenceCreateCommand;
 import org.modelversioning.emfprofile.diagram.edit.commands.EReferenceReorientCommand;
-import org.modelversioning.emfprofile.diagram.edit.commands.StereotypeBaseCreateCommand;
-import org.modelversioning.emfprofile.diagram.edit.commands.StereotypeBaseReorientCommand;
+import org.modelversioning.emfprofile.diagram.edit.commands.ExtensionCreateCommand;
+import org.modelversioning.emfprofile.diagram.edit.commands.ExtensionReorientCommand;
 import org.modelversioning.emfprofile.diagram.edit.parts.EAttributeEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EClassESuperTypesEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.EReferenceEditPart;
-import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeBaseEditPart;
+import org.modelversioning.emfprofile.diagram.edit.parts.ExtensionEditPart;
 import org.modelversioning.emfprofile.diagram.edit.parts.StereotypeTaggedValueCompEditPart;
 import org.modelversioning.emfprofile.diagram.part.EMFProfileVisualIDRegistry;
 import org.modelversioning.emfprofile.diagram.providers.EMFProfileElementTypes;
@@ -54,11 +54,10 @@ public class StereotypeItemSemanticEditPolicy extends
 		cmd.setTransactionNestingEnabled(false);
 		for (Iterator<?> it = view.getTargetEdges().iterator(); it.hasNext();) {
 			Edge incomingLink = (Edge) it.next();
-			if (EMFProfileVisualIDRegistry.getVisualID(incomingLink) == StereotypeBaseEditPart.VISUAL_ID) {
-				DestroyReferenceRequest r = new DestroyReferenceRequest(
-						incomingLink.getSource().getElement(), null,
-						incomingLink.getTarget().getElement(), false);
-				cmd.add(new DestroyReferenceCommand(r));
+			if (EMFProfileVisualIDRegistry.getVisualID(incomingLink) == ExtensionEditPart.VISUAL_ID) {
+				DestroyElementRequest r = new DestroyElementRequest(
+						incomingLink.getElement(), false);
+				cmd.add(new DestroyElementCommand(r));
 				cmd.add(new DeleteCommand(getEditingDomain(), incomingLink));
 				continue;
 			}
@@ -80,11 +79,10 @@ public class StereotypeItemSemanticEditPolicy extends
 		}
 		for (Iterator<?> it = view.getSourceEdges().iterator(); it.hasNext();) {
 			Edge outgoingLink = (Edge) it.next();
-			if (EMFProfileVisualIDRegistry.getVisualID(outgoingLink) == StereotypeBaseEditPart.VISUAL_ID) {
-				DestroyReferenceRequest r = new DestroyReferenceRequest(
-						outgoingLink.getSource().getElement(), null,
-						outgoingLink.getTarget().getElement(), false);
-				cmd.add(new DestroyReferenceCommand(r));
+			if (EMFProfileVisualIDRegistry.getVisualID(outgoingLink) == ExtensionEditPart.VISUAL_ID) {
+				DestroyElementRequest r = new DestroyElementRequest(
+						outgoingLink.getElement(), false);
+				cmd.add(new DestroyElementCommand(r));
 				cmd.add(new DeleteCommand(getEditingDomain(), outgoingLink));
 				continue;
 			}
@@ -159,8 +157,8 @@ public class StereotypeItemSemanticEditPolicy extends
 	 */
 	protected Command getStartCreateRelationshipCommand(
 			CreateRelationshipRequest req) {
-		if (EMFProfileElementTypes.StereotypeBase_4001 == req.getElementType()) {
-			return getGEFWrapper(new StereotypeBaseCreateCommand(req,
+		if (EMFProfileElementTypes.Extension_4004 == req.getElementType()) {
+			return getGEFWrapper(new ExtensionCreateCommand(req,
 					req.getSource(), req.getTarget()));
 		}
 		if (EMFProfileElementTypes.EClassESuperTypes_4002 == req
@@ -180,8 +178,8 @@ public class StereotypeItemSemanticEditPolicy extends
 	 */
 	protected Command getCompleteCreateRelationshipCommand(
 			CreateRelationshipRequest req) {
-		if (EMFProfileElementTypes.StereotypeBase_4001 == req.getElementType()) {
-			return getGEFWrapper(new StereotypeBaseCreateCommand(req,
+		if (EMFProfileElementTypes.Extension_4004 == req.getElementType()) {
+			return getGEFWrapper(new ExtensionCreateCommand(req,
 					req.getSource(), req.getTarget()));
 		}
 		if (EMFProfileElementTypes.EClassESuperTypes_4002 == req
@@ -205,6 +203,8 @@ public class StereotypeItemSemanticEditPolicy extends
 	protected Command getReorientRelationshipCommand(
 			ReorientRelationshipRequest req) {
 		switch (getVisualID(req)) {
+		case ExtensionEditPart.VISUAL_ID:
+			return getGEFWrapper(new ExtensionReorientCommand(req));
 		case EReferenceEditPart.VISUAL_ID:
 			return getGEFWrapper(new EReferenceReorientCommand(req));
 		}
@@ -220,8 +220,6 @@ public class StereotypeItemSemanticEditPolicy extends
 	protected Command getReorientReferenceRelationshipCommand(
 			ReorientReferenceRelationshipRequest req) {
 		switch (getVisualID(req)) {
-		case StereotypeBaseEditPart.VISUAL_ID:
-			return getGEFWrapper(new StereotypeBaseReorientCommand(req));
 		case EClassESuperTypesEditPart.VISUAL_ID:
 			return getGEFWrapper(new EClassESuperTypesReorientCommand(req));
 		}

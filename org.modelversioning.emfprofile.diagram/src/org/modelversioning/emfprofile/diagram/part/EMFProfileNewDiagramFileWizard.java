@@ -135,8 +135,6 @@ public class EMFProfileNewDiagramFileWizard extends Wizard {
 						EMFProfileDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 				diagramResource.getContents().add(diagram);
 				diagramResource.getContents().add(diagram.getElement());
-				new EMFProfileDiagramContentInitializer()
-						.initDiagramContent(diagram);
 				return CommandResult.newOKCommandResult();
 			}
 		};

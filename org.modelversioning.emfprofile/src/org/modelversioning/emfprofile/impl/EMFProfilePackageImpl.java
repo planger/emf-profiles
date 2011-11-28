@@ -13,11 +13,10 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.modelversioning.emfprofile.EMFProfileFactory;
 import org.modelversioning.emfprofile.EMFProfilePackage;
+import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
 
@@ -41,6 +40,13 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * @generated
 	 */
 	private EClass stereotypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass extensionEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -138,17 +144,8 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getStereotype_Base() {
-		return (EReference)stereotypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getStereotype_IconPath() {
-		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -157,7 +154,7 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * @generated
 	 */
 	public EAttribute getStereotype_MetaBase() {
-		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -165,8 +162,8 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getStereotype_LowerBound() {
-		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(3);
+	public EReference getStereotype_Extensions() {
+		return (EReference)stereotypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -174,8 +171,44 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getStereotype_UpperBound() {
-		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(4);
+	public EClass getExtension() {
+		return extensionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getExtension_Source() {
+		return (EReference)extensionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getExtension_Target() {
+		return (EReference)extensionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExtension_LowerBound() {
+		return (EAttribute)extensionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExtension_UpperBound() {
+		return (EAttribute)extensionEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -210,11 +243,15 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		createEReference(profileEClass, PROFILE__BASE);
 
 		stereotypeEClass = createEClass(STEREOTYPE);
-		createEReference(stereotypeEClass, STEREOTYPE__BASE);
 		createEAttribute(stereotypeEClass, STEREOTYPE__ICON_PATH);
 		createEAttribute(stereotypeEClass, STEREOTYPE__META_BASE);
-		createEAttribute(stereotypeEClass, STEREOTYPE__LOWER_BOUND);
-		createEAttribute(stereotypeEClass, STEREOTYPE__UPPER_BOUND);
+		createEReference(stereotypeEClass, STEREOTYPE__EXTENSIONS);
+
+		extensionEClass = createEClass(EXTENSION);
+		createEReference(extensionEClass, EXTENSION__SOURCE);
+		createEReference(extensionEClass, EXTENSION__TARGET);
+		createEAttribute(extensionEClass, EXTENSION__LOWER_BOUND);
+		createEAttribute(extensionEClass, EXTENSION__UPPER_BOUND);
 	}
 
 	/**
@@ -267,11 +304,9 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		addEParameter(op, ecorePackage.getEString(), "stereotypeName", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(stereotypeEClass, Stereotype.class, "Stereotype", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getStereotype_Base(), theEcorePackage.getEClass(), null, "base", null, 0, -1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStereotype_IconPath(), ecorePackage.getEString(), "iconPath", null, 0, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStereotype_MetaBase(), theEcorePackage.getEBoolean(), "metaBase", "false", 1, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStereotype_LowerBound(), ecorePackage.getEInt(), "lowerBound", "0", 0, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStereotype_UpperBound(), ecorePackage.getEInt(), "upperBound", "-1", 0, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStereotype_Extensions(), this.getExtension(), this.getExtension_Source(), "extensions", null, 0, -1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(stereotypeEClass, ecorePackage.getEBoolean(), "isApplicable", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -290,6 +325,12 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 
 		op = addEOperation(stereotypeEClass, ecorePackage.getEInt(), "getUpperBound", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(extensionEClass, Extension.class, "Extension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getExtension_Source(), this.getStereotype(), this.getStereotype_Extensions(), "source", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getExtension_Target(), theEcorePackage.getEClass(), null, "target", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getExtension_LowerBound(), ecorePackage.getEInt(), "lowerBound", "0", 0, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getExtension_UpperBound(), ecorePackage.getEInt(), "upperBound", "-1", 0, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -45,6 +45,15 @@ public interface EMFProfileFactory extends EFactory {
 	Stereotype createStereotype();
 
 	/**
+	 * Returns a new object of class '<em>Extension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Extension</em>'.
+	 * @generated
+	 */
+	Extension createExtension();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

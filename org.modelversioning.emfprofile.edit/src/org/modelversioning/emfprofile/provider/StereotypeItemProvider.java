@@ -16,6 +16,8 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.provider.EClassItemProvider;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -28,6 +30,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.modelversioning.emfprofile.EMFProfileFactory;
 import org.modelversioning.emfprofile.EMFProfilePackage;
 import org.modelversioning.emfprofile.Stereotype;
 
@@ -66,35 +69,10 @@ public class StereotypeItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addBasePropertyDescriptor(object);
 			addIconPathPropertyDescriptor(object);
 			addMetaBasePropertyDescriptor(object);
-			addLowerBoundPropertyDescriptor(object);
-			addUpperBoundPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Base feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addBasePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Stereotype_base_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Stereotype_base_feature", "_UI_Stereotype_type"),
-				 EMFProfilePackage.Literals.STEREOTYPE__BASE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -142,47 +120,33 @@ public class StereotypeItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Lower Bound feature.
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLowerBoundPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Stereotype_lowerBound_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Stereotype_lowerBound_feature", "_UI_Stereotype_type"),
-				 EMFProfilePackage.Literals.STEREOTYPE__LOWER_BOUND,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(EMFProfilePackage.Literals.STEREOTYPE__EXTENSIONS);
+		}
+		return childrenFeatures;
 	}
 
 	/**
-	 * This adds a property descriptor for the Upper Bound feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addUpperBoundPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Stereotype_upperBound_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Stereotype_upperBound_feature", "_UI_Stereotype_type"),
-				 EMFProfilePackage.Literals.STEREOTYPE__UPPER_BOUND,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
 	}
 
 	/**
@@ -224,9 +188,10 @@ public class StereotypeItemProvider
 		switch (notification.getFeatureID(Stereotype.class)) {
 			case EMFProfilePackage.STEREOTYPE__ICON_PATH:
 			case EMFProfilePackage.STEREOTYPE__META_BASE:
-			case EMFProfilePackage.STEREOTYPE__LOWER_BOUND:
-			case EMFProfilePackage.STEREOTYPE__UPPER_BOUND:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case EMFProfilePackage.STEREOTYPE__EXTENSIONS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -242,6 +207,11 @@ public class StereotypeItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EMFProfilePackage.Literals.STEREOTYPE__EXTENSIONS,
+				 EMFProfileFactory.eINSTANCE.createExtension()));
 	}
 
 	/**

@@ -36,6 +36,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientReferenceRelations
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.eclipse.gmf.runtime.notation.View;
+import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofile.diagram.edit.helpers.EMFProfileBaseEditHelper;
 import org.modelversioning.emfprofile.diagram.expressions.EMFProfileOCLFactory;
@@ -330,15 +331,9 @@ public class EMFProfileBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
-		public boolean canCreateStereotypeBase_4001(Stereotype source,
-				EClass target) {
-			if (source != null) {
-				if (source.getBase().contains(target)) {
-					return false;
-				}
-			}
-
-			return canExistStereotypeBase_4001(source, target);
+		public boolean canCreateExtension_4004(Stereotype container,
+				Stereotype source, EClass target) {
+			return canExistExtension_4004(container, null, source, target);
 		}
 
 		/**
@@ -366,8 +361,8 @@ public class EMFProfileBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
-		public boolean canExistStereotypeBase_4001(Stereotype source,
-				EClass target) {
+		public boolean canExistExtension_4004(Stereotype container,
+				Extension linkInstance, Stereotype source, EClass target) {
 			return true;
 		}
 
