@@ -45,6 +45,8 @@
       <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getUpperBound">
         <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getUpperBound/eClass"/>
       </genOperations>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getAllExtensibleClasses"/>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getExtensibleClasses"/>
     </genClasses>
     <genClasses ecoreClass="emfprofiles.ecore#//Extension">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/source"/>
