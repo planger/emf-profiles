@@ -167,9 +167,11 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 		if (this.isAbstract()) {
 			return false;
 		}
-		EList<EClass> allBaseClasses = getAllExtensibleClasses();
-		for (EClass baseClass : allBaseClasses) {
+		EList<EClass> allExtensibleClasses = getAllExtensibleClasses();
+		for (EClass baseClass : allExtensibleClasses) {
 			if (!metaBase) {
+				// FIXME why name check and not equals?
+				// FIXME support super types of eClass
 				if (baseClass.getName().equals(eClass.getName())
 						&& baseClass.getEPackage().getNsURI()
 								.equals(eClass.getEPackage().getNsURI())) {
@@ -258,6 +260,8 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	/**
 	 * Returns the direct or indirect {@link Extension} of this stereotype
 	 * having the specified <code>eClass</code> as target.
+	 * 
+	 * FIXME support super types of eClass
 	 * 
 	 * @param eClass
 	 *            to search extension for.
