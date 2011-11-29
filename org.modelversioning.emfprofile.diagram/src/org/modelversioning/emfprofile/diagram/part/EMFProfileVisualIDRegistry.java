@@ -133,7 +133,8 @@ public class EMFProfileVisualIDRegistry {
 		}
 		String containerModelID = org.modelversioning.emfprofile.diagram.part.EMFProfileVisualIDRegistry
 				.getModelID(containerView);
-		if (!ProfileEditPart.MODEL_ID.equals(containerModelID)) {
+		if (!ProfileEditPart.MODEL_ID.equals(containerModelID)
+				&& !"ecore".equals(containerModelID)) { //$NON-NLS-1$
 			return -1;
 		}
 		int containerVisualID;
@@ -223,7 +224,8 @@ public class EMFProfileVisualIDRegistry {
 	public static boolean canCreateNode(View containerView, int nodeVisualID) {
 		String containerModelID = org.modelversioning.emfprofile.diagram.part.EMFProfileVisualIDRegistry
 				.getModelID(containerView);
-		if (!ProfileEditPart.MODEL_ID.equals(containerModelID)) {
+		if (!ProfileEditPart.MODEL_ID.equals(containerModelID)
+				&& !"ecore".equals(containerModelID)) { //$NON-NLS-1$
 			return false;
 		}
 		int containerVisualID;

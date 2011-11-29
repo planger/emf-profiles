@@ -56,6 +56,14 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static boolean isShortcutOrphaned(View view) {
+		return !view.isSetElement() || view.getElement() == null
+				|| view.getElement().eIsProxy();
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<EMFProfileNodeDescriptor> getSemanticChildren(View view) {
 		switch (EMFProfileVisualIDRegistry.getVisualID(view)) {
 		case ProfileEditPart.VISUAL_ID:

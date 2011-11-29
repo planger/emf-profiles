@@ -68,8 +68,6 @@ public class EClassOperations2EditPart extends ListCompartmentEditPart {
 				new CreationEditPolicy());
 		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
 				new DragDropEditPolicy());
-		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-				new EClassOperations2CanonicalEditPolicy());
 	}
 
 	/**

@@ -44,15 +44,11 @@
   	  <wizard
   	     name="%newWizardName"
   	     icon="icons/obj16/EMFProfileDiagramFile.gif"
-  	     category="org.modelversioning.emfprofile.diagram.category1"
+  	     category="org.eclipse.ui.Examples"
   	     class="org.modelversioning.emfprofile.diagram.part.EMFProfileCreationWizard"
   	     id="org.modelversioning.emfprofile.diagram.part.EMFProfileCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
       </wizard>
-     <category
-           id="org.modelversioning.emfprofile.diagram.category1"
-           name="EMF Profile">
-     </category>
    </extension>
 
       <extension point="org.eclipse.ui.actionSets" id="init-diagram-action">
@@ -579,8 +575,7 @@
    <extension point="org.eclipse.ui.handlers" id="menu-handlers">
       <?gmfgen generated="true"?>
    </extension>
-   
-   <extension point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders" id="decorator-provider">
+<extension point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders" id="decorator-provider">
       <?gmfgen generated="true"?>
       <decoratorProvider class="org.modelversioning.emfprofile.diagram.providers.EMFProfileShortcutsDecoratorProvider">
          <Priority name="Lowest"/>
@@ -591,5 +586,7 @@
       </decoratorProvider>
    </extension>
 
+   
+   
    <!-- optionally, specify keybindings -->
 </plugin>
