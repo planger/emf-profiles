@@ -247,6 +247,18 @@ public interface IProfileFacade {
 	 * @return the list of {@link StereotypeApplication}s.
 	 */
 	EList<StereotypeApplication> getAppliedStereotypes(EObject eObject);
+	
+	/**
+	 * Specifies whether the <code>stereotype</code> is applicable to
+	 * <code>eObject</code>.
+	 * 
+	 * @param stereotype
+	 *            to check.
+	 * @param eObject
+	 *            to check.
+	 * @return <code>true</code> if applicable, otherwise <code>false</code>.
+	 */
+	boolean isApplicable(Stereotype stereotype, EObject eObject);
 
 	/**
 	 * Returns the list of {@link EStructuralFeature}s that can be set for the

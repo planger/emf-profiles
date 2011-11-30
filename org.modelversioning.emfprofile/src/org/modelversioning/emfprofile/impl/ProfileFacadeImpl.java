@@ -239,15 +239,9 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	}
 
 	/**
-	 * Specifies whether the <code>stereotype</code> is applicable to
-	 * <code>eObject</code>.
-	 * 
-	 * @param stereotype
-	 *            to check.
-	 * @param eObject
-	 *            to check.
-	 * @return <code>true</code> if applicable, otherwise <code>false</code>.
+	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean isApplicable(Stereotype stereotype, EObject eObject) {
 		return stereotype.isApplicable(eObject,
 				cast(getAppliedStereotypes(eObject)));
