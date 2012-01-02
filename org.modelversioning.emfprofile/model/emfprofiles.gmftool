@@ -7,7 +7,7 @@
       title="emfprofilePalette">
     <tools
         xsi:type="gmftool:ToolGroup"
-        title="EMFprofile"
+        title="EMF Profiles"
         collapsible="true">
       <tools
           xsi:type="gmftool:CreationTool"
@@ -15,11 +15,12 @@
           description="Create new Stereotype"/>
       <tools
           xsi:type="gmftool:CreationTool"
-          title="Tagged Value"/>
+          title="Tagged Value"
+          description="Add a new tagged value to a stereotype"/>
       <tools
           xsi:type="gmftool:CreationTool"
           title="Extension"
-          description="Create new Extension Relationship"/>
+          description="Create new extension relationship"/>
     </tools>
     <tools
         xsi:type="gmftool:ToolGroup"
