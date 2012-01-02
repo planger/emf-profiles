@@ -267,7 +267,7 @@
 
    <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypes" id="element-types">
       <?gmfgen generated="true"?>
-      <metamodel nsURI="http://www.modelversioning.org/emfprofile/1.0">
+      <metamodel nsURI="http://www.modelversioning.org/emfprofile/1.1">
          <metamodelType
                id="org.modelversioning.emfprofile.diagram.Profile_1000"
                name="%metatype.name.Profile_1000"
@@ -277,7 +277,7 @@
             <param name="semanticHint" value="1000"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://www.modelversioning.org/emfprofile/1.0">
+      <metamodel nsURI="http://www.modelversioning.org/emfprofile/1.1">
          <metamodelType
                id="org.modelversioning.emfprofile.diagram.Stereotype_2001"
                name="%metatype.name.Stereotype_2001"
@@ -375,7 +375,7 @@
             <param name="semanticHint" value="3003"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://www.modelversioning.org/emfprofile/1.0">
+      <metamodel nsURI="http://www.modelversioning.org/emfprofile/1.1">
          <metamodelType
                id="org.modelversioning.emfprofile.diagram.Extension_4004"
                name="%metatype.name.Extension_4004"
