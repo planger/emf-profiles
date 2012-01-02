@@ -13,7 +13,7 @@
 
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
-            uri="http://www.modelversioning.org/emfprofile/1.0"
+            uri="http://www.modelversioning.org/emfprofile/1.1"
             class="org.modelversioning.emfprofile.provider.EMFProfileItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
