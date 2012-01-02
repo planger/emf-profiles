@@ -53,7 +53,7 @@ public class ExtensionLowerBoundUpperBoundEditPart extends LabelEditPart
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 6003;
+	public static final int VISUAL_ID = 6004;
 
 	/**
 	 * @generated
@@ -310,7 +310,7 @@ public class ExtensionLowerBoundUpperBoundEditPart extends LabelEditPart
 		if (parser == null) {
 			parser = EMFProfileParserProvider
 					.getParser(
-							EMFProfileElementTypes.Extension_4004,
+							EMFProfileElementTypes.Extension_4005,
 							getParserElement(),
 							EMFProfileVisualIDRegistry
 									.getType(org.modelversioning.emfprofile.diagram.edit.parts.ExtensionLowerBoundUpperBoundEditPart.VISUAL_ID));

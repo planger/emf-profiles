@@ -15,7 +15,7 @@ public class StereotypeTaggedValueCompItemSemanticEditPolicy extends
 	 * @generated
 	 */
 	public StereotypeTaggedValueCompItemSemanticEditPolicy() {
-		super(EMFProfileElementTypes.Stereotype_2001);
+		super(EMFProfileElementTypes.Stereotype_2006);
 	}
 
 	/**

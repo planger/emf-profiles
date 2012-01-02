@@ -30,7 +30,7 @@ public class ProfileItemSemanticEditPolicy extends
 	 * @generated
 	 */
 	protected Command getCreateCommand(CreateElementRequest req) {
-		if (EMFProfileElementTypes.Stereotype_2001 == req.getElementType()) {
+		if (EMFProfileElementTypes.Stereotype_2006 == req.getElementType()) {
 			return getGEFWrapper(new StereotypeCreateCommand(req));
 		}
 		if (EMFProfileElementTypes.EClass_2002 == req.getElementType()) {

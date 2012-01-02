@@ -255,7 +255,7 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 		}
 		switch (visualID) {
 		case StereotypeEditPart.VISUAL_ID:
-			return createStereotype_2001(domainElement, containerView, index,
+			return createStereotype_2006(domainElement, containerView, index,
 					persisted, preferencesHint);
 		case EClassEditPart.VISUAL_ID:
 			return createEClass_2002(domainElement, containerView, index,
@@ -299,7 +299,7 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 		String elementTypeHint = ((IHintedType) elementType).getSemanticHint();
 		switch (EMFProfileVisualIDRegistry.getVisualID(elementTypeHint)) {
 		case ExtensionEditPart.VISUAL_ID:
-			return createExtension_4004(getSemanticElement(semanticAdapter),
+			return createExtension_4005(getSemanticElement(semanticAdapter),
 					containerView, index, persisted, preferencesHint);
 		case EClassESuperTypesEditPart.VISUAL_ID:
 			return createEClassESuperTypes_4002(containerView, index,
@@ -315,7 +315,7 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	public Node createStereotype_2001(EObject domainElement,
+	public Node createStereotype_2006(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Node node = NotationFactory.eINSTANCE.createNode();
@@ -345,7 +345,7 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		Node label5001 = createLabel(node,
+		Node label5008 = createLabel(node,
 				EMFProfileVisualIDRegistry
 						.getType(StereotypeNameEditPart.VISUAL_ID));
 		createCompartment(node,
@@ -641,7 +641,7 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	public Edge createExtension_4004(EObject domainElement, View containerView,
+	public Edge createExtension_4005(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
 		Edge edge = NotationFactory.eINSTANCE.createEdge();
 		edge.getStyles().add(NotationFactory.eINSTANCE.createRoutingStyle());
@@ -682,15 +682,15 @@ public class EMFProfileViewProvider extends AbstractProvider implements
 					NotationPackage.eINSTANCE.getRoutingStyle_Routing(),
 					routing);
 		}
-		Node label6003 = createLabel(
+		Node label6004 = createLabel(
 				edge,
 				EMFProfileVisualIDRegistry
 						.getType(ExtensionLowerBoundUpperBoundEditPart.VISUAL_ID));
-		label6003.setLayoutConstraint(NotationFactory.eINSTANCE
+		label6004.setLayoutConstraint(NotationFactory.eINSTANCE
 				.createLocation());
-		Location location6003 = (Location) label6003.getLayoutConstraint();
-		location6003.setX(10);
-		location6003.setY(10);
+		Location location6004 = (Location) label6004.getLayoutConstraint();
+		location6004.setX(10);
+		location6004.setY(10);
 		return edge;
 	}
 

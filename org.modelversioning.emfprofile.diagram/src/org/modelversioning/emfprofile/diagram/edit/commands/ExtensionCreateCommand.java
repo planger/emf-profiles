@@ -69,7 +69,7 @@ public class ExtensionCreateCommand extends EditElementCommand {
 			return false;
 		}
 		return EMFProfileBaseItemSemanticEditPolicy.getLinkConstraints()
-				.canCreateExtension_4004(getContainer(), getSource(),
+				.canCreateExtension_4005(getContainer(), getSource(),
 						getTarget());
 	}
 

@@ -272,7 +272,7 @@ public class EDataTypeEditPart extends ShapeNodeEditPart {
 	public List<IElementType> getMATypesForSource(IElementType relationshipType) {
 		LinkedList<IElementType> types = new LinkedList<IElementType>();
 		if (relationshipType == EMFProfileElementTypes.EReference_4003) {
-			types.add(EMFProfileElementTypes.Stereotype_2001);
+			types.add(EMFProfileElementTypes.Stereotype_2006);
 			types.add(EMFProfileElementTypes.EClass_2002);
 			types.add(EMFProfileElementTypes.EClass_3002);
 		}

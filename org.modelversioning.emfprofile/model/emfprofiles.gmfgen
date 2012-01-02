@@ -221,10 +221,9 @@
       </labelModelFacet>
     </childNodes>
     <topLevelNodes
-        visualID="2001"
+        visualID="2006"
         editPartClassName="StereotypeEditPart"
         itemSemanticEditPolicyClassName="StereotypeItemSemanticEditPolicy"
-        notationViewFactoryClassName="StereotypeViewFactory"
         canonicalEditPolicyClassName="StereotypeCanonicalEditPolicy"
         compartments="//@diagram/@compartments.0"
         graphicalNodeEditPolicyClassName="StereotypeGraphicalNodeEditPolicy"
@@ -252,10 +251,9 @@
             href="../../../plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore/EPackage/eClassifiers"/>
       </modelFacet>
       <labels
-          visualID="5001"
+          visualID="5008"
           editPartClassName="StereotypeNameEditPart"
           itemSemanticEditPolicyClassName="StereotypeNameItemSemanticEditPolicy"
-          notationViewFactoryClassName="StereotypeNameViewFactory"
           elementIcon="true">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
@@ -501,10 +499,9 @@
       </labels>
     </topLevelNodes>
     <links
-        visualID="4004"
+        visualID="4005"
         editPartClassName="ExtensionEditPart"
         itemSemanticEditPolicyClassName="ExtensionItemSemanticEditPolicy"
-        notationViewFactoryClassName="ExtensionViewFactory"
         createCommandClassName="ExtensionCreateCommand"
         reorientCommandClassName="ExtensionReorientCommand">
       <diagramRunTimeClass
@@ -534,10 +531,9 @@
             href="emfprofiles.genmodel#//emfprofile/Extension/target"/>
       </modelFacet>
       <labels
-          visualID="6003"
+          visualID="6004"
           editPartClassName="ExtensionLowerBoundUpperBoundEditPart"
           itemSemanticEditPolicyClassName="ExtensionLowerBoundUpperBoundItemSemanticEditPolicy"
-          notationViewFactoryClassName="ExtensionLowerBoundUpperBoundViewFactory"
           alignment="SOURCE">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
@@ -673,10 +669,9 @@
           targetEnd="//@expressionProviders/@providers.0/@expressions.2"/>
     </links>
     <compartments
-        visualID="7001"
+        visualID="7008"
         editPartClassName="StereotypeTaggedValueCompEditPart"
         itemSemanticEditPolicyClassName="StereotypeTaggedValueCompItemSemanticEditPolicy"
-        notationViewFactoryClassName="StereotypeTaggedValueCompViewFactory"
         canonicalEditPolicyClassName="StereotypeTaggedValueCompCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.0"
         title="TaggedValueComp"
@@ -824,7 +819,7 @@
     </compartments>
     <palette>
       <groups
-          title="EMFprofile"
+          title="EMF Profiles"
           collapse="true">
         <entries
             xsi:type="gmfgen:ToolEntry"
@@ -834,11 +829,12 @@
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Tagged Value"
+            description="Add a new tagged value to a stereotype"
             genNodes="//@diagram/@childNodes.0"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Extension"
-            description="Create new Extension Relationship"
+            description="Create new extension relationship"
             genLinks="//@diagram/@links.0"/>
       </groups>
       <groups

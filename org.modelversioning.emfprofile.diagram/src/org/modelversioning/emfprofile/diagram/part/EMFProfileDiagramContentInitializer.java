@@ -83,11 +83,11 @@ public class EMFProfileDiagramContentInitializer {
 	/**
 	 * @generated
 	 */
-	private void createStereotype_2001Children(View view) {
+	private void createStereotype_2006Children(View view) {
 		myDomain2NotationMap.put(view.getElement(), view);
 		myLinkDescriptors.addAll(EMFProfileDiagramUpdater
-				.getStereotype_2001OutgoingLinks(view));
-		createStereotypeTaggedValueComp_7001Children(getCompartment(view,
+				.getStereotype_2006OutgoingLinks(view));
+		createStereotypeTaggedValueComp_7008Children(getCompartment(view,
 				StereotypeTaggedValueCompEditPart.VISUAL_ID));
 
 	}
@@ -197,9 +197,9 @@ public class EMFProfileDiagramContentInitializer {
 	/**
 	 * @generated
 	 */
-	private void createStereotypeTaggedValueComp_7001Children(View view) {
+	private void createStereotypeTaggedValueComp_7008Children(View view) {
 		Collection childNodeDescriptors = EMFProfileDiagramUpdater
-				.getStereotypeTaggedValueComp_7001SemanticChildren(view);
+				.getStereotypeTaggedValueComp_7008SemanticChildren(view);
 		for (Iterator it = childNodeDescriptors.iterator(); it.hasNext();) {
 			createNode(view, (EMFProfileNodeDescriptor) it.next());
 		}
@@ -283,7 +283,7 @@ public class EMFProfileDiagramContentInitializer {
 				EMFProfileDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 		switch (nodeDescriptor.getVisualID()) {
 		case StereotypeEditPart.VISUAL_ID:
-			createStereotype_2001Children(node);
+			createStereotype_2006Children(node);
 			return;
 		case EClassEditPart.VISUAL_ID:
 			createEClass_2002Children(node);
@@ -351,7 +351,7 @@ public class EMFProfileDiagramContentInitializer {
 					switch (nextLinkDescriptor.getVisualID()) {
 					case ExtensionEditPart.VISUAL_ID:
 						additionalDescriptors.addAll(EMFProfileDiagramUpdater
-								.getExtension_4004OutgoingLinks(edge));
+								.getExtension_4005OutgoingLinks(edge));
 						break;
 					case EReferenceEditPart.VISUAL_ID:
 						additionalDescriptors.addAll(EMFProfileDiagramUpdater

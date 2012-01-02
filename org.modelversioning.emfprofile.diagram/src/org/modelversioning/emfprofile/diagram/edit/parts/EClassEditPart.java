@@ -313,11 +313,11 @@ public class EClassEditPart extends ShapeNodeEditPart {
 	public List<IElementType> getMATypesForTarget(IElementType relationshipType) {
 		LinkedList<IElementType> types = new LinkedList<IElementType>();
 		if (relationshipType == EMFProfileElementTypes.EClassESuperTypes_4002) {
-			types.add(EMFProfileElementTypes.Stereotype_2001);
+			types.add(EMFProfileElementTypes.Stereotype_2006);
 			types.add(EMFProfileElementTypes.EClass_2002);
 			types.add(EMFProfileElementTypes.EClass_3002);
 		} else if (relationshipType == EMFProfileElementTypes.EReference_4003) {
-			types.add(EMFProfileElementTypes.Stereotype_2001);
+			types.add(EMFProfileElementTypes.Stereotype_2006);
 			types.add(EMFProfileElementTypes.EClass_2002);
 			types.add(EMFProfileElementTypes.EEnum_2004);
 			types.add(EMFProfileElementTypes.EDataType_2005);
@@ -331,7 +331,7 @@ public class EClassEditPart extends ShapeNodeEditPart {
 	 */
 	public List<IElementType> getMARelTypesOnTarget() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(3);
-		types.add(EMFProfileElementTypes.Extension_4004);
+		types.add(EMFProfileElementTypes.Extension_4005);
 		types.add(EMFProfileElementTypes.EClassESuperTypes_4002);
 		types.add(EMFProfileElementTypes.EReference_4003);
 		return types;
@@ -342,14 +342,14 @@ public class EClassEditPart extends ShapeNodeEditPart {
 	 */
 	public List<IElementType> getMATypesForSource(IElementType relationshipType) {
 		LinkedList<IElementType> types = new LinkedList<IElementType>();
-		if (relationshipType == EMFProfileElementTypes.Extension_4004) {
-			types.add(EMFProfileElementTypes.Stereotype_2001);
+		if (relationshipType == EMFProfileElementTypes.Extension_4005) {
+			types.add(EMFProfileElementTypes.Stereotype_2006);
 		} else if (relationshipType == EMFProfileElementTypes.EClassESuperTypes_4002) {
-			types.add(EMFProfileElementTypes.Stereotype_2001);
+			types.add(EMFProfileElementTypes.Stereotype_2006);
 			types.add(EMFProfileElementTypes.EClass_2002);
 			types.add(EMFProfileElementTypes.EClass_3002);
 		} else if (relationshipType == EMFProfileElementTypes.EReference_4003) {
-			types.add(EMFProfileElementTypes.Stereotype_2001);
+			types.add(EMFProfileElementTypes.Stereotype_2006);
 			types.add(EMFProfileElementTypes.EClass_2002);
 			types.add(EMFProfileElementTypes.EClass_3002);
 		}

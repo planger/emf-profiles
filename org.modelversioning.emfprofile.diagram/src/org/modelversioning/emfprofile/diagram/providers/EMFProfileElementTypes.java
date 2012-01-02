@@ -66,7 +66,8 @@ public class EMFProfileElementTypes {
 	/**
 	 * @generated
 	 */
-	public static final IElementType Stereotype_2001 = getElementType("org.modelversioning.emfprofile.diagram.Stereotype_2001"); //$NON-NLS-1$
+	public static final IElementType Stereotype_2006 = getElementType("org.modelversioning.emfprofile.diagram.Stereotype_2006"); //$NON-NLS-1$
+
 	/**
 	 * @generated
 	 */
@@ -106,7 +107,7 @@ public class EMFProfileElementTypes {
 	/**
 	 * @generated
 	 */
-	public static final IElementType Extension_4004 = getElementType("org.modelversioning.emfprofile.diagram.Extension_4004"); //$NON-NLS-1$
+	public static final IElementType Extension_4005 = getElementType("org.modelversioning.emfprofile.diagram.Extension_4005"); //$NON-NLS-1$
 
 	/**
 	 * @generated
@@ -230,7 +231,7 @@ public class EMFProfileElementTypes {
 
 			elements.put(Profile_1000, EMFProfilePackage.eINSTANCE.getProfile());
 
-			elements.put(Stereotype_2001,
+			elements.put(Stereotype_2006,
 					EMFProfilePackage.eINSTANCE.getStereotype());
 
 			elements.put(EClass_2002, EcorePackage.eINSTANCE.getEClass());
@@ -255,7 +256,7 @@ public class EMFProfileElementTypes {
 			elements.put(EEnumLiteral_3003,
 					EcorePackage.eINSTANCE.getEEnumLiteral());
 
-			elements.put(Extension_4004,
+			elements.put(Extension_4005,
 					EMFProfilePackage.eINSTANCE.getExtension());
 
 			elements.put(EClassESuperTypes_4002,
@@ -281,7 +282,7 @@ public class EMFProfileElementTypes {
 		if (KNOWN_ELEMENT_TYPES == null) {
 			KNOWN_ELEMENT_TYPES = new HashSet<IElementType>();
 			KNOWN_ELEMENT_TYPES.add(Profile_1000);
-			KNOWN_ELEMENT_TYPES.add(Stereotype_2001);
+			KNOWN_ELEMENT_TYPES.add(Stereotype_2006);
 			KNOWN_ELEMENT_TYPES.add(EClass_2002);
 			KNOWN_ELEMENT_TYPES.add(EPackage_2003);
 			KNOWN_ELEMENT_TYPES.add(EEnum_2004);
@@ -291,7 +292,7 @@ public class EMFProfileElementTypes {
 			KNOWN_ELEMENT_TYPES.add(EOperation_3005);
 			KNOWN_ELEMENT_TYPES.add(EClass_3002);
 			KNOWN_ELEMENT_TYPES.add(EEnumLiteral_3003);
-			KNOWN_ELEMENT_TYPES.add(Extension_4004);
+			KNOWN_ELEMENT_TYPES.add(Extension_4005);
 			KNOWN_ELEMENT_TYPES.add(EClassESuperTypes_4002);
 			KNOWN_ELEMENT_TYPES.add(EReference_4003);
 		}
@@ -306,7 +307,7 @@ public class EMFProfileElementTypes {
 		case ProfileEditPart.VISUAL_ID:
 			return Profile_1000;
 		case StereotypeEditPart.VISUAL_ID:
-			return Stereotype_2001;
+			return Stereotype_2006;
 		case EClassEditPart.VISUAL_ID:
 			return EClass_2002;
 		case EPackageEditPart.VISUAL_ID:
@@ -326,7 +327,7 @@ public class EMFProfileElementTypes {
 		case EEnumLiteralEditPart.VISUAL_ID:
 			return EEnumLiteral_3003;
 		case ExtensionEditPart.VISUAL_ID:
-			return Extension_4004;
+			return Extension_4005;
 		case EClassESuperTypesEditPart.VISUAL_ID:
 			return EClassESuperTypes_4002;
 		case EReferenceEditPart.VISUAL_ID:

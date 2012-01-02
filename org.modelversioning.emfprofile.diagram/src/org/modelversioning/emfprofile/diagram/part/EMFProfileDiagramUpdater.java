@@ -69,7 +69,7 @@ public class EMFProfileDiagramUpdater {
 		case ProfileEditPart.VISUAL_ID:
 			return getProfile_1000SemanticChildren(view);
 		case StereotypeTaggedValueCompEditPart.VISUAL_ID:
-			return getStereotypeTaggedValueComp_7001SemanticChildren(view);
+			return getStereotypeTaggedValueComp_7008SemanticChildren(view);
 		case EClassAttributesEditPart.VISUAL_ID:
 			return getEClassAttributes_7004SemanticChildren(view);
 		case EClassOperationsEditPart.VISUAL_ID:
@@ -134,7 +134,7 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List<EMFProfileNodeDescriptor> getStereotypeTaggedValueComp_7001SemanticChildren(
+	public static List<EMFProfileNodeDescriptor> getStereotypeTaggedValueComp_7008SemanticChildren(
 			View view) {
 		if (false == view.eContainer() instanceof View) {
 			return Collections.emptyList();
@@ -328,7 +328,7 @@ public class EMFProfileDiagramUpdater {
 		case ProfileEditPart.VISUAL_ID:
 			return getProfile_1000ContainedLinks(view);
 		case StereotypeEditPart.VISUAL_ID:
-			return getStereotype_2001ContainedLinks(view);
+			return getStereotype_2006ContainedLinks(view);
 		case EClassEditPart.VISUAL_ID:
 			return getEClass_2002ContainedLinks(view);
 		case EPackageEditPart.VISUAL_ID:
@@ -348,7 +348,7 @@ public class EMFProfileDiagramUpdater {
 		case EEnumLiteralEditPart.VISUAL_ID:
 			return getEEnumLiteral_3003ContainedLinks(view);
 		case ExtensionEditPart.VISUAL_ID:
-			return getExtension_4004ContainedLinks(view);
+			return getExtension_4005ContainedLinks(view);
 		case EReferenceEditPart.VISUAL_ID:
 			return getEReference_4003ContainedLinks(view);
 		}
@@ -361,7 +361,7 @@ public class EMFProfileDiagramUpdater {
 	public static List<EMFProfileLinkDescriptor> getIncomingLinks(View view) {
 		switch (EMFProfileVisualIDRegistry.getVisualID(view)) {
 		case StereotypeEditPart.VISUAL_ID:
-			return getStereotype_2001IncomingLinks(view);
+			return getStereotype_2006IncomingLinks(view);
 		case EClassEditPart.VISUAL_ID:
 			return getEClass_2002IncomingLinks(view);
 		case EPackageEditPart.VISUAL_ID:
@@ -381,7 +381,7 @@ public class EMFProfileDiagramUpdater {
 		case EEnumLiteralEditPart.VISUAL_ID:
 			return getEEnumLiteral_3003IncomingLinks(view);
 		case ExtensionEditPart.VISUAL_ID:
-			return getExtension_4004IncomingLinks(view);
+			return getExtension_4005IncomingLinks(view);
 		case EReferenceEditPart.VISUAL_ID:
 			return getEReference_4003IncomingLinks(view);
 		}
@@ -394,7 +394,7 @@ public class EMFProfileDiagramUpdater {
 	public static List<EMFProfileLinkDescriptor> getOutgoingLinks(View view) {
 		switch (EMFProfileVisualIDRegistry.getVisualID(view)) {
 		case StereotypeEditPart.VISUAL_ID:
-			return getStereotype_2001OutgoingLinks(view);
+			return getStereotype_2006OutgoingLinks(view);
 		case EClassEditPart.VISUAL_ID:
 			return getEClass_2002OutgoingLinks(view);
 		case EPackageEditPart.VISUAL_ID:
@@ -414,7 +414,7 @@ public class EMFProfileDiagramUpdater {
 		case EEnumLiteralEditPart.VISUAL_ID:
 			return getEEnumLiteral_3003OutgoingLinks(view);
 		case ExtensionEditPart.VISUAL_ID:
-			return getExtension_4004OutgoingLinks(view);
+			return getExtension_4005OutgoingLinks(view);
 		case EReferenceEditPart.VISUAL_ID:
 			return getEReference_4003OutgoingLinks(view);
 		}
@@ -432,11 +432,11 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List<EMFProfileLinkDescriptor> getStereotype_2001ContainedLinks(
+	public static List<EMFProfileLinkDescriptor> getStereotype_2006ContainedLinks(
 			View view) {
 		Stereotype modelElement = (Stereotype) view.getElement();
 		LinkedList<EMFProfileLinkDescriptor> result = new LinkedList<EMFProfileLinkDescriptor>();
-		result.addAll(getContainedTypeModelFacetLinks_Extension_4004(modelElement));
+		result.addAll(getContainedTypeModelFacetLinks_Extension_4005(modelElement));
 		result.addAll(getOutgoingFeatureModelFacetLinks_EClass_ESuperTypes_4002(modelElement));
 		result.addAll(getContainedTypeModelFacetLinks_EReference_4003(modelElement));
 		return result;
@@ -525,7 +525,7 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List<EMFProfileLinkDescriptor> getExtension_4004ContainedLinks(
+	public static List<EMFProfileLinkDescriptor> getExtension_4005ContainedLinks(
 			View view) {
 		return Collections.emptyList();
 	}
@@ -541,13 +541,13 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List<EMFProfileLinkDescriptor> getStereotype_2001IncomingLinks(
+	public static List<EMFProfileLinkDescriptor> getStereotype_2006IncomingLinks(
 			View view) {
 		Stereotype modelElement = (Stereotype) view.getElement();
 		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
 				.find(view.eResource().getResourceSet().getResources());
 		LinkedList<EMFProfileLinkDescriptor> result = new LinkedList<EMFProfileLinkDescriptor>();
-		result.addAll(getIncomingTypeModelFacetLinks_Extension_4004(
+		result.addAll(getIncomingTypeModelFacetLinks_Extension_4005(
 				modelElement, crossReferences));
 		result.addAll(getIncomingFeatureModelFacetLinks_EClass_ESuperTypes_4002(
 				modelElement, crossReferences));
@@ -565,7 +565,7 @@ public class EMFProfileDiagramUpdater {
 		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
 				.find(view.eResource().getResourceSet().getResources());
 		LinkedList<EMFProfileLinkDescriptor> result = new LinkedList<EMFProfileLinkDescriptor>();
-		result.addAll(getIncomingTypeModelFacetLinks_Extension_4004(
+		result.addAll(getIncomingTypeModelFacetLinks_Extension_4005(
 				modelElement, crossReferences));
 		result.addAll(getIncomingFeatureModelFacetLinks_EClass_ESuperTypes_4002(
 				modelElement, crossReferences));
@@ -643,7 +643,7 @@ public class EMFProfileDiagramUpdater {
 		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
 				.find(view.eResource().getResourceSet().getResources());
 		LinkedList<EMFProfileLinkDescriptor> result = new LinkedList<EMFProfileLinkDescriptor>();
-		result.addAll(getIncomingTypeModelFacetLinks_Extension_4004(
+		result.addAll(getIncomingTypeModelFacetLinks_Extension_4005(
 				modelElement, crossReferences));
 		result.addAll(getIncomingFeatureModelFacetLinks_EClass_ESuperTypes_4002(
 				modelElement, crossReferences));
@@ -663,7 +663,7 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List<EMFProfileLinkDescriptor> getExtension_4004IncomingLinks(
+	public static List<EMFProfileLinkDescriptor> getExtension_4005IncomingLinks(
 			View view) {
 		return Collections.emptyList();
 	}
@@ -679,11 +679,11 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List<EMFProfileLinkDescriptor> getStereotype_2001OutgoingLinks(
+	public static List<EMFProfileLinkDescriptor> getStereotype_2006OutgoingLinks(
 			View view) {
 		Stereotype modelElement = (Stereotype) view.getElement();
 		LinkedList<EMFProfileLinkDescriptor> result = new LinkedList<EMFProfileLinkDescriptor>();
-		result.addAll(getOutgoingTypeModelFacetLinks_Extension_4004(modelElement));
+		result.addAll(getOutgoingTypeModelFacetLinks_Extension_4005(modelElement));
 		result.addAll(getOutgoingFeatureModelFacetLinks_EClass_ESuperTypes_4002(modelElement));
 		result.addAll(getContainedTypeModelFacetLinks_EReference_4003(modelElement));
 		return result;
@@ -772,7 +772,7 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List<EMFProfileLinkDescriptor> getExtension_4004OutgoingLinks(
+	public static List<EMFProfileLinkDescriptor> getExtension_4005OutgoingLinks(
 			View view) {
 		return Collections.emptyList();
 	}
@@ -788,7 +788,7 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	private static Collection<EMFProfileLinkDescriptor> getContainedTypeModelFacetLinks_Extension_4004(
+	private static Collection<EMFProfileLinkDescriptor> getContainedTypeModelFacetLinks_Extension_4005(
 			Stereotype container) {
 		LinkedList<EMFProfileLinkDescriptor> result = new LinkedList<EMFProfileLinkDescriptor>();
 		for (Iterator<?> links = container.getExtensions().iterator(); links
@@ -805,7 +805,7 @@ public class EMFProfileDiagramUpdater {
 			EClass dst = link.getTarget();
 			Stereotype src = link.getSource();
 			result.add(new EMFProfileLinkDescriptor(src, dst, link,
-					EMFProfileElementTypes.Extension_4004,
+					EMFProfileElementTypes.Extension_4005,
 					ExtensionEditPart.VISUAL_ID));
 		}
 		return result;
@@ -839,7 +839,7 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	private static Collection<EMFProfileLinkDescriptor> getIncomingTypeModelFacetLinks_Extension_4004(
+	private static Collection<EMFProfileLinkDescriptor> getIncomingTypeModelFacetLinks_Extension_4005(
 			EClass target,
 			Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences) {
 		LinkedList<EMFProfileLinkDescriptor> result = new LinkedList<EMFProfileLinkDescriptor>();
@@ -858,7 +858,7 @@ public class EMFProfileDiagramUpdater {
 			}
 			Stereotype src = link.getSource();
 			result.add(new EMFProfileLinkDescriptor(src, target, link,
-					EMFProfileElementTypes.Extension_4004,
+					EMFProfileElementTypes.Extension_4005,
 					ExtensionEditPart.VISUAL_ID));
 		}
 		return result;
@@ -919,7 +919,7 @@ public class EMFProfileDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	private static Collection<EMFProfileLinkDescriptor> getOutgoingTypeModelFacetLinks_Extension_4004(
+	private static Collection<EMFProfileLinkDescriptor> getOutgoingTypeModelFacetLinks_Extension_4005(
 			Stereotype source) {
 		Stereotype container = null;
 		// Find container element for the link.
@@ -952,7 +952,7 @@ public class EMFProfileDiagramUpdater {
 				continue;
 			}
 			result.add(new EMFProfileLinkDescriptor(src, dst, link,
-					EMFProfileElementTypes.Extension_4004,
+					EMFProfileElementTypes.Extension_4005,
 					ExtensionEditPart.VISUAL_ID));
 		}
 		return result;

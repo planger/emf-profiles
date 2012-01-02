@@ -167,7 +167,7 @@ public class EClassItemSemanticEditPolicy extends
 	 */
 	protected Command getStartCreateRelationshipCommand(
 			CreateRelationshipRequest req) {
-		if (EMFProfileElementTypes.Extension_4004 == req.getElementType()) {
+		if (EMFProfileElementTypes.Extension_4005 == req.getElementType()) {
 			return null;
 		}
 		if (EMFProfileElementTypes.EClassESuperTypes_4002 == req
@@ -187,7 +187,7 @@ public class EClassItemSemanticEditPolicy extends
 	 */
 	protected Command getCompleteCreateRelationshipCommand(
 			CreateRelationshipRequest req) {
-		if (EMFProfileElementTypes.Extension_4004 == req.getElementType()) {
+		if (EMFProfileElementTypes.Extension_4005 == req.getElementType()) {
 			return getGEFWrapper(new ExtensionCreateCommand(req,
 					req.getSource(), req.getTarget()));
 		}

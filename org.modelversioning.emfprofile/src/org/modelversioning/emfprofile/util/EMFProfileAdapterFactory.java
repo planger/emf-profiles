@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.modelversioning.emfprofile.*;
 import org.modelversioning.emfprofile.EMFProfilePackage;
 import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Profile;

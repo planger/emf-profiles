@@ -288,7 +288,7 @@ public class ProfileCanonicalEditPolicy extends CanonicalEditPolicy {
 		case StereotypeEditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(EMFProfileDiagramUpdater
-						.getStereotype_2001ContainedLinks(view));
+						.getStereotype_2006ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -354,7 +354,7 @@ public class ProfileCanonicalEditPolicy extends CanonicalEditPolicy {
 		case ExtensionEditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(EMFProfileDiagramUpdater
-						.getExtension_4004ContainedLinks(view));
+						.getExtension_4005ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$

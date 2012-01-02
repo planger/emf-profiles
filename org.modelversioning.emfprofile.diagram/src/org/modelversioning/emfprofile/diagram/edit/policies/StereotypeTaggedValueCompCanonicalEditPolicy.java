@@ -59,7 +59,7 @@ public class StereotypeTaggedValueCompCanonicalEditPolicy extends
 		View viewObject = (View) getHost().getModel();
 		LinkedList<EObject> result = new LinkedList<EObject>();
 		List<EMFProfileNodeDescriptor> childDescriptors = EMFProfileDiagramUpdater
-				.getStereotypeTaggedValueComp_7001SemanticChildren(viewObject);
+				.getStereotypeTaggedValueComp_7008SemanticChildren(viewObject);
 		for (EMFProfileNodeDescriptor d : childDescriptors) {
 			result.add(d.getModelElement());
 		}
@@ -92,7 +92,7 @@ public class StereotypeTaggedValueCompCanonicalEditPolicy extends
 		}
 		LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
 		List<EMFProfileNodeDescriptor> childDescriptors = EMFProfileDiagramUpdater
-				.getStereotypeTaggedValueComp_7001SemanticChildren((View) getHost()
+				.getStereotypeTaggedValueComp_7008SemanticChildren((View) getHost()
 						.getModel());
 		LinkedList<View> orphaned = new LinkedList<View>();
 		// we care to check only views we recognize as ours

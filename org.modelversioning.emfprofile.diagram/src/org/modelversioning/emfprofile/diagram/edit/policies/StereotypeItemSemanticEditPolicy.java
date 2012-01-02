@@ -41,7 +41,7 @@ public class StereotypeItemSemanticEditPolicy extends
 	 * @generated
 	 */
 	public StereotypeItemSemanticEditPolicy() {
-		super(EMFProfileElementTypes.Stereotype_2001);
+		super(EMFProfileElementTypes.Stereotype_2006);
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class StereotypeItemSemanticEditPolicy extends
 	 */
 	protected Command getStartCreateRelationshipCommand(
 			CreateRelationshipRequest req) {
-		if (EMFProfileElementTypes.Extension_4004 == req.getElementType()) {
+		if (EMFProfileElementTypes.Extension_4005 == req.getElementType()) {
 			return getGEFWrapper(new ExtensionCreateCommand(req,
 					req.getSource(), req.getTarget()));
 		}
@@ -178,7 +178,7 @@ public class StereotypeItemSemanticEditPolicy extends
 	 */
 	protected Command getCompleteCreateRelationshipCommand(
 			CreateRelationshipRequest req) {
-		if (EMFProfileElementTypes.Extension_4004 == req.getElementType()) {
+		if (EMFProfileElementTypes.Extension_4005 == req.getElementType()) {
 			return getGEFWrapper(new ExtensionCreateCommand(req,
 					req.getSource(), req.getTarget()));
 		}

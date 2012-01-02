@@ -40,22 +40,22 @@ public class EMFProfileParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser stereotypeName_5001Parser;
+	private IParser stereotypeName_5008Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getStereotypeName_5001Parser() {
-		if (stereotypeName_5001Parser == null) {
+	private IParser getStereotypeName_5008Parser() {
+		if (stereotypeName_5008Parser == null) {
 			EAttribute[] features = new EAttribute[] { EcorePackage.eINSTANCE
 					.getENamedElement_Name() };
 			EAttribute[] editableFeatures = new EAttribute[] { EcorePackage.eINSTANCE
 					.getENamedElement_Name() };
 			MessageFormatParser parser = new MessageFormatParser(features,
 					editableFeatures);
-			stereotypeName_5001Parser = parser;
+			stereotypeName_5008Parser = parser;
 		}
-		return stereotypeName_5001Parser;
+		return stereotypeName_5008Parser;
 	}
 
 	/**
@@ -244,13 +244,13 @@ public class EMFProfileParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser extensionLowerBoundUpperBound_6003Parser;
+	private IParser extensionLowerBoundUpperBound_6004Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getExtensionLowerBoundUpperBound_6003Parser() {
-		if (extensionLowerBoundUpperBound_6003Parser == null) {
+	private IParser getExtensionLowerBoundUpperBound_6004Parser() {
+		if (extensionLowerBoundUpperBound_6004Parser == null) {
 			EAttribute[] features = new EAttribute[] {
 					EMFProfilePackage.eINSTANCE.getExtension_LowerBound(),
 					EMFProfilePackage.eINSTANCE.getExtension_UpperBound() };
@@ -258,9 +258,9 @@ public class EMFProfileParserProvider extends AbstractProvider implements
 			parser.setViewPattern("{0}..{1,choice,-2#?|-1#*|-1<{1}}"); //$NON-NLS-1$
 			parser.setEditorPattern("{0}..{1,choice,-2#?|-1#*|-1<{1}}"); //$NON-NLS-1$
 			parser.setEditPattern("{0}..{1}"); //$NON-NLS-1$
-			extensionLowerBoundUpperBound_6003Parser = parser;
+			extensionLowerBoundUpperBound_6004Parser = parser;
 		}
-		return extensionLowerBoundUpperBound_6003Parser;
+		return extensionLowerBoundUpperBound_6004Parser;
 	}
 
 	/**
@@ -309,7 +309,7 @@ public class EMFProfileParserProvider extends AbstractProvider implements
 	protected IParser getParser(int visualID) {
 		switch (visualID) {
 		case StereotypeNameEditPart.VISUAL_ID:
-			return getStereotypeName_5001Parser();
+			return getStereotypeName_5008Parser();
 		case EClassNameEditPart.VISUAL_ID:
 			return getEClassName_5002Parser();
 		case EPackageNameEditPart.VISUAL_ID:
@@ -331,7 +331,7 @@ public class EMFProfileParserProvider extends AbstractProvider implements
 		case EEnumLiteralEditPart.VISUAL_ID:
 			return getEEnumLiteral_3003Parser();
 		case ExtensionLowerBoundUpperBoundEditPart.VISUAL_ID:
-			return getExtensionLowerBoundUpperBound_6003Parser();
+			return getExtensionLowerBoundUpperBound_6004Parser();
 		case EReferenceNameEditPart.VISUAL_ID:
 			return getEReferenceName_6001Parser();
 		case EReferenceLowerBoundUpperBoundEditPart.VISUAL_ID:

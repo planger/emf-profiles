@@ -8,7 +8,6 @@
 package org.modelversioning.emfprofile.tests;
 
 import junit.framework.TestCase;
-
 import junit.textui.TestRunner;
 
 import org.modelversioning.emfprofile.EMFProfileFactory;

@@ -273,7 +273,7 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String EMFprofile1Group_title;
+	public static String EMFProfiles1Group_title;
 
 	/**
 	 * @generated
@@ -299,6 +299,11 @@ public class Messages extends NLS {
 	 * @generated
 	 */
 	public static String TaggedValue2CreationTool_title;
+
+	/**
+	 * @generated
+	 */
+	public static String TaggedValue2CreationTool_desc;
 
 	/**
 	 * @generated

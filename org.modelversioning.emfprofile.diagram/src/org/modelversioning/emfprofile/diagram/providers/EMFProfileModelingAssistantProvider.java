@@ -44,7 +44,7 @@ public class EMFProfileModelingAssistantProvider extends
 				.getAdapter(IGraphicalEditPart.class);
 		if (editPart instanceof ProfileEditPart) {
 			ArrayList<IElementType> types = new ArrayList<IElementType>(5);
-			types.add(EMFProfileElementTypes.Stereotype_2001);
+			types.add(EMFProfileElementTypes.Stereotype_2006);
 			types.add(EMFProfileElementTypes.EClass_2002);
 			types.add(EMFProfileElementTypes.EPackage_2003);
 			types.add(EMFProfileElementTypes.EEnum_2004);

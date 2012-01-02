@@ -71,7 +71,7 @@ public class ExtensionReorientCommand extends EditElementCommand {
 		}
 		Stereotype container = (Stereotype) getLink().eContainer();
 		return EMFProfileBaseItemSemanticEditPolicy.getLinkConstraints()
-				.canExistExtension_4004(container, getLink(), getNewSource(),
+				.canExistExtension_4005(container, getLink(), getNewSource(),
 						target);
 	}
 
@@ -88,7 +88,7 @@ public class ExtensionReorientCommand extends EditElementCommand {
 		}
 		Stereotype container = (Stereotype) getLink().eContainer();
 		return EMFProfileBaseItemSemanticEditPolicy.getLinkConstraints()
-				.canExistExtension_4004(container, getLink(), source,
+				.canExistExtension_4005(container, getLink(), source,
 						getNewTarget());
 	}
 

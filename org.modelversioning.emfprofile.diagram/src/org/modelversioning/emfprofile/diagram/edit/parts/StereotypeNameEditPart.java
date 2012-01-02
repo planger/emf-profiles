@@ -52,7 +52,7 @@ public class StereotypeNameEditPart extends CompartmentEditPart implements
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5001;
+	public static final int VISUAL_ID = 5008;
 
 	/**
 	 * @generated
@@ -296,7 +296,7 @@ public class StereotypeNameEditPart extends CompartmentEditPart implements
 		if (parser == null) {
 			parser = EMFProfileParserProvider
 					.getParser(
-							EMFProfileElementTypes.Stereotype_2001,
+							EMFProfileElementTypes.Stereotype_2006,
 							getParserElement(),
 							EMFProfileVisualIDRegistry
 									.getType(org.modelversioning.emfprofile.diagram.edit.parts.StereotypeNameEditPart.VISUAL_ID));

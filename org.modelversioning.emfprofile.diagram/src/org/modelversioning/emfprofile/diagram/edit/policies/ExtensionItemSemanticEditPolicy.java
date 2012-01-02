@@ -15,7 +15,7 @@ public class ExtensionItemSemanticEditPolicy extends
 	 * @generated
 	 */
 	public ExtensionItemSemanticEditPolicy() {
-		super(EMFProfileElementTypes.Extension_4004);
+		super(EMFProfileElementTypes.Extension_4005);
 	}
 
 	/**

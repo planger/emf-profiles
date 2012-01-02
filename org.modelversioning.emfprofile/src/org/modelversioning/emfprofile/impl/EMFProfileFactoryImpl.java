@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.modelversioning.emfprofile.*;
 import org.modelversioning.emfprofile.EMFProfileFactory;
 import org.modelversioning.emfprofile.EMFProfilePackage;
 import org.modelversioning.emfprofile.Extension;

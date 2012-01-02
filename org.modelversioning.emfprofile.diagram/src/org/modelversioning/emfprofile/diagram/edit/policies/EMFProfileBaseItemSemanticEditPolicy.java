@@ -331,9 +331,9 @@ public class EMFProfileBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
-		public boolean canCreateExtension_4004(Stereotype container,
+		public boolean canCreateExtension_4005(Stereotype container,
 				Stereotype source, EClass target) {
-			return canExistExtension_4004(container, null, source, target);
+			return canExistExtension_4005(container, null, source, target);
 		}
 
 		/**
@@ -361,7 +361,7 @@ public class EMFProfileBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
-		public boolean canExistExtension_4004(Stereotype container,
+		public boolean canExistExtension_4005(Stereotype container,
 				Extension linkInstance, Stereotype source, EClass target) {
 			return true;
 		}

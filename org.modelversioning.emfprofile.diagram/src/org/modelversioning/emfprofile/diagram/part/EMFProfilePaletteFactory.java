@@ -23,18 +23,18 @@ public class EMFProfilePaletteFactory {
 	 * @generated
 	 */
 	public void fillPalette(PaletteRoot paletteRoot) {
-		paletteRoot.add(createEMFprofile1Group());
+		paletteRoot.add(createEMFProfiles1Group());
 		paletteRoot.add(createEcore2Group());
 	}
 
 	/**
-	 * Creates "EMFprofile" palette tool group
+	 * Creates "EMF Profiles" palette tool group
 	 * @generated
 	 */
-	private PaletteContainer createEMFprofile1Group() {
+	private PaletteContainer createEMFProfiles1Group() {
 		PaletteDrawer paletteContainer = new PaletteDrawer(
-				Messages.EMFprofile1Group_title);
-		paletteContainer.setId("createEMFprofile1Group"); //$NON-NLS-1$
+				Messages.EMFProfiles1Group_title);
+		paletteContainer.setId("createEMFProfiles1Group"); //$NON-NLS-1$
 		paletteContainer.add(createStereotype1CreationTool());
 		paletteContainer.add(createTaggedValue2CreationTool());
 		paletteContainer.add(createExtension3CreationTool());
@@ -70,10 +70,10 @@ public class EMFProfilePaletteFactory {
 				Messages.Stereotype1CreationTool_title,
 				Messages.Stereotype1CreationTool_desc,
 				Collections
-						.singletonList(EMFProfileElementTypes.Stereotype_2001));
+						.singletonList(EMFProfileElementTypes.Stereotype_2006));
 		entry.setId("createStereotype1CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(EMFProfileElementTypes
-				.getImageDescriptor(EMFProfileElementTypes.Stereotype_2001));
+				.getImageDescriptor(EMFProfileElementTypes.Stereotype_2006));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -83,7 +83,8 @@ public class EMFProfilePaletteFactory {
 	 */
 	private ToolEntry createTaggedValue2CreationTool() {
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.TaggedValue2CreationTool_title, null,
+				Messages.TaggedValue2CreationTool_title,
+				Messages.TaggedValue2CreationTool_desc,
 				Collections
 						.singletonList(EMFProfileElementTypes.EAttribute_3001));
 		entry.setId("createTaggedValue2CreationTool"); //$NON-NLS-1$
@@ -101,10 +102,10 @@ public class EMFProfilePaletteFactory {
 				Messages.Extension3CreationTool_title,
 				Messages.Extension3CreationTool_desc,
 				Collections
-						.singletonList(EMFProfileElementTypes.Extension_4004));
+						.singletonList(EMFProfileElementTypes.Extension_4005));
 		entry.setId("createExtension3CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(EMFProfileElementTypes
-				.getImageDescriptor(EMFProfileElementTypes.Extension_4004));
+				.getImageDescriptor(EMFProfileElementTypes.Extension_4005));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}

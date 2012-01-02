@@ -25,7 +25,6 @@ import org.junit.Test;
 import org.modelversioning.emfprofile.IProfileFacade;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
-import org.modelversioning.emfprofile.impl.ProfileFacadeImpl;
 
 /**
  * Test for annotating models with EMF Profiles.
