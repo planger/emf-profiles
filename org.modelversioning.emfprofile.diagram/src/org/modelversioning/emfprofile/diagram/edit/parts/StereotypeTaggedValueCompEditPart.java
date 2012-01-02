@@ -9,7 +9,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.notation.View;
-import org.modelversioning.emfprofile.diagram.edit.policies.StereotypeTaggedValueCompCanonicalEditPolicy;
 import org.modelversioning.emfprofile.diagram.edit.policies.StereotypeTaggedValueCompItemSemanticEditPolicy;
 import org.modelversioning.emfprofile.diagram.part.Messages;
 

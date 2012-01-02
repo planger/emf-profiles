@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
@@ -32,6 +33,7 @@ import org.modelversioning.emfprofileapplication.StereotypeApplication;
  * <ul>
  *   <li>{@link org.modelversioning.emfprofileapplication.impl.StereotypeApplicationImpl#getAppliedTo <em>Applied To</em>}</li>
  *   <li>{@link org.modelversioning.emfprofileapplication.impl.StereotypeApplicationImpl#getProfileApplication <em>Profile Application</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofileapplication.impl.StereotypeApplicationImpl#getExtension <em>Extension</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +49,16 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 	 * @ordered
 	 */
 	protected EList<EObject> appliedTo;
+
+	/**
+	 * The cached value of the '{@link #getExtension() <em>Extension</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExtension()
+	 * @generated
+	 * @ordered
+	 */
+	protected Extension extension;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -125,6 +137,44 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Extension getExtension() {
+		if (extension != null && extension.eIsProxy()) {
+			InternalEObject oldExtension = (InternalEObject)extension;
+			extension = (Extension)eResolveProxy(oldExtension);
+			if (extension != oldExtension) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION, oldExtension, extension));
+			}
+		}
+		return extension;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Extension basicGetExtension() {
+		return extension;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExtension(Extension newExtension) {
+		Extension oldExtension = extension;
+		extension = newExtension;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION, oldExtension, extension));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -176,6 +226,9 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 				return getAppliedTo();
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION:
 				return getProfileApplication();
+			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION:
+				if (resolve) return getExtension();
+				return basicGetExtension();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -196,6 +249,9 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION:
 				setProfileApplication((ProfileApplication)newValue);
 				return;
+			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION:
+				setExtension((Extension)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -214,6 +270,9 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION:
 				setProfileApplication((ProfileApplication)null);
 				return;
+			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION:
+				setExtension((Extension)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -230,6 +289,8 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 				return appliedTo != null && !appliedTo.isEmpty();
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION:
 				return getProfileApplication() != null;
+			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION:
+				return extension != null;
 		}
 		return super.eIsSet(featureID);
 	}

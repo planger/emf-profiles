@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.modelversioning.emfprofile.EMFProfileFactory;
@@ -19,6 +20,7 @@ import org.modelversioning.emfprofile.EMFProfilePackage;
 import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
+import org.modelversioning.emfprofile.util.EMFProfileValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -102,6 +104,15 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 
 		// Initialize created meta-data
 		theEMFProfilePackage.initializePackageContents();
+
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theEMFProfilePackage, 
+			 new EValidator.Descriptor() {
+				 public EValidator getEValidator() {
+					 return EMFProfileValidator.INSTANCE;
+				 }
+			 });
 
 		// Mark meta-data to indicate it can't be changed
 		theEMFProfilePackage.freeze();
@@ -216,6 +227,24 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getExtension_Redefined() {
+		return (EReference)extensionEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getExtension_Subsetted() {
+		return (EReference)extensionEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMFProfileFactory getEMFProfileFactory() {
 		return (EMFProfileFactory)getEFactoryInstance();
 	}
@@ -252,6 +281,8 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		createEReference(extensionEClass, EXTENSION__TARGET);
 		createEAttribute(extensionEClass, EXTENSION__LOWER_BOUND);
 		createEAttribute(extensionEClass, EXTENSION__UPPER_BOUND);
+		createEReference(extensionEClass, EXTENSION__REDEFINED);
+		createEReference(extensionEClass, EXTENSION__SUBSETTED);
 	}
 
 	/**
@@ -330,14 +361,66 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 
 		addEOperation(stereotypeEClass, theEcorePackage.getEClass(), "getExtensibleClasses", 0, -1, IS_UNIQUE, !IS_ORDERED);
 
+		addEOperation(stereotypeEClass, theEcorePackage.getEStructuralFeature(), "getTaggedValues", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(stereotypeEClass, theEcorePackage.getEStructuralFeature(), "getTaggedValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 1, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(extensionEClass, Extension.class, "Extension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getExtension_Source(), this.getStereotype(), this.getStereotype_Extensions(), "source", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExtension_Target(), theEcorePackage.getEClass(), null, "target", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExtension_LowerBound(), ecorePackage.getEInt(), "lowerBound", "0", 0, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExtension_UpperBound(), ecorePackage.getEInt(), "upperBound", "-1", 0, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getExtension_Redefined(), this.getExtension(), null, "redefined", null, 0, -1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getExtension_Subsetted(), this.getExtension(), null, "subsetted", null, 0, -1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+		// http://www.eclipse.org/emf/2002/Ecore/OCL
+		createOCLAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore";		
+		addAnnotation
+		  (this, 
+		   source, 
+		   new String[] {
+			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL"
+		   });		
+		addAnnotation
+		  (extensionEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "redefinedInSuperStereotype subsettedInSuperStereotype"
+		   });	
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore/OCL</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createOCLAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";				
+		addAnnotation
+		  (extensionEClass, 
+		   source, 
+		   new String[] {
+			 "redefinedInSuperStereotype", "self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.redefined)",
+			 "subsettedInSuperStereotype", "self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.subsetted)"
+		   });
 	}
 
 } //EMFProfilePackageImpl

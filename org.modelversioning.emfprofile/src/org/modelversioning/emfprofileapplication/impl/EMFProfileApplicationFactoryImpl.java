@@ -33,7 +33,7 @@ public class EMFProfileApplicationFactoryImpl extends EFactoryImpl implements EM
 	 */
 	public static EMFProfileApplicationFactory init() {
 		try {
-			EMFProfileApplicationFactory theEMFProfileApplicationFactory = (EMFProfileApplicationFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.modelversioning.org/emfprofile/application/1.0"); 
+			EMFProfileApplicationFactory theEMFProfileApplicationFactory = (EMFProfileApplicationFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.modelversioning.org/emfprofile/application/1.1"); 
 			if (theEMFProfileApplicationFactory != null) {
 				return theEMFProfileApplicationFactory;
 			}

@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EcorePackage;
  * <!-- end-user-doc -->
  * @see org.modelversioning.emfprofile.EMFProfileFactory
  * @model kind="package"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore validationDelegates='http://www.eclipse.org/emf/2002/Ecore/OCL'"
  * @generated
  */
 public interface EMFProfilePackage extends EPackage {
@@ -43,7 +44,7 @@ public interface EMFProfilePackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.modelversioning.org/emfprofile/1.0";
+	String eNS_URI = "http://www.modelversioning.org/emfprofile/1.1";
 
 	/**
 	 * The package namespace name.
@@ -471,13 +472,31 @@ public interface EMFProfilePackage extends EPackage {
 	int EXTENSION__UPPER_BOUND = 3;
 
 	/**
+	 * The feature id for the '<em><b>Redefined</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION__REDEFINED = 4;
+
+	/**
+	 * The feature id for the '<em><b>Subsetted</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION__SUBSETTED = 5;
+
+	/**
 	 * The number of structural features of the '<em>Extension</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION_FEATURE_COUNT = 4;
+	int EXTENSION_FEATURE_COUNT = 6;
 
 
 	/**
@@ -599,6 +618,28 @@ public interface EMFProfilePackage extends EPackage {
 	EAttribute getExtension_UpperBound();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.modelversioning.emfprofile.Extension#getRedefined <em>Redefined</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Redefined</em>'.
+	 * @see org.modelversioning.emfprofile.Extension#getRedefined()
+	 * @see #getExtension()
+	 * @generated
+	 */
+	EReference getExtension_Redefined();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.modelversioning.emfprofile.Extension#getSubsetted <em>Subsetted</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Subsetted</em>'.
+	 * @see org.modelversioning.emfprofile.Extension#getSubsetted()
+	 * @see #getExtension()
+	 * @generated
+	 */
+	EReference getExtension_Subsetted();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -713,6 +754,22 @@ public interface EMFProfilePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EXTENSION__UPPER_BOUND = eINSTANCE.getExtension_UpperBound();
+
+		/**
+		 * The meta object literal for the '<em><b>Redefined</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXTENSION__REDEFINED = eINSTANCE.getExtension_Redefined();
+
+		/**
+		 * The meta object literal for the '<em><b>Subsetted</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXTENSION__SUBSETTED = eINSTANCE.getExtension_Subsetted();
 
 	}
 

@@ -36,6 +36,12 @@ import org.modelversioning.emfprofile.Stereotype;
  * @generated
  */
 public class ProfileImpl extends EPackageImpl implements Profile {
+	
+	protected static final String NAME_EDEFAULT = "MyProfile"; //$NON-NLS-1$
+	protected static final String NS_URI_EDEFAULT = "http://www.modelversioning.org/myprofile"; //$NON-NLS-1$
+	protected static final String NS_PREFIX_EDEFAULT = "myprofile"; //$NON-NLS-1$
+	
+	
 	/**
 	 * The cached value of the '{@link #getBase() <em>Base</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -49,10 +55,17 @@ public class ProfileImpl extends EPackageImpl implements Profile {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected ProfileImpl() {
 		super();
+		setDefaultValues();
+	}
+	
+	private void setDefaultValues() {
+		this.setName(NAME_EDEFAULT);
+		this.setNsURI(NS_URI_EDEFAULT);
+		this.setNsPrefix(NS_PREFIX_EDEFAULT);
 	}
 
 	/**

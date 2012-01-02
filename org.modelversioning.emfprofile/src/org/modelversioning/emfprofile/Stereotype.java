@@ -10,6 +10,7 @@ package org.modelversioning.emfprofile;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * <!-- begin-user-doc -->
@@ -161,6 +162,22 @@ public interface Stereotype extends EClass {
 	 * @generated
 	 */
 	EList<EClass> getExtensibleClasses();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<EStructuralFeature> getTaggedValues();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model nameRequired="true"
+	 * @generated
+	 */
+	EStructuralFeature getTaggedValue(String name);
 
 	/**
 	 * Returns the value of the '<em><b>Extensions</b></em>' containment reference list.

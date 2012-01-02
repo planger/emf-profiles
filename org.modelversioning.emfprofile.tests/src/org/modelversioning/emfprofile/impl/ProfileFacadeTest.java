@@ -1,4 +1,3 @@
-package org.modelversioning.emfprofile.impl;
 /**
  * <copyright>
  *
@@ -10,6 +9,7 @@ package org.modelversioning.emfprofile.impl;
  *
  * </copyright>
  */
+package org.modelversioning.emfprofile.impl;
 
 import java.io.File;
 import java.io.IOException;

@@ -7,12 +7,16 @@
  */
 package org.modelversioning.emfprofile.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.modelversioning.emfprofile.EMFProfilePackage;
 import org.modelversioning.emfprofile.Extension;
@@ -29,6 +33,8 @@ import org.modelversioning.emfprofile.Stereotype;
  *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getLowerBound <em>Lower Bound</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getUpperBound <em>Upper Bound</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getRedefined <em>Redefined</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getSubsetted <em>Subsetted</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,6 +86,25 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	 * @ordered
 	 */
 	protected int upperBound = UPPER_BOUND_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getRedefined() <em>Redefined</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRedefined()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Extension> redefined;
+	/**
+	 * The cached value of the '{@link #getSubsetted() <em>Subsetted</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSubsetted()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Extension> subsetted;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -226,6 +251,30 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Extension> getRedefined() {
+		if (redefined == null) {
+			redefined = new EObjectResolvingEList<Extension>(Extension.class, this, EMFProfilePackage.EXTENSION__REDEFINED);
+		}
+		return redefined;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Extension> getSubsetted() {
+		if (subsetted == null) {
+			subsetted = new EObjectEList<Extension>(Extension.class, this, EMFProfilePackage.EXTENSION__SUBSETTED);
+		}
+		return subsetted;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -282,6 +331,10 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 				return getLowerBound();
 			case EMFProfilePackage.EXTENSION__UPPER_BOUND:
 				return getUpperBound();
+			case EMFProfilePackage.EXTENSION__REDEFINED:
+				return getRedefined();
+			case EMFProfilePackage.EXTENSION__SUBSETTED:
+				return getSubsetted();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -291,6 +344,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -305,6 +359,14 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 				return;
 			case EMFProfilePackage.EXTENSION__UPPER_BOUND:
 				setUpperBound((Integer)newValue);
+				return;
+			case EMFProfilePackage.EXTENSION__REDEFINED:
+				getRedefined().clear();
+				getRedefined().addAll((Collection<? extends Extension>)newValue);
+				return;
+			case EMFProfilePackage.EXTENSION__SUBSETTED:
+				getSubsetted().clear();
+				getSubsetted().addAll((Collection<? extends Extension>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -330,6 +392,12 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 			case EMFProfilePackage.EXTENSION__UPPER_BOUND:
 				setUpperBound(UPPER_BOUND_EDEFAULT);
 				return;
+			case EMFProfilePackage.EXTENSION__REDEFINED:
+				getRedefined().clear();
+				return;
+			case EMFProfilePackage.EXTENSION__SUBSETTED:
+				getSubsetted().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -350,6 +418,10 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 				return lowerBound != LOWER_BOUND_EDEFAULT;
 			case EMFProfilePackage.EXTENSION__UPPER_BOUND:
 				return upperBound != UPPER_BOUND_EDEFAULT;
+			case EMFProfilePackage.EXTENSION__REDEFINED:
+				return redefined != null && !redefined.isEmpty();
+			case EMFProfilePackage.EXTENSION__SUBSETTED:
+				return subsetted != null && !subsetted.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

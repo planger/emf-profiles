@@ -12,7 +12,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.NonResizableLabelEditPolicy;
 import org.eclipse.gmf.runtime.notation.View;
-import org.modelversioning.emfprofile.diagram.edit.policies.ProfileCanonicalEditPolicy;
 import org.modelversioning.emfprofile.diagram.edit.policies.ProfileItemSemanticEditPolicy;
 
 /**

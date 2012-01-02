@@ -10,7 +10,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ResizableCompartmentEditP
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.notation.View;
-import org.modelversioning.emfprofile.diagram.edit.policies.EPackageContentsCanonicalEditPolicy;
 import org.modelversioning.emfprofile.diagram.edit.policies.EPackageContentsItemSemanticEditPolicy;
 import org.modelversioning.emfprofile.diagram.part.Messages;
 

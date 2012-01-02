@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.modelversioning.emfprofile.*;
 import org.modelversioning.emfprofile.EMFProfileFactory;
 import org.modelversioning.emfprofile.EMFProfilePackage;
 import org.modelversioning.emfprofile.Extension;
@@ -33,7 +34,7 @@ public class EMFProfileFactoryImpl extends EFactoryImpl implements EMFProfileFac
 	 */
 	public static EMFProfileFactory init() {
 		try {
-			EMFProfileFactory theEMFProfileFactory = (EMFProfileFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.modelversioning.org/emfprofile/1.0"); 
+			EMFProfileFactory theEMFProfileFactory = (EMFProfileFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.modelversioning.org/emfprofile/1.1"); 
 			if (theEMFProfileFactory != null) {
 				return theEMFProfileFactory;
 			}

@@ -62,6 +62,7 @@ public class StereotypeApplicationItemProvider
 			super.getPropertyDescriptors(object);
 
 			addAppliedToPropertyDescriptor(object);
+			addExtensionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -88,6 +89,28 @@ public class StereotypeApplicationItemProvider
 				 null));
 	}
 	
+	/**
+	 * This adds a property descriptor for the Extension feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addExtensionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_StereotypeApplication_extension_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_StereotypeApplication_extension_feature", "_UI_StereotypeApplication_type"),
+				 EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICATION__EXTENSION,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
 	/**
 	 * This returns Stereotype.gif.
 	 * <!-- begin-user-doc -->

@@ -42,7 +42,7 @@ public interface EMFProfileApplicationPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.modelversioning.org/emfprofile/application/1.0";
+	String eNS_URI = "http://www.modelversioning.org/emfprofile/application/1.1";
 
 	/**
 	 * The package namespace name.
@@ -172,13 +172,22 @@ public interface EMFProfileApplicationPackage extends EPackage {
 	int STEREOTYPE_APPLICATION__PROFILE_APPLICATION = 1;
 
 	/**
+	 * The feature id for the '<em><b>Extension</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEREOTYPE_APPLICATION__EXTENSION = 2;
+
+	/**
 	 * The number of structural features of the '<em>Stereotype Application</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STEREOTYPE_APPLICATION_FEATURE_COUNT = 2;
+	int STEREOTYPE_APPLICATION_FEATURE_COUNT = 3;
 
 
 	/**
@@ -289,6 +298,17 @@ public interface EMFProfileApplicationPackage extends EPackage {
 	EReference getStereotypeApplication_ProfileApplication();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.modelversioning.emfprofileapplication.StereotypeApplication#getExtension <em>Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Extension</em>'.
+	 * @see org.modelversioning.emfprofileapplication.StereotypeApplication#getExtension()
+	 * @see #getStereotypeApplication()
+	 * @generated
+	 */
+	EReference getStereotypeApplication_Extension();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -395,6 +415,14 @@ public interface EMFProfileApplicationPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STEREOTYPE_APPLICATION__PROFILE_APPLICATION = eINSTANCE.getStereotypeApplication_ProfileApplication();
+
+		/**
+		 * The meta object literal for the '<em><b>Extension</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STEREOTYPE_APPLICATION__EXTENSION = eINSTANCE.getStereotypeApplication_Extension();
 
 	}
 

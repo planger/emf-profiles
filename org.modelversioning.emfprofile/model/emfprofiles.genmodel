@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2010 modelversioning.org&#xA;All rights reserved. This program and the accompanying materials are&#xA;made available under the terms of the Eclipse Public License v1.0 which&#xA;accompanies this distribution, and is available at&#xA; http://www.eclipse.org/legal/epl-v10.html"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2010 - 2012 modelversioning.org&#xA;All rights reserved. This program and the accompanying materials are&#xA;made available under the terms of the Eclipse Public License v1.0 which&#xA;accompanies this distribution, and is available at&#xA; http://www.eclipse.org/legal/epl-v10.html"
     modelDirectory="/org.modelversioning.emfprofile/src" editDirectory="/org.modelversioning.emfprofile.edit/src"
     editorDirectory="/org.modelversioning.emfprofile.editor/src" modelPluginID="org.modelversioning.emfprofile"
-    modelName="EMFProfile" testsDirectory="/org.modelversioning.emfprofile.tests/src"
+    dynamicTemplates="true" modelName="EMFProfile" modelPluginClass="" testsDirectory="/org.modelversioning.emfprofile.tests/src"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
     editPluginID="org.modelversioning.emfprofile.edit" editorPluginID="org.modelversioning.emfprofile.editor"
     testsPluginID="org.modelversioning.emfprofile.tests" language="" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>emfprofiles.ecore</foreignModel>
   <genPackages prefix="EMFProfile" basePackage="org.modelversioning" disposableProviderFactory="true"
-      fileExtensions="emfprofile" ecorePackage="emfprofiles.ecore#/">
+      generateExampleClass="false" fileExtensions="emfprofile" ecorePackage="emfprofiles.ecore#/">
     <genClasses ecoreClass="emfprofiles.ecore#//Profile">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfprofiles.ecore#//Profile/base"/>
       <genOperations ecoreOperation="emfprofiles.ecore#//Profile/isApplicable">
@@ -47,12 +47,18 @@
       </genOperations>
       <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getAllExtensibleClasses"/>
       <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getExtensibleClasses"/>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getTaggedValues"/>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getTaggedValue">
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getTaggedValue/name"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="emfprofiles.ecore#//Extension">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/source"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/target"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emfprofiles.ecore#//Extension/lowerBound"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emfprofiles.ecore#//Extension/upperBound"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/redefined"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/subsetted"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

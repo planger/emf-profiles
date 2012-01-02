@@ -7,6 +7,7 @@
  */
 package org.modelversioning.emfprofile;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
@@ -22,11 +23,14 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.modelversioning.emfprofile.Extension#getTarget <em>Target</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Extension#getLowerBound <em>Lower Bound</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Extension#getUpperBound <em>Upper Bound</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Extension#getRedefined <em>Redefined</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Extension#getSubsetted <em>Subsetted</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.modelversioning.emfprofile.EMFProfilePackage#getExtension()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='redefinedInSuperStereotype subsettedInSuperStereotype'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL redefinedInSuperStereotype='self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.redefined)' subsettedInSuperStereotype='self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.subsetted)'"
  * @generated
  */
 public interface Extension extends EObject {
@@ -138,4 +142,36 @@ public interface Extension extends EObject {
 	 * @generated
 	 */
 	void setUpperBound(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Redefined</b></em>' reference list.
+	 * The list contents are of type {@link org.modelversioning.emfprofile.Extension}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Redefined</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Redefined</em>' reference list.
+	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getExtension_Redefined()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	EList<Extension> getRedefined();
+
+	/**
+	 * Returns the value of the '<em><b>Subsetted</b></em>' reference list.
+	 * The list contents are of type {@link org.modelversioning.emfprofile.Extension}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Subsetted</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Subsetted</em>' reference list.
+	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getExtension_Subsetted()
+	 * @model resolveProxies="false"
+	 * @generated
+	 */
+	EList<Extension> getSubsetted();
 } // Extension

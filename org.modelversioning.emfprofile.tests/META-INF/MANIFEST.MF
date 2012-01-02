@@ -7,7 +7,6 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.modelversioning.emfprofile.tests
 Require-Bundle: org.eclipse.core.runtime,
  org.modelversioning.emfprofile;visibility:=reexport,
  org.eclipse.emf.ecore;visibility:=reexport,

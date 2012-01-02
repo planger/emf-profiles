@@ -1,5 +1,5 @@
 /**
- * Copyright (c) ${year} modelversioning.org
+ * Copyright (c) 2010 modelversioning.org
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -29,6 +29,8 @@ import org.modelversioning.emfprofile.Stereotype;
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#getUpperBound(org.eclipse.emf.ecore.EClass) <em>Get Upper Bound</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#getAllExtensibleClasses() <em>Get All Extensible Classes</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Stereotype#getExtensibleClasses() <em>Get Extensible Classes</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#getTaggedValues() <em>Get Tagged Values</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Stereotype#getTaggedValue(java.lang.String) <em>Get Tagged Value</em>}</li>
  * </ul>
  * </p>
  * @generated
@@ -203,6 +205,32 @@ public class StereotypeTest extends TestCase {
 	 * @generated
 	 */
 	public void testGetExtensibleClasses() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Stereotype#getTaggedValues() <em>Get Tagged Values</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Stereotype#getTaggedValues()
+	 * @generated
+	 */
+	public void testGetTaggedValues() {
+		// TODO: implement this operation test method
+		// Ensure that you remove @generated or mark it @generated NOT
+		fail();
+	}
+
+	/**
+	 * Tests the '{@link org.modelversioning.emfprofile.Stereotype#getTaggedValue(java.lang.String) <em>Get Tagged Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofile.Stereotype#getTaggedValue(java.lang.String)
+	 * @generated
+	 */
+	public void testGetTaggedValue__String() {
 		// TODO: implement this operation test method
 		// Ensure that you remove @generated or mark it @generated NOT
 		fail();

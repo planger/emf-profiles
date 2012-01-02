@@ -205,6 +205,15 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getStereotypeApplication_Extension() {
+		return (EReference)stereotypeApplicationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMFProfileApplicationFactory getEMFProfileApplicationFactory() {
 		return (EMFProfileApplicationFactory)getEFactoryInstance();
 	}
@@ -240,6 +249,7 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		stereotypeApplicationEClass = createEClass(STEREOTYPE_APPLICATION);
 		createEReference(stereotypeApplicationEClass, STEREOTYPE_APPLICATION__APPLIED_TO);
 		createEReference(stereotypeApplicationEClass, STEREOTYPE_APPLICATION__PROFILE_APPLICATION);
+		createEReference(stereotypeApplicationEClass, STEREOTYPE_APPLICATION__EXTENSION);
 	}
 
 	/**
@@ -288,6 +298,7 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		initEClass(stereotypeApplicationEClass, StereotypeApplication.class, "StereotypeApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getStereotypeApplication_AppliedTo(), theEcorePackage.getEObject(), null, "appliedTo", null, 0, -1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStereotypeApplication_ProfileApplication(), this.getProfileApplication(), this.getProfileApplication_StereotypeApplications(), "profileApplication", null, 0, 1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStereotypeApplication_Extension(), theEMFProfilePackage.getExtension(), null, "extension", null, 1, 1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
