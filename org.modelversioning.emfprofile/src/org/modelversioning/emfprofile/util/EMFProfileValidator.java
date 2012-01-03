@@ -212,6 +212,7 @@ public class EMFProfileValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(extension, diagnostics, context);
 		if (result || diagnostics != null) result &= validateExtension_redefinedInSuperStereotype(extension, diagnostics, context);
 		if (result || diagnostics != null) result &= validateExtension_subsettedInSuperStereotype(extension, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExtension_subsettedMustHaveHigherOrEqualUpperBound(extension, diagnostics, context);
 		return result;
 	}
 
@@ -268,6 +269,35 @@ public class EMFProfileValidator extends EObjectValidator {
 				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
 				 "subsettedInSuperStereotype",
 				 EXTENSION__SUBSETTED_IN_SUPER_STEREOTYPE__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
+	}
+
+	/**
+	 * The cached validation expression for the subsettedMustHaveHigherOrEqualUpperBound constraint of '<em>Extension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String EXTENSION__SUBSETTED_MUST_HAVE_HIGHER_OR_EQUAL_UPPER_BOUND__EEXPRESSION = "self.subsetted->size() > 0 implies self.subsetted->forAll(subsetted : Extension | subsetted.upperBound >= self.upperBound or subsetted.upperBound = -1)";
+
+	/**
+	 * Validates the subsettedMustHaveHigherOrEqualUpperBound constraint of '<em>Extension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateExtension_subsettedMustHaveHigherOrEqualUpperBound(Extension extension, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(EMFProfilePackage.Literals.EXTENSION,
+				 extension,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
+				 "subsettedMustHaveHigherOrEqualUpperBound",
+				 EXTENSION__SUBSETTED_MUST_HAVE_HIGHER_OR_EQUAL_UPPER_BOUND__EEXPRESSION,
 				 Diagnostic.ERROR,
 				 DIAGNOSTIC_SOURCE,
 				 0);

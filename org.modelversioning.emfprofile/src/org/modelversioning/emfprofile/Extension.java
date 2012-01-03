@@ -29,8 +29,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.modelversioning.emfprofile.EMFProfilePackage#getExtension()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='redefinedInSuperStereotype subsettedInSuperStereotype'"
- *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL redefinedInSuperStereotype='self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.redefined)' subsettedInSuperStereotype='self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.subsetted)'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='redefinedInSuperStereotype subsettedInSuperStereotype subsettedMustHaveHigherOrEqualUpperBound'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL redefinedInSuperStereotype='self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.redefined)' subsettedInSuperStereotype='self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.subsetted)' subsettedMustHaveHigherOrEqualUpperBound='self.subsetted->size() > 0 implies self.subsetted->forAll(subsetted : Extension | subsetted.upperBound >= self.upperBound or subsetted.upperBound = -1)'"
  * @generated
  */
 public interface Extension extends EObject {

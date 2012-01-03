@@ -404,7 +404,7 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		  (extensionEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "redefinedInSuperStereotype subsettedInSuperStereotype"
+			 "constraints", "redefinedInSuperStereotype subsettedInSuperStereotype subsettedMustHaveHigherOrEqualUpperBound"
 		   });	
 	}
 
@@ -427,7 +427,8 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		   source, 
 		   new String[] {
 			 "redefinedInSuperStereotype", "self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.redefined)",
-			 "subsettedInSuperStereotype", "self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.subsetted)"
+			 "subsettedInSuperStereotype", "self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.subsetted)",
+			 "subsettedMustHaveHigherOrEqualUpperBound", "self.subsetted->size() > 0 implies self.subsetted->forAll(subsetted : Extension | subsetted.upperBound >= self.upperBound or subsetted.upperBound = -1)"
 		   });
 	}
 
