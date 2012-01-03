@@ -27,7 +27,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * </p>
  *
  * @see org.modelversioning.emfprofile.EMFProfilePackage#getStereotype()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='uniqueExtensions'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL uniqueExtensions='self.extensions->size() > 1 implies self.extensions->forAll(ex1 : Extension, ex2 : Extension | ex1 <> ex2 implies ex1.target <> ex2.target)'"
  * @generated
  */
 public interface Stereotype extends EClass {
@@ -178,6 +179,14 @@ public interface Stereotype extends EClass {
 	 * @generated
 	 */
 	EStructuralFeature getTaggedValue(String name);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model eObjectRequired="true" appliedStereotypesMany="true" appliedStereotypesOrdered="false"
+	 * @generated
+	 */
+	EList<Boolean> getApplicableExtensions(EObject eObject, EList<Stereotype> appliedStereotypes);
 
 	/**
 	 * Returns the value of the '<em><b>Extensions</b></em>' containment reference list.

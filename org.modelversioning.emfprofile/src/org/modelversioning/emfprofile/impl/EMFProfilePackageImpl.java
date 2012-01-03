@@ -366,6 +366,10 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		op = addEOperation(stereotypeEClass, theEcorePackage.getEStructuralFeature(), "getTaggedValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 1, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(stereotypeEClass, ecorePackage.getEBoolean(), "getApplicableExtensions", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEObject(), "eObject", 1, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getStereotype(), "appliedStereotypes", 0, -1, IS_UNIQUE, !IS_ORDERED);
+
 		initEClass(extensionEClass, Extension.class, "Extension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getExtension_Source(), this.getStereotype(), this.getStereotype_Extensions(), "source", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExtension_Target(), theEcorePackage.getEClass(), null, "target", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -399,6 +403,12 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL"
 		   });		
 		addAnnotation
+		  (stereotypeEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "uniqueExtensions"
+		   });			
+		addAnnotation
 		  (extensionEClass, 
 		   source, 
 		   new String[] {
@@ -414,6 +424,12 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 */
 	protected void createOCLAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";				
+		addAnnotation
+		  (stereotypeEClass, 
+		   source, 
+		   new String[] {
+			 "uniqueExtensions", "self.extensions->size() > 1 implies self.extensions->forAll(ex1 : Extension, ex2 : Extension | ex1 <> ex2 implies ex1.target <> ex2.target)"
+		   });			
 		addAnnotation
 		  (extensionEClass, 
 		   source, 

@@ -46,17 +46,17 @@ public class UpperBoundConstraint extends AbstractModelConstraint {
 
 			if (eObj instanceof Stereotype
 					&& eObj instanceof StereotypeApplication) {
-				int upperBound = ((Stereotype) eObj).getExtensions().get(0).getUpperBound();
+				int upperBound = ((Stereotype) eObj).getExtensions().get(0)
+						.getUpperBound();
 				String stereotypeName = ((Stereotype) eObj).getName();
 				ProfileApplication profileApplication = ((StereotypeApplication) eObj)
 						.getProfileApplication();
 				int applications = 0;
-				for (EObject extendedObject : ((StereotypeApplication) eObj)
-						.getAppliedTo()) {
-					applications += getNumberOfAppliedStereotypes(
-							extendedObject, (Stereotype) eObj,
-							profileApplication);
-				}
+				EObject extendedObject = ((StereotypeApplication) eObj)
+						.getAppliedTo();
+				applications += getNumberOfAppliedStereotypes(extendedObject,
+						(Stereotype) eObj, profileApplication);
+
 				if (applications > upperBound) {
 					return ctx
 							.createFailureStatus(new Object[] { stereotypeName });

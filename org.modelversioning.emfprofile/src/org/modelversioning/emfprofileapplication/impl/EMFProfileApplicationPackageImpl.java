@@ -296,7 +296,7 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		initEReference(getProfileImport_Profile(), theEMFProfilePackage.getProfile(), null, "profile", null, 0, 1, ProfileImport.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stereotypeApplicationEClass, StereotypeApplication.class, "StereotypeApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getStereotypeApplication_AppliedTo(), theEcorePackage.getEObject(), null, "appliedTo", null, 0, -1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStereotypeApplication_AppliedTo(), theEcorePackage.getEObject(), null, "appliedTo", null, 0, 1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStereotypeApplication_ProfileApplication(), this.getProfileApplication(), this.getProfileApplication_StereotypeApplications(), "profileApplication", null, 0, 1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStereotypeApplication_Extension(), theEMFProfilePackage.getExtension(), null, "extension", null, 1, 1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

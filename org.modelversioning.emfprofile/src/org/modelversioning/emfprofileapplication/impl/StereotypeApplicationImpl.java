@@ -7,17 +7,13 @@
  */
 package org.modelversioning.emfprofileapplication.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
@@ -41,14 +37,14 @@ import org.modelversioning.emfprofileapplication.StereotypeApplication;
  */
 public class StereotypeApplicationImpl extends EObjectImpl implements StereotypeApplication {
 	/**
-	 * The cached value of the '{@link #getAppliedTo() <em>Applied To</em>}' reference list.
+	 * The cached value of the '{@link #getAppliedTo() <em>Applied To</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getAppliedTo()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<EObject> appliedTo;
+	protected EObject appliedTo;
 
 	/**
 	 * The cached value of the '{@link #getExtension() <em>Extension</em>}' reference.
@@ -84,11 +80,37 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<EObject> getAppliedTo() {
-		if (appliedTo == null) {
-			appliedTo = new EObjectResolvingEList<EObject>(EObject.class, this, EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__APPLIED_TO);
+	public EObject getAppliedTo() {
+		if (appliedTo != null && appliedTo.eIsProxy()) {
+			InternalEObject oldAppliedTo = (InternalEObject)appliedTo;
+			appliedTo = eResolveProxy(oldAppliedTo);
+			if (appliedTo != oldAppliedTo) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__APPLIED_TO, oldAppliedTo, appliedTo));
+			}
 		}
 		return appliedTo;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EObject basicGetAppliedTo() {
+		return appliedTo;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAppliedTo(EObject newAppliedTo) {
+		EObject oldAppliedTo = appliedTo;
+		appliedTo = newAppliedTo;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__APPLIED_TO, oldAppliedTo, appliedTo));
 	}
 
 	/**
@@ -223,7 +245,8 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__APPLIED_TO:
-				return getAppliedTo();
+				if (resolve) return getAppliedTo();
+				return basicGetAppliedTo();
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION:
 				return getProfileApplication();
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION:
@@ -243,8 +266,7 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__APPLIED_TO:
-				getAppliedTo().clear();
-				getAppliedTo().addAll((Collection<? extends EObject>)newValue);
+				setAppliedTo((EObject)newValue);
 				return;
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION:
 				setProfileApplication((ProfileApplication)newValue);
@@ -265,7 +287,7 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__APPLIED_TO:
-				getAppliedTo().clear();
+				setAppliedTo((EObject)null);
 				return;
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION:
 				setProfileApplication((ProfileApplication)null);
@@ -286,7 +308,7 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__APPLIED_TO:
-				return appliedTo != null && !appliedTo.isEmpty();
+				return appliedTo != null;
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION:
 				return getProfileApplication() != null;
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION:

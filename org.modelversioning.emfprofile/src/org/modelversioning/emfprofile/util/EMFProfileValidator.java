@@ -162,7 +162,37 @@ public class EMFProfileValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_WellFormedMapEntryClass(stereotype, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_ConsistentSuperTypes(stereotype, diagnostics, context);
 		if (result || diagnostics != null) result &= ecoreValidator.validateEClass_DisjointFeatureAndOperationSignatures(stereotype, diagnostics, context);
+		if (result || diagnostics != null) result &= validateStereotype_uniqueExtensions(stereotype, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * The cached validation expression for the uniqueExtensions constraint of '<em>Stereotype</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String STEREOTYPE__UNIQUE_EXTENSIONS__EEXPRESSION = "self.extensions->size() > 1 implies self.extensions->forAll(ex1 : Extension, ex2 : Extension | ex1 <> ex2 implies ex1.target <> ex2.target)";
+
+	/**
+	 * Validates the uniqueExtensions constraint of '<em>Stereotype</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateStereotype_uniqueExtensions(Stereotype stereotype, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(EMFProfilePackage.Literals.STEREOTYPE,
+				 stereotype,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
+				 "uniqueExtensions",
+				 STEREOTYPE__UNIQUE_EXTENSIONS__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
@@ -251,6 +281,9 @@ public class EMFProfileValidator extends EObjectValidator {
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
+		// TODO
+		// Specialize this to return a resource locator for messages specific to this validator.
+		// Ensure that you remove @generated or mark it @generated NOT
 		return super.getResourceLocator();
 	}
 

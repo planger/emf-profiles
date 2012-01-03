@@ -154,7 +154,7 @@ public interface EMFProfileApplicationPackage extends EPackage {
 	int STEREOTYPE_APPLICATION = 2;
 
 	/**
-	 * The feature id for the '<em><b>Applied To</b></em>' reference list.
+	 * The feature id for the '<em><b>Applied To</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -276,10 +276,10 @@ public interface EMFProfileApplicationPackage extends EPackage {
 	EClass getStereotypeApplication();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.modelversioning.emfprofileapplication.StereotypeApplication#getAppliedTo <em>Applied To</em>}'.
+	 * Returns the meta object for the reference '{@link org.modelversioning.emfprofileapplication.StereotypeApplication#getAppliedTo <em>Applied To</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Applied To</em>'.
+	 * @return the meta object for the reference '<em>Applied To</em>'.
 	 * @see org.modelversioning.emfprofileapplication.StereotypeApplication#getAppliedTo()
 	 * @see #getStereotypeApplication()
 	 * @generated
@@ -401,7 +401,7 @@ public interface EMFProfileApplicationPackage extends EPackage {
 		EClass STEREOTYPE_APPLICATION = eINSTANCE.getStereotypeApplication();
 
 		/**
-		 * The meta object literal for the '<em><b>Applied To</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Applied To</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

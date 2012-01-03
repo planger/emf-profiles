@@ -7,7 +7,6 @@
  */
 package org.modelversioning.emfprofileapplication;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.modelversioning.emfprofile.Extension;
 
@@ -31,20 +30,30 @@ import org.modelversioning.emfprofile.Extension;
  */
 public interface StereotypeApplication extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Applied To</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+	 * Returns the value of the '<em><b>Applied To</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Applied To</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Applied To</em>' reference list.
+	 * @return the value of the '<em>Applied To</em>' reference.
+	 * @see #setAppliedTo(EObject)
 	 * @see org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage#getStereotypeApplication_AppliedTo()
 	 * @model
 	 * @generated
 	 */
-	EList<EObject> getAppliedTo();
+	EObject getAppliedTo();
+
+	/**
+	 * Sets the value of the '{@link org.modelversioning.emfprofileapplication.StereotypeApplication#getAppliedTo <em>Applied To</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Applied To</em>' reference.
+	 * @see #getAppliedTo()
+	 * @generated
+	 */
+	void setAppliedTo(EObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Profile Application</b></em>' container reference.

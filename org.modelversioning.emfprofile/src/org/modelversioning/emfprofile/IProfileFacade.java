@@ -179,58 +179,6 @@ public interface IProfileFacade {
 	StereotypeApplication apply(Stereotype stereotype, EObject eObject);
 
 	/**
-	 * Applies the specified <code>stereotype</code> to the specified list of
-	 * <code>eObjects</code>.
-	 * 
-	 * <p>
-	 * This method creates a new instance of the specified {@link Stereotype}
-	 * and adds it to the {@link #setProfileApplicationResource(Resource)
-	 * currently set profile application resource}. If no resource is currently
-	 * set, this method throws an {@link IllegalStateException}.
-	 * </p>
-	 * 
-	 * @param stereotype
-	 *            to apply.
-	 * @param eObjects
-	 *            to apply the <code>stereotype</code> to.
-	 * @return the created instance of the {@link Stereotype}.
-	 */
-	StereotypeApplication apply(Stereotype stereotype, EList<EObject> eObjects);
-
-	/**
-	 * Applies the specified existing <code>stereotypeApplication</code> to the
-	 * specified <code>eObject</code>.
-	 * 
-	 * <p>
-	 * This method adds the specified <code>eObject</code> to the objects to
-	 * which the specified {@link StereotypeApplication} is applied.
-	 * </p>
-	 * 
-	 * @param stereotypeApplication
-	 *            to apply.
-	 * @param eObject
-	 *            to apply the <code>stereotypeApplication</code> to.
-	 */
-	void apply(StereotypeApplication stereotypeApplication, EObject eObject);
-
-	/**
-	 * Applies the specified existing <code>stereotypeApplication</code> to the
-	 * specified list of <code>eObjects</code>.
-	 * 
-	 * <p>
-	 * This method adds the specified list of <code>eObjects</code> to the
-	 * objects to which the specified {@link StereotypeApplication} is applied.
-	 * </p>
-	 * 
-	 * @param stereotypeApplication
-	 *            to apply.
-	 * @param eObjects
-	 *            to apply the <code>stereotypeApplication</code> to.
-	 */
-	void apply(StereotypeApplication stereotypeApplication,
-			EList<EObject> eObjects);
-
-	/**
 	 * Returns all {@link StereotypeApplication StereotypeApplications} handled
 	 * by this facade.
 	 * 
@@ -247,7 +195,7 @@ public interface IProfileFacade {
 	 * @return the list of {@link StereotypeApplication}s.
 	 */
 	EList<StereotypeApplication> getAppliedStereotypes(EObject eObject);
-	
+
 	/**
 	 * Specifies whether the <code>stereotype</code> is applicable to
 	 * <code>eObject</code>.
@@ -271,12 +219,12 @@ public interface IProfileFacade {
 	EList<EStructuralFeature> getStereotypeFeatures(Stereotype stereotype);
 
 	/**
-	 * Returns the value of the given <code>feature</code> of the given
+	 * Returns the value of the given <code>taggedValue</code> of the given
 	 * <code>stereotypeApplication</code>.
 	 * 
 	 * <p>
-	 * If the feature is {@link ETypedElement#isMany() many-valued}, the result
-	 * will be an {@link EList} and each object in the list will be
+	 * If the tagged value is {@link ETypedElement#isMany() many-valued}, the
+	 * result will be an {@link EList} and each object in the list will be
 	 * {@link EClassifier#isInstance an instance of} the feature's
 	 * {@link ETypedElement#getEType() type}; the list's contents are <b>not</b>
 	 * affected by <code>resolve</code> argument. Otherwise the result directly
@@ -286,15 +234,15 @@ public interface IProfileFacade {
 	 * 
 	 * @param stereotypeApplication
 	 *            to get feature value for.
-	 * @param feature
-	 *            the feature of the value to fetch.
-	 * @return the value of the given feature of the object.
+	 * @param taggedValue
+	 *            the tagged value to fetch.
+	 * @return the value of the given tagged value of the object.
 	 */
-	Object getStereotypeApplicationFeatureValue(EObject stereotypeApplication,
-			EStructuralFeature feature);
+	Object getTaggedValue(EObject stereotypeApplication,
+			EStructuralFeature taggedValue);
 
 	/**
-	 * Sets the value of the given <code>feature</code> of the
+	 * Sets the value of the given <code>taggedValue</code> of the
 	 * <code>stereotypeApplication</code> to the new value.
 	 * <p>
 	 * If the feature is {@link ETypedElement#isMany() many-valued}, the new
@@ -314,8 +262,8 @@ public interface IProfileFacade {
 	 * 
 	 * @param stereotypeApplication
 	 *            to set feature value.
-	 * @param feature
-	 *            the feature of the value to set.
+	 * @param taggedValue
+	 *            the tagged value to set.
 	 * @param newValue
 	 *            the value to set.
 	 * 
@@ -328,8 +276,8 @@ public interface IProfileFacade {
 	 * @exception ArrayStoreException
 	 *                if there is a type conflict.
 	 */
-	void setStereotypeApplicationFeatureValue(EObject stereotypeApplication,
-			EStructuralFeature feature, Object newValue);
+	void setTaggedValue(EObject stereotypeApplication,
+			EStructuralFeature taggedValue, Object newValue);
 
 	/**
 	 * Saves the currently set profile application resource.
