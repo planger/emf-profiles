@@ -378,23 +378,24 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public EList<EStructuralFeature> getTaggedValues() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		return this.eStructuralFeatures;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public EStructuralFeature getTaggedValue(String name) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		for (EStructuralFeature taggedValue : getTaggedValues()) {
+			if (name.equals(taggedValue.getName())) {
+				return taggedValue;
+			}
+		}
+		return null;
 	}
 
 	/**
