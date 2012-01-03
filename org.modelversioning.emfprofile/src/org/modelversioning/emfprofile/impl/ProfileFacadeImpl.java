@@ -35,6 +35,7 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.emf.validation.model.EvaluationMode;
 import org.eclipse.emf.validation.service.IBatchValidator;
 import org.eclipse.emf.validation.service.ModelValidationService;
+import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.IProfileFacade;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
@@ -52,6 +53,7 @@ import org.modelversioning.emfprofileapplication.validation.ValidationDelegateCl
  */
 public class ProfileFacadeImpl implements IProfileFacade {
 
+	private static final String STEREOTYPE_NOT_APPLICABLE = "Stereotype is not applicable to the object.";
 	private static final String STEREOTYPE_APP_RESOURCE_ERROR = "Specified resource for the "
 			+ "stereotype application is not set, null, or unloaded.";
 	/**
@@ -244,25 +246,16 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	@Override
 	public boolean isApplicable(Stereotype stereotype, EObject eObject) {
 		return stereotype.isApplicable(eObject,
-				cast(getAppliedStereotypes(eObject)));
+				extractAppliedExtensions(getAppliedStereotypes(eObject)));
 	}
 
-	/**
-	 * Converts a list of {@link StereotypeApplication} to a list of
-	 * {@link Stereotype}.
-	 * 
-	 * @param applications
-	 *            to convert.
-	 * @return the converted list.
-	 */
-	private EList<Stereotype> cast(EList<StereotypeApplication> applications) {
-		EList<Stereotype> stereotypes = new BasicEList<Stereotype>();
-		for (StereotypeApplication application : applications) {
-			if (application.eClass() instanceof Stereotype) {
-				stereotypes.add((Stereotype) application.eClass());
-			}
+	private EList<Extension> extractAppliedExtensions(
+			EList<StereotypeApplication> appliedStereotypes) {
+		EList<Extension> appliedExtensions = new BasicEList<Extension>();
+		for (StereotypeApplication stereotypeApplication : appliedStereotypes) {
+			appliedExtensions.add(stereotypeApplication.getExtension());
 		}
-		return stereotypes;
+		return appliedExtensions;
 	}
 
 	/**
@@ -271,28 +264,33 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	@Override
 	public StereotypeApplication apply(Stereotype stereotype, EObject eObject) {
 		if (!isApplicable(stereotype, eObject)) {
-			throw new IllegalArgumentException(
-					"Stereotype is not applicable to the object.");
+			throw new IllegalArgumentException(STEREOTYPE_NOT_APPLICABLE);
 		}
-		StereotypeApplication stereotypeApplication = createStereotypeApplication(stereotype);
-		apply(stereotypeApplication, eObject);
-		return stereotypeApplication;
+		Extension defaultExtension = getDefaultExtension(stereotype, eObject);
+		return apply(stereotype, eObject, defaultExtension);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public StereotypeApplication apply(Stereotype stereotype,
-			EList<EObject> eObjects) {
-		for (EObject eObject : eObjects) {
-			if (!isApplicable(stereotype, eObject)) {
-				throw new IllegalArgumentException(
-						"Stereotype is not applicable to all objects.");
-			}
+	private Extension getDefaultExtension(Stereotype stereotype, EObject eObject) {
+		EList<Extension> applicableExtensions = getApplicableExtensions(
+				stereotype, eObject);
+		if (applicableExtensions.size() > 0) {
+			return applicableExtensions.get(0);
+		} else {
+			throw new IllegalArgumentException(STEREOTYPE_NOT_APPLICABLE);
 		}
+	}
+
+	private EList<Extension> getApplicableExtensions(Stereotype stereotype,
+			EObject eObject) {
+		return stereotype.getApplicableExtensions(eObject,
+				extractAppliedExtensions(getAppliedStereotypes(eObject)));
+	}
+
+	private StereotypeApplication apply(Stereotype stereotype, EObject eObject,
+			Extension extension) {
 		StereotypeApplication stereotypeApplication = createStereotypeApplication(stereotype);
-		apply(stereotypeApplication, eObjects);
+		stereotypeApplication.setExtension(extension);
+		apply(stereotypeApplication, eObject);
 		return stereotypeApplication;
 	}
 
@@ -426,55 +424,26 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Applies the specified stereotype application to the specified object.
+	 * 
+	 * @param stereotypeApplication
+	 *            to be applied.
+	 * @param eObject
+	 *            to apply the stereotype application to.
 	 */
-	@Override
-	public void apply(final StereotypeApplication stereotypeApplication,
+	private void apply(final StereotypeApplication stereotypeApplication,
 			final EObject eObject) {
 		if (requireTransaction()) {
 			TransactionalEditingDomain domain = getTransactionalEditingDomain();
 			domain.getCommandStack().execute(new RecordingCommand(domain) {
 				@Override
 				protected void doExecute() {
-					getAppliedToList(stereotypeApplication).add(eObject);
+					stereotypeApplication.setAppliedTo(eObject);
 				}
 			});
 		} else {
-			getAppliedToList(stereotypeApplication).add(eObject);
+			stereotypeApplication.setAppliedTo(eObject);
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void apply(final StereotypeApplication stereotypeApplication,
-			final EList<EObject> eObjects) {
-		if (requireTransaction()) {
-			TransactionalEditingDomain domain = getTransactionalEditingDomain();
-			domain.getCommandStack().execute(new RecordingCommand(domain) {
-				@Override
-				protected void doExecute() {
-					getAppliedToList(stereotypeApplication).addAll(eObjects);
-				}
-			});
-		} else {
-			getAppliedToList(stereotypeApplication).addAll(eObjects);
-		}
-	}
-
-	/**
-	 * Returns the list of {@link EObject EObjects} to which the specified
-	 * <code>stereotypeApplication</code> is applied to.
-	 * 
-	 * @param stereotypeApplication
-	 *            to get {@link EObject EObjects} to which it is applied to.
-	 * @return the list of {@link EObject EObjects} to which the specified
-	 *         <code>stereotypeApplication</code> is applied to
-	 */
-	protected EList<EObject> getAppliedToList(
-			StereotypeApplication stereotypeApplication) {
-		return stereotypeApplication.getAppliedTo();
 	}
 
 	/**
@@ -538,10 +507,8 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	public EList<StereotypeApplication> getAppliedStereotypes(EObject eObject) {
 		EList<StereotypeApplication> appliedStereotypes = new BasicEList<StereotypeApplication>();
 		for (StereotypeApplication stereotypeApplication : getStereotypeApplications()) {
-			for (EObject appliedToObject : stereotypeApplication.getAppliedTo()) {
-				if (resolvedEquals(appliedToObject, eObject)) {
-					appliedStereotypes.add(stereotypeApplication);
-				}
+			if (resolvedEquals(stereotypeApplication.getAppliedTo(), eObject)) {
+				appliedStereotypes.add(stereotypeApplication);
 			}
 		}
 		return appliedStereotypes;
@@ -630,26 +597,25 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object getStereotypeApplicationFeatureValue(
-			EObject stereotypeApplication, EStructuralFeature feature) {
-		return stereotypeApplication.eGet(feature);
+	public Object getTaggedValue(EObject stereotypeApplication,
+			EStructuralFeature taggedValue) {
+		return stereotypeApplication.eGet(taggedValue);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setStereotypeApplicationFeatureValue(
-			EObject stereotypeApplication, EStructuralFeature feature,
-			Object newValue) {
+	public void setTaggedValue(EObject stereotypeApplication,
+			EStructuralFeature taggedValue, Object newValue) {
 		if (requireTransaction()) {
 			TransactionalEditingDomain domain = getTransactionalEditingDomain();
 			Command command = domain.createCommand(SetCommand.class,
-					new CommandParameter(stereotypeApplication, feature,
+					new CommandParameter(stereotypeApplication, taggedValue,
 							newValue));
 			domain.getCommandStack().execute(command);
 		} else {
-			stereotypeApplication.eSet(feature, newValue);
+			stereotypeApplication.eSet(taggedValue, newValue);
 		}
 	}
 

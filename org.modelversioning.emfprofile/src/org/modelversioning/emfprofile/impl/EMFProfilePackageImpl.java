@@ -347,28 +347,20 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 
 		op = addEOperation(stereotypeEClass, ecorePackage.getEBoolean(), "isApplicable", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEObject(), "eObject", 1, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getStereotype(), "appliedStereotypes", 0, -1, IS_UNIQUE, !IS_ORDERED);
+		addEParameter(op, this.getExtension(), "appliedExtensions", 0, -1, IS_UNIQUE, !IS_ORDERED);
 
 		addEOperation(stereotypeEClass, this.getProfile(), "getProfile", 1, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(stereotypeEClass, ecorePackage.getEInt(), "getLowerBound", 1, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(stereotypeEClass, ecorePackage.getEInt(), "getUpperBound", 1, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		addEOperation(stereotypeEClass, theEcorePackage.getEClass(), "getAllExtensibleClasses", 0, -1, !IS_UNIQUE, IS_ORDERED);
-
-		addEOperation(stereotypeEClass, theEcorePackage.getEClass(), "getExtensibleClasses", 0, -1, IS_UNIQUE, !IS_ORDERED);
+		addEOperation(stereotypeEClass, this.getExtension(), "getAllExtensions", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(stereotypeEClass, theEcorePackage.getEStructuralFeature(), "getTaggedValues", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(stereotypeEClass, theEcorePackage.getEStructuralFeature(), "getTaggedValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 1, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(stereotypeEClass, ecorePackage.getEBoolean(), "getApplicableExtensions", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(stereotypeEClass, this.getExtension(), "getApplicableExtensions", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEObject(), "eObject", 1, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getStereotype(), "appliedStereotypes", 0, -1, IS_UNIQUE, !IS_ORDERED);
+		addEParameter(op, this.getExtension(), "appliedExtensions", 0, -1, IS_UNIQUE, !IS_ORDERED);
 
 		initEClass(extensionEClass, Extension.class, "Extension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getExtension_Source(), this.getStereotype(), this.getStereotype_Extensions(), "source", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

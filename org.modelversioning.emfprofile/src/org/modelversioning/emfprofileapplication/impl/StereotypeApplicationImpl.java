@@ -261,7 +261,6 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {

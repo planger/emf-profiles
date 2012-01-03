@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<emfprofileapplication:ProfileApplication xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:conflictProfile="modelversioning.org/conflictProfile" xmlns:emfprofileapplication="http://www.modelversioning.org/emfprofile/application/1.0">
-  <stereotypeApplications xsi:type="conflictProfile:UpdateUpdate" appliedTo="model.ecore#_tkq4oGqQEeCHRc0jG79cZA"/>
-  <importedProfiles nsURI="modelversioning.org/conflictProfile"/>
-</emfprofileapplication:ProfileApplication>

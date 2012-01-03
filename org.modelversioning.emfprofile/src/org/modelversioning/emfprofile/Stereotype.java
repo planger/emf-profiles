@@ -107,14 +107,11 @@ public interface Stereotype extends EClass {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * Specifies whether this stereotype is applicable to <code>eObject</code>, given
-	 * that the specified list of <code>appliedStereotypes</code> already is applied
-	 * to <code>eObject</code>.
 	 * <!-- end-user-doc -->
-	 * @model required="true" eObjectRequired="true" appliedStereotypesMany="true" appliedStereotypesOrdered="false"
-	 * @generated NOT
+	 * @model required="true" eObjectRequired="true" appliedExtensionsMany="true" appliedExtensionsOrdered="false"
+	 * @generated
 	 */
-	boolean isApplicable(EObject eObject, EList<Stereotype> appliedStereotypes);
+	boolean isApplicable(EObject eObject, EList<Extension> appliedExtensions);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -123,46 +120,14 @@ public interface Stereotype extends EClass {
 	 * @generated
 	 */
 	Profile getProfile();
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * Returns the upper bound of this stereotype for the specified <code>eClass</code>.
-	 * If this stereotype is directly and indirectly not applicable to <code>eClass</code>,
-	 * this method returns <code>-2</code>.
-	 * <!-- end-user-doc -->
-	 * @model required="true"
-	 * @generated NOT
-	 */
-	int getLowerBound(EClass eClass);
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * Returns the upper bound of this stereotype for the specified <code>eClass</code>.
-	 * If this stereotype is directly and indirectly not applicable to <code>eClass</code>,
-	 * this method returns <code>-2</code>.
-	 * <!-- end-user-doc -->
-	 * @model required="true"
-	 * @generated NOT
-	 */
-	int getUpperBound(EClass eClass);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * All classes for which a this and all super stereotypes contain an {@link #getExtensions() extension}.
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
 	 * @generated
 	 */
-	EList<EClass> getAllExtensibleClasses();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * All classes for which a this stereotype contains an {@link #getExtensions() extension}.
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" ordered="false"
-	 * @generated
-	 */
-	EList<EClass> getExtensibleClasses();
+	EList<Extension> getAllExtensions();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -183,10 +148,10 @@ public interface Stereotype extends EClass {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model eObjectRequired="true" appliedStereotypesMany="true" appliedStereotypesOrdered="false"
+	 * @model eObjectRequired="true" appliedExtensionsMany="true" appliedExtensionsOrdered="false"
 	 * @generated
 	 */
-	EList<Boolean> getApplicableExtensions(EObject eObject, EList<Stereotype> appliedStereotypes);
+	EList<Extension> getApplicableExtensions(EObject eObject, EList<Extension> appliedExtensions);
 
 	/**
 	 * Returns the value of the '<em><b>Extensions</b></em>' containment reference list.
