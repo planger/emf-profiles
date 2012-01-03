@@ -4,6 +4,15 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="emfprofileapplication"
     nsURI="http://www.modelversioning.org/emfprofile/application/1.1" nsPrefix="emfprofileapplication">
   <eClassifiers xsi:type="ecore:EClass" name="ProfileApplication">
+    <eOperations name="getStereotypeApplications" ordered="false" upperBound="-1"
+        eType="#//StereotypeApplication">
+      <eParameters name="eObject" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+    </eOperations>
+    <eOperations name="getStereotypeApplications" ordered="false" upperBound="-1"
+        eType="#//StereotypeApplication">
+      <eParameters name="eObject" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+      <eParameters name="stereotype" lowerBound="1" eType="ecore:EClass emfprofiles.ecore#//Stereotype"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stereotypeApplications"
         upperBound="-1" eType="#//StereotypeApplication" containment="true" eOpposite="#//StereotypeApplication/profileApplication"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="importedProfiles" upperBound="-1"

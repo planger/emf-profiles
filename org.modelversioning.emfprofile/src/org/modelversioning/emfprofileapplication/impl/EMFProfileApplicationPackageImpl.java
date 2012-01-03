@@ -9,6 +9,7 @@ package org.modelversioning.emfprofileapplication.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -276,8 +277,8 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		EMFProfilePackage theEMFProfilePackage = (EMFProfilePackage)EPackage.Registry.INSTANCE.getEPackage(EMFProfilePackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		EMFProfilePackage theEMFProfilePackage = (EMFProfilePackage)EPackage.Registry.INSTANCE.getEPackage(EMFProfilePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -289,6 +290,13 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		initEClass(profileApplicationEClass, ProfileApplication.class, "ProfileApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProfileApplication_StereotypeApplications(), this.getStereotypeApplication(), this.getStereotypeApplication_ProfileApplication(), "stereotypeApplications", null, 0, -1, ProfileApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getProfileApplication_ImportedProfiles(), this.getProfileImport(), null, "importedProfiles", null, 0, -1, ProfileApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		EOperation op = addEOperation(profileApplicationEClass, this.getStereotypeApplication(), "getStereotypeApplications", 0, -1, IS_UNIQUE, !IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEObject(), "eObject", 1, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(profileApplicationEClass, this.getStereotypeApplication(), "getStereotypeApplications", 0, -1, IS_UNIQUE, !IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEObject(), "eObject", 1, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEMFProfilePackage.getStereotype(), "stereotype", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(profileImportEClass, ProfileImport.class, "ProfileImport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getProfileImport_NsURI(), ecorePackage.getEString(), "nsURI", null, 1, 1, ProfileImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

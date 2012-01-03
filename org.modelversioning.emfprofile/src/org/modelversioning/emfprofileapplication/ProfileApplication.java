@@ -9,6 +9,7 @@ package org.modelversioning.emfprofileapplication;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.modelversioning.emfprofile.Stereotype;
 
 /**
  * <!-- begin-user-doc -->
@@ -61,5 +62,21 @@ public interface ProfileApplication extends EObject {
 	 * @generated
 	 */
 	EList<ProfileImport> getImportedProfiles();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model ordered="false" eObjectRequired="true"
+	 * @generated
+	 */
+	EList<StereotypeApplication> getStereotypeApplications(EObject eObject);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model ordered="false" eObjectRequired="true" stereotypeRequired="true"
+	 * @generated
+	 */
+	EList<StereotypeApplication> getStereotypeApplications(EObject eObject, Stereotype stereotype);
 
 } // ProfileApplication

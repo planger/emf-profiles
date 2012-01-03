@@ -490,14 +490,12 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 */
 	@Override
 	public EList<StereotypeApplication> getStereotypeApplications() {
-		for (EObject contentObject : this.profileApplicationResource
-				.getContents()) {
-			if (contentObject instanceof ProfileApplication) {
-				return ((ProfileApplication) contentObject)
-						.getStereotypeApplications();
-			}
+		EList<StereotypeApplication> stereotypeApplications = new BasicEList<StereotypeApplication>();
+		for (ProfileApplication profileApplication : getProfileApplications(profileApplicationResource)) {
+			stereotypeApplications.addAll(profileApplication
+					.getStereotypeApplications());
 		}
-		return ECollections.emptyEList();
+		return ECollections.unmodifiableEList(stereotypeApplications);
 	}
 
 	/**
@@ -505,13 +503,12 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 */
 	@Override
 	public EList<StereotypeApplication> getAppliedStereotypes(EObject eObject) {
-		EList<StereotypeApplication> appliedStereotypes = new BasicEList<StereotypeApplication>();
-		for (StereotypeApplication stereotypeApplication : getStereotypeApplications()) {
-			if (resolvedEquals(stereotypeApplication.getAppliedTo(), eObject)) {
-				appliedStereotypes.add(stereotypeApplication);
-			}
+		EList<StereotypeApplication> stereotypeApplications = new BasicEList<StereotypeApplication>();
+		for (ProfileApplication profileApplication : getProfileApplications(profileApplicationResource)) {
+			stereotypeApplications.addAll(profileApplication
+					.getStereotypeApplications(eObject));
 		}
-		return appliedStereotypes;
+		return ECollections.unmodifiableEList(stereotypeApplications);
 	}
 
 	/**
@@ -526,15 +523,13 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * @return the list of {@link StereotypeApplication}s.
 	 */
 	protected EList<StereotypeApplication> getAppliedStereotypes(
-			Stereotype stereotype, EObject eObject) {
-		EList<StereotypeApplication> appliedStereotypes = getAppliedStereotypes(eObject);
-		for (StereotypeApplication application : new BasicEList<StereotypeApplication>(
-				appliedStereotypes)) {
-			if (application.eClass() != stereotype) {
-				appliedStereotypes.remove(application);
-			}
+			EObject eObject, Stereotype stereotype) {
+		EList<StereotypeApplication> stereotypeApplications = new BasicEList<StereotypeApplication>();
+		for (ProfileApplication profileApplication : getProfileApplications(profileApplicationResource)) {
+			stereotypeApplications.addAll(profileApplication
+					.getStereotypeApplications(eObject, stereotype));
 		}
-		return appliedStereotypes;
+		return ECollections.unmodifiableEList(stereotypeApplications);
 	}
 
 	/**
@@ -548,34 +543,12 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			domain.getCommandStack().execute(new RecordingCommand(domain) {
 				@Override
 				protected void doExecute() {
-					getStereotypeApplications().remove(stereotypeApplication);
+					EcoreUtil.remove(stereotypeApplication);
 				}
 			});
 		} else {
-			getStereotypeApplications().remove(stereotypeApplication);
+			EcoreUtil.remove(stereotypeApplication);
 		}
-	}
-
-	/**
-	 * Specifies whether the two specified {@link EObject EObjects} are equal
-	 * irrespectively of their resource.
-	 * 
-	 * @param eObject1
-	 *            first {@link EObject}
-	 * @param eObject2
-	 *            second {@link EObject}
-	 * @return <code>true</code> if equal, <code>false</code> otherwise.
-	 */
-	private boolean resolvedEquals(EObject eObject1, EObject eObject2) {
-		if (eObject1.equals(eObject2)) {
-			return true;
-		}
-		String eObject1URIFrag = eObject1.eResource().getURIFragment(eObject1);
-		String eObject2URIFrag = eObject2.eResource().getURIFragment(eObject2);
-		if (eObject1URIFrag.equals(eObject2URIFrag)) {
-			return true;
-		}
-		return false;
 	}
 
 	/**

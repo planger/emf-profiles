@@ -167,33 +167,73 @@ public class BasicProfileFacadeTest {
 		Assert.assertEquals(expectedExtension,
 				stereotypeApplication.getExtension());
 	}
-	
+
 	@Test
-	public void testSavingAndReloadingExistingProfileApplication() throws IOException {
+	public void testSavingAndReloadingExistingProfileApplication()
+			throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASS_NAME);
 		EClass person = getModelPersonEClass();
-		StereotypeApplication application = profileFacade.apply(stereotype, person);
-		EStructuralFeature taggedValue = stereotype.getTaggedValue("testTaggedValue");
+		StereotypeApplication application = profileFacade.apply(stereotype,
+				person);
+		EStructuralFeature taggedValue = stereotype
+				.getTaggedValue("testTaggedValue");
 		profileFacade.setTaggedValue(application, taggedValue, "test");
-		
+
 		profileFacade.save();
-		
+
 		profileFacade = new ProfileFacadeImpl();
 		profileFacade.loadProfile(profile);
 		String absolutePath = getAbsolutePath(profileApplicationPath);
 		Resource profileApplicationRes = loadResource(absolutePath);
 		profileFacade.setProfileApplicationResource(profileApplicationRes);
-		
-		EList<StereotypeApplication> appliedStereotypes = profileFacade.getAppliedStereotypes(person);
+
+		EList<StereotypeApplication> appliedStereotypes = profileFacade
+				.getAppliedStereotypes(person);
 		Assert.assertEquals(1, appliedStereotypes.size());
-		
+
 		StereotypeApplication stereotypeApplication = appliedStereotypes.get(0);
 		Assert.assertTrue(stereotypeApplication.eClass().equals(stereotype));
 		Assert.assertEquals(person, stereotypeApplication.getAppliedTo());
-		
-		Object value = profileFacade.getTaggedValue(stereotypeApplication, taggedValue);
+
+		Object value = profileFacade.getTaggedValue(stereotypeApplication,
+				taggedValue);
 		Assert.assertEquals("test", value);
+	}
+
+	@Test
+	public void testRemovingExistingProfileApplication() throws IOException {
+		IProfileFacade profileFacade = createProfileFacade();
+		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASS_NAME);
+		EClass person = getModelPersonEClass();
+		StereotypeApplication application = profileFacade.apply(stereotype,
+				person);
+		EStructuralFeature taggedValue = stereotype
+				.getTaggedValue("testTaggedValue");
+		profileFacade.setTaggedValue(application, taggedValue, "test");
+
+		profileFacade.save();
+
+		profileFacade = new ProfileFacadeImpl();
+		profileFacade.loadProfile(profile);
+		String absolutePath = getAbsolutePath(profileApplicationPath);
+		Resource profileApplicationRes = loadResource(absolutePath);
+		profileFacade.setProfileApplicationResource(profileApplicationRes);
+
+		Assert.assertEquals(1, profileFacade.getAppliedStereotypes(person)
+				.size());
+
+		StereotypeApplication stereotypeApplication = profileFacade
+				.getAppliedStereotypes(person).get(0);
+		profileFacade.removeStereotypeApplication(stereotypeApplication);
+
+		Assert.assertEquals(0, profileFacade.getAppliedStereotypes(person)
+				.size());
+
+		profileFacade.save();
+
+		Assert.assertEquals(0, profileFacade.getAppliedStereotypes(person)
+				.size());
 	}
 
 	@Test
@@ -229,17 +269,17 @@ public class BasicProfileFacadeTest {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME);
 		EAttribute firstNameAttribute = getModelPersonFirstNameEAttribute();
-		
+
 		Assert.assertTrue(profileFacade.isApplicable(stereotype,
 				firstNameAttribute));
-		
+
 		profileFacade.apply(stereotype, firstNameAttribute);
-		
+
 		Assert.assertTrue(profileFacade.isApplicable(stereotype,
 				firstNameAttribute));
-		
+
 		profileFacade.apply(stereotype, firstNameAttribute);
-		
+
 		Assert.assertFalse(profileFacade.isApplicable(stereotype,
 				firstNameAttribute));
 	}

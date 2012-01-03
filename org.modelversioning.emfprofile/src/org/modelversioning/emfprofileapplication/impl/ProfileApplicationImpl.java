@@ -10,13 +10,17 @@ package org.modelversioning.emfprofileapplication.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
@@ -98,6 +102,36 @@ public class ProfileApplicationImpl extends EObjectImpl implements ProfileApplic
 			importedProfiles = new EObjectContainmentEList<ProfileImport>(ProfileImport.class, this, EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES);
 		}
 		return importedProfiles;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<StereotypeApplication> getStereotypeApplications(EObject eObject) {
+		EList<StereotypeApplication> appliedStereotypes = new BasicEList<StereotypeApplication>();
+		for (StereotypeApplication stereotypeApplication : getStereotypeApplications()) {
+			if (eObject.equals(stereotypeApplication.getAppliedTo())) {
+				appliedStereotypes.add(stereotypeApplication);
+			}
+		}
+		return ECollections.unmodifiableEList(appliedStereotypes);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<StereotypeApplication> getStereotypeApplications(EObject eObject, Stereotype stereotype) {
+		EList<StereotypeApplication> appliedStereotypes = new BasicEList<StereotypeApplication>();
+		for (StereotypeApplication stereotypeApplication : getStereotypeApplications(eObject)) {
+			if (stereotypeApplication.eClass().equals(stereotype)) {
+				appliedStereotypes.add(stereotypeApplication);
+			}
+		}
+		return ECollections.unmodifiableEList(appliedStereotypes);
 	}
 
 	/**
