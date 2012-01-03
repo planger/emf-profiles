@@ -17,9 +17,12 @@ import java.util.Collections;
 
 import junit.framework.Assert;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -34,18 +37,22 @@ import org.modelversioning.emfprofile.impl.ProfileFacadeImpl;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
- * Tests for creating profile applications using the {@link ProfileFacadeImpl}.
+ * Tests for basic functions with basic profiles using the
+ * {@link ProfileFacadeImpl}.
  * 
- * @author <a href="mailto:wimmer@big.tuwien.ac.at">Manuel Wimmer</a>
+ * @author <a href="langer@big.tuwien.ac.at">Philip Langer</a>
  * 
  */
-public class ProfileFacadeTest {
+public class BasicProfileFacadeTest {
 
-	private static final String ABSTRACT_STEREOTYPE_FOR_E_CLASS_NAME = "AbstractForEClass";
+	private static final String ABSTRACT_STEREOTYPE_FOR_ECLASS_NAME = "AbstractForEClass";
 	private static final String CONCRETE_STEREOTYPE_FOR_ECLASS_NAME = "ConcreteForEClassInherited";
-	private final String modelPath = "model/basic/sample_ecore_model.ecore";
-	private final String profilePath = "model/basic/profile_for_ecore_models.emfprofile_diagram";
-	private final String profileApplicationPath = "model/basic/annotation.emfprofile.xmi";
+	private static final String CONCRETE_STEREOTYPE_FOR_ECLASSIFIER_NAME = "ConcreteForEClassifiers";
+	private static final String CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME = "ConcreteForEAttribute";
+
+	private static final String modelPath = "model/basic/sample_ecore_model.ecore";
+	private static final String profilePath = "model/basic/profile_for_ecore_models.emfprofile_diagram";
+	private static final String profileApplicationPath = "model/basic/annotation.emfprofile.xmi";
 
 	private final ResourceSet resourceSet = new ResourceSetImpl();
 
@@ -78,19 +85,24 @@ public class ProfileFacadeTest {
 	}
 
 	@Test
-	public void testAppliedToAfterApplyingStereotype() throws IOException {
+	public void testAppliedToValueAfterApplyingStereotype() throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASS_NAME);
 		EClass person = getModelPersonEClass();
-		
+
 		StereotypeApplication stereotypeApplication = profileFacade.apply(
 				stereotype, person);
-		
+
 		Assert.assertEquals(person, stereotypeApplication.getAppliedTo());
 	}
 
 	private EClass getModelPersonEClass() {
 		return (EClass) getModelEPackage().eContents().get(0);
+	}
+
+	private EAttribute getModelPersonFirstNameEAttribute() {
+		return (EAttribute) getModelPersonEClass().getEStructuralFeature(
+				"firstName");
 	}
 
 	private EObject getModelEPackage() {
@@ -133,10 +145,10 @@ public class ProfileFacadeTest {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASS_NAME);
 		EClass person = getModelPersonEClass();
-		
+
 		StereotypeApplication stereotypeApplication = profileFacade.apply(
 				stereotype, person);
-		
+
 		Assert.assertTrue(stereotypeApplication.eClass().equals(stereotype));
 	}
 
@@ -145,51 +157,93 @@ public class ProfileFacadeTest {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASS_NAME);
 		EClass person = getModelPersonEClass();
-		
+
 		StereotypeApplication stereotypeApplication = profileFacade.apply(
 				stereotype, person);
-		
-		Stereotype superStereotype = getStereotype(ABSTRACT_STEREOTYPE_FOR_E_CLASS_NAME);
-		Extension expectedExtension = superStereotype.getExtensions().get(0);;
-		
-		Assert.assertEquals(expectedExtension, stereotypeApplication.getExtension());
+
+		Stereotype superStereotype = getStereotype(ABSTRACT_STEREOTYPE_FOR_ECLASS_NAME);
+		Extension expectedExtension = superStereotype.getExtensions().get(0);
+
+		Assert.assertEquals(expectedExtension,
+				stereotypeApplication.getExtension());
 	}
 	
 	@Test
-	public void testApplicabilityOfSubmetaclass() throws IOException {
-		Assert.fail();
-	}
-	
-	@Test
-	public void testInapplicabilityCausedByAbstract() throws IOException {
+	public void testSavingAndReloadingExistingProfileApplication() throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASS_NAME);
 		EClass person = getModelPersonEClass();
+		StereotypeApplication application = profileFacade.apply(stereotype, person);
+		EStructuralFeature taggedValue = stereotype.getTaggedValue("testTaggedValue");
+		profileFacade.setTaggedValue(application, taggedValue, "test");
 		
-		Assert.fail();
+		profileFacade.save();
 		
-		StereotypeApplication stereotypeApplication = profileFacade.apply(
-				stereotype, person);
+		profileFacade = new ProfileFacadeImpl();
+		profileFacade.loadProfile(profile);
+		String absolutePath = getAbsolutePath(profileApplicationPath);
+		Resource profileApplicationRes = loadResource(absolutePath);
+		profileFacade.setProfileApplicationResource(profileApplicationRes);
 		
-		Stereotype superStereotype = getStereotype(ABSTRACT_STEREOTYPE_FOR_E_CLASS_NAME);
-		Extension expectedExtension = superStereotype.getExtensions().get(0);;
+		EList<StereotypeApplication> appliedStereotypes = profileFacade.getAppliedStereotypes(person);
+		Assert.assertEquals(1, appliedStereotypes.size());
 		
-		Assert.assertEquals(expectedExtension, stereotypeApplication.getExtension());
+		StereotypeApplication stereotypeApplication = appliedStereotypes.get(0);
+		Assert.assertTrue(stereotypeApplication.eClass().equals(stereotype));
+		Assert.assertEquals(person, stereotypeApplication.getAppliedTo());
+		
+		Object value = profileFacade.getTaggedValue(stereotypeApplication, taggedValue);
+		Assert.assertEquals("test", value);
 	}
-	
+
+	@Test
+	public void testApplicabilityOfSubmetaclass() throws IOException {
+		IProfileFacade profileFacade = createProfileFacade();
+		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASSIFIER_NAME);
+		EClass person = getModelPersonEClass();
+
+		Assert.assertTrue(profileFacade.isApplicable(stereotype, person));
+	}
+
+	@Test
+	public void testInapplicabilityCausedByAbstract() throws IOException {
+		IProfileFacade profileFacade = createProfileFacade();
+		Stereotype stereotype = getStereotype(ABSTRACT_STEREOTYPE_FOR_ECLASS_NAME);
+		EClass person = getModelPersonEClass();
+
+		Assert.assertFalse(profileFacade.isApplicable(stereotype, person));
+	}
+
 	@Test
 	public void testInapplicabilityCausedByWrongBaseType() throws IOException {
-		Assert.fail();
+		IProfileFacade profileFacade = createProfileFacade();
+		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASSIFIER_NAME);
+		EAttribute firstNameAttribute = getModelPersonFirstNameEAttribute();
+
+		Assert.assertFalse(profileFacade.isApplicable(stereotype,
+				firstNameAttribute));
 	}
-	
+
 	@Test
 	public void testInapplicabilityCausedByUpperBound() throws IOException {
-		Assert.fail();
+		IProfileFacade profileFacade = createProfileFacade();
+		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME);
+		EAttribute firstNameAttribute = getModelPersonFirstNameEAttribute();
+		
+		Assert.assertTrue(profileFacade.isApplicable(stereotype,
+				firstNameAttribute));
+		
+		profileFacade.apply(stereotype, firstNameAttribute);
+		
+		Assert.assertTrue(profileFacade.isApplicable(stereotype,
+				firstNameAttribute));
+		
+		profileFacade.apply(stereotype, firstNameAttribute);
+		
+		Assert.assertFalse(profileFacade.isApplicable(stereotype,
+				firstNameAttribute));
 	}
-	
-	
-	
-	
+
 	@After
 	public void deleteProfileApplicationResource() {
 		String absolutePath = getAbsolutePath(profileApplicationPath);

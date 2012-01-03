@@ -174,7 +174,8 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 
 		EList<EClass> allSuperTypes = eClass.getEAllSuperTypes();
 		for (Extension extension : getAllExtensions()) {
-			if (allSuperTypes.contains(extension.getTarget())) {
+			if (eClass.equals(extension.getTarget())
+					|| allSuperTypes.contains(extension.getTarget())) {
 				return true;
 			}
 		}
@@ -198,7 +199,8 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	 */
 	public boolean isApplicable(EObject eObject,
 			EList<Extension> appliedExtensions) {
-		return getApplicableExtensions(eObject, appliedExtensions).size() > 0;
+		return isApplicable(eObject)
+				&& getApplicableExtensions(eObject, appliedExtensions).size() > 0;
 	}
 
 	/**
