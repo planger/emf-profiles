@@ -286,7 +286,11 @@ public class ProfileFacadeImpl implements IProfileFacade {
 				extractAppliedExtensions(getAppliedStereotypes(eObject)));
 	}
 
-	private StereotypeApplication apply(Stereotype stereotype, EObject eObject,
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public StereotypeApplication apply(Stereotype stereotype, EObject eObject,
 			Extension extension) {
 		StereotypeApplication stereotypeApplication = createStereotypeApplication(stereotype);
 		stereotypeApplication.setExtension(extension);

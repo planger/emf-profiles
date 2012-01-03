@@ -179,6 +179,28 @@ public interface IProfileFacade {
 	StereotypeApplication apply(Stereotype stereotype, EObject eObject);
 
 	/**
+	 * Applies the specified <code>stereotype</code> to the specified
+	 * <code>eObject</code> using the specified <code>extension</code>.
+	 * 
+	 * <p>
+	 * This method creates a new instance of the specified {@link Stereotype}
+	 * and adds it to the currently set profile application resource (cf.
+	 * {@link #setProfileApplicationResource(Resource)}). If no resource is
+	 * currently set, this method throws an {@link IllegalStateException}.
+	 * </p>
+	 * 
+	 * @param stereotype
+	 *            to apply.
+	 * @param eObject
+	 *            to apply the <code>stereotype</code> to.
+	 * @param extension
+	 *            the extension to be used for applying the stereotype.
+	 * @return the created instance of the {@link Stereotype}.
+	 */
+	StereotypeApplication apply(Stereotype stereotype, EObject eObject,
+			Extension extension);
+
+	/**
 	 * Returns all {@link StereotypeApplication StereotypeApplications} handled
 	 * by this facade.
 	 * 
