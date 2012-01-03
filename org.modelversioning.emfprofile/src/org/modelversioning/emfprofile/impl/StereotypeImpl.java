@@ -259,21 +259,6 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * TODO remove?
-	 * 
-	 * @generated NOT
-	 */
-	public EList<EClass> getExtensibleClasses() {
-		EList<EClass> extensibleClasses = new BasicEList<EClass>();
-		for (Extension extension : getExtensions()) {
-			extensibleClasses.add(extension.getTarget());
-		}
-		return ECollections.unmodifiableEList(extensibleClasses);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated NOT
 	 */
 	public EList<EStructuralFeature> getTaggedValues() {
