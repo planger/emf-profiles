@@ -27,24 +27,29 @@ import org.modelversioning.emfprofileapplication.ProfileImport;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Profile Application</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Profile Application</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.modelversioning.emfprofileapplication.impl.ProfileApplicationImpl#getStereotypeApplications <em>Stereotype Applications</em>}</li>
- *   <li>{@link org.modelversioning.emfprofileapplication.impl.ProfileApplicationImpl#getImportedProfiles <em>Imported Profiles</em>}</li>
+ * <li>
+ * {@link org.modelversioning.emfprofileapplication.impl.ProfileApplicationImpl#getStereotypeApplications
+ * <em>Stereotype Applications</em>}</li>
+ * <li>
+ * {@link org.modelversioning.emfprofileapplication.impl.ProfileApplicationImpl#getImportedProfiles
+ * <em>Imported Profiles</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class ProfileApplicationImpl extends EObjectImpl implements ProfileApplication {
+public class ProfileApplicationImpl extends EObjectImpl implements
+		ProfileApplication {
 	/**
-	 * The cached value of the '{@link #getStereotypeApplications() <em>Stereotype Applications</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getStereotypeApplications()
+	 * <em>Stereotype Applications</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getStereotypeApplications()
 	 * @generated
 	 * @ordered
@@ -52,9 +57,10 @@ public class ProfileApplicationImpl extends EObjectImpl implements ProfileApplic
 	protected EList<StereotypeApplication> stereotypeApplications;
 
 	/**
-	 * The cached value of the '{@link #getImportedProfiles() <em>Imported Profiles</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getImportedProfiles()
+	 * <em>Imported Profiles</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getImportedProfiles()
 	 * @generated
 	 * @ordered
@@ -62,8 +68,8 @@ public class ProfileApplicationImpl extends EObjectImpl implements ProfileApplic
 	protected EList<ProfileImport> importedProfiles;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ProfileApplicationImpl() {
@@ -71,8 +77,8 @@ public class ProfileApplicationImpl extends EObjectImpl implements ProfileApplic
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,35 +87,43 @@ public class ProfileApplicationImpl extends EObjectImpl implements ProfileApplic
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<StereotypeApplication> getStereotypeApplications() {
 		if (stereotypeApplications == null) {
-			stereotypeApplications = new EObjectContainmentWithInverseEList<StereotypeApplication>(StereotypeApplication.class, this, EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS, EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION);
+			stereotypeApplications = new EObjectContainmentWithInverseEList<StereotypeApplication>(
+					StereotypeApplication.class,
+					this,
+					EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS,
+					EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__PROFILE_APPLICATION);
 		}
 		return stereotypeApplications;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<ProfileImport> getImportedProfiles() {
 		if (importedProfiles == null) {
-			importedProfiles = new EObjectContainmentEList<ProfileImport>(ProfileImport.class, this, EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES);
+			importedProfiles = new EObjectContainmentEList<ProfileImport>(
+					ProfileImport.class,
+					this,
+					EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES);
 		}
 		return importedProfiles;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
-	public EList<StereotypeApplication> getStereotypeApplications(EObject eObject) {
+	public EList<StereotypeApplication> getStereotypeApplications(
+			EObject eObject) {
 		EList<StereotypeApplication> appliedStereotypes = new BasicEList<StereotypeApplication>();
 		for (StereotypeApplication stereotypeApplication : getStereotypeApplications()) {
 			if (eObject.equals(stereotypeApplication.getAppliedTo())) {
@@ -120,11 +134,12 @@ public class ProfileApplicationImpl extends EObjectImpl implements ProfileApplic
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
-	public EList<StereotypeApplication> getStereotypeApplications(EObject eObject, Stereotype stereotype) {
+	public EList<StereotypeApplication> getStereotypeApplications(
+			EObject eObject, Stereotype stereotype) {
 		EList<StereotypeApplication> appliedStereotypes = new BasicEList<StereotypeApplication>();
 		for (StereotypeApplication stereotypeApplication : getStereotypeApplications(eObject)) {
 			if (stereotypeApplication.eClass().equals(stereotype)) {
@@ -135,105 +150,128 @@ public class ProfileApplicationImpl extends EObjectImpl implements ProfileApplic
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public EList<EObject> getAnnotatedObjects() {
+		EList<EObject> annotatedObjects = new BasicEList<EObject>();
+		for (StereotypeApplication stereotypeApplication : getStereotypeApplications()) {
+			if (!annotatedObjects.contains(stereotypeApplication.getAppliedTo())) {
+				annotatedObjects.add(stereotypeApplication.getAppliedTo());
+			}
+		}
+		return ECollections.unmodifiableEList(annotatedObjects);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getStereotypeApplications()).basicAdd(otherEnd, msgs);
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getStereotypeApplications())
+					.basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
-				return ((InternalEList<?>)getStereotypeApplications()).basicRemove(otherEnd, msgs);
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
-				return ((InternalEList<?>)getImportedProfiles()).basicRemove(otherEnd, msgs);
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
+			return ((InternalEList<?>) getStereotypeApplications())
+					.basicRemove(otherEnd, msgs);
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
+			return ((InternalEList<?>) getImportedProfiles()).basicRemove(
+					otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
-				return getStereotypeApplications();
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
-				return getImportedProfiles();
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
+			return getStereotypeApplications();
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
+			return getImportedProfiles();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
-				getStereotypeApplications().clear();
-				getStereotypeApplications().addAll((Collection<? extends StereotypeApplication>)newValue);
-				return;
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
-				getImportedProfiles().clear();
-				getImportedProfiles().addAll((Collection<? extends ProfileImport>)newValue);
-				return;
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
+			getStereotypeApplications().clear();
+			getStereotypeApplications().addAll(
+					(Collection<? extends StereotypeApplication>) newValue);
+			return;
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
+			getImportedProfiles().clear();
+			getImportedProfiles().addAll(
+					(Collection<? extends ProfileImport>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
-				getStereotypeApplications().clear();
-				return;
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
-				getImportedProfiles().clear();
-				return;
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
+			getStereotypeApplications().clear();
+			return;
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
+			getImportedProfiles().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
-				return stereotypeApplications != null && !stereotypeApplications.isEmpty();
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
-				return importedProfiles != null && !importedProfiles.isEmpty();
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
+			return stereotypeApplications != null
+					&& !stereotypeApplications.isEmpty();
+		case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
+			return importedProfiles != null && !importedProfiles.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //ProfileApplicationImpl
+} // ProfileApplicationImpl

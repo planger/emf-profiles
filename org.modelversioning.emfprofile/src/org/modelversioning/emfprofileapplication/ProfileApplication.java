@@ -79,4 +79,12 @@ public interface ProfileApplication extends EObject {
 	 */
 	EList<StereotypeApplication> getStereotypeApplications(EObject eObject, Stereotype stereotype);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" ordered="false"
+	 * @generated
+	 */
+	EList<EObject> getAnnotatedObjects();
+
 } // ProfileApplication

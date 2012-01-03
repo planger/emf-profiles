@@ -298,6 +298,8 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		addEParameter(op, theEcorePackage.getEObject(), "eObject", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEMFProfilePackage.getStereotype(), "stereotype", 1, 1, IS_UNIQUE, IS_ORDERED);
 
+		addEOperation(profileApplicationEClass, theEcorePackage.getEObject(), "getAnnotatedObjects", 0, -1, IS_UNIQUE, !IS_ORDERED);
+
 		initEClass(profileImportEClass, ProfileImport.class, "ProfileImport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getProfileImport_NsURI(), ecorePackage.getEString(), "nsURI", null, 1, 1, ProfileImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProfileImport_Location(), ecorePackage.getEString(), "location", null, 0, 1, ProfileImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
