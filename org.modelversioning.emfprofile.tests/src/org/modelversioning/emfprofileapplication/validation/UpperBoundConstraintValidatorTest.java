@@ -24,7 +24,7 @@ import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
- * Tests the {@link UpperBoundConstraintValidator} for lower bound violations.
+ * Tests the {@link UpperBoundConstraintValidator} for upper bound violations.
  * 
  * @author <a href="mailto:langer@big.tuwien.ac.at">Philip Langer</a>
  * 
@@ -33,9 +33,10 @@ public class UpperBoundConstraintValidatorTest {
 
 	private static final String CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME = "ConcreteForEAttribute";
 	private static final String SUB_STEREOTYPE_FOR_EATTRIBUTE_NAME = "SubForEAttribute";
+	private static final String SUBSETTING_STEREOTYPE_FOR_EATTRIBUTE_NAME = "SubsettingStereotype";
 
 	private static final String modelPath = "model/validation/sample_ecore_model.ecore";
-	private static final String profilePath = "model/validation/profile_for_ecore_models.emfprofile_diagram";
+	private static final String profilePath = "model/validation/profile_with_subset_for_ecore_models.emfprofile_diagram";
 	private static final String profileApplicationPath = "model/validation/annotation.emfprofile.xmi";
 
 	private final ResourceSet resourceSet = new ResourceSetImpl();
@@ -105,6 +106,27 @@ public class UpperBoundConstraintValidatorTest {
 		Assert.assertEquals(0, validator.getViolations().size());
 
 		applyStereotypeBypassingFacade(stereotype, getModelPersonFirstNameEAttribute());
+
+		validator = new UpperBoundConstraintValidator(profileApplication);
+		Assert.assertEquals(1, validator.getViolations().size());
+	}
+	
+	@Test
+	public void testUpperBoundViolationWithSubsettingStereotype() throws IOException {
+		IProfileFacade profileFacade = createProfileFacade();
+		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME);
+		Stereotype subsettingStereotype = getStereotype(SUBSETTING_STEREOTYPE_FOR_EATTRIBUTE_NAME);
+
+		profileFacade.apply(stereotype, getModelPersonFirstNameEAttribute());
+		profileFacade.apply(stereotype, getModelPersonFirstNameEAttribute());
+
+		ProfileApplication profileApplication = getProfileApplication();
+
+		UpperBoundConstraintValidator validator = new UpperBoundConstraintValidator(
+				profileApplication);
+		Assert.assertEquals(0, validator.getViolations().size());
+
+		applyStereotypeBypassingFacade(subsettingStereotype, getModelPersonFirstNameEAttribute());
 
 		validator = new UpperBoundConstraintValidator(profileApplication);
 		Assert.assertEquals(1, validator.getViolations().size());

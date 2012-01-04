@@ -23,6 +23,8 @@ import org.modelversioning.emfprofileapplication.StereotypeApplication;
 /**
  * Checks for a violation of the lower bound constraint of a {@link Stereotype}.
  * 
+ * TODO respect redefines (no lower bound violation for redefined extensions)
+ * 
  * @author <a href="mailto:langer@big.tuwien.ac.at">Philip Langer</a>
  * 
  */
@@ -41,6 +43,7 @@ public class LowerBoundConstraintValidator {
 	public EList<LowerBoundConstraintViolation> getViolations() {
 		EList<Extension> extensions = collectRequiredExtensionsFromProfiles();
 		checkExtensions(extensions);
+		cleanViolationsConcerningSubsettedExtensions();
 		return ECollections.unmodifiableEList(violations);
 	}
 
@@ -111,11 +114,44 @@ public class LowerBoundConstraintValidator {
 		EList<Extension> appliedExtension = new BasicEList<Extension>();
 		for (StereotypeApplication stereotypeApplication : stereotypeApplications) {
 			if (EcoreUtil.equals(extension,
-					stereotypeApplication.getExtension())) {
+					stereotypeApplication.getExtension())
+					|| isSubsetted(extension,
+							stereotypeApplication.getExtension())) {
 				appliedExtension.add(stereotypeApplication.getExtension());
 			}
 		}
 		return appliedExtension;
+	}
+
+	private void cleanViolationsConcerningSubsettedExtensions() {
+		for (LowerBoundConstraintViolation violation : new BasicEList<LowerBoundConstraintViolation>(
+				violations)) {
+			if (foundViolationForSubsettingForSameModelObject(violation)) {
+				violations.remove(violation);
+			}
+		}
+	}
+
+	private boolean foundViolationForSubsettingForSameModelObject(
+			LowerBoundConstraintViolation violation) {
+		for (LowerBoundConstraintViolation currentViolation : violations) {
+			if (isSubsetted(violation.getExtension(),
+					currentViolation.getExtension())
+					&& EcoreUtil.equals(currentViolation.getModelObject(),
+							violation.getModelObject())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSubsetted(Extension extension, Extension extension2) {
+		for (Extension subsettedExtension : extension2.getSubsetted()) {
+			if (EcoreUtil.equals(subsettedExtension, extension)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean isExtensionApplicable(Extension extension, EObject eObject) {

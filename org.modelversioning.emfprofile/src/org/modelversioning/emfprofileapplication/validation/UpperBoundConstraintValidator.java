@@ -93,11 +93,17 @@ public class UpperBoundConstraintValidator {
 			Extension extension) {
 		EList<Extension> extensions = new BasicEList<Extension>();
 		for (StereotypeApplication stereotypeApplication : stereotypeApplications) {
-			if (extension.equals(stereotypeApplication.getExtension())) {
+			if (isSameOrSubsettedExtension(extension, stereotypeApplication)) {
 				extensions.add(stereotypeApplication.getExtension());
 			}
 		}
 		return extensions;
 	}
 
+	private boolean isSameOrSubsettedExtension(Extension extension,
+			StereotypeApplication stereotypeApplication) {
+		return extension.equals(stereotypeApplication.getExtension())
+				|| stereotypeApplication.getExtension().getSubsetted()
+						.contains(extension);
+	}
 }
