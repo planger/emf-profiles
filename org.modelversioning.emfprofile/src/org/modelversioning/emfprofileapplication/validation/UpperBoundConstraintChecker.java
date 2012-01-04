@@ -11,6 +11,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
@@ -25,15 +26,15 @@ import org.modelversioning.emfprofileapplication.StereotypeApplication;
 public class UpperBoundConstraintChecker {
 
 	private final ProfileApplication profileApplication;
-	private EList<StereotypeApplication> violatingStereotypeApplications = new BasicEList<StereotypeApplication>();
+	private EList<UpperBoundConstraintViolation> violations = new BasicEList<UpperBoundConstraintViolation>();
 
 	public UpperBoundConstraintChecker(ProfileApplication profileApplication) {
 		this.profileApplication = profileApplication;
 	}
 
-	public EList<StereotypeApplication> getViolatingStereotypeApplications() {
+	public EList<UpperBoundConstraintViolation> getViolatings() {
 		validateProfileApplication();
-		return ECollections.unmodifiableEList(violatingStereotypeApplications);
+		return ECollections.unmodifiableEList(violations);
 	}
 
 	private void validateProfileApplication() {
@@ -58,7 +59,21 @@ public class UpperBoundConstraintChecker {
 
 	private void addViolatingStereotypeApplication(
 			StereotypeApplication stereotypeApplication) {
-		violatingStereotypeApplications.add(stereotypeApplication);
+		if (!alreadyReported(stereotypeApplication)) {
+			violations.add(new UpperBoundConstraintViolation(
+					stereotypeApplication));
+		}
+	}
+
+	private boolean alreadyReported(StereotypeApplication stereotypeApplication) {
+		for (UpperBoundConstraintViolation violation : violations) {
+			if (EcoreUtil.equals(violation.getStereotype(), stereotypeApplication.eClass()) && 
+					EcoreUtil.equals(violation.getExtension(), stereotypeApplication.getExtension()) &&
+							EcoreUtil.equals(violation.getModelObject(), stereotypeApplication.getAppliedTo())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean isUpperBoundOk(Extension extension,

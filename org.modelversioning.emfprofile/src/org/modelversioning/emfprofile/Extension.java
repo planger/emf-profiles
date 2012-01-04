@@ -174,4 +174,20 @@ public interface Extension extends EObject {
 	 * @generated
 	 */
 	EList<Extension> getSubsetted();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" required="true"
+	 * @generated
+	 */
+	boolean isRequired();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model required="true" eClassRequired="true"
+	 * @generated
+	 */
+	boolean isApplicable(EClass eClass);
 } // Extension

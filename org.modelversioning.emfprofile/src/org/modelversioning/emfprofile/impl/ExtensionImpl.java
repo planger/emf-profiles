@@ -24,9 +24,8 @@ import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Stereotype;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Extension</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Extension</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -44,8 +43,7 @@ import org.modelversioning.emfprofile.Stereotype;
 public class ExtensionImpl extends EObjectImpl implements Extension {
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getTarget()
 	 * @generated
 	 * @ordered
@@ -53,8 +51,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	protected EClass target;
 	/**
 	 * The default value of the '{@link #getLowerBound() <em>Lower Bound</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getLowerBound()
 	 * @generated
 	 * @ordered
@@ -62,8 +59,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	protected static final int LOWER_BOUND_EDEFAULT = 0;
 	/**
 	 * The cached value of the '{@link #getLowerBound() <em>Lower Bound</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getLowerBound()
 	 * @generated
 	 * @ordered
@@ -71,8 +67,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	protected int lowerBound = LOWER_BOUND_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getUpperBound() <em>Upper Bound</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getUpperBound()
 	 * @generated
 	 * @ordered
@@ -80,8 +75,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	protected static final int UPPER_BOUND_EDEFAULT = -1;
 	/**
 	 * The cached value of the '{@link #getUpperBound() <em>Upper Bound</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getUpperBound()
 	 * @generated
 	 * @ordered
@@ -90,8 +84,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 
 	/**
 	 * The cached value of the '{@link #getRedefined() <em>Redefined</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRedefined()
 	 * @generated
 	 * @ordered
@@ -99,8 +92,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	protected EList<Extension> redefined;
 	/**
 	 * The cached value of the '{@link #getSubsetted() <em>Subsetted</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getSubsetted()
 	 * @generated
 	 * @ordered
@@ -108,8 +100,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	protected EList<Extension> subsetted;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected ExtensionImpl() {
@@ -117,8 +108,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -127,8 +117,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Stereotype getSource() {
@@ -137,18 +126,17 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetSource(Stereotype newSource, NotificationChain msgs) {
+	public NotificationChain basicSetSource(Stereotype newSource,
+			NotificationChain msgs) {
 		msgs = eBasicSetContainer((InternalEObject)newSource, EMFProfilePackage.EXTENSION__SOURCE, msgs);
 		return msgs;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setSource(Stereotype newSource) {
@@ -168,8 +156,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getTarget() {
@@ -185,8 +172,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass basicGetTarget() {
@@ -194,8 +180,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTarget(EClass newTarget) {
@@ -206,8 +191,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getLowerBound() {
@@ -215,8 +199,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setLowerBound(int newLowerBound) {
@@ -227,8 +210,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getUpperBound() {
@@ -236,8 +218,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setUpperBound(int newUpperBound) {
@@ -248,8 +229,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<Extension> getRedefined() {
@@ -260,8 +240,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<Extension> getSubsetted() {
@@ -272,12 +251,31 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean isRequired() {
+		return getLowerBound() > 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean isApplicable(EClass eClass) {
+		return eClass.equals(getTarget())
+				|| eClass.getEAllSuperTypes().contains(getTarget());
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case EMFProfilePackage.EXTENSION__SOURCE:
 				if (eInternalContainer() != null)
@@ -288,12 +286,12 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case EMFProfilePackage.EXTENSION__SOURCE:
 				return basicSetSource(null, msgs);
@@ -302,12 +300,12 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+	public NotificationChain eBasicRemoveFromContainerFeature(
+			NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case EMFProfilePackage.EXTENSION__SOURCE:
 				return eInternalContainer().eInverseRemove(this, EMFProfilePackage.STEREOTYPE__EXTENSIONS, Stereotype.class, msgs);
@@ -316,8 +314,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -341,8 +338,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -374,8 +370,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -404,8 +399,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -428,21 +422,17 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (lowerBound: ");
-		result.append(lowerBound);
-		result.append(", upperBound: ");
-		result.append(upperBound);
-		result.append(')');
+		StringBuffer result = new StringBuffer(getSource().getName());
+		result.append(" -> ");
+		result.append(getTarget().getName());
 		return result.toString();
 	}
 
-} //ExtensionImpl
+} // ExtensionImpl

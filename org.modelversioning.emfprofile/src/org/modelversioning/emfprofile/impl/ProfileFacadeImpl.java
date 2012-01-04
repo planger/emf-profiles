@@ -629,10 +629,12 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Diagnostic validateAll() {
+	public Diagnostic validateAll(EObject currentlySelectedEObject) {
+		Map<String, EObject> context = createValidationContextMap(currentlySelectedEObject);
 		Diagnostic diagnostic = null;
 		for (ProfileApplication profileApplication : getProfileApplications(profileApplicationResource)) {
-			diagnostic = Diagnostician.INSTANCE.validate(profileApplication);
+			diagnostic = Diagnostician.INSTANCE.validate(profileApplication,
+					context);
 			if (Diagnostic.OK != diagnostic.getSeverity()) {
 				return diagnostic;
 			}
@@ -643,6 +645,13 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			return EcoreUtil
 					.computeDiagnostic(profileApplicationResource, true);
 		}
+	}
+
+	private Map<String, EObject> createValidationContextMap(
+			EObject currentlySelectedEObject) {
+		Map<String, EObject> context = new HashMap<String, EObject>();
+		context.put("MODEL_OBJECT", currentlySelectedEObject);
+		return context;
 	}
 
 }

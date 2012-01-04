@@ -325,8 +325,12 @@ public interface IProfileFacade {
 	/**
 	 * Validates the entire profile application.
 	 * 
+	 * @param currentlySelectedEObject
+	 *            currently selected object. This is used for obtaining the
+	 *            annotated model in case no stereotype application has been
+	 *            created yet.
 	 * @return the validation result.
 	 */
-	Diagnostic validateAll();
+	Diagnostic validateAll(EObject currentlySelectedEObject);
 
 }

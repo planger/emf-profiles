@@ -17,3 +17,4 @@ Export-Package: org.modelversioning.emfprofile,
  org.modelversioning.emfprofileapplication,
  org.modelversioning.emfprofileapplication.impl,
  org.modelversioning.emfprofileapplication.util
+Bundle-Activator: org.modelversioning.emfprofile.EMFProfilePlugin$Implementation
