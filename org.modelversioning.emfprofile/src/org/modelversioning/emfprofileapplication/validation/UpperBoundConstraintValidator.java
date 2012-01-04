@@ -23,12 +23,12 @@ import org.modelversioning.emfprofileapplication.StereotypeApplication;
  * @author <a href="mailto:langer@big.tuwien.ac.at">Philip Langer</a>
  * 
  */
-public class UpperBoundConstraintChecker {
+public class UpperBoundConstraintValidator {
 
 	private final ProfileApplication profileApplication;
 	private EList<UpperBoundConstraintViolation> violations = new BasicEList<UpperBoundConstraintViolation>();
 
-	public UpperBoundConstraintChecker(ProfileApplication profileApplication) {
+	public UpperBoundConstraintValidator(ProfileApplication profileApplication) {
 		this.profileApplication = profileApplication;
 	}
 
