@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.modelversioning.emfprofile.EMFProfilePackage;
@@ -20,6 +21,7 @@ import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
+import org.modelversioning.emfprofileapplication.util.EMFProfileApplicationValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -101,6 +103,15 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 
 		// Initialize created meta-data
 		theEMFProfileApplicationPackage.initializePackageContents();
+
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theEMFProfileApplicationPackage, 
+			 new EValidator.Descriptor() {
+				 public EValidator getEValidator() {
+					 return EMFProfileApplicationValidator.INSTANCE;
+				 }
+			 });
 
 		// Mark meta-data to indicate it can't be changed
 		theEMFProfileApplicationPackage.freeze();
@@ -312,6 +323,26 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore";		
+		addAnnotation
+		  (profileApplicationEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "violatedUpperBound violatedLowerBound useOfRedefinedExtension"
+		   });
 	}
 
 } //EMFProfileApplicationPackageImpl

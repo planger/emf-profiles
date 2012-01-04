@@ -20,7 +20,9 @@ import java.util.Map;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.ui.dialogs.DiagnosticDialog;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -310,10 +312,16 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	}
 
 	/**
-	 * Saves all currently loaded profile applications.
+	 * Validates all currently loaded profile applications.
 	 */
 	public void validateAll() {
-		currentProfileFacade.validateAll();
+		// TODO provide nicer way to show diagnostics (even with error markers?)
+		Diagnostic diagnostic = currentProfileFacade.validateAll();
+		DiagnosticDialog dialog = new DiagnosticDialog(getSite().getShell(),
+				"Profile Application", diagnostic.getMessage(), diagnostic,
+				diagnostic.getSeverity());
+		dialog.setBlockOnOpen(true);
+		dialog.open();
 	}
 
 	/**

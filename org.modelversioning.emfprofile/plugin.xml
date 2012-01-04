@@ -14,53 +14,5 @@
             uri="http://www.modelversioning.org/emfprofile/application/1.1">
       </package>
    </extension>
-   <extension
-         point="org.eclipse.emf.validation.constraintProviders">
-      <category
-            id="org.modelversioning.emfprofileapplication"
-            mandatory="true"
-            name="EMF Profile Application">
-      </category>
-      <constraintProvider
-            cache="true"
-            mode="Batch">
-         <package
-               namespaceUri="http://www.modelversioning.org/emfprofile/application/1.1">
-         </package>
-         <constraints
-               categories="org.modelversioning.emfprofileapplication">
-            <constraint
-                  class="org.modelversioning.emfprofileapplication.validation.UpperBoundConstraint"
-                  id="org.modelversioning.emfprofileapplication.upperBoundConstraint"
-                  isEnabledByDefault="true"
-                  lang="Java"
-                  mode="Batch"
-                  name="Stereotype Upper Bound Constraint"
-                  severity="ERROR"
-                  statusCode="1">
-               <message>
-                  Stereotype {0} has been applied more often than it is allowed by its upper bound.
-               </message>
-               <target
-                     class="ProfileApplication">
-               </target>
-            </constraint>
-         </constraints>
-      </constraintProvider>
-   </extension>
-   <extension
-         point="org.eclipse.emf.validation.constraintBindings">
-      <binding
-            category="org.modelversioning.emfprofileapplication"
-            context="org.modelversioning.emfprofileapplication.context">
-      </binding>
-      <clientContext
-            default="false"
-            id="org.modelversioning.emfprofileapplication.context">
-         <selector
-               class="org.modelversioning.emfprofileapplication.validation.ValidationDelegateClientSelector">
-         </selector>
-      </clientContext>
-   </extension>
 
 </plugin>

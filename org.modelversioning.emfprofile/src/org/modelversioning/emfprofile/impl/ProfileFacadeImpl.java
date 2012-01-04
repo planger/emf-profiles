@@ -17,24 +17,22 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.emf.validation.model.EvaluationMode;
-import org.eclipse.emf.validation.service.IBatchValidator;
-import org.eclipse.emf.validation.service.ModelValidationService;
 import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.IProfileFacade;
 import org.modelversioning.emfprofile.Profile;
@@ -43,7 +41,6 @@ import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 import org.modelversioning.emfprofileapplication.util.ProfileImportResolver;
-import org.modelversioning.emfprofileapplication.validation.ValidationDelegateClientSelector;
 
 /**
  * Implements the {@link IProfileFacade}.
@@ -632,16 +629,20 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IStatus validateAll() {
-		ValidationDelegateClientSelector.running = true;
-		IBatchValidator validator = (IBatchValidator) ModelValidationService
-				.getInstance().newValidator(EvaluationMode.BATCH);
-		validator.setIncludeLiveConstraints(true);
-		validator.setReportSuccesses(true);
-		IStatus status = validator
-				.validate(getProfileApplications(profileApplicationResource));
-		ValidationDelegateClientSelector.running = false;
-		return status;
+	public Diagnostic validateAll() {
+		Diagnostic diagnostic = null;
+		for (ProfileApplication profileApplication : getProfileApplications(profileApplicationResource)) {
+			diagnostic = Diagnostician.INSTANCE.validate(profileApplication);
+			if (Diagnostic.OK != diagnostic.getSeverity()) {
+				return diagnostic;
+			}
+		}
+		if (diagnostic != null) {
+			return diagnostic;
+		} else {
+			return EcoreUtil
+					.computeDiagnostic(profileApplicationResource, true);
+		}
 	}
 
 }

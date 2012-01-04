@@ -4,6 +4,9 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="emfprofileapplication"
     nsURI="http://www.modelversioning.org/emfprofile/application/1.1" nsPrefix="emfprofileapplication">
   <eClassifiers xsi:type="ecore:EClass" name="ProfileApplication">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="violatedUpperBound violatedLowerBound useOfRedefinedExtension"/>
+    </eAnnotations>
     <eOperations name="getStereotypeApplications" ordered="false" upperBound="-1"
         eType="#//StereotypeApplication">
       <eParameters name="eObject" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
