@@ -316,12 +316,16 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	 */
 	public void validateAll() {
 		// TODO provide nicer way to show diagnostics (even with error markers?)
-		Diagnostic diagnostic = currentProfileFacade.validateAll(currentEObject);
-		DiagnosticDialog dialog = new DiagnosticDialog(getSite().getShell(),
-				"Profile Application", diagnostic.getMessage(), diagnostic,
-				diagnostic.getSeverity());
-		dialog.setBlockOnOpen(true);
-		dialog.open();
+		if (currentProfileFacade != null) {
+			Diagnostic diagnostic = currentProfileFacade
+					.validateAll(currentEObject);
+			DiagnosticDialog dialog = new DiagnosticDialog(
+					getSite().getShell(), "Profile Application",
+					diagnostic.getMessage(), diagnostic,
+					diagnostic.getSeverity());
+			dialog.setBlockOnOpen(true);
+			dialog.open();
+		}
 	}
 
 	/**
