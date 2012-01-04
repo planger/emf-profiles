@@ -181,7 +181,7 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 		UpperBoundConstraintValidator validator = new UpperBoundConstraintValidator(
 				profileApplication);
 		EList<UpperBoundConstraintViolation> violations = validator
-				.getViolatings();
+				.getViolations();
 
 		if (violations.size() == 0) {
 			return true;

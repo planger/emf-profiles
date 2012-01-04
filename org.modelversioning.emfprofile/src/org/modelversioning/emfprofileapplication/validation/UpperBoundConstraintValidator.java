@@ -32,7 +32,7 @@ public class UpperBoundConstraintValidator {
 		this.profileApplication = profileApplication;
 	}
 
-	public EList<UpperBoundConstraintViolation> getViolatings() {
+	public EList<UpperBoundConstraintViolation> getViolations() {
 		validateProfileApplication();
 		return ECollections.unmodifiableEList(violations);
 	}
@@ -67,9 +67,10 @@ public class UpperBoundConstraintValidator {
 
 	private boolean alreadyReported(StereotypeApplication stereotypeApplication) {
 		for (UpperBoundConstraintViolation violation : violations) {
-			if (EcoreUtil.equals(violation.getStereotype(), stereotypeApplication.eClass()) && 
-					EcoreUtil.equals(violation.getExtension(), stereotypeApplication.getExtension()) &&
-							EcoreUtil.equals(violation.getModelObject(), stereotypeApplication.getAppliedTo())) {
+			if (EcoreUtil.equals(violation.getExtension(),
+					stereotypeApplication.getExtension())
+					&& EcoreUtil.equals(violation.getModelObject(),
+							stereotypeApplication.getAppliedTo())) {
 				return true;
 			}
 		}
