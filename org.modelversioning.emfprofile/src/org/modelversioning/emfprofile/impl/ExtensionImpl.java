@@ -29,53 +29,64 @@ import org.modelversioning.emfprofile.Stereotype;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getSource <em>Source</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getTarget <em>Target</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getLowerBound <em>Lower Bound</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getUpperBound <em>Upper Bound</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getRedefined <em>Redefined</em>}</li>
- *   <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getSubsetted <em>Subsetted</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getSource <em>
+ * Source</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getTarget <em>
+ * Target</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getLowerBound
+ * <em>Lower Bound</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getUpperBound
+ * <em>Upper Bound</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getRedefined
+ * <em>Redefined</em>}</li>
+ * <li>{@link org.modelversioning.emfprofile.impl.ExtensionImpl#getSubsetted
+ * <em>Subsetted</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ExtensionImpl extends EObjectImpl implements Extension {
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getTarget()
 	 * @generated
 	 * @ordered
 	 */
 	protected EClass target;
 	/**
-	 * The default value of the '{@link #getLowerBound() <em>Lower Bound</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getLowerBound() <em>Lower Bound</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getLowerBound()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final int LOWER_BOUND_EDEFAULT = 0;
 	/**
-	 * The cached value of the '{@link #getLowerBound() <em>Lower Bound</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getLowerBound() <em>Lower Bound</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getLowerBound()
 	 * @generated
 	 * @ordered
 	 */
 	protected int lowerBound = LOWER_BOUND_EDEFAULT;
 	/**
-	 * The default value of the '{@link #getUpperBound() <em>Upper Bound</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The default value of the '{@link #getUpperBound() <em>Upper Bound</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getUpperBound()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final int UPPER_BOUND_EDEFAULT = -1;
 	/**
-	 * The cached value of the '{@link #getUpperBound() <em>Upper Bound</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getUpperBound() <em>Upper Bound</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getUpperBound()
 	 * @generated
 	 * @ordered
@@ -83,16 +94,18 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	protected int upperBound = UPPER_BOUND_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getRedefined() <em>Redefined</em>}' reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getRedefined() <em>Redefined</em>}'
+	 * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getRedefined()
 	 * @generated
 	 * @ordered
 	 */
 	protected EList<Extension> redefined;
 	/**
-	 * The cached value of the '{@link #getSubsetted() <em>Subsetted</em>}' reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached value of the '{@link #getSubsetted() <em>Subsetted</em>}'
+	 * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSubsetted()
 	 * @generated
 	 * @ordered
@@ -101,6 +114,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ExtensionImpl() {
@@ -109,6 +123,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -118,54 +133,67 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Stereotype getSource() {
-		if (eContainerFeatureID() != EMFProfilePackage.EXTENSION__SOURCE) return null;
-		return (Stereotype)eContainer();
+		if (eContainerFeatureID() != EMFProfilePackage.EXTENSION__SOURCE)
+			return null;
+		return (Stereotype) eContainer();
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetSource(Stereotype newSource,
 			NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newSource, EMFProfilePackage.EXTENSION__SOURCE, msgs);
+		msgs = eBasicSetContainer((InternalEObject) newSource,
+				EMFProfilePackage.EXTENSION__SOURCE, msgs);
 		return msgs;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setSource(Stereotype newSource) {
-		if (newSource != eInternalContainer() || (eContainerFeatureID() != EMFProfilePackage.EXTENSION__SOURCE && newSource != null)) {
+		if (newSource != eInternalContainer()
+				|| (eContainerFeatureID() != EMFProfilePackage.EXTENSION__SOURCE && newSource != null)) {
 			if (EcoreUtil.isAncestor(this, newSource))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+				throw new IllegalArgumentException(
+						"Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, EMFProfilePackage.STEREOTYPE__EXTENSIONS, Stereotype.class, msgs);
+				msgs = ((InternalEObject) newSource).eInverseAdd(this,
+						EMFProfilePackage.STEREOTYPE__EXTENSIONS,
+						Stereotype.class, msgs);
 			msgs = basicSetSource(newSource, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.EXTENSION__SOURCE, newSource, newSource));
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					EMFProfilePackage.EXTENSION__SOURCE, newSource, newSource));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EClass getTarget() {
 		if (target != null && target.eIsProxy()) {
-			InternalEObject oldTarget = (InternalEObject)target;
-			target = (EClass)eResolveProxy(oldTarget);
+			InternalEObject oldTarget = (InternalEObject) target;
+			target = (EClass) eResolveProxy(oldTarget);
 			if (target != oldTarget) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EMFProfilePackage.EXTENSION__TARGET, oldTarget, target));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+							EMFProfilePackage.EXTENSION__TARGET, oldTarget,
+							target));
 			}
 		}
 		return target;
@@ -173,6 +201,7 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EClass basicGetTarget() {
@@ -181,17 +210,20 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setTarget(EClass newTarget) {
 		EClass oldTarget = target;
 		target = newTarget;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.EXTENSION__TARGET, oldTarget, target));
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					EMFProfilePackage.EXTENSION__TARGET, oldTarget, target));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public int getLowerBound() {
@@ -200,17 +232,21 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setLowerBound(int newLowerBound) {
 		int oldLowerBound = lowerBound;
 		lowerBound = newLowerBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.EXTENSION__LOWER_BOUND, oldLowerBound, lowerBound));
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					EMFProfilePackage.EXTENSION__LOWER_BOUND, oldLowerBound,
+					lowerBound));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public int getUpperBound() {
@@ -219,33 +255,40 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setUpperBound(int newUpperBound) {
 		int oldUpperBound = upperBound;
 		upperBound = newUpperBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.EXTENSION__UPPER_BOUND, oldUpperBound, upperBound));
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					EMFProfilePackage.EXTENSION__UPPER_BOUND, oldUpperBound,
+					upperBound));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Extension> getRedefined() {
 		if (redefined == null) {
-			redefined = new EObjectResolvingEList<Extension>(Extension.class, this, EMFProfilePackage.EXTENSION__REDEFINED);
+			redefined = new EObjectResolvingEList<Extension>(Extension.class,
+					this, EMFProfilePackage.EXTENSION__REDEFINED);
 		}
 		return redefined;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Extension> getSubsetted() {
 		if (subsetted == null) {
-			subsetted = new EObjectEList<Extension>(Extension.class, this, EMFProfilePackage.EXTENSION__SUBSETTED);
+			subsetted = new EObjectEList<Extension>(Extension.class, this,
+					EMFProfilePackage.EXTENSION__SUBSETTED);
 		}
 		return subsetted;
 	}
@@ -266,168 +309,181 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 	 */
 	public boolean isApplicable(EClass eClass) {
 		return eClass.equals(getTarget())
-				|| eClass.getEAllSuperTypes().contains(getTarget());
+				|| eClass.getEAllSuperTypes().contains(getTarget())
+				|| getSource().isMetaBase();
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EMFProfilePackage.EXTENSION__SOURCE:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetSource((Stereotype)otherEnd, msgs);
+		case EMFProfilePackage.EXTENSION__SOURCE:
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			return basicSetSource((Stereotype) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EMFProfilePackage.EXTENSION__SOURCE:
-				return basicSetSource(null, msgs);
+		case EMFProfilePackage.EXTENSION__SOURCE:
+			return basicSetSource(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(
 			NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case EMFProfilePackage.EXTENSION__SOURCE:
-				return eInternalContainer().eInverseRemove(this, EMFProfilePackage.STEREOTYPE__EXTENSIONS, Stereotype.class, msgs);
+		case EMFProfilePackage.EXTENSION__SOURCE:
+			return eInternalContainer().eInverseRemove(this,
+					EMFProfilePackage.STEREOTYPE__EXTENSIONS, Stereotype.class,
+					msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EMFProfilePackage.EXTENSION__SOURCE:
-				return getSource();
-			case EMFProfilePackage.EXTENSION__TARGET:
-				if (resolve) return getTarget();
-				return basicGetTarget();
-			case EMFProfilePackage.EXTENSION__LOWER_BOUND:
-				return getLowerBound();
-			case EMFProfilePackage.EXTENSION__UPPER_BOUND:
-				return getUpperBound();
-			case EMFProfilePackage.EXTENSION__REDEFINED:
-				return getRedefined();
-			case EMFProfilePackage.EXTENSION__SUBSETTED:
-				return getSubsetted();
+		case EMFProfilePackage.EXTENSION__SOURCE:
+			return getSource();
+		case EMFProfilePackage.EXTENSION__TARGET:
+			if (resolve)
+				return getTarget();
+			return basicGetTarget();
+		case EMFProfilePackage.EXTENSION__LOWER_BOUND:
+			return getLowerBound();
+		case EMFProfilePackage.EXTENSION__UPPER_BOUND:
+			return getUpperBound();
+		case EMFProfilePackage.EXTENSION__REDEFINED:
+			return getRedefined();
+		case EMFProfilePackage.EXTENSION__SUBSETTED:
+			return getSubsetted();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EMFProfilePackage.EXTENSION__SOURCE:
-				setSource((Stereotype)newValue);
-				return;
-			case EMFProfilePackage.EXTENSION__TARGET:
-				setTarget((EClass)newValue);
-				return;
-			case EMFProfilePackage.EXTENSION__LOWER_BOUND:
-				setLowerBound((Integer)newValue);
-				return;
-			case EMFProfilePackage.EXTENSION__UPPER_BOUND:
-				setUpperBound((Integer)newValue);
-				return;
-			case EMFProfilePackage.EXTENSION__REDEFINED:
-				getRedefined().clear();
-				getRedefined().addAll((Collection<? extends Extension>)newValue);
-				return;
-			case EMFProfilePackage.EXTENSION__SUBSETTED:
-				getSubsetted().clear();
-				getSubsetted().addAll((Collection<? extends Extension>)newValue);
-				return;
+		case EMFProfilePackage.EXTENSION__SOURCE:
+			setSource((Stereotype) newValue);
+			return;
+		case EMFProfilePackage.EXTENSION__TARGET:
+			setTarget((EClass) newValue);
+			return;
+		case EMFProfilePackage.EXTENSION__LOWER_BOUND:
+			setLowerBound((Integer) newValue);
+			return;
+		case EMFProfilePackage.EXTENSION__UPPER_BOUND:
+			setUpperBound((Integer) newValue);
+			return;
+		case EMFProfilePackage.EXTENSION__REDEFINED:
+			getRedefined().clear();
+			getRedefined().addAll((Collection<? extends Extension>) newValue);
+			return;
+		case EMFProfilePackage.EXTENSION__SUBSETTED:
+			getSubsetted().clear();
+			getSubsetted().addAll((Collection<? extends Extension>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EMFProfilePackage.EXTENSION__SOURCE:
-				setSource((Stereotype)null);
-				return;
-			case EMFProfilePackage.EXTENSION__TARGET:
-				setTarget((EClass)null);
-				return;
-			case EMFProfilePackage.EXTENSION__LOWER_BOUND:
-				setLowerBound(LOWER_BOUND_EDEFAULT);
-				return;
-			case EMFProfilePackage.EXTENSION__UPPER_BOUND:
-				setUpperBound(UPPER_BOUND_EDEFAULT);
-				return;
-			case EMFProfilePackage.EXTENSION__REDEFINED:
-				getRedefined().clear();
-				return;
-			case EMFProfilePackage.EXTENSION__SUBSETTED:
-				getSubsetted().clear();
-				return;
+		case EMFProfilePackage.EXTENSION__SOURCE:
+			setSource((Stereotype) null);
+			return;
+		case EMFProfilePackage.EXTENSION__TARGET:
+			setTarget((EClass) null);
+			return;
+		case EMFProfilePackage.EXTENSION__LOWER_BOUND:
+			setLowerBound(LOWER_BOUND_EDEFAULT);
+			return;
+		case EMFProfilePackage.EXTENSION__UPPER_BOUND:
+			setUpperBound(UPPER_BOUND_EDEFAULT);
+			return;
+		case EMFProfilePackage.EXTENSION__REDEFINED:
+			getRedefined().clear();
+			return;
+		case EMFProfilePackage.EXTENSION__SUBSETTED:
+			getSubsetted().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EMFProfilePackage.EXTENSION__SOURCE:
-				return getSource() != null;
-			case EMFProfilePackage.EXTENSION__TARGET:
-				return target != null;
-			case EMFProfilePackage.EXTENSION__LOWER_BOUND:
-				return lowerBound != LOWER_BOUND_EDEFAULT;
-			case EMFProfilePackage.EXTENSION__UPPER_BOUND:
-				return upperBound != UPPER_BOUND_EDEFAULT;
-			case EMFProfilePackage.EXTENSION__REDEFINED:
-				return redefined != null && !redefined.isEmpty();
-			case EMFProfilePackage.EXTENSION__SUBSETTED:
-				return subsetted != null && !subsetted.isEmpty();
+		case EMFProfilePackage.EXTENSION__SOURCE:
+			return getSource() != null;
+		case EMFProfilePackage.EXTENSION__TARGET:
+			return target != null;
+		case EMFProfilePackage.EXTENSION__LOWER_BOUND:
+			return lowerBound != LOWER_BOUND_EDEFAULT;
+		case EMFProfilePackage.EXTENSION__UPPER_BOUND:
+			return upperBound != UPPER_BOUND_EDEFAULT;
+		case EMFProfilePackage.EXTENSION__REDEFINED:
+			return redefined != null && !redefined.isEmpty();
+		case EMFProfilePackage.EXTENSION__SUBSETTED:
+			return subsetted != null && !subsetted.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(getSource().getName());
 		result.append(" -> ");

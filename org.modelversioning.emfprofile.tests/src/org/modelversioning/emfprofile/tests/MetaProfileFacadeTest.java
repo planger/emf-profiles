@@ -170,16 +170,6 @@ public class MetaProfileFacadeTest {
 		Assert.assertTrue(profileFacade.isApplicable(stereotype, person));
 	}
 
-	@Test
-	public void testInapplicabilityOfSubStereotypeToEAttribute()
-			throws IOException {
-		IProfileFacade profileFacade = createProfileFacade();
-		Stereotype stereotype = getStereotype(SUB_STEREOTYPE_NAME);
-		EAttribute eAttribute = getModelPersonFirstNameEAttribute();
-
-		Assert.assertFalse(profileFacade.isApplicable(stereotype, eAttribute));
-	}
-
 	@After
 	public void deleteProfileApplicationResource() {
 		String absolutePath = getAbsolutePath(profileApplicationPath);
