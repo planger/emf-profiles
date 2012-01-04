@@ -49,6 +49,7 @@ public class BasicProfileFacadeTest {
 	private static final String CONCRETE_STEREOTYPE_FOR_ECLASS_NAME = "ConcreteForEClassInherited";
 	private static final String CONCRETE_STEREOTYPE_FOR_ECLASSIFIER_NAME = "ConcreteForEClassifiers";
 	private static final String CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME = "ConcreteForEAttribute";
+	private static final String SUB_STEREOTYPE_FOR_EATTRIBUTE_NAME = "SubForEAttribute";
 
 	private static final String modelPath = "model/basic/sample_ecore_model.ecore";
 	private static final String profilePath = "model/basic/profile_for_ecore_models.emfprofile_diagram";
@@ -281,6 +282,27 @@ public class BasicProfileFacadeTest {
 		profileFacade.apply(stereotype, firstNameAttribute);
 
 		Assert.assertFalse(profileFacade.isApplicable(stereotype,
+				firstNameAttribute));
+	}
+	
+	@Test
+	public void testInapplicabilityCausedByUpperBoundWithMixedStereotypes() throws IOException {
+		IProfileFacade profileFacade = createProfileFacade();
+		Stereotype stereotype1 = getStereotype(CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME);
+		Stereotype stereotype2 = getStereotype(SUB_STEREOTYPE_FOR_EATTRIBUTE_NAME);
+		EAttribute firstNameAttribute = getModelPersonFirstNameEAttribute();
+
+		Assert.assertTrue(profileFacade.isApplicable(stereotype1,
+				firstNameAttribute));
+
+		profileFacade.apply(stereotype1, firstNameAttribute);
+
+		Assert.assertTrue(profileFacade.isApplicable(stereotype2,
+				firstNameAttribute));
+
+		profileFacade.apply(stereotype1, firstNameAttribute);
+
+		Assert.assertFalse(profileFacade.isApplicable(stereotype1,
 				firstNameAttribute));
 	}
 

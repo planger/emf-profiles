@@ -29,6 +29,10 @@
         <target xmi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </extensions>
     </eClassifiers>
+    <eClassifiers xmi:type="emfprofile:Stereotype" xmi:id="_pXkw4DcGEeGmdKZl4eaY4A" name="SubForEAttribute">
+      <eSuperTypes xmi:type="emfprofile:Stereotype" href="#_H_skIDVvEeGu3fRZW9onUA"/>
+      <eSuperTypes xmi:type="ecore:EClass" href="http://www.modelversioning.org/emfprofile/application/1.1#//StereotypeApplication"/>
+    </eClassifiers>
     <base xmi:type="ecore:EPackage" href="http://www.eclipse.org/emf/2002/Ecore#/"/>
   </emfprofile:Profile>
   <notation:Diagram xmi:id="_Bvq0sDVoEeGYg4ix0ehwmQ" type="EMFProfile" element="_BvRMEDVoEeGYg4ix0ehwmQ" name="default.emfprofile_diagram" measurementUnit="Pixel">
@@ -132,6 +136,16 @@
       <styles xmi:type="notation:FontStyle" xmi:id="_Gj0YwTYvEeGBZ45zEXUzPg" fontName="Ubuntu"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Gj0YwjYvEeGBZ45zEXUzPg" x="270" y="340" width="165"/>
     </children>
+    <children xmi:type="notation:Node" xmi:id="_pYpH4DcGEeGmdKZl4eaY4A" type="2006" element="_pXkw4DcGEeGmdKZl4eaY4A">
+      <children xmi:type="notation:DecorationNode" xmi:id="_pYpu8DcGEeGmdKZl4eaY4A" type="5008"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_pYpu8TcGEeGmdKZl4eaY4A" type="7008">
+        <styles xmi:type="notation:SortingStyle" xmi:id="_pYqWADcGEeGmdKZl4eaY4A"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_pYqWATcGEeGmdKZl4eaY4A"/>
+      </children>
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_pYpH4TcGEeGmdKZl4eaY4A"/>
+      <styles xmi:type="notation:FontStyle" xmi:id="_pYpH4jcGEeGmdKZl4eaY4A" fontName="Ubuntu"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pYpH4zcGEeGmdKZl4eaY4A" x="529" y="227"/>
+    </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_Bvq0sTVoEeGYg4ix0ehwmQ"/>
     <edges xmi:type="notation:Edge" xmi:id="_EPKV8DVoEeGYg4ix0ehwmQ" type="4002" source="_DiVsMDVoEeGYg4ix0ehwmQ" target="_Cc3R4DVoEeGYg4ix0ehwmQ">
       <styles xmi:type="notation:RoutingStyle" xmi:id="_EPKV8TVoEeGYg4ix0ehwmQ"/>
@@ -168,6 +182,14 @@
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JJLRczYvEeGBZ45zEXUzPg" points="[-3, -1, 118, 1]$[-119, -20, 2, -18]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JJPi4DYvEeGBZ45zEXUzPg" id="(0.024242424242424242,0.37777777777777777)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JJPi4TYvEeGBZ45zEXUzPg" id="(0.9215686274509803,0.4523809523809524)"/>
+    </edges>
+    <edges xmi:type="notation:Edge" xmi:id="_sCb0oDcGEeGmdKZl4eaY4A" type="4002" source="_pYpH4DcGEeGmdKZl4eaY4A" target="_H_vAYDVvEeGu3fRZW9onUA">
+      <styles xmi:type="notation:RoutingStyle" xmi:id="_sCb0oTcGEeGmdKZl4eaY4A"/>
+      <styles xmi:type="notation:FontStyle" xmi:id="_sCb0ojcGEeGmdKZl4eaY4A" fontName="Ubuntu"/>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_sCb0ozcGEeGmdKZl4eaY4A" points="[-4, -4, 134, 1]$[-136, -19, 2, -14]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_sCe38DcGEeGmdKZl4eaY4A" id="(0.0423728813559322,0.4666666666666667)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_sCe38TcGEeGmdKZl4eaY4A" id="(0.7777777777777778,0.28846153846153844)"/>
     </edges>
   </notation:Diagram>
 </xmi:XMI>
