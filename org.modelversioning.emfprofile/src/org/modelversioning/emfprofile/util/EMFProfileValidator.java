@@ -213,6 +213,8 @@ public class EMFProfileValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateExtension_redefinedInSuperStereotype(extension, diagnostics, context);
 		if (result || diagnostics != null) result &= validateExtension_subsettedInSuperStereotype(extension, diagnostics, context);
 		if (result || diagnostics != null) result &= validateExtension_subsettedMustHaveHigherOrEqualUpperBound(extension, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExtension_redefiningTargetMustBeSubclassOfRedefinedTarget(extension, diagnostics, context);
+		if (result || diagnostics != null) result &= validateExtension_subsettingTargetMustBeSubclassOfSubsettedTarget(extension, diagnostics, context);
 		return result;
 	}
 
@@ -298,6 +300,64 @@ public class EMFProfileValidator extends EObjectValidator {
 				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
 				 "subsettedMustHaveHigherOrEqualUpperBound",
 				 EXTENSION__SUBSETTED_MUST_HAVE_HIGHER_OR_EQUAL_UPPER_BOUND__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
+	}
+
+	/**
+	 * The cached validation expression for the redefiningTargetMustBeSubclassOfRedefinedTarget constraint of '<em>Extension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String EXTENSION__REDEFINING_TARGET_MUST_BE_SUBCLASS_OF_REDEFINED_TARGET__EEXPRESSION = "self.redefined->notEmpty() implies self.redefined->forAll(redef : Extension | target.eAllSuperTypes->includes(redef.target))";
+
+	/**
+	 * Validates the redefiningTargetMustBeSubclassOfRedefinedTarget constraint of '<em>Extension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateExtension_redefiningTargetMustBeSubclassOfRedefinedTarget(Extension extension, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(EMFProfilePackage.Literals.EXTENSION,
+				 extension,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
+				 "redefiningTargetMustBeSubclassOfRedefinedTarget",
+				 EXTENSION__REDEFINING_TARGET_MUST_BE_SUBCLASS_OF_REDEFINED_TARGET__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
+	}
+
+	/**
+	 * The cached validation expression for the subsettingTargetMustBeSubclassOfSubsettedTarget constraint of '<em>Extension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String EXTENSION__SUBSETTING_TARGET_MUST_BE_SUBCLASS_OF_SUBSETTED_TARGET__EEXPRESSION = "self.subsetted->notEmpty() implies self.subsetted->forAll(subsetted : Extension | target.eAllSuperTypes->includes(subsetted.target))";
+
+	/**
+	 * Validates the subsettingTargetMustBeSubclassOfSubsettedTarget constraint of '<em>Extension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateExtension_subsettingTargetMustBeSubclassOfSubsettedTarget(Extension extension, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(EMFProfilePackage.Literals.EXTENSION,
+				 extension,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
+				 "subsettingTargetMustBeSubclassOfSubsettedTarget",
+				 EXTENSION__SUBSETTING_TARGET_MUST_BE_SUBCLASS_OF_SUBSETTED_TARGET__EEXPRESSION,
 				 Diagnostic.ERROR,
 				 DIAGNOSTIC_SOURCE,
 				 0);

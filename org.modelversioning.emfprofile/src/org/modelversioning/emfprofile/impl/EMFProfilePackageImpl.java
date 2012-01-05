@@ -415,7 +415,7 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		  (extensionEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "redefinedInSuperStereotype subsettedInSuperStereotype subsettedMustHaveHigherOrEqualUpperBound"
+			 "constraints", "redefinedInSuperStereotype subsettedInSuperStereotype subsettedMustHaveHigherOrEqualUpperBound redefiningTargetMustBeSubclassOfRedefinedTarget subsettingTargetMustBeSubclassOfSubsettedTarget"
 		   });	
 	}
 
@@ -439,7 +439,9 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		   new String[] {
 			 "redefinedInSuperStereotype", "self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.redefined)",
 			 "subsettedInSuperStereotype", "self.source.eAllSuperTypes->select(s | s.oclIsKindOf(Stereotype))->collect(s  | s.oclAsType(Stereotype).extensions)->includesAll(self.subsetted)",
-			 "subsettedMustHaveHigherOrEqualUpperBound", "self.subsetted->size() > 0 implies self.subsetted->forAll(subsetted : Extension | subsetted.upperBound >= self.upperBound or subsetted.upperBound = -1)"
+			 "subsettedMustHaveHigherOrEqualUpperBound", "self.subsetted->size() > 0 implies self.subsetted->forAll(subsetted : Extension | subsetted.upperBound >= self.upperBound or subsetted.upperBound = -1)",
+			 "redefiningTargetMustBeSubclassOfRedefinedTarget", "self.redefined->notEmpty() implies self.redefined->forAll(redef : Extension | target.eAllSuperTypes->includes(redef.target))",
+			 "subsettingTargetMustBeSubclassOfSubsettedTarget", "self.subsetted->notEmpty() implies self.subsetted->forAll(subsetted : Extension | target.eAllSuperTypes->includes(subsetted.target))"
 		   });
 	}
 
