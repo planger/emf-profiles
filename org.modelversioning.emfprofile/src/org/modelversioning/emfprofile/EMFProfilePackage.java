@@ -490,13 +490,31 @@ public interface EMFProfilePackage extends EPackage {
 	int EXTENSION__SUBSETTED = 5;
 
 	/**
+	 * The feature id for the '<em><b>Redefining</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION__REDEFINING = 6;
+
+	/**
+	 * The feature id for the '<em><b>Subsetting</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENSION__SUBSETTING = 7;
+
+	/**
 	 * The number of structural features of the '<em>Extension</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION_FEATURE_COUNT = 6;
+	int EXTENSION_FEATURE_COUNT = 8;
 
 
 	/**
@@ -640,6 +658,28 @@ public interface EMFProfilePackage extends EPackage {
 	EReference getExtension_Subsetted();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.modelversioning.emfprofile.Extension#getRedefining <em>Redefining</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Redefining</em>'.
+	 * @see org.modelversioning.emfprofile.Extension#getRedefining()
+	 * @see #getExtension()
+	 * @generated
+	 */
+	EReference getExtension_Redefining();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.modelversioning.emfprofile.Extension#getSubsetting <em>Subsetting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Subsetting</em>'.
+	 * @see org.modelversioning.emfprofile.Extension#getSubsetting()
+	 * @see #getExtension()
+	 * @generated
+	 */
+	EReference getExtension_Subsetting();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -770,6 +810,22 @@ public interface EMFProfilePackage extends EPackage {
 		 * @generated
 		 */
 		EReference EXTENSION__SUBSETTED = eINSTANCE.getExtension_Subsetted();
+
+		/**
+		 * The meta object literal for the '<em><b>Redefining</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXTENSION__REDEFINING = eINSTANCE.getExtension_Redefining();
+
+		/**
+		 * The meta object literal for the '<em><b>Subsetting</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXTENSION__SUBSETTING = eINSTANCE.getExtension_Subsetting();
 
 	}
 

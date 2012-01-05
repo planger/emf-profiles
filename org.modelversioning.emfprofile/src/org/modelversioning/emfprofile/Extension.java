@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.modelversioning.emfprofile.Extension#getUpperBound <em>Upper Bound</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Extension#getRedefined <em>Redefined</em>}</li>
  *   <li>{@link org.modelversioning.emfprofile.Extension#getSubsetted <em>Subsetted</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Extension#getRedefining <em>Redefining</em>}</li>
+ *   <li>{@link org.modelversioning.emfprofile.Extension#getSubsetting <em>Subsetting</em>}</li>
  * </ul>
  * </p>
  *
@@ -146,6 +148,7 @@ public interface Extension extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Redefined</b></em>' reference list.
 	 * The list contents are of type {@link org.modelversioning.emfprofile.Extension}.
+	 * It is bidirectional and its opposite is '{@link org.modelversioning.emfprofile.Extension#getRedefining <em>Redefining</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Redefined</em>' reference list isn't clear,
@@ -154,7 +157,8 @@ public interface Extension extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Redefined</em>' reference list.
 	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getExtension_Redefined()
-	 * @model ordered="false"
+	 * @see org.modelversioning.emfprofile.Extension#getRedefining
+	 * @model opposite="redefining" ordered="false"
 	 * @generated
 	 */
 	EList<Extension> getRedefined();
@@ -162,6 +166,7 @@ public interface Extension extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Subsetted</b></em>' reference list.
 	 * The list contents are of type {@link org.modelversioning.emfprofile.Extension}.
+	 * It is bidirectional and its opposite is '{@link org.modelversioning.emfprofile.Extension#getSubsetting <em>Subsetting</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Subsetted</em>' reference list isn't clear,
@@ -170,10 +175,69 @@ public interface Extension extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Subsetted</em>' reference list.
 	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getExtension_Subsetted()
-	 * @model resolveProxies="false"
+	 * @see org.modelversioning.emfprofile.Extension#getSubsetting
+	 * @model opposite="subsetting" resolveProxies="false"
 	 * @generated
 	 */
 	EList<Extension> getSubsetted();
+
+	/**
+	 * Returns the value of the '<em><b>Redefining</b></em>' reference list.
+	 * The list contents are of type {@link org.modelversioning.emfprofile.Extension}.
+	 * It is bidirectional and its opposite is '{@link org.modelversioning.emfprofile.Extension#getRedefined <em>Redefined</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Redefining</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Redefining</em>' reference list.
+	 * @see #isSetRedefining()
+	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getExtension_Redefining()
+	 * @see org.modelversioning.emfprofile.Extension#getRedefined
+	 * @model opposite="redefined" unsettable="true" changeable="false" derived="true"
+	 * @generated
+	 */
+	EList<Extension> getRedefining();
+
+	/**
+	 * Returns whether the value of the '{@link org.modelversioning.emfprofile.Extension#getRedefining <em>Redefining</em>}' reference list is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Redefining</em>' reference list is set.
+	 * @see #getRedefining()
+	 * @generated
+	 */
+	boolean isSetRedefining();
+
+	/**
+	 * Returns the value of the '<em><b>Subsetting</b></em>' reference list.
+	 * The list contents are of type {@link org.modelversioning.emfprofile.Extension}.
+	 * It is bidirectional and its opposite is '{@link org.modelversioning.emfprofile.Extension#getSubsetted <em>Subsetted</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Subsetting</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Subsetting</em>' reference list.
+	 * @see #isSetSubsetting()
+	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getExtension_Subsetting()
+	 * @see org.modelversioning.emfprofile.Extension#getSubsetted
+	 * @model opposite="subsetted" unsettable="true" changeable="false" derived="true"
+	 * @generated
+	 */
+	EList<Extension> getSubsetting();
+
+	/**
+	 * Returns whether the value of the '{@link org.modelversioning.emfprofile.Extension#getSubsetting <em>Subsetting</em>}' reference list is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Subsetting</em>' reference list is set.
+	 * @see #getSubsetting()
+	 * @generated
+	 */
+	boolean isSetSubsetting();
 
 	/**
 	 * <!-- begin-user-doc -->

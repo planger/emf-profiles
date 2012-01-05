@@ -83,8 +83,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="redefined" ordered="false"
-        upperBound="-1" eType="#//Extension"/>
+        upperBound="-1" eType="#//Extension" eOpposite="#//Extension/redefining"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subsetted" upperBound="-1"
-        eType="#//Extension" resolveProxies="false"/>
+        eType="#//Extension" resolveProxies="false" eOpposite="#//Extension/subsetting"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="redefining" upperBound="-1"
+        eType="#//Extension" changeable="false" unsettable="true" derived="true" eOpposite="#//Extension/redefined"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subsetting" upperBound="-1"
+        eType="#//Extension" changeable="false" unsettable="true" derived="true" eOpposite="#//Extension/subsetted"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -245,6 +245,24 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getExtension_Redefining() {
+		return (EReference)extensionEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getExtension_Subsetting() {
+		return (EReference)extensionEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMFProfileFactory getEMFProfileFactory() {
 		return (EMFProfileFactory)getEFactoryInstance();
 	}
@@ -283,6 +301,8 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		createEAttribute(extensionEClass, EXTENSION__UPPER_BOUND);
 		createEReference(extensionEClass, EXTENSION__REDEFINED);
 		createEReference(extensionEClass, EXTENSION__SUBSETTED);
+		createEReference(extensionEClass, EXTENSION__REDEFINING);
+		createEReference(extensionEClass, EXTENSION__SUBSETTING);
 	}
 
 	/**
@@ -373,8 +393,10 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 		initEReference(getExtension_Target(), theEcorePackage.getEClass(), null, "target", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExtension_LowerBound(), ecorePackage.getEInt(), "lowerBound", "0", 0, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExtension_UpperBound(), ecorePackage.getEInt(), "upperBound", "-1", 0, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getExtension_Redefined(), this.getExtension(), null, "redefined", null, 0, -1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getExtension_Subsetted(), this.getExtension(), null, "subsetted", null, 0, -1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getExtension_Redefined(), this.getExtension(), this.getExtension_Redefining(), "redefined", null, 0, -1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getExtension_Subsetted(), this.getExtension(), this.getExtension_Subsetting(), "subsetted", null, 0, -1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getExtension_Redefining(), this.getExtension(), this.getExtension_Redefined(), "redefining", null, 0, -1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getExtension_Subsetting(), this.getExtension(), this.getExtension_Subsetted(), "subsetting", null, 0, -1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		addEOperation(extensionEClass, ecorePackage.getEBoolean(), "isRequired", 1, 1, IS_UNIQUE, IS_ORDERED);
 

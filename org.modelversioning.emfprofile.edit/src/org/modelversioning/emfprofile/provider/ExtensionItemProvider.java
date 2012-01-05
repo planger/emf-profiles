@@ -61,6 +61,8 @@ public class ExtensionItemProvider extends ItemProviderAdapter implements
 			addUpperBoundPropertyDescriptor(object);
 			addRedefinedPropertyDescriptor(object);
 			addSubsettedPropertyDescriptor(object);
+			addRedefiningPropertyDescriptor(object);
+			addSubsettingPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -170,6 +172,50 @@ public class ExtensionItemProvider extends ItemProviderAdapter implements
 				 true,
 				 false,
 				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Redefining feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRedefiningPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Extension_redefining_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Extension_redefining_feature", "_UI_Extension_type"),
+				 EMFProfilePackage.Literals.EXTENSION__REDEFINING,
+				 false,
+				 false,
+				 false,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Subsetting feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSubsettingPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Extension_subsetting_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Extension_subsetting_feature", "_UI_Extension_type"),
+				 EMFProfilePackage.Literals.EXTENSION__SUBSETTING,
+				 false,
+				 false,
+				 false,
 				 null,
 				 null,
 				 null));
