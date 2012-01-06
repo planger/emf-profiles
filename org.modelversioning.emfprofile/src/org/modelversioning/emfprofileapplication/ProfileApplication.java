@@ -25,7 +25,7 @@ import org.modelversioning.emfprofile.Stereotype;
  * </p>
  *
  * @see org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage#getProfileApplication()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='violatedUpperBound violatedLowerBound useOfRedefinedExtension'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='violatedUpperBound violatedLowerBound'"
  * @generated
  */
 public interface ProfileApplication extends EObject {

@@ -25,7 +25,7 @@ import org.modelversioning.emfprofile.Extension;
  * </p>
  *
  * @see org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage#getStereotypeApplication()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='appliedInapplicableExtension'"
  * @generated
  */
 public interface StereotypeApplication extends EObject {

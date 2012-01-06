@@ -341,7 +341,13 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		  (profileApplicationEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "violatedUpperBound violatedLowerBound useOfRedefinedExtension"
+			 "constraints", "violatedUpperBound violatedLowerBound"
+		   });		
+		addAnnotation
+		  (stereotypeApplicationEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "appliedInapplicableExtension"
 		   });
 	}
 

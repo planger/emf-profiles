@@ -419,6 +419,24 @@ public class ExtensionImpl extends EObjectImpl implements Extension {
 		}
 		return refinedTypes;
 	}
+	
+	protected boolean isRedefinedByExtensions(EList<Extension> extensions) {
+		for (Extension extension : extensions) {
+			if (getRedefining().contains(extension)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	protected boolean isSubsettedByExtensions(EList<Extension> extensions) {
+		for (Extension extension : extensions) {
+			if (getSubsetting().contains(extension)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -22,6 +22,8 @@ import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
+import org.modelversioning.emfprofileapplication.validation.InapplicableExtensionApplicationConstraintValidator;
+import org.modelversioning.emfprofileapplication.validation.InapplicableExtensionApplicationViolation;
 import org.modelversioning.emfprofileapplication.validation.LowerBoundConstraintValidator;
 import org.modelversioning.emfprofileapplication.validation.LowerBoundConstraintViolation;
 import org.modelversioning.emfprofileapplication.validation.UpperBoundConstraintValidator;
@@ -74,8 +76,7 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 
 	public static final int VIOLATED_UPPER_BOUND = 1;
 	public static final int VIOLATED_LOWER_BOUND = 2;
-	private static final int ILLEGAL_USE_OF_REDEFINED_EXTENSION = 3;
-	private static final int ILLEGAL_USE_OF_SUBSETTED_EXTENSION = 4;
+	private static final int APPLIED_INAPPLICABLE_EXTENSION = 3;
 
 	/**
 	 * Creates an instance of the switch. <!-- begin-user-doc --> <!--
@@ -161,9 +162,6 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 					profileApplication, diagnostics, context);
 		if (result || diagnostics != null)
 			result &= validateProfileApplication_violatedLowerBound(
-					profileApplication, diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validateProfileApplication_useOfRedefinedExtension(
 					profileApplication, diagnostics, context);
 		return result;
 	}
@@ -270,35 +268,6 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 	}
 
 	/**
-	 * Validates the useOfRedefinedExtension constraint of '
-	 * <em>Profile Application</em>'. <!-- begin-user-doc --> <!-- end-user-doc
-	 * -->
-	 * 
-	 * @generated
-	 */
-	public boolean validateProfileApplication_useOfRedefinedExtension(
-			ProfileApplication profileApplication, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
-		// TODO implement the constraint
-		// -> specify the condition that violates the constraint
-		// -> verify the diagnostic details, including severity, code, and
-		// message
-		// Ensure that you remove @generated or mark it @generated NOT
-		if (false) {
-			if (diagnostics != null) {
-				diagnostics.add(createDiagnostic(Diagnostic.ERROR,
-						DIAGNOSTIC_SOURCE, ILLEGAL_USE_OF_REDEFINED_EXTENSION,
-						"_UI_GenericConstraint_diagnostic",
-						new Object[] { "useOfRedefinedExtension",
-								getObjectLabel(profileApplication, context) },
-						new Object[] { profileApplication }, context));
-			}
-			return false;
-		}
-		return true;
-	}
-
-	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -317,8 +286,70 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 	public boolean validateStereotypeApplication(
 			StereotypeApplication stereotypeApplication,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(stereotypeApplication,
-				diagnostics, context);
+		if (!validate_NoCircularContainment(stereotypeApplication, diagnostics,
+				context))
+			return false;
+		boolean result = validate_EveryMultiplicityConforms(
+				stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryDataValueConforms(stereotypeApplication,
+					diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryReferenceIsContained(stereotypeApplication,
+					diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryBidirectionalReferenceIsPaired(
+					stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryProxyResolves(stereotypeApplication,
+					diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_UniqueID(stereotypeApplication, diagnostics,
+					context);
+		if (result || diagnostics != null)
+			result &= validate_EveryKeyUnique(stereotypeApplication,
+					diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryMapEntryUnique(stereotypeApplication,
+					diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validateStereotypeApplication_appliedInapplicableExtension(
+					stereotypeApplication, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the appliedInapplicableExtension constraint of '
+	 * <em>Stereotype Application</em>'. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean validateStereotypeApplication_appliedInapplicableExtension(
+			StereotypeApplication stereotypeApplication,
+			DiagnosticChain diagnostics, Map<Object, Object> context) {
+		InapplicableExtensionApplicationConstraintValidator validator = new InapplicableExtensionApplicationConstraintValidator(
+				stereotypeApplication);
+		if (validator.isViolated()) {
+			if (diagnostics != null) {
+				InapplicableExtensionApplicationViolation violation = validator
+						.createViolation();
+				diagnostics
+						.add(createDiagnostic(
+								Diagnostic.ERROR,
+								DIAGNOSTIC_SOURCE,
+								APPLIED_INAPPLICABLE_EXTENSION,
+								"ProfileApplication.ConstraintViolation.applied_inapplicable_extension",
+								new Object[] {
+										violation.getStereotype().getName(),
+										violation.getExtension().toString(),
+										violation.getModelObject() },
+								new Object[] { violation }, context));
+			}
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	/**

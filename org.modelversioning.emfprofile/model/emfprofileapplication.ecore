@@ -5,7 +5,7 @@
     nsURI="http://www.modelversioning.org/emfprofile/application/1.1" nsPrefix="emfprofileapplication">
   <eClassifiers xsi:type="ecore:EClass" name="ProfileApplication">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="violatedUpperBound violatedLowerBound useOfRedefinedExtension"/>
+      <details key="constraints" value="violatedUpperBound violatedLowerBound"/>
     </eAnnotations>
     <eOperations name="getStereotypeApplications" ordered="false" upperBound="-1"
         eType="#//StereotypeApplication">
@@ -29,6 +29,9 @@
         transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StereotypeApplication">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="appliedInapplicableExtension"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appliedTo" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="profileApplication" eType="#//ProfileApplication"
         eOpposite="#//ProfileApplication/stereotypeApplications"/>
