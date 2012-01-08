@@ -16,6 +16,7 @@ import org.modelversioning.emfprofileapplication.EMFProfileApplicationFactory;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
@@ -65,6 +66,7 @@ public class EMFProfileApplicationFactoryImpl extends EFactoryImpl implements EM
 			case EMFProfileApplicationPackage.PROFILE_APPLICATION: return createProfileApplication();
 			case EMFProfileApplicationPackage.PROFILE_IMPORT: return createProfileImport();
 			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION: return createStereotypeApplication();
+			case EMFProfileApplicationPackage.STEREOTYPE_APPLICABILITY: return createStereotypeApplicability();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -98,6 +100,16 @@ public class EMFProfileApplicationFactoryImpl extends EFactoryImpl implements EM
 	public StereotypeApplication createStereotypeApplication() {
 		StereotypeApplicationImpl stereotypeApplication = new StereotypeApplicationImpl();
 		return stereotypeApplication;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StereotypeApplicability createStereotypeApplicability() {
+		StereotypeApplicabilityImpl stereotypeApplicability = new StereotypeApplicabilityImpl();
+		return stereotypeApplicability;
 	}
 
 	/**

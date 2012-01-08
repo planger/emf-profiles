@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010 modelversioning.org
+ * Copyright (c) 2010 - 2012 modelversioning.org
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -22,16 +22,16 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
-import org.modelversioning.emfprofileapplication.StereotypeApplication;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 
 /**
  * This is the item provider adapter for a
- * {@link org.modelversioning.emfprofileapplication.StereotypeApplication}
+ * {@link org.modelversioning.emfprofileapplication.StereotypeApplicability}
  * object. <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
  * @generated
  */
-public class StereotypeApplicationItemProvider extends ItemProviderAdapter
+public class StereotypeApplicabilityItemProvider extends ItemProviderAdapter
 		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
@@ -40,7 +40,7 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 	 * 
 	 * @generated
 	 */
-	public StereotypeApplicationItemProvider(AdapterFactory adapterFactory) {
+	public StereotypeApplicabilityItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -55,29 +55,30 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addAppliedToPropertyDescriptor(object);
+			addStereotypePropertyDescriptor(object);
 			addExtensionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Applied To feature. <!--
+	 * This adds a property descriptor for the Stereotype feature. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected void addAppliedToPropertyDescriptor(Object object) {
+	protected void addStereotypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 				.add(createItemPropertyDescriptor(
 						((ComposeableAdapterFactory) adapterFactory)
 								.getRootAdapterFactory(),
 						getResourceLocator(),
-						getString("_UI_StereotypeApplication_appliedTo_feature"),
-						getString("_UI_PropertyDescriptor_description",
-								"_UI_StereotypeApplication_appliedTo_feature",
-								"_UI_StereotypeApplication_type"),
-						EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICATION__APPLIED_TO,
+						getString("_UI_StereotypeApplicability_stereotype_feature"),
+						getString(
+								"_UI_PropertyDescriptor_description",
+								"_UI_StereotypeApplicability_stereotype_feature",
+								"_UI_StereotypeApplicability_type"),
+						EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICABILITY__STEREOTYPE,
 						true, false, true, null, null, null));
 	}
 
@@ -93,24 +94,27 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 						((ComposeableAdapterFactory) adapterFactory)
 								.getRootAdapterFactory(),
 						getResourceLocator(),
-						getString("_UI_StereotypeApplication_extension_feature"),
-						getString("_UI_PropertyDescriptor_description",
-								"_UI_StereotypeApplication_extension_feature",
-								"_UI_StereotypeApplication_type"),
-						EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICATION__EXTENSION,
+						getString("_UI_StereotypeApplicability_extension_feature"),
+						getString(
+								"_UI_PropertyDescriptor_description",
+								"_UI_StereotypeApplicability_extension_feature",
+								"_UI_StereotypeApplicability_type"),
+						EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICABILITY__EXTENSION,
 						true, false, true, null, null, null));
 	}
 
 	/**
-	 * This returns Stereotype.gif. <!-- begin-user-doc --> <!-- end-user-doc
-	 * -->
+	 * This returns StereotypeApplicability.gif. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * 
-	 * @generated NOT
+	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object,
-				getResourceLocator().getImage("full/obj16/Stereotype"));
+		return overlayImage(
+				object,
+				getResourceLocator().getImage(
+						"full/obj16/StereotypeApplicability"));
 	}
 
 	/**
@@ -121,16 +125,16 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 	 */
 	@Override
 	public String getText(Object object) {
-		if (object instanceof StereotypeApplication) {
-			StereotypeApplication stereotypeApplication = (StereotypeApplication) object;
+		if (object instanceof StereotypeApplicability) {
+			StereotypeApplicability stereotypeApplicability = (StereotypeApplicability) object;
 			return getString("_UI_Stereotype_Prefix")
-					+ stereotypeApplication.getStereotype().getName()
+					+ stereotypeApplicability.getStereotype().getName()
 					+ getString("_UI_Stereotype_Postfix")
 					+ " ("
-					+ stereotypeApplication.getExtension().getSource()
+					+ stereotypeApplicability.getExtension().getSource()
 							.getName()
 					+ " -> "
-					+ stereotypeApplication.getExtension().getTarget()
+					+ stereotypeApplicability.getExtension().getTarget()
 							.getName() + ")";
 		} else {
 			return getString("_UI_StereotypeApplication_type");

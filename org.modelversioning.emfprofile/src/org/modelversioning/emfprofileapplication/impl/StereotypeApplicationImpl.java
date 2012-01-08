@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.modelversioning.emfprofile.Extension;
+import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
@@ -190,6 +191,20 @@ public class StereotypeApplicationImpl extends EObjectImpl implements Stereotype
 		extension = newExtension;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfileApplicationPackage.STEREOTYPE_APPLICATION__EXTENSION, oldExtension, extension));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Stereotype getStereotype() {
+		EClass eClass = this.eClass();
+		if (eClass instanceof Stereotype) {
+			return (Stereotype) eClass;
+		} else {
+			return null;
+		}
 	}
 
 	/**

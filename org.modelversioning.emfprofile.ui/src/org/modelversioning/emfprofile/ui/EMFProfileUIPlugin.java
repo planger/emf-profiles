@@ -593,10 +593,9 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 	 * @return the {@link Image}.
 	 */
 	private Image getStereotypeImage(StereotypeApplication stereotypeApplication) {
-		if (stereotypeApplication.eClass() instanceof Stereotype) {
-			Stereotype stereotype = (Stereotype) stereotypeApplication.eClass();
-			if (stereotype.getIconPath() != null
-					&& stereotype.getIconPath().length() > 0) {
+		if (stereotypeApplication.getStereotype() != null) {
+			Stereotype stereotype = stereotypeApplication.getStereotype();
+			if (stereotype.hasIcon()) {
 				if (getImage(getImageKey(stereotype)) == null) {
 					registerExternalImage(getImageRegistry(),
 							getImageKey(stereotype), stereotype.getIconPath());

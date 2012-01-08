@@ -37,9 +37,9 @@ import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.IProfileFacade;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
-import org.modelversioning.emfprofile.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 import org.modelversioning.emfprofileapplication.util.ProfileImportResolver;
 
@@ -223,7 +223,11 @@ public class ProfileFacadeImpl implements IProfileFacade {
 
 	private StereotypeApplicability createApplicableStereotype(
 			Stereotype stereotype, Extension extension) {
-		return new StereotypeApplicabilityImpl(stereotype, extension);
+		StereotypeApplicability stereotypeApplicability = EMF_PROFILE_APPLICATION_FACTORY
+				.createStereotypeApplicability();
+		stereotypeApplicability.setStereotype(stereotype);
+		stereotypeApplicability.setExtension(extension);
+		return stereotypeApplicability;
 	}
 
 	/**
@@ -319,9 +323,25 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			throw new IllegalArgumentException(STEREOTYPE_NOT_APPLICABLE);
 		}
 		StereotypeApplication stereotypeApplication = createStereotypeApplication(stereotype);
-		stereotypeApplication.setExtension(extension);
+		setExtension(stereotypeApplication, extension);
 		apply(stereotypeApplication, eObject);
 		return stereotypeApplication;
+	}
+
+	private void setExtension(
+			final StereotypeApplication stereotypeApplication,
+			final Extension extension) {
+		if (requireTransaction()) {
+			TransactionalEditingDomain domain = getTransactionalEditingDomain();
+			domain.getCommandStack().execute(new RecordingCommand(domain) {
+				@Override
+				protected void doExecute() {
+					stereotypeApplication.setExtension(extension);
+				}
+			});
+		} else {
+			stereotypeApplication.setExtension(extension);
+		}
 	}
 
 	/**

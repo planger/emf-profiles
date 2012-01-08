@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.util.Switch;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
@@ -90,6 +91,12 @@ public class EMFProfileApplicationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case EMFProfileApplicationPackage.STEREOTYPE_APPLICABILITY: {
+				StereotypeApplicability stereotypeApplicability = (StereotypeApplicability)theEObject;
+				T result = caseStereotypeApplicability(stereotypeApplicability);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -136,6 +143,21 @@ public class EMFProfileApplicationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStereotypeApplication(StereotypeApplication object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stereotype Applicability</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stereotype Applicability</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStereotypeApplicability(StereotypeApplicability object) {
 		return null;
 	}
 

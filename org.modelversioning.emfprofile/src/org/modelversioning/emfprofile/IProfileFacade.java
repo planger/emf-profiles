@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationFactory;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**

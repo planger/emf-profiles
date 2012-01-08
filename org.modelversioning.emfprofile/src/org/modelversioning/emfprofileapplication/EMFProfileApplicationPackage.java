@@ -191,6 +191,44 @@ public interface EMFProfileApplicationPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.modelversioning.emfprofileapplication.impl.StereotypeApplicabilityImpl <em>Stereotype Applicability</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.modelversioning.emfprofileapplication.impl.StereotypeApplicabilityImpl
+	 * @see org.modelversioning.emfprofileapplication.impl.EMFProfileApplicationPackageImpl#getStereotypeApplicability()
+	 * @generated
+	 */
+	int STEREOTYPE_APPLICABILITY = 3;
+
+	/**
+	 * The feature id for the '<em><b>Stereotype</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEREOTYPE_APPLICABILITY__STEREOTYPE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Extension</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEREOTYPE_APPLICABILITY__EXTENSION = 1;
+
+	/**
+	 * The number of structural features of the '<em>Stereotype Applicability</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEREOTYPE_APPLICABILITY_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.modelversioning.emfprofileapplication.ProfileApplication <em>Profile Application</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -309,6 +347,38 @@ public interface EMFProfileApplicationPackage extends EPackage {
 	EReference getStereotypeApplication_Extension();
 
 	/**
+	 * Returns the meta object for class '{@link org.modelversioning.emfprofileapplication.StereotypeApplicability <em>Stereotype Applicability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stereotype Applicability</em>'.
+	 * @see org.modelversioning.emfprofileapplication.StereotypeApplicability
+	 * @generated
+	 */
+	EClass getStereotypeApplicability();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.modelversioning.emfprofileapplication.StereotypeApplicability#getStereotype <em>Stereotype</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Stereotype</em>'.
+	 * @see org.modelversioning.emfprofileapplication.StereotypeApplicability#getStereotype()
+	 * @see #getStereotypeApplicability()
+	 * @generated
+	 */
+	EReference getStereotypeApplicability_Stereotype();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.modelversioning.emfprofileapplication.StereotypeApplicability#getExtension <em>Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Extension</em>'.
+	 * @see org.modelversioning.emfprofileapplication.StereotypeApplicability#getExtension()
+	 * @see #getStereotypeApplicability()
+	 * @generated
+	 */
+	EReference getStereotypeApplicability_Extension();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -423,6 +493,32 @@ public interface EMFProfileApplicationPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STEREOTYPE_APPLICATION__EXTENSION = eINSTANCE.getStereotypeApplication_Extension();
+
+		/**
+		 * The meta object literal for the '{@link org.modelversioning.emfprofileapplication.impl.StereotypeApplicabilityImpl <em>Stereotype Applicability</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.modelversioning.emfprofileapplication.impl.StereotypeApplicabilityImpl
+		 * @see org.modelversioning.emfprofileapplication.impl.EMFProfileApplicationPackageImpl#getStereotypeApplicability()
+		 * @generated
+		 */
+		EClass STEREOTYPE_APPLICABILITY = eINSTANCE.getStereotypeApplicability();
+
+		/**
+		 * The meta object literal for the '<em><b>Stereotype</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STEREOTYPE_APPLICABILITY__STEREOTYPE = eINSTANCE.getStereotypeApplicability_Stereotype();
+
+		/**
+		 * The meta object literal for the '<em><b>Extension</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STEREOTYPE_APPLICABILITY__EXTENSION = eINSTANCE.getStereotypeApplicability_Extension();
 
 	}
 

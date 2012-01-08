@@ -32,9 +32,16 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="appliedInapplicableExtension"/>
     </eAnnotations>
+    <eOperations name="getStereotype" lowerBound="1" eType="ecore:EClass emfprofiles.ecore#//Stereotype"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appliedTo" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="profileApplication" eType="#//ProfileApplication"
         eOpposite="#//ProfileApplication/stereotypeApplications"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extension" lowerBound="1"
+        eType="ecore:EClass emfprofiles.ecore#//Extension"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StereotypeApplicability">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stereotype" lowerBound="1"
+        eType="ecore:EClass emfprofiles.ecore#//Stereotype"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extension" lowerBound="1"
         eType="ecore:EClass emfprofiles.ecore#//Extension"/>
   </eClassifiers>

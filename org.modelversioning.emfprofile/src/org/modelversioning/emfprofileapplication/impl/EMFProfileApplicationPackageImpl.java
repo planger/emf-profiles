@@ -20,6 +20,7 @@ import org.modelversioning.emfprofileapplication.EMFProfileApplicationFactory;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 import org.modelversioning.emfprofileapplication.util.EMFProfileApplicationValidator;
 
@@ -48,6 +49,13 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 	 * @generated
 	 */
 	private EClass stereotypeApplicationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stereotypeApplicabilityEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -226,6 +234,33 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStereotypeApplicability() {
+		return stereotypeApplicabilityEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStereotypeApplicability_Stereotype() {
+		return (EReference)stereotypeApplicabilityEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStereotypeApplicability_Extension() {
+		return (EReference)stereotypeApplicabilityEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMFProfileApplicationFactory getEMFProfileApplicationFactory() {
 		return (EMFProfileApplicationFactory)getEFactoryInstance();
 	}
@@ -262,6 +297,10 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		createEReference(stereotypeApplicationEClass, STEREOTYPE_APPLICATION__APPLIED_TO);
 		createEReference(stereotypeApplicationEClass, STEREOTYPE_APPLICATION__PROFILE_APPLICATION);
 		createEReference(stereotypeApplicationEClass, STEREOTYPE_APPLICATION__EXTENSION);
+
+		stereotypeApplicabilityEClass = createEClass(STEREOTYPE_APPLICABILITY);
+		createEReference(stereotypeApplicabilityEClass, STEREOTYPE_APPLICABILITY__STEREOTYPE);
+		createEReference(stereotypeApplicabilityEClass, STEREOTYPE_APPLICABILITY__EXTENSION);
 	}
 
 	/**
@@ -320,6 +359,12 @@ public class EMFProfileApplicationPackageImpl extends EPackageImpl implements EM
 		initEReference(getStereotypeApplication_AppliedTo(), theEcorePackage.getEObject(), null, "appliedTo", null, 0, 1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStereotypeApplication_ProfileApplication(), this.getProfileApplication(), this.getProfileApplication_StereotypeApplications(), "profileApplication", null, 0, 1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStereotypeApplication_Extension(), theEMFProfilePackage.getExtension(), null, "extension", null, 1, 1, StereotypeApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(stereotypeApplicationEClass, theEMFProfilePackage.getStereotype(), "getStereotype", 1, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(stereotypeApplicabilityEClass, StereotypeApplicability.class, "StereotypeApplicability", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getStereotypeApplicability_Stereotype(), theEMFProfilePackage.getStereotype(), null, "stereotype", null, 1, 1, StereotypeApplicability.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStereotypeApplicability_Extension(), theEMFProfilePackage.getExtension(), null, "extension", null, 1, 1, StereotypeApplicability.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

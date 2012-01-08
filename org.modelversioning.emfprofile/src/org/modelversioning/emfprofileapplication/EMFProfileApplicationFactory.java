@@ -54,6 +54,15 @@ public interface EMFProfileApplicationFactory extends EFactory {
 	StereotypeApplication createStereotypeApplication();
 
 	/**
+	 * Returns a new object of class '<em>Stereotype Applicability</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stereotype Applicability</em>'.
+	 * @generated
+	 */
+	StereotypeApplicability createStereotypeApplicability();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

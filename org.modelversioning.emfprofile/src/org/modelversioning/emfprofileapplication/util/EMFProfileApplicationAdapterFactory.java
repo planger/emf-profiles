@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
@@ -85,6 +86,10 @@ public class EMFProfileApplicationAdapterFactory extends AdapterFactoryImpl {
 				return createStereotypeApplicationAdapter();
 			}
 			@Override
+			public Adapter caseStereotypeApplicability(StereotypeApplicability object) {
+				return createStereotypeApplicabilityAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -143,6 +148,20 @@ public class EMFProfileApplicationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStereotypeApplicationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.modelversioning.emfprofileapplication.StereotypeApplicability <em>Stereotype Applicability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.modelversioning.emfprofileapplication.StereotypeApplicability
+	 * @generated
+	 */
+	public Adapter createStereotypeApplicabilityAdapter() {
 		return null;
 	}
 

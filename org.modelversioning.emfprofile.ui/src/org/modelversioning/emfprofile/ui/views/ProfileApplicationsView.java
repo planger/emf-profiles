@@ -69,9 +69,9 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.modelversioning.emfprofile.IProfileFacade;
-import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofile.provider.EMFProfileItemProviderAdapterFactory;
 import org.modelversioning.emfprofile.ui.EMFProfileUIPlugin;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 import org.modelversioning.emfprofileapplication.provider.EMFProfileApplicationItemProviderAdapterFactory;
 
@@ -544,9 +544,9 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 			int result = dialog.open();
 			if (Dialog.OK == result) {
 				Object firstResult = dialog.getFirstResult();
-				if (firstResult instanceof Stereotype) {
-					currentProfileFacade.apply((Stereotype) firstResult,
-							eObject);
+				if (firstResult instanceof StereotypeApplicability) {
+					currentProfileFacade.apply(
+							(StereotypeApplicability) firstResult, eObject);
 					updateView();
 				}
 			}

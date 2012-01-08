@@ -144,6 +144,29 @@ public class EMFProfileApplicationItemProviderAdapterFactory extends EMFProfileA
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.modelversioning.emfprofileapplication.StereotypeApplicability} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected StereotypeApplicabilityItemProvider stereotypeApplicabilityItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.modelversioning.emfprofileapplication.StereotypeApplicability}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createStereotypeApplicabilityAdapter() {
+		if (stereotypeApplicabilityItemProvider == null) {
+			stereotypeApplicabilityItemProvider = new StereotypeApplicabilityItemProvider(this);
+		}
+
+		return stereotypeApplicabilityItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -245,6 +268,7 @@ public class EMFProfileApplicationItemProviderAdapterFactory extends EMFProfileA
 		if (profileApplicationItemProvider != null) profileApplicationItemProvider.dispose();
 		if (profileImportItemProvider != null) profileImportItemProvider.dispose();
 		if (stereotypeApplicationItemProvider != null) stereotypeApplicationItemProvider.dispose();
+		if (stereotypeApplicabilityItemProvider != null) stereotypeApplicabilityItemProvider.dispose();
 	}
 
 }

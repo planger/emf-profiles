@@ -178,6 +178,14 @@ public interface Stereotype extends EClass {
 	EList<Extension> getApplicableExtensions(EObject eObject);
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean hasIcon();
+
+	/**
 	 * Returns the value of the '<em><b>Extensions</b></em>' containment reference list.
 	 * The list contents are of type {@link org.modelversioning.emfprofile.Extension}.
 	 * It is bidirectional and its opposite is '{@link org.modelversioning.emfprofile.Extension#getSource <em>Source</em>}'.

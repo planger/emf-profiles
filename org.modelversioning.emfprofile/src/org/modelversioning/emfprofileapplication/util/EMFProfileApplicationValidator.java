@@ -21,6 +21,7 @@ import org.modelversioning.emfprofile.EMFProfilePlugin;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
+import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 import org.modelversioning.emfprofileapplication.validation.InapplicableExtensionApplicationConstraintValidator;
 import org.modelversioning.emfprofileapplication.validation.InapplicableExtensionApplicationViolation;
@@ -38,18 +39,15 @@ import org.modelversioning.emfprofileapplication.validation.UpperBoundConstraint
  */
 public class EMFProfileApplicationValidator extends EObjectValidator {
 	/**
-	 * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached model package
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static final EMFProfileApplicationValidator INSTANCE = new EMFProfileApplicationValidator();
 
 	/**
-	 * A constant for the
-	 * {@link org.eclipse.emf.common.util.Diagnostic#getSource() source} of
-	 * diagnostic {@link org.eclipse.emf.common.util.Diagnostic#getCode() codes}
-	 * from this package. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * A constant for the {@link org.eclipse.emf.common.util.Diagnostic#getSource() source} of diagnostic {@link org.eclipse.emf.common.util.Diagnostic#getCode() codes} from this package.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.emf.common.util.Diagnostic#getSource()
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
@@ -57,19 +55,17 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 	public static final String DIAGNOSTIC_SOURCE = "org.modelversioning.emfprofileapplication";
 
 	/**
-	 * A constant with a fixed name that can be used as the base value for
-	 * additional hand written constants. <!-- begin-user-doc --> <!--
+	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 0;
 
 	/**
-	 * A constant with a fixed name that can be used as the base value for
-	 * additional hand written constants in a derived class. <!-- begin-user-doc
+	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
@@ -79,9 +75,9 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 	private static final int APPLIED_INAPPLICABLE_EXTENSION = 3;
 
 	/**
-	 * Creates an instance of the switch. <!-- begin-user-doc --> <!--
+	 * Creates an instance of the switch.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EMFProfileApplicationValidator() {
@@ -89,80 +85,56 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 	}
 
 	/**
-	 * Returns the package of this validator switch. <!-- begin-user-doc -->
+	 * Returns the package of this validator switch.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	protected EPackage getEPackage() {
-		return EMFProfileApplicationPackage.eINSTANCE;
+	  return EMFProfileApplicationPackage.eINSTANCE;
 	}
 
 	/**
-	 * Calls <code>validateXXX</code> for the corresponding classifier of the
-	 * model. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Calls <code>validateXXX</code> for the corresponding classifier of the model.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	protected boolean validate(int classifierID, Object value,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		switch (classifierID) {
-		case EMFProfileApplicationPackage.PROFILE_APPLICATION:
-			return validateProfileApplication((ProfileApplication) value,
-					diagnostics, context);
-		case EMFProfileApplicationPackage.PROFILE_IMPORT:
-			return validateProfileImport((ProfileImport) value, diagnostics,
-					context);
-		case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION:
-			return validateStereotypeApplication((StereotypeApplication) value,
-					diagnostics, context);
-		default:
-			return true;
+			case EMFProfileApplicationPackage.PROFILE_APPLICATION:
+				return validateProfileApplication((ProfileApplication)value, diagnostics, context);
+			case EMFProfileApplicationPackage.PROFILE_IMPORT:
+				return validateProfileImport((ProfileImport)value, diagnostics, context);
+			case EMFProfileApplicationPackage.STEREOTYPE_APPLICATION:
+				return validateStereotypeApplication((StereotypeApplication)value, diagnostics, context);
+			case EMFProfileApplicationPackage.STEREOTYPE_APPLICABILITY:
+				return validateStereotypeApplicability((StereotypeApplicability)value, diagnostics, context);
+			default:
+				return true;
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public boolean validateProfileApplication(
 			ProfileApplication profileApplication, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(profileApplication, diagnostics,
-				context))
-			return false;
-		boolean result = validate_EveryMultiplicityConforms(profileApplication,
-				diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryDataValueConforms(profileApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryReferenceIsContained(profileApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryBidirectionalReferenceIsPaired(
-					profileApplication, diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryProxyResolves(profileApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_UniqueID(profileApplication, diagnostics,
-					context);
-		if (result || diagnostics != null)
-			result &= validate_EveryKeyUnique(profileApplication, diagnostics,
-					context);
-		if (result || diagnostics != null)
-			result &= validate_EveryMapEntryUnique(profileApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validateProfileApplication_violatedUpperBound(
-					profileApplication, diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validateProfileApplication_violatedLowerBound(
-					profileApplication, diagnostics, context);
+		if (!validate_NoCircularContainment(profileApplication, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validateProfileApplication_violatedUpperBound(profileApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validateProfileApplication_violatedLowerBound(profileApplication, diagnostics, context);
 		return result;
 	}
 
@@ -269,52 +241,30 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public boolean validateProfileImport(ProfileImport profileImport,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(profileImport, diagnostics,
-				context);
+		return validate_EveryDefaultConstraint(profileImport, diagnostics, context);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public boolean validateStereotypeApplication(
 			StereotypeApplication stereotypeApplication,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(stereotypeApplication, diagnostics,
-				context))
-			return false;
-		boolean result = validate_EveryMultiplicityConforms(
-				stereotypeApplication, diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryDataValueConforms(stereotypeApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryReferenceIsContained(stereotypeApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryBidirectionalReferenceIsPaired(
-					stereotypeApplication, diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryProxyResolves(stereotypeApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_UniqueID(stereotypeApplication, diagnostics,
-					context);
-		if (result || diagnostics != null)
-			result &= validate_EveryKeyUnique(stereotypeApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validate_EveryMapEntryUnique(stereotypeApplication,
-					diagnostics, context);
-		if (result || diagnostics != null)
-			result &= validateStereotypeApplication_appliedInapplicableExtension(
-					stereotypeApplication, diagnostics, context);
+		if (!validate_NoCircularContainment(stereotypeApplication, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(stereotypeApplication, diagnostics, context);
+		if (result || diagnostics != null) result &= validateStereotypeApplication_appliedInapplicableExtension(stereotypeApplication, diagnostics, context);
 		return result;
 	}
 
@@ -350,6 +300,15 @@ public class EMFProfileApplicationValidator extends EObjectValidator {
 		} else {
 			return true;
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateStereotypeApplicability(StereotypeApplicability stereotypeApplicability, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(stereotypeApplicability, diagnostics, context);
 	}
 
 	/**
