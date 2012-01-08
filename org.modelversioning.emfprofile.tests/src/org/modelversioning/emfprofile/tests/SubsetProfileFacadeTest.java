@@ -10,7 +10,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -73,7 +72,6 @@ public class SubsetProfileFacadeTest {
 	@Test
 	public void testInapplicabilityOfSubsettedExtension() throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
-		applyLegalExtension(profileFacade);
 
 		// check subsetting stereotype with subsetted extension
 		Extension subsettedExtension = getSubsettedExtension();
@@ -85,8 +83,7 @@ public class SubsetProfileFacadeTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testFailingApplicationOfSubsettedExtension() throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
-		applyLegalExtension(profileFacade);
-
+		
 		// check subsetting stereotype with subsetted extension
 		Extension subsettedExtension = getSubsettedExtension();
 		Stereotype subsettingStereotype = getSubsettingStereotype();
@@ -157,11 +154,6 @@ public class SubsetProfileFacadeTest {
 		return getSubsettedStereotype().getExtensions().get(0);
 	}
 
-	private void applyLegalExtension(IProfileFacade profileFacade) {
-		profileFacade.apply(getSubsettedStereotype(),
-				getModelPersonOwnedCarsEReference());
-	}
-
 	private IProfileFacade createProfileFacade() throws IOException {
 		return createProfileFacade(profileWithSubset);
 	}
@@ -198,11 +190,6 @@ public class SubsetProfileFacadeTest {
 	private EAttribute getModelPersonFirstNameEAttribute() {
 		return (EAttribute) getModelPersonEClass().getEStructuralFeature(
 				"firstName");
-	}
-
-	private EReference getModelPersonOwnedCarsEReference() {
-		return (EReference) getModelPersonEClass().getEStructuralFeature(
-				"ownedCars");
 	}
 
 	private EClass getModelPersonEClass() {
