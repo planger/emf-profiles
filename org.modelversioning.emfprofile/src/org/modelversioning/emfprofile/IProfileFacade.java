@@ -147,7 +147,7 @@ public interface IProfileFacade {
 	 *            to get applicable stereotype for.
 	 * @return the list of applicable {@link Stereotype}s.
 	 */
-	EList<Stereotype> getApplicableStereotypes(EClass eClass);
+	EList<StereotypeApplicability> getApplicableStereotypes(EClass eClass);
 
 	/**
 	 * Returns the list of applicable stereotype for the specified
@@ -157,7 +157,7 @@ public interface IProfileFacade {
 	 *            to get applicable stereotype for.
 	 * @return the list of applicable {@link Stereotype}s.
 	 */
-	EList<Stereotype> getApplicableStereotypes(EObject eObject);
+	EList<StereotypeApplicability> getApplicableStereotypes(EObject eObject);
 
 	/**
 	 * Applies the specified <code>stereotype</code> to the specified
@@ -201,6 +201,23 @@ public interface IProfileFacade {
 			Extension extension);
 
 	/**
+	 * Applies the specified <code>applicableStereotype</code>.
+	 * 
+	 * <p>
+	 * This method is a convenience method for
+	 * {@link #apply(Stereotype, EObject, Extension)}.
+	 * </p>
+	 * 
+	 * @param stereotypeApplicability
+	 *            the applicable stereotype to be applied.
+	 * @param eObject
+	 *            to apply the <code>applicableStereotype</code> to.
+	 * @return the created instance of the {@link Stereotype}.
+	 */
+	StereotypeApplication apply(
+			StereotypeApplicability stereotypeApplicability, EObject eObject);
+
+	/**
 	 * Returns all {@link StereotypeApplication StereotypeApplications} handled
 	 * by this facade.
 	 * 
@@ -229,6 +246,21 @@ public interface IProfileFacade {
 	 * @return <code>true</code> if applicable, otherwise <code>false</code>.
 	 */
 	boolean isApplicable(Stereotype stereotype, EObject eObject);
+
+	/**
+	 * Specifies whether the <code>stereotype</code> is applicable to
+	 * <code>eObject</code> using the specified <code>extension</code>.
+	 * 
+	 * @param stereotype
+	 *            to check.
+	 * @param eObject
+	 *            to check.
+	 * @param extension
+	 *            the extension to check.
+	 * @return <code>true</code> if applicable, otherwise <code>false</code>.
+	 */
+	boolean isApplicable(Stereotype stereotype, EObject eObject,
+			Extension extension);
 
 	/**
 	 * Returns the list of {@link EStructuralFeature}s that can be set for the

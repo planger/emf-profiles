@@ -11,7 +11,8 @@ import org.modelversioning.emfprofileapplication.validation.UpperBoundConstraint
 @SuiteClasses({ BasicProfileFacadeTest.class, MetaProfileFacadeTest.class,
 		LowerBoundConstraintValidatorTest.class,
 		UpperBoundConstraintValidatorTest.class,
-		InapplicableExtensionApplicationConstraintValidatorTest.class })
+		InapplicableExtensionApplicationConstraintValidatorTest.class,
+		SubsetProfileFacadeTest.class })
 public class AllEMFProfileTests {
 
 }

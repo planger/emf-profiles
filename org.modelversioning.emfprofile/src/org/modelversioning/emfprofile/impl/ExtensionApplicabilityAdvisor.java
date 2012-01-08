@@ -13,21 +13,22 @@ import java.util.Map;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.modelversioning.emfprofile.Extension;
 
 /**
- * Stores the applicability of a stereotype.
+ * Computes the applicability of a extensions.
  * 
  * @author <a href="mailto:langer@big.tuwien.ac.at">Philip Langer</a>
  * 
  */
-public class StereotypeApplicability {
+public class ExtensionApplicabilityAdvisor {
 
 	Map<Extension, Integer> remainingApplications = new HashMap<Extension, Integer>();
 	final EList<Extension> allExtensions;
 	final EList<Extension> usedExtensions;
 
-	public StereotypeApplicability(EList<Extension> allExtensions,
+	public ExtensionApplicabilityAdvisor(EList<Extension> allExtensions,
 			EList<Extension> usedExtensions) {
 		this.allExtensions = allExtensions;
 		this.usedExtensions = usedExtensions;
@@ -54,11 +55,26 @@ public class StereotypeApplicability {
 	private int countOccurrencesInUsedExtensions(Extension extension) {
 		int count = 0;
 		for (Extension usedExtension : usedExtensions) {
-			if (extension.equals(usedExtension)) {
+			if (equals(extension, usedExtension)
+					|| isSubsettingExtensionUsed(extension, usedExtension)) {
 				count++;
 			}
 		}
 		return count;
+	}
+
+	private boolean isSubsettingExtensionUsed(Extension extension,
+			Extension usedExtension) {
+		for (Extension subsettingExtension : extension.getSubsetting()) {
+			if (equals(usedExtension, subsettingExtension)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean equals(Extension extension1, Extension extension2) {
+		return EcoreUtil.equals(extension1, extension2);
 	}
 
 	/**

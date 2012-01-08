@@ -37,6 +37,7 @@ import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.IProfileFacade;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
+import org.modelversioning.emfprofile.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.ProfileImport;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
@@ -205,36 +206,44 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EList<Stereotype> getApplicableStereotypes(EClass eClass) {
-		EList<Stereotype> applicableStereotypes = new BasicEList<Stereotype>();
+	public EList<StereotypeApplicability> getApplicableStereotypes(EClass eClass) {
+		EList<StereotypeApplicability> stereotypeApplicabilities = new BasicEList<StereotypeApplicability>();
 		for (Profile profile : profiles) {
-			applicableStereotypes.addAll(profile
-					.getApplicableStereotypes(eClass));
+			for (Stereotype stereotype : profile
+					.getApplicableStereotypes(eClass)) {
+				for (Extension extension : stereotype
+						.getApplicableExtensions(eClass)) {
+					stereotypeApplicabilities.add(createApplicableStereotype(
+							stereotype, extension));
+				}
+			}
 		}
-		return applicableStereotypes;
+		return stereotypeApplicabilities;
+	}
+
+	private StereotypeApplicability createApplicableStereotype(
+			Stereotype stereotype, Extension extension) {
+		return new StereotypeApplicabilityImpl(stereotype, extension);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EList<Stereotype> getApplicableStereotypes(EObject eObject) {
-		EList<Stereotype> applicableStereotypes = new BasicEList<Stereotype>();
-
-		// check applicability concerning type
-		for (Profile profile : profiles) {
-			applicableStereotypes.addAll(profile
-					.getApplicableStereotypes(eObject.eClass()));
-		}
+	public EList<StereotypeApplicability> getApplicableStereotypes(
+			EObject eObject) {
+		EList<StereotypeApplicability> stereotypeApplicabilities = getApplicableStereotypes(eObject
+				.eClass());
 
 		// check applicability for each
-		for (Stereotype stereotype : new BasicEList<Stereotype>(
-				applicableStereotypes)) {
-			if (!isApplicable(stereotype, eObject)) {
-				applicableStereotypes.remove(stereotype);
+		for (StereotypeApplicability stereotypeApplicability : new BasicEList<StereotypeApplicability>(
+				stereotypeApplicabilities)) {
+			if (!isApplicable(stereotypeApplicability.getStereotype(), eObject,
+					stereotypeApplicability.getExtension())) {
+				stereotypeApplicabilities.remove(stereotypeApplicabilities);
 			}
 		}
-		return applicableStereotypes;
+		return stereotypeApplicabilities;
 	}
 
 	/**
@@ -243,6 +252,16 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	@Override
 	public boolean isApplicable(Stereotype stereotype, EObject eObject) {
 		return stereotype.isApplicable(eObject,
+				extractAppliedExtensions(getAppliedStereotypes(eObject)));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isApplicable(Stereotype stereotype, EObject eObject,
+			Extension extension) {
+		return stereotype.isApplicable(eObject, extension,
 				extractAppliedExtensions(getAppliedStereotypes(eObject)));
 	}
 
@@ -259,10 +278,17 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public StereotypeApplication apply(
+			StereotypeApplicability stereotypeApplicability, EObject eObject) {
+		return apply(stereotypeApplicability.getStereotype(), eObject,
+				stereotypeApplicability.getExtension());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public StereotypeApplication apply(Stereotype stereotype, EObject eObject) {
-		if (!isApplicable(stereotype, eObject)) {
-			throw new IllegalArgumentException(STEREOTYPE_NOT_APPLICABLE);
-		}
 		Extension defaultExtension = getDefaultExtension(stereotype, eObject);
 		return apply(stereotype, eObject, defaultExtension);
 	}
@@ -289,6 +315,9 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	@Override
 	public StereotypeApplication apply(Stereotype stereotype, EObject eObject,
 			Extension extension) {
+		if (!isApplicable(stereotype, eObject, extension)) {
+			throw new IllegalArgumentException(STEREOTYPE_NOT_APPLICABLE);
+		}
 		StereotypeApplication stereotypeApplication = createStereotypeApplication(stereotype);
 		stereotypeApplication.setExtension(extension);
 		apply(stereotypeApplication, eObject);

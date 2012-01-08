@@ -116,6 +116,14 @@ public interface Stereotype extends EClass {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model required="true" eObjectRequired="true" extensionRequired="true" appliedExtensionsMany="true" appliedExtensionsOrdered="false"
+	 * @generated
+	 */
+	boolean isApplicable(EObject eObject, Extension extension, EList<Extension> appliedExtensions);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model kind="operation" required="true"
 	 * @generated
 	 */

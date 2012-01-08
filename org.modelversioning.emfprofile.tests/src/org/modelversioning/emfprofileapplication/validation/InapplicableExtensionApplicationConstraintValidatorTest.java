@@ -221,7 +221,7 @@ public class InapplicableExtensionApplicationConstraintValidatorTest {
 		// apply legal extension
 		profileFacade.apply(stereotype, getModelPersonOwnedCarsEReference());
 
-		// apply redefining stereotype using the redefined extension
+		// apply subsetting stereotype using the subsetted extension
 		StereotypeApplication stereotypeApplication = applyStereotypeBypassingFacade(
 				subsettingStereotype, stereotype.getExtensions().get(0),
 				getModelPersonFirstNameEAttribute());

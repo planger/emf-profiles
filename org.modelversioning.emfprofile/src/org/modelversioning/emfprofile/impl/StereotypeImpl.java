@@ -201,6 +201,18 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	 * 
 	 * @generated NOT
 	 */
+	public boolean isApplicable(EObject eObject, Extension extension,
+			EList<Extension> appliedExtensions) {
+		return isApplicable(eObject)
+				&& getApplicableExtensions(eObject, appliedExtensions)
+						.contains(extension);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
 	public Profile getProfile() {
 		if (!(eContainer() instanceof Profile)) {
 			throw new IllegalStateException(
@@ -279,9 +291,9 @@ public class StereotypeImpl extends EClassImpl implements Stereotype {
 	 */
 	public EList<Extension> getApplicableExtensions(EObject eObject,
 			EList<Extension> appliedExtensions) {
-		StereotypeApplicability applicability = new StereotypeApplicability(
+		ExtensionApplicabilityAdvisor applicabilityAdvisor = new ExtensionApplicabilityAdvisor(
 				getApplicableExtensions(eObject), appliedExtensions);
-		return applicability.getApplicableExtensions();
+		return applicabilityAdvisor.getApplicableExtensions();
 	}
 
 	/**

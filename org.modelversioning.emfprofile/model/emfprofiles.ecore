@@ -36,6 +36,11 @@
       <eParameters name="eObject" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
       <eParameters name="appliedExtensions" ordered="false" upperBound="-1" eType="#//Extension"/>
     </eOperations>
+    <eOperations name="isApplicable" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="eObject" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+      <eParameters name="extension" lowerBound="1" eType="#//Extension"/>
+      <eParameters name="appliedExtensions" ordered="false" upperBound="-1" eType="#//Extension"/>
+    </eOperations>
     <eOperations name="getProfile" lowerBound="1" eType="#//Profile"/>
     <eOperations name="getAllExtensions" unique="false" upperBound="-1" eType="#//Extension"/>
     <eOperations name="getTaggedValues" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
