@@ -12,7 +12,7 @@ import org.modelversioning.emfprofileapplication.validation.UpperBoundConstraint
 		LowerBoundConstraintValidatorTest.class,
 		UpperBoundConstraintValidatorTest.class,
 		InapplicableExtensionApplicationConstraintValidatorTest.class,
-		SubsetProfileFacadeTest.class })
+		SubsetProfileFacadeTest.class, RedefineProfileFacadeTest.class })
 public class AllEMFProfileTests {
 
 }
