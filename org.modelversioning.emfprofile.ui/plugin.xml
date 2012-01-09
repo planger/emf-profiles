@@ -25,10 +25,11 @@
                label="Register EMF Profile">
          </action>
       </objectContribution>
+      
       <objectContribution
             adaptable="false"
-            id="org.modelversioning.emfprofile.ui.objectContribution2"
-            objectClass="org.eclipse.core.runtime.IAdaptable">
+            id="org.modelversioning.emfprofile.ui.applymenu.gmf.editpart"
+            objectClass="org.eclipse.gef.EditPart">
          <menu
                id="org.modelversioning.emfprofile.ui.emfProfilesMenu"
                label="EMF Profiles"
@@ -66,6 +67,48 @@
                menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
          </action>
       </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.modelversioning.emfprofile.ui.applymenu.eobject"
+            objectClass="org.eclipse.emf.ecore.EObject">
+         <menu
+               id="org.modelversioning.emfprofile.ui.emfProfilesMenu"
+               label="EMF Profiles"
+               path="additions">
+            <groupMarker
+                  name="group1">
+            </groupMarker>
+         </menu>
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.ApplyProfileAction"
+               enablesFor="1"
+               id="org.modelversioning.emfprofile.ui.applyProfile"
+               label="Apply Profile"
+               menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
+         </action>
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.LoadProfileApplicationAction"
+               enablesFor="1"
+               id="org.modelversioning.emfprofile.ui.importProfileAction"
+               label="Load Profile Application"
+               menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
+         </action>
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.UnloadProfileApplicationAction"
+               enablesFor="1"
+               id="org.modelversioning.emfprofile.ui.unloadProfileaction"
+               label="Unload Profile Application"
+               menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
+         </action>
+         <action
+               class="org.modelversioning.emfprofile.ui.actions.ApplyStereotypeAction"
+               enablesFor="1"
+               id="org.modelversioning.emfprofile.ui.applyStereotypeAction"
+               label="Apply Stereotype"
+               menubarPath="org.modelversioning.emfprofile.ui.emfProfilesMenu/group1">
+         </action>
+      </objectContribution>
+      
    </extension>
    <extension
          point="org.eclipse.ui.views">
