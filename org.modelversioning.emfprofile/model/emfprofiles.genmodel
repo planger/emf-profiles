@@ -36,21 +36,30 @@
       </genOperations>
       <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/isApplicable.2">
         <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/isApplicable.2/eObject"/>
-        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/isApplicable.2/appliedStereotypes"/>
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/isApplicable.2/appliedExtensions"/>
+      </genOperations>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/isApplicable.3">
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/isApplicable.3/eObject"/>
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/isApplicable.3/extension"/>
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/isApplicable.3/appliedExtensions"/>
       </genOperations>
       <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getProfile"/>
-      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getLowerBound">
-        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getLowerBound/eClass"/>
-      </genOperations>
-      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getUpperBound">
-        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getUpperBound/eClass"/>
-      </genOperations>
-      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getAllExtensibleClasses"/>
-      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getExtensibleClasses"/>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getAllExtensions"/>
       <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getTaggedValues"/>
       <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getTaggedValue">
         <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getTaggedValue/name"/>
       </genOperations>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getApplicableExtensions">
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getApplicableExtensions/eObject"/>
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getApplicableExtensions/appliedExtensions"/>
+      </genOperations>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getApplicableExtensions.1">
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getApplicableExtensions.1/eClass"/>
+      </genOperations>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/getApplicableExtensions.2">
+        <genParameters ecoreParameter="emfprofiles.ecore#//Stereotype/getApplicableExtensions.2/eObject"/>
+      </genOperations>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Stereotype/hasIcon"/>
     </genClasses>
     <genClasses ecoreClass="emfprofiles.ecore#//Extension">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/source"/>
@@ -59,6 +68,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emfprofiles.ecore#//Extension/upperBound"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/redefined"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/subsetted"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/redefining"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference emfprofiles.ecore#//Extension/subsetting"/>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Extension/isRequired"/>
+      <genOperations ecoreOperation="emfprofiles.ecore#//Extension/isApplicable">
+        <genParameters ecoreParameter="emfprofiles.ecore#//Extension/isApplicable/eClass"/>
+      </genOperations>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

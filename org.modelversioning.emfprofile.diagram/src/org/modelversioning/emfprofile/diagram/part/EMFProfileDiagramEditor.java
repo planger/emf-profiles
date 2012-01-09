@@ -86,6 +86,7 @@ public class EMFProfileDiagramEditor extends DiagramDocumentEditor {
 						}
 					}
 				});
+		new ValidateAction(this.getEditorSite().getPage()).run();
 	}
 
 	/**

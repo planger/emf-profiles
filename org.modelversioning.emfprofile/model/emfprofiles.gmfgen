@@ -10,6 +10,9 @@
       canonicalEditPolicyClassName="ProfileCanonicalEditPolicy"
       iconProviderPriority="Low"
       validationProviderPriority="Low"
+      validationEnabled="true"
+      validationDecorators="true"
+      liveValidationUIFeedback="true"
       synchronized="false">
     <diagramRunTimeClass
         href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Diagram"/>
