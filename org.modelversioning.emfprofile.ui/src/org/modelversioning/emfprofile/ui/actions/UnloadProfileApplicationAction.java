@@ -12,7 +12,6 @@
 package org.modelversioning.emfprofile.ui.actions;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.IObjectActionDelegate;
@@ -41,9 +40,7 @@ public class UnloadProfileApplicationAction implements IObjectActionDelegate {
 	 * @see IActionDelegate#run(IAction)
 	 */
 	public void run(IAction action) {
-		MessageDialog.openInformation(targetPart.getSite().getShell(),
-				"EMF Extensions Reflective Editor",
-				"Unload Extensions was executed.");
+		EMFProfileUIPlugin.getDefault().unloadProfileApplication();
 	}
 
 	/**

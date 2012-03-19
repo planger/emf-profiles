@@ -1476,7 +1476,6 @@ public class EMFProfileEditor extends MultiPageEditorPart implements
 					@Override
 					public void doUndo() {
 						// noop
-
 					}
 
 					@Override

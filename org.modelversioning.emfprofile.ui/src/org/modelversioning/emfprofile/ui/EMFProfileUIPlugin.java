@@ -68,7 +68,7 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 
 	/** The image for demonstrate action. */
 	public static final String IMG_STEREOTYPE_DEFAULT = "stereotype"; //$NON-NLS-1$
-	
+
 	/** The image for demonstrate action. */
 	public static final String IMG_VALIDATE = "validate"; //$NON-NLS-1$
 
@@ -135,29 +135,23 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 					URI.createFileURI(profileFile.getLocation().toString()),
 					true);
 
-			Resource profileApplicationResource = createProfileApplicationResource(
-					profileApplicationFile, resourceSet);
-
 			profileApplicationFile.refreshLocal(1, new NullProgressMonitor());
 
 			if (profileResource != null
 					&& profileResource.getContents().size() > 0) {
-				IProfileFacade facade = new ProfileFacadeImpl();
-				facade.setProfileApplicationResource(profileApplicationResource);
-				for (EObject eObject : profileResource.getContents()) {
-					if (eObject instanceof Profile) {
-						facade.loadProfile((Profile) eObject);
-					}
-				}
+				IProfileFacade facade = createNewProfileFacade(workbenchPart,
+						profileApplicationFile);
+				loadProfilesFromResource(facade, profileResource);
 				if (workbenchPart instanceof DiagramEditor) {
 					DiagramEditor diagramEditor = (DiagramEditor) workbenchPart;
 					DiagramEditPart diagramEditPart = diagramEditor
 							.getDiagramEditPart();
 					RootEditPart rootEditPart = diagramEditPart.getRoot();
-					getProfileApplicationView().addToView(rootEditPart, facade);
+					getProfileApplicationView().addToView(rootEditPart, facade,
+							profileApplicationFile);
 				} else {
-					getProfileApplicationView()
-							.addToView(workbenchPart, facade);
+					getProfileApplicationView().addToView(workbenchPart,
+							facade, profileApplicationFile);
 				}
 			} else {
 				ErrorDialog
@@ -178,6 +172,15 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 		}
 	}
 
+	private void loadProfilesFromResource(IProfileFacade facade,
+			Resource profileResource) {
+		for (EObject eObject : profileResource.getContents()) {
+			if (eObject instanceof Profile) {
+				facade.loadProfile((Profile) eObject);
+			}
+		}
+	}
+
 	/**
 	 * Loads an existing profile application.
 	 * 
@@ -190,21 +193,20 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 			IFile profileApplicationFile) {
 		try {
 			profileApplicationFile.refreshLocal(1, new NullProgressMonitor());
-			ResourceSet resourceSet = getResourceSet(workbenchPart);
-			Resource profileApplicationResource = createProfileApplicationResource(
-					profileApplicationFile, resourceSet);
-			IProfileFacade facade = new ProfileFacadeImpl();
-			facade.setProfileApplicationResource(profileApplicationResource);
+			IProfileFacade facade = createNewProfileFacade(workbenchPart,
+					profileApplicationFile);
 			if (workbenchPart instanceof DiagramEditor) {
 				DiagramEditor diagramEditor = (DiagramEditor) workbenchPart;
 				DiagramEditPart diagramEditPart = diagramEditor
 						.getDiagramEditPart();
 				RootEditPart rootEditPart = diagramEditPart.getRoot();
-				getProfileApplicationView().addToView(rootEditPart, facade);
+				getProfileApplicationView().addToView(rootEditPart, facade,
+						profileApplicationFile);
 				refreshAllDecorations();
 				refresh(workbenchPart);
 			} else {
-				getProfileApplicationView().addToView(workbenchPart, facade);
+				getProfileApplicationView().addToView(workbenchPart, facade,
+						profileApplicationFile);
 			}
 		} catch (Exception e) {
 			IStatus status = new Status(IStatus.ERROR, PLUGIN_ID,
@@ -215,7 +217,16 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 							e.getMessage(), status);
 			getLog().log(status);
 		}
+	}
 
+	private IProfileFacade createNewProfileFacade(IWorkbenchPart workbenchPart,
+			IFile profileApplicationFile) throws IOException {
+		ResourceSet resourceSet = getResourceSet(workbenchPart);
+		Resource profileApplicationResource = createProfileApplicationResource(
+				profileApplicationFile, resourceSet);
+		IProfileFacade facade = new ProfileFacadeImpl();
+		facade.setProfileApplicationResource(profileApplicationResource);
+		return facade;
 	}
 
 	/**
@@ -625,6 +636,14 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 	public static Shell getShell() {
 		return getDefault().getWorkbench().getActiveWorkbenchWindow()
 				.getShell();
+	}
+
+	/**
+	 * Triggers unloading a profile application.
+	 */
+	public void unloadProfileApplication() {
+		// TODO implement
+
 	}
 
 }

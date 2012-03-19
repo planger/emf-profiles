@@ -17,6 +17,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -33,6 +39,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.modelversioning.emfprofile.EMFProfilePlugin;
 import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.IProfileFacade;
 import org.modelversioning.emfprofile.Profile;
@@ -81,12 +88,34 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 */
 	@Override
 	public void save() throws IOException {
+		if (profileApplicationResource != null) {
+			if (requireTransaction()) {
+				TransactionalEditingDomain domain = getTransactionalEditingDomain();
+				doProfileApplicationResourceSave();
+				((BasicCommandStack) domain.getCommandStack()).saveIsDone();
+			} else {
+				doProfileApplicationResourceSave();
+			}
+		}
+	}
+
+	private void doProfileApplicationResourceSave() {
 		final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
 		saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED,
 				Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-		if (profileApplicationResource != null) {
-			profileApplicationResource.save(saveOptions);
-		}
+		new WorkspaceJob("Saving Profile Application") {
+			@Override
+			public IStatus runInWorkspace(IProgressMonitor monitor)
+					throws CoreException {
+				try {
+					profileApplicationResource.save(saveOptions);					
+				} catch (IOException e) {
+					return new Status(IStatus.ERROR, EMFProfilePlugin.ID,
+							e.getMessage(), e);
+				}
+				return new Status(IStatus.OK, EMFProfilePlugin.ID, "OK");
+			}
+		}.schedule();
 	}
 
 	/**

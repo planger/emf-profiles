@@ -17,8 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.ui.dialogs.DiagnosticDialog;
 import org.eclipse.emf.common.util.BasicEList;
@@ -45,6 +49,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -64,6 +69,7 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -128,6 +134,12 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	private Action removeStereotypeApplication;
 
 	/**
+	 * A map maintaining the facade and a handle to the profile application
+	 * file.
+	 */
+	private Map<IProfileFacade, IFile> facadeToFileMap = new HashMap<IProfileFacade, IFile>();
+
+	/**
 	 * The constructor.
 	 */
 	public ProfileApplicationsView() {
@@ -187,9 +199,12 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	 *            to add.
 	 * @param profileFacade
 	 *            to add.
+	 * @param profileApplicationFile
+	 *            handle to the file containing the profile application.
 	 */
 	public void addToView(IWorkbenchPart workbenchPart,
-			IProfileFacade profileFacade) {
+			IProfileFacade profileFacade, IFile profileApplicationFile) {
+		maintainProfileApplicationFile(profileFacade, profileApplicationFile);
 		partProfileMapping.put(workbenchPart, profileFacade);
 		registerWorkbenchPart(workbenchPart);
 		updateView();
@@ -202,6 +217,8 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	 *            to remove.
 	 */
 	public void removeFromView(IWorkbenchPart workbenchPart) {
+		IProfileFacade iProfileFacade = partProfileMapping.get(workbenchPart);
+		facadeToFileMap.remove(iProfileFacade);
 		partProfileMapping.remove(workbenchPart);
 		unregisterWorkbenchPart(workbenchPart);
 		updateView();
@@ -245,11 +262,20 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	 *            to add.
 	 * @param profileFacade
 	 *            to add.
+	 * @param profileApplicationFile
+	 *            handle to the file containing the profile application.
 	 */
-	public void addToView(RootEditPart editPart, IProfileFacade profileFacade) {
+	public void addToView(RootEditPart editPart, IProfileFacade profileFacade,
+			IFile profileApplicationFile) {
 		partProfileMapping.put(editPart, profileFacade);
+		maintainProfileApplicationFile(profileFacade, profileApplicationFile);
 		registerEditPart(editPart);
 		updateView();
+	}
+
+	private void maintainProfileApplicationFile(IProfileFacade profileFacade,
+			IFile profileApplicationFile) {
+		this.facadeToFileMap.put(profileFacade, profileApplicationFile);
 	}
 
 	/**
@@ -290,11 +316,29 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	 */
 	public void save() {
 		if (currentProfileFacade != null) {
-			try {
-				currentProfileFacade.save();
-			} catch (IOException e) {
-				showError("Error while saving profile application resource", e);
+			saveFacade(currentProfileFacade);
+		}
+	}
+
+	private void saveFacade(final IProfileFacade facade) {
+		WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
+			@Override
+			public void execute(IProgressMonitor monitor) {
+				try {
+					facade.save();
+					refreshProfileApplicationFile(facade);
+				} catch (IOException e) {
+					showError(
+							"Error while saving profile application resource",
+							e);
+				}
 			}
+		};
+		try {
+			new ProgressMonitorDialog(getSite().getShell()).run(true, false,
+					operation);
+		} catch (Exception e) {
+			showError("Error while saving profile application resource", e);
 		}
 	}
 
@@ -303,10 +347,17 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	 */
 	public void saveAll() {
 		for (IProfileFacade facade : getProfileFacades()) {
+			saveFacade(facade);
+		}
+	}
+
+	private void refreshProfileApplicationFile(IProfileFacade facade) {
+		IFile profileApplicationFile = facadeToFileMap.get(facade);
+		if (profileApplicationFile != null) {
 			try {
-				facade.save();
-			} catch (IOException e) {
-				showError("Error while saving profile application resource", e);
+				profileApplicationFile.refreshLocal(1,
+						new NullProgressMonitor());
+			} catch (CoreException e) {
 			}
 		}
 	}
@@ -484,6 +535,7 @@ public class ProfileApplicationsView extends ViewPart implements IPartListener,
 	 */
 	public void updateView() {
 		viewer.refresh(true);
+		refreshProfileApplicationFile(currentProfileFacade);
 	}
 
 	/**

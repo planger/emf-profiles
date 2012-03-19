@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * @generated
  */
 public final class EMFProfilePlugin extends EMFPlugin {
+	
+	public static final String ID = "org.modelversioning.emfprofile";
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
