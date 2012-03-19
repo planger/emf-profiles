@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.modelversioning.emfprofile.feature_1.0.0.201104181351.jar" id="org.modelversioning.emfprofile.feature" version="1.0.0.201104181351">
+   <feature url="features/org.modelversioning.emfprofile.feature_1.0.0.201203192338.jar" id="org.modelversioning.emfprofile.feature" version="1.0.0.201203192338">
       <category name="emf-profiles"/>
    </feature>
    <category-def name="emf-profiles" label="EMF Profile Support">
