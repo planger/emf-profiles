@@ -85,7 +85,7 @@ public class SelectProfileFilePage extends WizardPage {
 					.getWorkspace().getRoot().getLocationURI()));
 		}
 		((FileFieldEditor) fileFieldEditor).setFileExtensions(new String[] {
-				"*.emfprofile", "*.emfprofile_diagram" }); //$NON-NLS-1$ //$NON-NLS-2$
+				"*.emfprofile_diagram", "*.emfprofile" }); //$NON-NLS-1$ //$NON-NLS-2$
 		fileFieldEditor.getTextControl(container).addModifyListener(
 				new ModifyListener() {
 					@Override
