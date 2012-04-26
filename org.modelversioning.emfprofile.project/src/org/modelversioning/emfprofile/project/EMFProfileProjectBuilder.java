@@ -20,6 +20,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/*
+ * TODO validate profile and register it into registry
+ */
+
 public class EMFProfileProjectBuilder extends
 		IncrementalProjectBuilder {
 
