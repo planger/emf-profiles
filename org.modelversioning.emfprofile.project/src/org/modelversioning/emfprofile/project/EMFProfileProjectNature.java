@@ -24,7 +24,7 @@ public class EMFProfileProjectNature implements IProjectNature {
 		ICommand[] commands = desc.getBuildSpec();
 
 		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(EMFProfileProjectRegisteringBuilder.BUILDER_ID)) {
+			if (commands[i].getBuilderName().equals(EMFProfileProjectBuilder.BUILDER_ID)) {
 				return;
 			}
 		}
@@ -32,7 +32,7 @@ public class EMFProfileProjectNature implements IProjectNature {
 		ICommand[] newCommands = new ICommand[commands.length + 1];
 		System.arraycopy(commands, 0, newCommands, 0, commands.length);
 		ICommand command = desc.newCommand();
-		command.setBuilderName(EMFProfileProjectRegisteringBuilder.BUILDER_ID);
+		command.setBuilderName(EMFProfileProjectBuilder.BUILDER_ID);
 		newCommands[newCommands.length - 1] = command;
 		desc.setBuildSpec(newCommands);
 		project.setDescription(desc, null);
@@ -42,7 +42,7 @@ public class EMFProfileProjectNature implements IProjectNature {
 		IProjectDescription description = getProject().getDescription();
 		ICommand[] commands = description.getBuildSpec();
 		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(EMFProfileProjectRegisteringBuilder.BUILDER_ID)) {
+			if (commands[i].getBuilderName().equals(EMFProfileProjectBuilder.BUILDER_ID)) {
 				ICommand[] newCommands = new ICommand[commands.length - 1];
 				System.arraycopy(commands, 0, newCommands, 0, i);
 				System.arraycopy(commands, i + 1, newCommands, i,

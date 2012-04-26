@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class EMFProfileProjectRegisteringBuilder extends
+public class EMFProfileProjectBuilder extends
 		IncrementalProjectBuilder {
 
 	class SampleDeltaVisitor implements IResourceDeltaVisitor {
@@ -61,7 +61,7 @@ public class EMFProfileProjectRegisteringBuilder extends
 		}
 
 		private void addMarker(SAXParseException e, int severity) {
-			EMFProfileProjectRegisteringBuilder.this.addMarker(file,
+			EMFProfileProjectBuilder.this.addMarker(file,
 					e.getMessage(), e.getLineNumber(), severity);
 		}
 

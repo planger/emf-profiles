@@ -10,7 +10,7 @@
             hasNature="true"
             isConfigurable="false">
          <run
-               class="org.modelversioning.emfprofile.project.EMFProfileProjectRegisteringBuilder">
+               class="org.modelversioning.emfprofile.project.EMFProfileProjectBuilder">
          </run>
       </builder>
    </extension>
@@ -31,66 +31,14 @@
       </requires-nature>
    </extension>
    <extension
-         point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            adaptable="true"
-            objectClass="org.eclipse.core.resources.IProject"
-            nameFilter="*"
-            id="org.modelversioning.emfprofile.project.nature.contribution">
-         <action
-               class="org.modelversioning.emfprofile.project.ToggleNatureAction"
-               enablesFor="+"
-               icon="icons/profile.png"
-               id="org.modelversioning.emfprofile.project.addRemoveNatureAction"
-               label="Add EMF Profile project nature"
-               menubarPath="org.eclipse.ui.projectConfigure/group0"
-               tooltip="Adds the EMF Profiles project nature.">
-         </action>
-         <visibility>
-            <not>
-            <or>
-            <objectState name="projectNature" value="org.modelversioning.emfprofile.project.nature"/>
-               <objectState
-                     name="open"
-                     value="false">
-               </objectState>
-            </or>
-            </not>
-         </visibility>
-      </objectContribution>
-      <objectContribution
-            adaptable="true"
-            objectClass="org.eclipse.core.resources.IProject"
-            nameFilter="*"
-            id="org.modelversioning.emfprofile.project.nature.contribution">
-         <action
-               class="org.modelversioning.emfprofile.project.ToggleNatureAction"
-               enablesFor="+"
-               icon="icons/profile.png"
-               id="org.modelversioning.emfprofile.project.addRemoveNatureAction"
-               label="Remove EMF Profile project nature"
-               menubarPath="org.eclipse.ui.projectConfigure/group0"
-               tooltip="Removes the EMF Profiles project nature.">
-         </action>
-         <visibility>
-         <and>
-         <objectState name="projectNature" value="org.modelversioning.emfprofile.project.nature"/>
-         <objectState
-                     name="open"
-                     value="true"/>
-         </and>
-         </visibility>
-      </objectContribution>
-   </extension>
-   <extension
-         id="xmlProblem"
-         name="XML Problem"
+         id="invalidEMFProfile"
+         name="Invalid EMF Profile"
          point="org.eclipse.core.resources.markers">
       <super
             type="org.eclipse.core.resources.problemmarker">
       </super>
       <persistent
-            value="false">
+            value="true">
       </persistent>
    </extension>
    <extension
