@@ -5,7 +5,7 @@
  * accompanies this distribution, and is available at
  *  http://www.eclipse.org/legal/epl-v10.html
  */
-package org.modelversioning.emfprofile.project.wizard;
+package org.modelversioning.emfprofile.project.ui.wizard;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;

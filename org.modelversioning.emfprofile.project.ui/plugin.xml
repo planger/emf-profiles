@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.modelversioning.emfprofile.category.wizards"
+            name="EMF Profiles">
+      </category>
+      <wizard
+            category="org.modelversioning.emfprofile.category.wizards"
+            class="org.modelversioning.emfprofile.project.ui.wizard.EMFProfileProjectNewWizard"
+            icon="icons/profile.png"
+            id="org.modelversioning.emfprofile.project.wizard.new"
+            name="New EMF Profiles Project"
+            project="true">
+      </wizard>
+   </extension>
+      <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            icon="icons/profile8x8.png"
+            id="org.modelversioning.emfprofile.project.nature.image"
+            natureId="org.modelversioning.emfprofile.project.nature">
+      </image>
+   </extension>
+</plugin>
