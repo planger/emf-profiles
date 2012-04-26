@@ -7,7 +7,8 @@
          name="EMF Profile Project Registering"
          point="org.eclipse.core.resources.builders">
       <builder
-            hasNature="true">
+            hasNature="true"
+            isConfigurable="false">
          <run
                class="org.modelversioning.emfprofile.project.EMFProfileProjectRegisteringBuilder">
          </run>
@@ -25,6 +26,9 @@
       <builder
             id="org.modelversioning.emfprofile.project.registeringbuilder">
       </builder>
+      <requires-nature
+            id="org.eclipse.pde.PluginNature">
+      </requires-nature>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">
@@ -32,15 +36,50 @@
             adaptable="true"
             objectClass="org.eclipse.core.resources.IProject"
             nameFilter="*"
-            id="org.modelversioning.emfprofile.project.contribution1">
+            id="org.modelversioning.emfprofile.project.nature.contribution">
          <action
                class="org.modelversioning.emfprofile.project.ToggleNatureAction"
                enablesFor="+"
                icon="icons/profile.png"
                id="org.modelversioning.emfprofile.project.addRemoveNatureAction"
-               label="Add/Remove EMF Profile Nature"
-               menubarPath="additions">
+               label="Add EMF Profile project nature"
+               menubarPath="org.eclipse.ui.projectConfigure/group0"
+               tooltip="Adds the EMF Profiles project nature.">
          </action>
+         <visibility>
+            <not>
+            <or>
+            <objectState name="projectNature" value="org.modelversioning.emfprofile.project.nature"/>
+               <objectState
+                     name="open"
+                     value="false">
+               </objectState>
+            </or>
+            </not>
+         </visibility>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="org.modelversioning.emfprofile.project.nature.contribution">
+         <action
+               class="org.modelversioning.emfprofile.project.ToggleNatureAction"
+               enablesFor="+"
+               icon="icons/profile.png"
+               id="org.modelversioning.emfprofile.project.addRemoveNatureAction"
+               label="Remove EMF Profile project nature"
+               menubarPath="org.eclipse.ui.projectConfigure/group0"
+               tooltip="Removes the EMF Profiles project nature.">
+         </action>
+         <visibility>
+         <and>
+         <objectState name="projectNature" value="org.modelversioning.emfprofile.project.nature"/>
+         <objectState
+                     name="open"
+                     value="true"/>
+         </and>
+         </visibility>
       </objectContribution>
    </extension>
    <extension
@@ -57,10 +96,25 @@
    <extension
          point="org.eclipse.ui.ide.projectNatureImages">
       <image
-            icon="icons/profile.png"
-            id="org.modelversioning.emfprofile.project.image"
+            icon="icons/profile8x8.png"
+            id="org.modelversioning.emfprofile.project.nature.image"
             natureId="org.modelversioning.emfprofile.project.nature">
       </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.modelversioning.emfprofile.category.wizards"
+            name="EMF Profiles">
+      </category>
+      <wizard
+            category="org.modelversioning.emfprofile.category.wizards"
+            class="org.modelversioning.emfprofile.project.wizard.EMFProfileProjectNewWizard"
+            icon="icons/profile.png"
+            id="org.modelversioning.emfprofile.project.wizard.new"
+            name="New EMF Profiles Project"
+            project="true">
+      </wizard>
    </extension>
 
 </plugin>
