@@ -7,33 +7,70 @@
  */
 package org.modelversioning.emfprofile.project.ui.wizard;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkingSet;
+import org.modelversioning.emfprofile.ui.EMFProfileUIPlugin;
 
 /**
  * Wizard for creating new EMF Profile projects.
  * 
  * @author <a href="mailto:langer@big.tuwien.ac.at">Philip Langer</a>
- *
+ * 
  */
 public class EMFProfileProjectNewWizard extends Wizard implements INewWizard {
 
+	private EMFProfileProjectData projectData;
+	private IWorkbench workbench;
+
+	protected EMFProfileProjectNewPage mainPage;
+
 	public EMFProfileProjectNewWizard() {
-		// TODO Auto-generated constructor stub
+		setWindowTitle("New EMF Profile Project");
+		setNeedsProgressMonitor(true);
+		projectData = new EMFProfileProjectData();
 	}
 
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		// TODO Auto-generated method stub
-
+		this.workbench = workbench;
+		mainPage = new EMFProfileProjectNewPage("main", projectData, selection); //$NON-NLS-1$
+		mainPage.setTitle("EMF Profile Project");
+		mainPage.setDescription("Create a new EMF Profile project.");
+		this.addPage(mainPage);
 	}
 
 	@Override
 	public boolean performFinish() {
-		// TODO Auto-generated method stub
+		mainPage.updateData();
+
+		try {
+			createEMFProfileProject();
+			addToWorkingSets();
+			return true;
+		} catch (InvocationTargetException e) {
+			EMFProfileUIPlugin.logException(e);
+		} catch (InterruptedException e) {
+		}
+
 		return false;
+	}
+
+	private void createEMFProfileProject() throws InvocationTargetException,
+			InterruptedException {
+		getContainer().run(false, true,
+				new NewEMFProfileProjectOperation(projectData));
+	}
+
+	private void addToWorkingSets() {
+		IWorkingSet[] workingSets = mainPage.getSelectedWorkingSets();
+		if (workingSets.length > 0)
+			workbench.getWorkingSetManager().addToWorkingSets(
+					mainPage.getProjectHandle(), workingSets);
 	}
 
 }

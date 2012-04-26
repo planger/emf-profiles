@@ -5,14 +5,14 @@
          point="org.eclipse.ui.newWizards">
       <category
             id="org.modelversioning.emfprofile.category.wizards"
-            name="EMF Profiles">
+            name="EMF Profile">
       </category>
       <wizard
             category="org.modelversioning.emfprofile.category.wizards"
             class="org.modelversioning.emfprofile.project.ui.wizard.EMFProfileProjectNewWizard"
             icon="icons/profile.png"
             id="org.modelversioning.emfprofile.project.wizard.new"
-            name="New EMF Profiles Project"
+            name="EMF Profile Project"
             project="true">
       </wizard>
    </extension>

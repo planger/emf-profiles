@@ -7,3 +7,4 @@ Bundle-Vendor: modelversioning.org
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.modelversioning.emfprofile.project
