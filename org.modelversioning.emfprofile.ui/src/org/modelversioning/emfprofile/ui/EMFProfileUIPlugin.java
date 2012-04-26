@@ -1,6 +1,7 @@
 package org.modelversioning.emfprofile.ui;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
@@ -33,6 +36,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
@@ -301,20 +305,70 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 									}
 								});
 					} catch (Exception e) {
-						EMFProfileUIPlugin.getDefault().logError(
-								"Decorator refresh failure", e); //$NON-NLS-1$
+						logException(e);
 					}
 				}
 			});
 		}
 	}
+	
+	public static void log(IStatus status) {
+		ResourcesPlugin.getPlugin().getLog().log(status);
+	}
 
-	public void logError(String message, Throwable ex) {
-		EMFProfileUIPlugin
-				.getDefault()
-				.getLog()
-				.log(new Status(IStatus.ERROR, EMFProfileUIPlugin.PLUGIN_ID,
-						message, ex)); //$NON-NLS-1$
+	public static void logErrorMessage(String message) {
+		log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, message,
+				null));
+	}
+
+	public static void logException(Throwable e, final String title,
+			String message) {
+		if (e instanceof InvocationTargetException) {
+			e = ((InvocationTargetException) e).getTargetException();
+		}
+		IStatus status = null;
+		if (e instanceof CoreException)
+			status = ((CoreException) e).getStatus();
+		else {
+			if (message == null)
+				message = e.getMessage();
+			if (message == null)
+				message = e.toString();
+			status = new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK,
+					message, e);
+		}
+		ResourcesPlugin.getPlugin().getLog().log(status);
+		Display display = getStandardDisplay();
+		final IStatus fstatus = status;
+		display.asyncExec(new Runnable() {
+			public void run() {
+				ErrorDialog.openError(null, title, null, fstatus);
+			}
+		});
+	}
+
+	public static void logException(Throwable e) {
+		logException(e, null, null);
+	}
+
+	public static void log(Throwable e) {
+		if (e instanceof InvocationTargetException)
+			e = ((InvocationTargetException) e).getTargetException();
+		IStatus status = null;
+		if (e instanceof CoreException)
+			status = ((CoreException) e).getStatus();
+		else
+			status = new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK,
+					e.getMessage(), e);
+		log(status);
+	}
+
+	public static Display getStandardDisplay() {
+		Display display;
+		display = Display.getCurrent();
+		if (display == null)
+			display = Display.getDefault();
+		return display;
 	}
 
 	public void refreshDecorations(EList<EObject> eObjects) {
