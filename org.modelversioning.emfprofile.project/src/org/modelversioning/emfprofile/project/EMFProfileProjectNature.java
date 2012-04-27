@@ -8,15 +8,19 @@
 package org.modelversioning.emfprofile.project;
 
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.URI;
 
 public class EMFProfileProjectNature implements IProjectNature {
 
 	public static final String NATURE_ID = "org.modelversioning.emfprofile.project.nature"; //$NON-NLS-1$
 	public static final String ICONS_FOLDER_NAME = "icons"; //$NON-NLS-1$
+	public static final String PROFILE_DIAGRAM_FILE_NAME = "profile.emfprofile_diagram"; //$NON-NLS-1$
 
 	private IProject project;
 
@@ -25,7 +29,8 @@ public class EMFProfileProjectNature implements IProjectNature {
 		ICommand[] commands = desc.getBuildSpec();
 
 		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(EMFProfileProjectBuilder.BUILDER_ID)) {
+			if (commands[i].getBuilderName().equals(
+					EMFProfileProjectBuilder.BUILDER_ID)) {
 				return;
 			}
 		}
@@ -43,13 +48,14 @@ public class EMFProfileProjectNature implements IProjectNature {
 		IProjectDescription description = getProject().getDescription();
 		ICommand[] commands = description.getBuildSpec();
 		for (int i = 0; i < commands.length; ++i) {
-			if (commands[i].getBuilderName().equals(EMFProfileProjectBuilder.BUILDER_ID)) {
+			if (commands[i].getBuilderName().equals(
+					EMFProfileProjectBuilder.BUILDER_ID)) {
 				ICommand[] newCommands = new ICommand[commands.length - 1];
 				System.arraycopy(commands, 0, newCommands, 0, i);
 				System.arraycopy(commands, i + 1, newCommands, i,
 						commands.length - i - 1);
 				description.setBuildSpec(newCommands);
-				project.setDescription(description, null);			
+				project.setDescription(description, null);
 				return;
 			}
 		}
@@ -61,6 +67,18 @@ public class EMFProfileProjectNature implements IProjectNature {
 
 	public void setProject(IProject project) {
 		this.project = project;
+	}
+
+	public IFolder getIconsFolder() {
+		return project.getFolder(ICONS_FOLDER_NAME);
+	}
+
+	public IFile getProfileDiagramFile() {
+		return EMFProfileProjectNatureUtil.getProfileDiagramFile(project);
+	}
+
+	public URI getProfileDiagramURI() {
+		return EMFProfileProjectNatureUtil.getProfileDiagramURI(project);
 	}
 
 }
