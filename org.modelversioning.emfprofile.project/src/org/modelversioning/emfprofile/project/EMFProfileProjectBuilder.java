@@ -82,9 +82,9 @@ public class EMFProfileProjectBuilder extends
 		}
 	}
 
-	public static final String BUILDER_ID = "org.modelversioning.emfprofile.project.org.modelversioning.emfprofile.project.registeringbuilder";
+	public static final String BUILDER_ID = "org.modelversioning.emfprofile.project.registeringbuilder"; //$NON-NLS-1$
 
-	private static final String MARKER_TYPE = "org.modelversioning.emfprofile.project.xmlProblem";
+	private static final String MARKER_TYPE = "org.modelversioning.emfprofile.project.xmlProblem"; //$NON-NLS-1$
 
 	private SAXParserFactory parserFactory;
 

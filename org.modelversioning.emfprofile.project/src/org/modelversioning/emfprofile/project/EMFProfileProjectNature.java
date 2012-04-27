@@ -15,7 +15,8 @@ import org.eclipse.core.runtime.CoreException;
 
 public class EMFProfileProjectNature implements IProjectNature {
 
-	public static final String NATURE_ID = "org.modelversioning.emfprofile.project.org.modelversioning.emfprofile.project.nature"; //$NON-NLS-1$
+	public static final String NATURE_ID = "org.modelversioning.emfprofile.project.nature"; //$NON-NLS-1$
+	public static final String ICONS_FOLDER_NAME = "icons"; //$NON-NLS-1$
 
 	private IProject project;
 
