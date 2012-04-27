@@ -106,6 +106,7 @@ public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 	}
 
 	private void createPluginXml(IProgressMonitor monitor) throws CoreException {
+		// TODO write extension concerning registering profile later
 		IFile pluginXmlFile = project.getFile(PLUGIN_XML_FILE_NAME);
 		if (!pluginXmlFile.exists()) {
 			StringBuffer pluginXmlContent = new StringBuffer();
