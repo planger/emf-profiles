@@ -3,10 +3,12 @@ package org.modelversioning.emfprofile.project.ui.wizard;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -17,76 +19,53 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.pde.core.build.IBuildEntry;
-import org.eclipse.pde.internal.ui.wizards.IProjectProvider;
-import org.eclipse.pde.internal.ui.wizards.plugin.NewProjectCreationOperation;
-import org.eclipse.pde.internal.ui.wizards.plugin.PluginFieldData;
-import org.eclipse.pde.ui.IFieldData;
-import org.eclipse.pde.ui.IPluginContentWizard;
+import org.eclipse.pde.core.build.IBuildModelFactory;
+import org.eclipse.pde.core.plugin.IPluginBase;
+import org.eclipse.pde.internal.core.ICoreConstants;
+import org.eclipse.pde.internal.core.TargetPlatformHelper;
+import org.eclipse.pde.internal.core.build.WorkspaceBuildModel;
+import org.eclipse.pde.internal.core.natures.PDE;
+import org.eclipse.pde.internal.core.plugin.WorkspacePluginModel;
+import org.eclipse.pde.internal.core.project.PDEProject;
+import org.eclipse.pde.internal.core.util.CoreUtility;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.diagram.part.EMFProfileDiagramEditorUtil;
 import org.modelversioning.emfprofile.project.EMFProfileProjectNature;
 import org.modelversioning.emfprofile.project.EMFProfileProjectNatureUtil;
 
 @SuppressWarnings("restriction")
-public class NewEMFProfileProjectOperation extends NewProjectCreationOperation {
+public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 
 	private static final String DEFAULT_VERSION = "1.0.0.qualifier";
 
 	private EMFProfileProjectData projectData;
-
+	private IProject project;
 	private Resource profileDiagramResource;
 
 	public NewEMFProfileProjectOperation(EMFProfileProjectData projectData) {
-		super(createPluginData(projectData),
-				createProjectProvider(projectData), createContentWizard());
+		super();
 		this.projectData = projectData;
-	}
-
-	private static IFieldData createPluginData(EMFProfileProjectData projectData) {
-		PluginFieldData pluginFieldData = new PluginFieldData();
-		pluginFieldData.setDoGenerateClass(false);
-		pluginFieldData.setEnableAPITooling(false);
-		pluginFieldData.setId(projectData.getProjectName());
-		pluginFieldData.setLegacy(false);
-		pluginFieldData.setName(projectData.getProjectName());
-		pluginFieldData.setRCPApplicationPlugin(false);
-		pluginFieldData.setUIPlugin(false);
-		pluginFieldData.setVersion(DEFAULT_VERSION);
-		return pluginFieldData;
-	}
-
-	private static IProjectProvider createProjectProvider(
-			final EMFProfileProjectData projectData) {
-		return new IProjectProvider() {
-			@Override
-			public String getProjectName() {
-				return projectData.getProfileName();
-			}
-
-			@Override
-			public IProject getProject() {
-				return projectData.getProjectHandle();
-			}
-
-			@Override
-			public IPath getLocationPath() {
-				return projectData.getLocationPath();
-			}
-		};
-	}
-
-	private static IPluginContentWizard createContentWizard() {
-		return null;
+		this.project = projectData.getProjectHandle();
 	}
 
 	@Override
 	protected void execute(IProgressMonitor monitor) throws CoreException,
 			InvocationTargetException, InterruptedException {
-		super.execute(monitor);
+		
+		// TODO set task number
 
-		monitor.subTask("Configure EMF Profile project");
-		addEMFProfileProjectNature();
+		monitor.subTask("Create EMF Profile project");
+		createPDEProject(new SubProgressMonitor(monitor, 1));
+		monitor.worked(1);
+
+		monitor.subTask("Create EMF Profile project contents");
+		createContents(new SubProgressMonitor(monitor, 1));
+		monitor.worked(1);
+
+		monitor.subTask("Create manifest");
+		createManifest(new SubProgressMonitor(monitor, 1));
 		monitor.worked(1);
 
 		monitor.subTask("Open EMF Profile");
@@ -94,8 +73,57 @@ public class NewEMFProfileProjectOperation extends NewProjectCreationOperation {
 		monitor.worked(1);
 	}
 
-	private void addEMFProfileProjectNature() throws CoreException {
-		EMFProfileProjectNatureUtil.addNature(projectData.getProjectHandle());
+	private void createPDEProject(IProgressMonitor monitor)
+			throws CoreException {
+		if (!project.exists()) {
+			if (!Platform.getLocation().equals(projectData.getLocationPath())) {
+				IProjectDescription desc = project.getWorkspace()
+						.newProjectDescription(project.getName());
+				desc.setLocation(projectData.getLocationPath());
+				project.create(desc, monitor);
+			} else {
+				project.create(monitor);
+			}
+			project.open(null);
+		}
+		configureNatures(project);
+	}
+
+	private void configureNatures(IProject project) throws CoreException {
+		if (!project.hasNature(PDE.PLUGIN_NATURE))
+			CoreUtility.addNatureToProject(project, PDE.PLUGIN_NATURE, null);
+		if (!project.hasNature(EMFProfileProjectNature.NATURE_ID))
+			EMFProfileProjectNatureUtil.addNature(project);
+	}
+
+	private void createManifest(IProgressMonitor monitor) throws CoreException {
+		IFile pluginXml = PDEProject.getPluginXml(project);
+		WorkspacePluginModel fModel = new WorkspacePluginModel(pluginXml, false);
+		IPluginBase pluginBase = fModel.getPluginBase();
+		pluginBase.setSchemaVersion(TargetPlatformHelper
+				.getSchemaVersionForTargetVersion(null));
+		pluginBase.setId(projectData.getProjectName());
+		pluginBase.setVersion(DEFAULT_VERSION);
+		pluginBase.setName(projectData.getProjectName());
+		pluginBase.setProviderName("");
+		// TODO add extension point for registry
+		// TODO add dependency to emf profiles plug-ins
+		fModel.save();
+
+		// build properties
+		// TODO also configure source build
+		IFile file = PDEProject.getBuildProperties(project);
+		if (!file.exists()) {
+			WorkspaceBuildModel model = new WorkspaceBuildModel(file);
+			IBuildModelFactory factory = model.getFactory();
+			IBuildEntry binEntry = factory
+					.createEntry(IBuildEntry.BIN_INCLUDES);
+			binEntry.addToken(ICoreConstants.PLUGIN_FILENAME_DESCRIPTOR);
+			binEntry.addToken(EMFProfileProjectNature.ICONS_FOLDER_NAME + "/"); //$NON-NLS-1$
+			binEntry.addToken(EMFProfileProjectNature.PROFILE_DIAGRAM_FILE_NAME);
+			model.getBuild().add(binEntry);
+			model.save();
+		}
 	}
 
 	private void openEMFProfileDiagram() {
@@ -108,17 +136,9 @@ public class NewEMFProfileProjectOperation extends NewProjectCreationOperation {
 		}
 	}
 
-	@Override
-	protected int getNumberOfWorkUnits() {
-		// we have two additional tasks
-		return super.getNumberOfWorkUnits() + 2;
-	}
-
-	@Override
-	protected void createContents(IProgressMonitor monitor, IProject project)
+	protected void createContents(IProgressMonitor monitor)
 			throws CoreException, JavaModelException,
 			InvocationTargetException, InterruptedException {
-		super.createContents(monitor, project);
 		createIconFolder(monitor, project);
 		try {
 			createProfile(monitor, project);
@@ -174,14 +194,6 @@ public class NewEMFProfileProjectOperation extends NewProjectCreationOperation {
 			}
 		}
 		return null;
-	}
-
-	@Override
-	protected void fillBinIncludes(IProject project, IBuildEntry binEntry)
-			throws CoreException {
-		super.fillBinIncludes(project, binEntry);
-		binEntry.addToken(EMFProfileProjectNature.ICONS_FOLDER_NAME + "/"); //$NON-NLS-1$
-		binEntry.addToken(EMFProfileProjectNature.PROFILE_DIAGRAM_FILE_NAME);
 	}
 
 }
