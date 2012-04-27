@@ -39,17 +39,6 @@
       </context>
    </extension>
 
-   <extension point="org.eclipse.ui.newWizards" id="creation-wizard">
-      <?gmfgen generated="true"?>
-  	  <wizard
-  	     name="%newWizardName"
-  	     icon="icons/obj16/EMFProfileDiagramFile.gif"
-  	     category="org.eclipse.ui.Examples"
-  	     class="org.modelversioning.emfprofile.diagram.part.EMFProfileCreationWizard"
-  	     id="org.modelversioning.emfprofile.diagram.part.EMFProfileCreationWizardID">
-  	  	 <description>%newWizardDesc</description>  
-      </wizard>
-   </extension>
 
       <extension point="org.eclipse.ui.actionSets" id="init-diagram-action">
       <?gmfgen generated="true"?>

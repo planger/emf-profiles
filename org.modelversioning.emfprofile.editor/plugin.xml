@@ -11,20 +11,6 @@
 
 <plugin>
 
-   <extension point="org.eclipse.ui.newWizards">
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
-      <wizard
-            id="org.modelversioning.emfprofile.presentation.EMFProfileModelWizardID"
-            name="%_UI_EMFProfileModelWizard_label"
-            class="org.modelversioning.emfprofile.presentation.EMFProfileModelWizard"
-            category="org.modelversioning.emfprofile.diagram.category1"
-            icon="icons/full/obj16/EMFProfileModelFile.gif">
-         <description>%_UI_EMFProfileModelWizard_description</description>
-         <selection class="org.eclipse.core.resources.IResource"/>
-      </wizard>
-   </extension>
 
    <extension point="org.eclipse.ui.editors">
       <editor
