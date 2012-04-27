@@ -1,7 +1,10 @@
 package org.modelversioning.emfprofile.project.ui.wizard;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -18,27 +21,20 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.pde.core.build.IBuildEntry;
-import org.eclipse.pde.core.build.IBuildModelFactory;
-import org.eclipse.pde.core.plugin.IPluginBase;
-import org.eclipse.pde.internal.core.ICoreConstants;
-import org.eclipse.pde.internal.core.TargetPlatformHelper;
-import org.eclipse.pde.internal.core.build.WorkspaceBuildModel;
-import org.eclipse.pde.internal.core.natures.PDE;
-import org.eclipse.pde.internal.core.plugin.WorkspacePluginModel;
-import org.eclipse.pde.internal.core.project.PDEProject;
-import org.eclipse.pde.internal.core.util.CoreUtility;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.modelversioning.emfprofile.EMFProfilePlugin;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.diagram.part.EMFProfileDiagramEditorUtil;
 import org.modelversioning.emfprofile.project.EMFProfileProjectNature;
 import org.modelversioning.emfprofile.project.EMFProfileProjectNatureUtil;
 
-@SuppressWarnings("restriction")
 public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 
+	private static final String PLUGIN_XML_FILE_NAME = "plugin.xml";
+	private static final String BUILD_PROP_FILE_NAME = "build.properties";
 	private static final String DEFAULT_VERSION = "1.0.0.qualifier";
+	private static final String PDE_PLUGIN_NATURE = "org.eclipse.pde.PluginNature";
 
 	private EMFProfileProjectData projectData;
 	private IProject project;
@@ -53,22 +49,23 @@ public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 	@Override
 	protected void execute(IProgressMonitor monitor) throws CoreException,
 			InvocationTargetException, InterruptedException {
-		
-		// TODO set task number
 
-		monitor.subTask("Create EMF Profile project");
+		monitor.beginTask("Creating new EMF Profile project", 4);
+
+		monitor.subTask("Creating project");
 		createPDEProject(new SubProgressMonitor(monitor, 1));
 		monitor.worked(1);
 
-		monitor.subTask("Create EMF Profile project contents");
+		monitor.subTask("Create contents");
 		createContents(new SubProgressMonitor(monitor, 1));
 		monitor.worked(1);
 
 		monitor.subTask("Create manifest");
-		createManifest(new SubProgressMonitor(monitor, 1));
+		createPluginXml(new SubProgressMonitor(monitor, 1));
+		configureBinBuildProperties();
 		monitor.worked(1);
 
-		monitor.subTask("Open EMF Profile");
+		monitor.subTask("Open profile");
 		openEMFProfileDiagram();
 		monitor.worked(1);
 	}
@@ -90,39 +87,68 @@ public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 	}
 
 	private void configureNatures(IProject project) throws CoreException {
-		if (!project.hasNature(PDE.PLUGIN_NATURE))
-			CoreUtility.addNatureToProject(project, PDE.PLUGIN_NATURE, null);
+		if (!project.hasNature(PDE_PLUGIN_NATURE))
+			addPDENature();
 		if (!project.hasNature(EMFProfileProjectNature.NATURE_ID))
 			EMFProfileProjectNatureUtil.addNature(project);
 	}
 
-	private void createManifest(IProgressMonitor monitor) throws CoreException {
-		IFile pluginXml = PDEProject.getPluginXml(project);
-		WorkspacePluginModel fModel = new WorkspacePluginModel(pluginXml, false);
-		IPluginBase pluginBase = fModel.getPluginBase();
-		pluginBase.setSchemaVersion(TargetPlatformHelper
-				.getSchemaVersionForTargetVersion(null));
-		pluginBase.setId(projectData.getProjectName());
-		pluginBase.setVersion(DEFAULT_VERSION);
-		pluginBase.setName(projectData.getProjectName());
-		pluginBase.setProviderName("");
-		// TODO add extension point for registry
-		// TODO add dependency to emf profiles plug-ins
-		fModel.save();
+	public void addPDENature() throws CoreException {
+		IProjectDescription description = project.getDescription();
+		String[] natures = description.getNatureIds();
+		if (!Arrays.asList(natures).contains(PDE_PLUGIN_NATURE)) {
+			String[] newNatures = new String[natures.length + 1];
+			System.arraycopy(natures, 0, newNatures, 1, natures.length);
+			newNatures[0] = PDE_PLUGIN_NATURE;
+			description.setNatureIds(newNatures);
+			project.setDescription(description, null);
+		}
+	}
 
-		// build properties
-		// TODO also configure source build
-		IFile file = PDEProject.getBuildProperties(project);
-		if (!file.exists()) {
-			WorkspaceBuildModel model = new WorkspaceBuildModel(file);
-			IBuildModelFactory factory = model.getFactory();
-			IBuildEntry binEntry = factory
-					.createEntry(IBuildEntry.BIN_INCLUDES);
-			binEntry.addToken(ICoreConstants.PLUGIN_FILENAME_DESCRIPTOR);
-			binEntry.addToken(EMFProfileProjectNature.ICONS_FOLDER_NAME + "/"); //$NON-NLS-1$
-			binEntry.addToken(EMFProfileProjectNature.PROFILE_DIAGRAM_FILE_NAME);
-			model.getBuild().add(binEntry);
-			model.save();
+	private void createPluginXml(IProgressMonitor monitor) throws CoreException {
+		IFile pluginXmlFile = project.getFile(PLUGIN_XML_FILE_NAME);
+		if (!pluginXmlFile.exists()) {
+			StringBuffer pluginXmlContent = new StringBuffer();
+			pluginXmlContent
+					.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); //$NON-NLS-1$
+			pluginXmlContent.append("<?eclipse version=\"3.4\"?>\n"); //$NON-NLS-1$
+			pluginXmlContent.append("<plugin\n"); //$NON-NLS-1$
+			pluginXmlContent.append("  id=\"" + projectData.getProjectName() //$NON-NLS-1$
+					+ "\"\n"); //$NON-NLS-1$
+			pluginXmlContent.append("   name=\"" + projectData.getProjectName() //$NON-NLS-1$
+					+ "\"\n"); //$NON-NLS-1$
+			pluginXmlContent.append("   version=\"" + DEFAULT_VERSION + "\"\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			pluginXmlContent.append("  provider=\"\">\n"); //$NON-NLS-1$
+			pluginXmlContent.append("  <requires>\n"); //$NON-NLS-1$
+			pluginXmlContent
+					.append("     <import plugin=\"" + EMFProfilePlugin.ID + "\" "); //$NON-NLS-1$ //$NON-NLS-2$
+			pluginXmlContent.append("version=\"1.1.0\" "); //$NON-NLS-1$
+			pluginXmlContent.append("match=\"greaterOrEqual\" "); //$NON-NLS-1$
+			pluginXmlContent.append("export=\"true\"/>\n"); //$NON-NLS-1$
+			pluginXmlContent.append("  </requires>\n"); //$NON-NLS-1$
+			pluginXmlContent.append("</plugin>\n"); //$NON-NLS-1$
+			InputStream source = new ByteArrayInputStream(pluginXmlContent
+					.toString().getBytes());
+			pluginXmlFile.create(source, true, monitor);
+		}
+	}
+
+	private void configureBinBuildProperties() throws CoreException {
+		IFile buildPropFile = project.getFile(BUILD_PROP_FILE_NAME);
+		if (!buildPropFile.exists()) {
+			StringBuffer buildPropContent = new StringBuffer();
+			buildPropContent.append("bin.includes = ");
+			buildPropContent.append(PLUGIN_XML_FILE_NAME + ",\\\n"); //$NON-NLS-1$
+			buildPropContent.append("               "); //$NON-NLS-1$
+			buildPropContent.append(EMFProfileProjectNature.ICONS_FOLDER_NAME);
+			buildPropContent.append("/,\\\n"); //$NON-NLS-1$
+			buildPropContent.append("               "); //$NON-NLS-1$
+			buildPropContent
+					.append(EMFProfileProjectNature.PROFILE_DIAGRAM_FILE_NAME
+							+ "\n"); //$NON-NLS-1$
+			InputStream source = new ByteArrayInputStream(buildPropContent
+					.toString().getBytes());
+			buildPropFile.create(source, true, null);
 		}
 	}
 
