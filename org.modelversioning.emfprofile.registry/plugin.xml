@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="org.modelversioning.emfprofile.profile" name="EMF Profile" schema="schema/org.modelversioning.emfprofile.profile.exsd"/>
+
+</plugin>

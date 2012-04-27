@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMF Profile Registry
+Bundle-SymbolicName: org.modelversioning.emfprofile.registry;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.modelversioning.emfprofile.registry.EMFProfileRegistryPlugin
+Bundle-Vendor: modelversioning.org
+Require-Bundle: org.eclipse.core.runtime,
+ org.modelversioning.emfprofile;bundle-version="1.1.0";visibility:=reexport,
+ org.eclipse.core.resources;bundle-version="3.7.101"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Export-Package: org.modelversioning.emfprofile.registry

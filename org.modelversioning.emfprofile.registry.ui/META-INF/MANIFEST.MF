@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMF Profile Registry UI
+Bundle-SymbolicName: org.modelversioning.emfprofile.registry.ui; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.modelversioning.emfprofile.registry.ui.EMFProfileRegistryUIPlugin
+Bundle-Vendor: modelversioning.org
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.modelversioning.emfprofile.registry;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
