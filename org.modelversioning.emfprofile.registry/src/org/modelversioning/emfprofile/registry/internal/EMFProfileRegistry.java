@@ -63,7 +63,7 @@ public class EMFProfileRegistry implements IEMFProfileRegistry {
 
 	private URI createProfileURI(IContributor contributor,
 			String profileResourceName) {
-		return URI.createURI("platform:/resource/" + contributor.getName() //$NON-NLS-1$
+		return URI.createURI("platform:/plugin/" + contributor.getName() //$NON-NLS-1$
 				+ "/" + profileResourceName); //$NON-NLS-1$
 	}
 
