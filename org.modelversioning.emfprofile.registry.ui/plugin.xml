@@ -10,7 +10,7 @@
       </category>
       <view
             name="Registered EMF Profiles"
-            icon="icons/sample.gif"
+            icon="icons/profile.png"
             category="org.modelversioning.emfprofile"
             class="org.modelversioning.emfprofile.registry.ui.views.RegisteredProfilesView"
             id="org.modelversioning.emfprofile.registry.ui.views.RegisteredProfilesView">
