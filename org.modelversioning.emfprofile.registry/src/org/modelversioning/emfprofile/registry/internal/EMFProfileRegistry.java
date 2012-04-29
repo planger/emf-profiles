@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -22,7 +23,6 @@ import org.modelversioning.emfprofile.registry.IEMFProfileRegistry;
 import org.modelversioning.emfprofile.registry.IProfileProvider;
 import org.osgi.framework.Bundle;
 
-// TODO synch with EMF Metamodel Registry
 // TODO iterate through all projects and register
 
 public class EMFProfileRegistry extends Observable implements
@@ -86,6 +86,9 @@ public class EMFProfileRegistry extends Observable implements
 		registeredProfileProviders.put(profileProvider.getProfileNsURI(),
 				profileProvider);
 		registeredProfiles.add(profileProvider.getProfile());
+		EPackage.Registry.INSTANCE.remove(profileProvider.getProfileNsURI());
+		EPackage.Registry.INSTANCE.put(profileProvider.getProfileNsURI(),
+				profileProvider.getProfile());
 		notifyObservers();
 	}
 
@@ -93,6 +96,7 @@ public class EMFProfileRegistry extends Observable implements
 	public void unregisterProfile(IProfileProvider profileProvider) {
 		registeredProfileProviders.remove(profileProvider.getProfileNsURI());
 		registeredProfiles.remove(profileProvider.getProfile());
+		EPackage.Registry.INSTANCE.remove(profileProvider.getProfileNsURI());
 		notifyObservers();
 	}
 
