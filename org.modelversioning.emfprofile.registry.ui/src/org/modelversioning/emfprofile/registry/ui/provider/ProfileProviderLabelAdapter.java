@@ -1,4 +1,4 @@
-package org.modelversioning.emfprofile.registry.ui.views;
+package org.modelversioning.emfprofile.registry.ui.provider;
 
 import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;

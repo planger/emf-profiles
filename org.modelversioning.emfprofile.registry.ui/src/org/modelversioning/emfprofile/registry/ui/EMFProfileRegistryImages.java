@@ -17,9 +17,9 @@ public class EMFProfileRegistryImages {
 	public final static String ICONS_PATH = "icons/"; //$NON-NLS-1$
 
 	public static final String IMG_PROJECT_PROFILE = NAME_PREFIX
-			+ "IMG_ATTRIBUTE_OBJ"; //$NON-NLS-1$
+			+ "IMG_PROJECT_PROFILE"; //$NON-NLS-1$
 	public static final String IMG_PLUGIN_PROFILE = NAME_PREFIX
-			+ "IMG_ATT_CLASS_OBJ"; //$NON-NLS-1$
+			+ "IMG_PLUGIN_PROFILE"; //$NON-NLS-1$
 
 	public static final ImageDescriptor DESC_PLUGIN_PROFILE = create(
 			ICONS_PATH, "plugin.png"); //$NON-NLS-1$

@@ -1,4 +1,4 @@
-package org.modelversioning.emfprofile.registry.ui.views;
+package org.modelversioning.emfprofile.registry.ui.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
