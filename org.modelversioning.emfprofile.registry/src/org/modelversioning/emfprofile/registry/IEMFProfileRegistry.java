@@ -1,6 +1,8 @@
 package org.modelversioning.emfprofile.registry;
 
 import java.util.Collection;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.registry.internal.EMFProfileRegistry;
@@ -50,5 +52,11 @@ public interface IEMFProfileRegistry {
 	 *            provider for the profile to register.
 	 */
 	void unregisterProfile(IProfileProvider profileProvider);
+	
+	/**
+	 * @see Observable#addObserver(Observer)
+	 * @param observer
+	 */
+	void addObserver(Observer observer);
 
 }

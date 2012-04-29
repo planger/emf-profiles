@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IContributor;
@@ -22,8 +23,10 @@ import org.modelversioning.emfprofile.registry.IProfileProvider;
 import org.osgi.framework.Bundle;
 
 // TODO synch with EMF Metamodel Registry
+// TODO iterate through all projects and register
 
-public class EMFProfileRegistry implements IEMFProfileRegistry {
+public class EMFProfileRegistry extends Observable implements
+		IEMFProfileRegistry {
 
 	private final ResourceSet resourceSet = new ResourceSetImpl();
 	private Map<String, IProfileProvider> registeredProfileProviders = new HashMap<String, IProfileProvider>();;
@@ -83,12 +86,18 @@ public class EMFProfileRegistry implements IEMFProfileRegistry {
 		registeredProfileProviders.put(profileProvider.getProfileNsURI(),
 				profileProvider);
 		registeredProfiles.add(profileProvider.getProfile());
+		notifyObservers();
 	}
 
 	@Override
 	public void unregisterProfile(IProfileProvider profileProvider) {
 		registeredProfileProviders.remove(profileProvider.getProfileNsURI());
 		registeredProfiles.remove(profileProvider.getProfile());
+		notifyObservers();
+	}
+
+	public void update(Observable o, Object arg) {
+		o.notifyObservers();
 	}
 
 }
