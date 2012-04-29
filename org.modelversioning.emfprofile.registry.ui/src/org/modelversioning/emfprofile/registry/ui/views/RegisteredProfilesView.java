@@ -31,7 +31,7 @@ import org.modelversioning.emfprofile.registry.ui.provider.ProfileProviderLabelA
 
 public class RegisteredProfilesView extends ViewPart implements Observer {
 
-	public static final String ID = "org.modelversioning.emfprofile.registry.ui.views.RegisteredProfilesView";
+	public static final String ID = "org.modelversioning.emfprofile.registry.ui.views.RegisteredProfilesView"; //$NON-NLS-1$
 
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
@@ -47,8 +47,8 @@ public class RegisteredProfilesView extends ViewPart implements Observer {
 	}
 
 	/**
-	 * This is a callback that will allow us
-	 * to create the viewer and initialize it.
+	 * This is a callback that will allow us to create the viewer and initialize
+	 * it.
 	 */
 	public void createPartControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -96,7 +96,7 @@ public class RegisteredProfilesView extends ViewPart implements Observer {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
-	
+
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(action1);
 		manager.add(action2);
@@ -112,9 +112,9 @@ public class RegisteredProfilesView extends ViewPart implements Observer {
 		};
 		action1.setText("Action 1");
 		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		
+		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+
 		action2 = new Action() {
 			public void run() {
 				showMessage("Action 2 executed");
@@ -122,13 +122,14 @@ public class RegisteredProfilesView extends ViewPart implements Observer {
 		};
 		action2.setText("Action 2");
 		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				Object obj = ((IStructuredSelection) selection)
+						.getFirstElement();
+				showMessage("Double-click detected on " + obj.toString());
 			}
 		};
 	}
@@ -140,11 +141,10 @@ public class RegisteredProfilesView extends ViewPart implements Observer {
 			}
 		});
 	}
+
 	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"Registered EMF Profiles",
-			message);
+		MessageDialog.openInformation(viewer.getControl().getShell(),
+				"Registered EMF Profiles", message);
 	}
 
 	/**
