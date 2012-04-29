@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IContributor;
 import org.eclipse.core.runtime.IStatus;
@@ -19,11 +23,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.modelversioning.emfprofile.EMFProfilePlugin;
 import org.modelversioning.emfprofile.Profile;
+import org.modelversioning.emfprofile.project.EMFProfileProjectNature;
+import org.modelversioning.emfprofile.project.EMFProfileProjectNatureUtil;
 import org.modelversioning.emfprofile.registry.IEMFProfileRegistry;
 import org.modelversioning.emfprofile.registry.IProfileProvider;
 import org.osgi.framework.Bundle;
-
-// TODO iterate through all projects and register
 
 public class EMFProfileRegistry extends Observable implements
 		IEMFProfileRegistry {
@@ -34,6 +38,7 @@ public class EMFProfileRegistry extends Observable implements
 
 	public EMFProfileRegistry() {
 		loadProfileProvidersFromExtensionPoint();
+		loadProfileProvidersFromWorkspace();
 	}
 
 	private void loadProfileProvidersFromExtensionPoint() {
@@ -68,6 +73,45 @@ public class EMFProfileRegistry extends Observable implements
 			String profileResourceName) {
 		return URI.createURI("platform:/plugin/" + contributor.getName() //$NON-NLS-1$
 				+ "/" + profileResourceName); //$NON-NLS-1$
+	}
+
+	private void loadProfileProvidersFromWorkspace() {
+		IProject[] allProjects = ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects();
+		for (IProject project : allProjects) {
+			try {
+				if (project.hasNature(EMFProfileProjectNature.NATURE_ID)) {
+					ProjectProfileProvider profileProvider = loadProfileProvider(project);
+					registerProfile(profileProvider);
+				}
+			} catch (CoreException e) {
+				EMFProfilePlugin
+						.getPlugin()
+						.log(new Status(
+								IStatus.WARNING,
+								EMFProfilePlugin.ID,
+								"Could not load profile project from workspace",
+								e));
+			}
+		}
+	}
+
+	private ProjectProfileProvider loadProfileProvider(IProject project) {
+		IFile profileDiagramFile = EMFProfileProjectNatureUtil
+				.getProfileDiagramFile(project);
+		Resource profileResource = resourceSet.getResource(
+				createProfileURI(profileDiagramFile), true);
+		ProjectProfileProvider profileProvider = new ProjectProfileProvider(
+				project, profileResource);
+		return profileProvider;
+	}
+
+	private URI createProfileURI(IFile profileDiagramFile) {
+		return URI.createURI("platform:/resource/" //$NON-NLS-1$
+				+ profileDiagramFile.getProject().getName()
+				+ "/" //$NON-NLS-1$
+				+ profileDiagramFile.getProjectRelativePath()
+						.toPortableString());
 	}
 
 	@Override
