@@ -106,7 +106,6 @@ public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 	}
 
 	private void createPluginXml(IProgressMonitor monitor) throws CoreException {
-		// TODO write extension concerning registering profile later
 		IFile pluginXmlFile = project.getFile(PLUGIN_XML_FILE_NAME);
 		if (!pluginXmlFile.exists()) {
 			StringBuffer pluginXmlContent = new StringBuffer();
@@ -120,13 +119,30 @@ public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 					+ "\"\n"); //$NON-NLS-1$
 			pluginXmlContent.append("   version=\"" + DEFAULT_VERSION + "\"\n"); //$NON-NLS-1$ //$NON-NLS-2$
 			pluginXmlContent.append("  provider=\"\">\n"); //$NON-NLS-1$
+
+			// requires
 			pluginXmlContent.append("  <requires>\n"); //$NON-NLS-1$
+			// import of emf profile plug-in
 			pluginXmlContent
 					.append("     <import plugin=\"" + EMFProfilePlugin.ID + "\" "); //$NON-NLS-1$ //$NON-NLS-2$
 			pluginXmlContent.append("version=\"1.1.0\" "); //$NON-NLS-1$
 			pluginXmlContent.append("match=\"greaterOrEqual\" "); //$NON-NLS-1$
 			pluginXmlContent.append("export=\"true\"/>\n"); //$NON-NLS-1$
+			// import of emf profile registry plug-in
+			pluginXmlContent
+					.append("     <import plugin=\"org.modelversioning.emfprofile.registry\" "); //$NON-NLS-1$
+			pluginXmlContent.append("version=\"1.0.0\" "); //$NON-NLS-1$
+			pluginXmlContent.append("match=\"greaterOrEqual\" "); //$NON-NLS-1$
+			pluginXmlContent.append("export=\"true\"/>\n"); //$NON-NLS-1$
 			pluginXmlContent.append("  </requires>\n"); //$NON-NLS-1$
+
+			// extension point to register emf profile
+			pluginXmlContent
+					.append("  <extension point=\"org.modelversioning.emfprofile.profile\">\n"); //$NON-NLS-1$
+			pluginXmlContent
+					.append("     <profile profile_resource=\"profile.emfprofile_diagram\"/>\n"); //$NON-NLS-1$
+			pluginXmlContent.append("  </extension>\n"); //$NON-NLS-1$
+
 			pluginXmlContent.append("</plugin>\n"); //$NON-NLS-1$
 			InputStream source = new ByteArrayInputStream(pluginXmlContent
 					.toString().getBytes());
