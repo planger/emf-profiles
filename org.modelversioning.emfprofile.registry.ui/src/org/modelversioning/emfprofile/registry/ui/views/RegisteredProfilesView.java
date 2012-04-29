@@ -1,5 +1,8 @@
 package org.modelversioning.emfprofile.registry.ui.views;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -24,7 +27,7 @@ import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.modelversioning.emfprofile.registry.IEMFProfileRegistry;
 
-public class RegisteredProfilesView extends ViewPart {
+public class RegisteredProfilesView extends ViewPart implements Observer {
 
 	public static final String ID = "org.modelversioning.emfprofile.registry.ui.views.RegisteredProfilesView";
 
@@ -38,6 +41,7 @@ public class RegisteredProfilesView extends ViewPart {
 
 	public RegisteredProfilesView() {
 		profileRegistry = IEMFProfileRegistry.eINSTANCE;
+		profileRegistry.addObserver(this);
 	}
 
 	/**
@@ -146,5 +150,10 @@ public class RegisteredProfilesView extends ViewPart {
 	 */
 	public void setFocus() {
 		viewer.getControl().setFocus();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		viewer.refresh(true);
 	}
 }
