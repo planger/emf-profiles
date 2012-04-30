@@ -47,8 +47,7 @@ public class EMFProfileRegistry extends Observable implements
 						IEMFProfileRegistry.PROFILE_EXTENSION_POINT_ID);
 		for (IConfigurationElement configElement : config) {
 			try {
-				IProfileProvider profileProvider = loadProfileProvider(configElement);
-				registerProfile(profileProvider);
+				registerProfile(configElement);
 			} catch (Exception e) {
 				EMFProfilePlugin.getPlugin().log(
 						new Status(IStatus.WARNING, EMFProfilePlugin.ID,
@@ -58,15 +57,16 @@ public class EMFProfileRegistry extends Observable implements
 		}
 	}
 
-	private IProfileProvider loadProfileProvider(
-			IConfigurationElement configElement) {
+	private void registerProfile(IConfigurationElement configElement) {
 		IContributor contributor = configElement.getContributor();
 		String profileResourceName = configElement
 				.getAttribute(PROFILE_EXTENSION_POINT_RESOURCE_NAME);
 		Bundle bundle = Platform.getBundle(contributor.getName());
 		Resource profileResource = resourceSet.getResource(
 				createProfileURI(contributor, profileResourceName), true);
-		return new BundleProfileProvider(bundle, profileResource);
+		BundleProfileProvider bundleProfileProvider = new BundleProfileProvider(
+				bundle, profileResource);
+		registerProfile(bundleProfileProvider);
 	}
 
 	private URI createProfileURI(IContributor contributor,
@@ -81,8 +81,7 @@ public class EMFProfileRegistry extends Observable implements
 		for (IProject project : allProjects) {
 			try {
 				if (project.hasNature(EMFProfileProjectNature.NATURE_ID)) {
-					ProjectProfileProvider profileProvider = loadProfileProvider(project);
-					registerProfile(profileProvider);
+					registerProfiles(project);
 				}
 			} catch (CoreException e) {
 				EMFProfilePlugin
@@ -96,14 +95,16 @@ public class EMFProfileRegistry extends Observable implements
 		}
 	}
 
-	private ProjectProfileProvider loadProfileProvider(IProject project) {
-		IFile profileDiagramFile = EMFProfileProjectNatureUtil
-				.getProfileDiagramFile(project);
-		Resource profileResource = resourceSet.getResource(
-				createProfileURI(profileDiagramFile), true);
-		ProjectProfileProvider profileProvider = new ProjectProfileProvider(
-				project, profileResource);
-		return profileProvider;
+	private void registerProfiles(IProject project) {
+		Collection<IFile> profileDiagramFiles = EMFProfileProjectNatureUtil
+				.getProfileDiagramFiles(project);
+		for (IFile profileDiagramFile : profileDiagramFiles) {
+			Resource profileResource = resourceSet.getResource(
+					createProfileURI(profileDiagramFile), true);
+			ProjectProfileProvider profileProvider = new ProjectProfileProvider(
+					project, profileResource);
+			registerProfile(profileProvider);
+		}
 	}
 
 	private URI createProfileURI(IFile profileDiagramFile) {

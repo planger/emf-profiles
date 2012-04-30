@@ -31,7 +31,6 @@ import org.modelversioning.emfprofile.project.EMFProfileProjectNatureUtil;
 
 public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 
-	private static final String PLUGIN_XML_FILE_NAME = "plugin.xml";
 	private static final String BUILD_PROP_FILE_NAME = "build.properties";
 	private static final String DEFAULT_VERSION = "1.0.0.qualifier";
 	private static final String PDE_PLUGIN_NATURE = "org.eclipse.pde.PluginNature";
@@ -106,7 +105,8 @@ public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 	}
 
 	private void createPluginXml(IProgressMonitor monitor) throws CoreException {
-		IFile pluginXmlFile = project.getFile(PLUGIN_XML_FILE_NAME);
+		IFile pluginXmlFile = project
+				.getFile(EMFProfileProjectNature.PLUGIN_XML_FILE_NAME);
 		if (!pluginXmlFile.exists()) {
 			StringBuffer pluginXmlContent = new StringBuffer();
 			pluginXmlContent
@@ -155,13 +155,15 @@ public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 		if (!buildPropFile.exists()) {
 			StringBuffer buildPropContent = new StringBuffer();
 			buildPropContent.append("bin.includes = ");
-			buildPropContent.append(PLUGIN_XML_FILE_NAME + ",\\\n"); //$NON-NLS-1$
+			buildPropContent
+					.append(EMFProfileProjectNature.PLUGIN_XML_FILE_NAME
+							+ ",\\\n"); //$NON-NLS-1$
 			buildPropContent.append("               "); //$NON-NLS-1$
 			buildPropContent.append(EMFProfileProjectNature.ICONS_FOLDER_NAME);
 			buildPropContent.append("/,\\\n"); //$NON-NLS-1$
 			buildPropContent.append("               "); //$NON-NLS-1$
 			buildPropContent
-					.append(EMFProfileProjectNature.PROFILE_DIAGRAM_FILE_NAME
+					.append(EMFProfileProjectNature.DEFAULT_PROFILE_DIAGRAM_FILE_NAME
 							+ "\n"); //$NON-NLS-1$
 			InputStream source = new ByteArrayInputStream(buildPropContent
 					.toString().getBytes());
@@ -199,7 +201,8 @@ public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
 	private void createProfile(IProgressMonitor monitor, IProject project)
 			throws IOException {
 		profileDiagramResource = EMFProfileDiagramEditorUtil.createDiagram(
-				EMFProfileProjectNatureUtil.getProfileDiagramURI(project),
+				EMFProfileProjectNatureUtil
+						.getDefaultProfileDiagramURI(project),
 				new SubProgressMonitor(monitor, 0));
 		setProfileDiagramData();
 		saveProfileDiagramResource();

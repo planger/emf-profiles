@@ -7,6 +7,8 @@
  */
 package org.modelversioning.emfprofile.project;
 
+import java.util.Collection;
+
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -14,13 +16,13 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.common.util.URI;
 
 public class EMFProfileProjectNature implements IProjectNature {
 
 	public static final String NATURE_ID = "org.modelversioning.emfprofile.project.nature"; //$NON-NLS-1$
+	public static final String PLUGIN_XML_FILE_NAME = "plugin.xml";
 	public static final String ICONS_FOLDER_NAME = "icons"; //$NON-NLS-1$
-	public static final String PROFILE_DIAGRAM_FILE_NAME = "profile.emfprofile_diagram"; //$NON-NLS-1$
+	public static final String DEFAULT_PROFILE_DIAGRAM_FILE_NAME = "profile.emfprofile_diagram"; //$NON-NLS-1$
 
 	private IProject project;
 
@@ -73,12 +75,8 @@ public class EMFProfileProjectNature implements IProjectNature {
 		return project.getFolder(ICONS_FOLDER_NAME);
 	}
 
-	public IFile getProfileDiagramFile() {
-		return EMFProfileProjectNatureUtil.getProfileDiagramFile(project);
-	}
-
-	public URI getProfileDiagramURI() {
-		return EMFProfileProjectNatureUtil.getProfileDiagramURI(project);
+	public Collection<IFile> getProfileDiagramFiles() {
+		return EMFProfileProjectNatureUtil.getProfileDiagramFiles(project);
 	}
 
 }
