@@ -1,9 +1,8 @@
 package org.modelversioning.emfprofile.project;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.eclipse.core.resources.IFile;
@@ -16,88 +15,124 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.DefaultHandler;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
+import org.modelversioning.emfprofile.Profile;
 
-/*
- * TODO validate profile and register it into registry
- */
+public class EMFProfileProjectBuilder extends IncrementalProjectBuilder {
 
-public class EMFProfileProjectBuilder extends
-		IncrementalProjectBuilder {
+	class SampleDeltaVisitor implements IResourceDeltaVisitor, IResourceVisitor {
 
-	class SampleDeltaVisitor implements IResourceDeltaVisitor {
+		private ResourceSet resourceSet = new ResourceSetImpl();
+
 		public boolean visit(IResourceDelta delta) throws CoreException {
 			IResource resource = delta.getResource();
 			switch (delta.getKind()) {
 			case IResourceDelta.ADDED:
-				// handle added resource
-				checkXML(resource);
+				checkAndUpdateProfileResource(resource);
 				break;
 			case IResourceDelta.REMOVED:
-				// handle removed resource
+				checkAndUpdateProfileResource(resource);
 				break;
 			case IResourceDelta.CHANGED:
-				// handle changed resource
-				checkXML(resource);
+				checkAndUpdateProfileResource(resource);
 				break;
 			}
-			// return true to continue visiting children.
 			return true;
 		}
-	}
-
-	class SampleResourceVisitor implements IResourceVisitor {
-		public boolean visit(IResource resource) {
-			checkXML(resource);
-			// return true to continue visiting children.
+		
+		@Override
+		public boolean visit(IResource resource) throws CoreException {
+			checkAndUpdateProfileResource(resource);
 			return true;
 		}
-	}
 
-	class XMLErrorHandler extends DefaultHandler {
-
-		private IFile file;
-
-		public XMLErrorHandler(IFile file) {
-			this.file = file;
+		private void checkAndUpdateProfileResource(IResource resource) {
+			if (resource instanceof IFile && isProfileResource(resource)) {
+				Profile profile = getProfile(resource);
+				if (validate(profile, (IFile) resource)) {
+					reregisterProfile(profile);
+				}
+			}
 		}
 
-		private void addMarker(SAXParseException e, int severity) {
-			EMFProfileProjectBuilder.this.addMarker(file,
-					e.getMessage(), e.getLineNumber(), severity);
+		private boolean isProfileResource(IResource resource) {
+			if (resource instanceof IFile) {
+				IFile iFile = (IFile) resource;
+				if ("emfprofile_diagram".equals(iFile.getFileExtension())
+						|| "emfprofile".equals(iFile.getFileExtension())) {
+					return true;
+				}
+			}
+			return false;
 		}
 
-		public void error(SAXParseException exception) throws SAXException {
-			addMarker(exception, IMarker.SEVERITY_ERROR);
+		private Profile getProfile(IResource resource) {
+			if (resource instanceof IFile) {
+				IFile profileFile = (IFile) resource;
+				Resource profileResource = resourceSet.getResource(
+						createProfileURI(profileFile), true);
+				for (EObject eObject : profileResource.getContents()) {
+					if (eObject instanceof Profile) {
+						return (Profile) eObject;
+					}
+				}
+			}
+			return null;
 		}
 
-		public void fatalError(SAXParseException exception) throws SAXException {
-			addMarker(exception, IMarker.SEVERITY_ERROR);
+		private boolean validate(Profile profile, IFile profileFile) {
+			Map<String, EObject> context = createValidationContextMap(profile);
+			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(profile,
+					context);
+			if (Diagnostic.ERROR == diagnostic.getSeverity()) {
+				EMFProfileProjectBuilder.this.addMarker(profileFile,
+						diagnostic.getMessage(), diagnostic.getSeverity());
+				return false;
+			} else {
+				deleteMarkers(profileFile);
+				return true;
+			}
 		}
 
-		public void warning(SAXParseException exception) throws SAXException {
-			addMarker(exception, IMarker.SEVERITY_WARNING);
+		private void reregisterProfile(Profile profile) {
+			// TODO register profile
+			// not possible because of cyclic dependency
+			// either resolve dependency problem or let the registry listen to the workspace
+		}
+
+		private Map<String, EObject> createValidationContextMap(
+				EObject currentlySelectedEObject) {
+			Map<String, EObject> context = new HashMap<String, EObject>();
+			context.put("MODEL_OBJECT", currentlySelectedEObject);
+			return context;
+		}
+
+		private URI createProfileURI(IFile profileDiagramFile) {
+			return URI.createURI("platform:/resource/" //$NON-NLS-1$
+					+ profileDiagramFile.getProject().getName()
+					+ "/" //$NON-NLS-1$
+					+ profileDiagramFile.getProjectRelativePath()
+							.toPortableString());
 		}
 	}
 
 	public static final String BUILDER_ID = "org.modelversioning.emfprofile.project.registeringbuilder"; //$NON-NLS-1$
 
-	private static final String MARKER_TYPE = "org.modelversioning.emfprofile.project.xmlProblem"; //$NON-NLS-1$
+	private static final String MARKER_TYPE = "org.modelversioning.emfprofile.project.invalid"; //$NON-NLS-1$
 
 	private SAXParserFactory parserFactory;
 
-	private void addMarker(IFile file, String message, int lineNumber,
-			int severity) {
+	private void addMarker(IFile file, String message, int severity) {
 		try {
 			IMarker marker = file.createMarker(MARKER_TYPE);
 			marker.setAttribute(IMarker.MESSAGE, message);
 			marker.setAttribute(IMarker.SEVERITY, severity);
-			if (lineNumber == -1) {
-				lineNumber = 1;
-			}
-			marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
 		} catch (CoreException e) {
 		}
 	}
@@ -118,18 +153,6 @@ public class EMFProfileProjectBuilder extends
 		return null;
 	}
 
-	void checkXML(IResource resource) {
-		if (resource instanceof IFile && resource.getName().endsWith(".xml")) {
-			IFile file = (IFile) resource;
-			deleteMarkers(file);
-			XMLErrorHandler reporter = new XMLErrorHandler(file);
-			try {
-				getParser().parse(file.getContents(), reporter);
-			} catch (Exception e1) {
-			}
-		}
-	}
-
 	private void deleteMarkers(IFile file) {
 		try {
 			file.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ZERO);
@@ -140,17 +163,9 @@ public class EMFProfileProjectBuilder extends
 	protected void fullBuild(final IProgressMonitor monitor)
 			throws CoreException {
 		try {
-			getProject().accept(new SampleResourceVisitor());
+			getProject().accept(new SampleDeltaVisitor());
 		} catch (CoreException e) {
 		}
-	}
-
-	private SAXParser getParser() throws ParserConfigurationException,
-			SAXException {
-		if (parserFactory == null) {
-			parserFactory = SAXParserFactory.newInstance();
-		}
-		return parserFactory.newSAXParser();
 	}
 
 	protected void incrementalBuild(IResourceDelta delta,
