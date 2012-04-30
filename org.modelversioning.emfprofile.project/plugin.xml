@@ -3,18 +3,6 @@
 <plugin>
 
    <extension
-         id="org.modelversioning.emfprofile.project.registeringbuilder"
-         name="EMF Profile Project Registering"
-         point="org.eclipse.core.resources.builders">
-      <builder
-            hasNature="true"
-            isConfigurable="false">
-         <run
-               class="org.modelversioning.emfprofile.project.EMFProfileProjectBuilder">
-         </run>
-      </builder>
-   </extension>
-   <extension
          id="org.modelversioning.emfprofile.project.nature"
          name="EMF Profile Project Nature"
          point="org.eclipse.core.resources.natures">
@@ -23,23 +11,9 @@
                class="org.modelversioning.emfprofile.project.EMFProfileProjectNature">
          </run>
       </runtime>
-      <builder
-            id="org.modelversioning.emfprofile.project.registeringbuilder">
-      </builder>
       <requires-nature
             id="org.eclipse.pde.PluginNature">
       </requires-nature>
-   </extension>
-   <extension
-         id="invalidEMFProfile"
-         name="Invalid EMF Profile"
-         point="org.eclipse.core.resources.markers">
-      <super
-            type="org.eclipse.core.resources.problemmarker">
-      </super>
-      <persistent
-            value="true">
-      </persistent>
    </extension>
 
 </plugin>
