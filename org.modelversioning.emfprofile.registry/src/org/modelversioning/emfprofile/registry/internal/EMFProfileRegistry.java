@@ -95,7 +95,12 @@ public class EMFProfileRegistry extends Observable implements
 		for (IProject project : affectedProjects) {
 			unregisterProfiles(project);
 			if (!isDeleteOrClose(event)) {
-				registerProfiles(project);
+				try {
+					registerProfiles(project);
+				} catch (Exception e) {
+					logWarning(e, "Errors while loading profiles from project "
+							+ project.getName());
+				}
 			}
 		}
 		if (affectedProjects.size() > 0)
@@ -181,11 +186,12 @@ public class EMFProfileRegistry extends Observable implements
 	private void registerProfiles(IProject[] allProjects) {
 		for (IProject project : allProjects) {
 			try {
-				if (project.hasNature(EMFProfileProjectNature.NATURE_ID)) {
+				if (project.isOpen() && isProfileProject(project)) {
 					registerProfiles(project);
 				}
-			} catch (CoreException e) {
-				logWarning(e, "Could not load profile project from workspace");
+			} catch (Exception e) {
+				logWarning(e, "Errors while loading profiles from project "
+						+ project.getName());
 			}
 		}
 	}
