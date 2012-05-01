@@ -145,22 +145,13 @@ public interface EMFProfilePackage extends EPackage {
 	int PROFILE__ESUPER_PACKAGE = EcorePackage.EPACKAGE__ESUPER_PACKAGE;
 
 	/**
-	 * The feature id for the '<em><b>Base</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROFILE__BASE = EcorePackage.EPACKAGE_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>Profile</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROFILE_FEATURE_COUNT = EcorePackage.EPACKAGE_FEATURE_COUNT + 1;
+	int PROFILE_FEATURE_COUNT = EcorePackage.EPACKAGE_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.modelversioning.emfprofile.impl.StereotypeImpl <em>Stereotype</em>}' class.
@@ -528,17 +519,6 @@ public interface EMFProfilePackage extends EPackage {
 	EClass getProfile();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.modelversioning.emfprofile.Profile#getBase <em>Base</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base</em>'.
-	 * @see org.modelversioning.emfprofile.Profile#getBase()
-	 * @see #getProfile()
-	 * @generated
-	 */
-	EReference getProfile_Base();
-
-	/**
 	 * Returns the meta object for class '{@link org.modelversioning.emfprofile.Stereotype <em>Stereotype</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -710,14 +690,6 @@ public interface EMFProfilePackage extends EPackage {
 		 * @generated
 		 */
 		EClass PROFILE = eINSTANCE.getProfile();
-
-		/**
-		 * The meta object literal for the '<em><b>Base</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PROFILE__BASE = eINSTANCE.getProfile_Base();
 
 		/**
 		 * The meta object literal for the '{@link org.modelversioning.emfprofile.impl.StereotypeImpl <em>Stereotype</em>}' class.

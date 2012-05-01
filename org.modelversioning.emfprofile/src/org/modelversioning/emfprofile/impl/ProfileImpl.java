@@ -7,17 +7,12 @@
  */
 package org.modelversioning.emfprofile.impl;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.modelversioning.emfprofile.EMFProfilePackage;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.Stereotype;
@@ -27,10 +22,6 @@ import org.modelversioning.emfprofile.Stereotype;
  * An implementation of the model object '<em><b>Profile</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link org.modelversioning.emfprofile.impl.ProfileImpl#getBase <em>Base</em>}</li>
- * </ul>
  * </p>
  *
  * @generated
@@ -42,16 +33,6 @@ public class ProfileImpl extends EPackageImpl implements Profile {
 	protected static final String NS_PREFIX_EDEFAULT = "myprofile"; //$NON-NLS-1$
 	
 	
-	/**
-	 * The cached value of the '{@link #getBase() <em>Base</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBase()
-	 * @generated
-	 * @ordered
-	 */
-	protected EPackage base;
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -76,53 +57,6 @@ public class ProfileImpl extends EPackageImpl implements Profile {
 	@Override
 	protected EClass eStaticClass() {
 		return EMFProfilePackage.Literals.PROFILE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EPackage getBase() {
-		if (base != null && base.eIsProxy()) {
-			InternalEObject oldBase = (InternalEObject)base;
-			base = (EPackage)eResolveProxy(oldBase);
-			if (base != oldBase) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EMFProfilePackage.PROFILE__BASE, oldBase, base));
-			}
-		}
-		return base;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EPackage basicGetBase() {
-		return base;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBase(EPackage newBase) {
-		EPackage oldBase = base;
-		base = newBase;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfilePackage.PROFILE__BASE, oldBase, base));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public boolean isApplicable(EPackage ePackage) {
-		return EcoreUtil.equals(ePackage, this.base);
 	}
 
 	/**
@@ -169,65 +103,6 @@ public class ProfileImpl extends EPackageImpl implements Profile {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case EMFProfilePackage.PROFILE__BASE:
-				if (resolve) return getBase();
-				return basicGetBase();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case EMFProfilePackage.PROFILE__BASE:
-				setBase((EPackage)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case EMFProfilePackage.PROFILE__BASE:
-				setBase((EPackage)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case EMFProfilePackage.PROFILE__BASE:
-				return base != null;
-		}
-		return super.eIsSet(featureID);
 	}
 
 } //ProfileImpl

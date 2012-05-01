@@ -137,15 +137,6 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getProfile_Base() {
-		return (EReference)profileEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getStereotype() {
 		return stereotypeEClass;
 	}
@@ -287,7 +278,6 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 
 		// Create classes and their features
 		profileEClass = createEClass(PROFILE);
-		createEReference(profileEClass, PROFILE__BASE);
 
 		stereotypeEClass = createEClass(STEREOTYPE);
 		createEAttribute(stereotypeEClass, STEREOTYPE__ICON_PATH);
@@ -341,12 +331,8 @@ public class EMFProfilePackageImpl extends EPackageImpl implements EMFProfilePac
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(profileEClass, Profile.class, "Profile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getProfile_Base(), theEcorePackage.getEPackage(), null, "base", null, 1, 1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = addEOperation(profileEClass, ecorePackage.getEBoolean(), "isApplicable", 1, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEcorePackage.getEPackage(), "ePackage", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(profileEClass, this.getStereotype(), "getApplicableStereotypes", 0, -1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(profileEClass, this.getStereotype(), "getApplicableStereotypes", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(profileEClass, this.getStereotype(), "getStereotypes", 0, -1, IS_UNIQUE, IS_ORDERED);

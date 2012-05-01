@@ -16,54 +16,12 @@ import org.eclipse.emf.ecore.EPackage;
  * A representation of the model object '<em><b>Profile</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * <ul>
- *   <li>{@link org.modelversioning.emfprofile.Profile#getBase <em>Base</em>}</li>
- * </ul>
- * </p>
  *
  * @see org.modelversioning.emfprofile.EMFProfilePackage#getProfile()
  * @model
  * @generated
  */
 public interface Profile extends EPackage {
-	/**
-	 * Returns the value of the '<em><b>Base</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Base</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base</em>' reference.
-	 * @see #setBase(EPackage)
-	 * @see org.modelversioning.emfprofile.EMFProfilePackage#getProfile_Base()
-	 * @model required="true"
-	 * @generated
-	 */
-	EPackage getBase();
-
-	/**
-	 * Sets the value of the '{@link org.modelversioning.emfprofile.Profile#getBase <em>Base</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base</em>' reference.
-	 * @see #getBase()
-	 * @generated
-	 */
-	void setBase(EPackage value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * Returns <code>true</code> if this profile is applicable to the specified
-	 * <code>ePackage</code>. Otherwise, <code>false</code> is returned. 
-	 * <!-- end-user-doc -->
-	 * @model required="true"
-	 * @generated
-	 */
-	boolean isApplicable(EPackage ePackage);
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * Returns a list of all applicable stereotypes for the specified
