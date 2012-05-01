@@ -13,9 +13,9 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
-public class EMFProfileProjectNewPage extends WizardNewProjectCreationPage {
+public class ProfileProjectNewPage extends WizardNewProjectCreationPage {
 
-	private EMFProfileProjectData data;
+	private ProfileProjectData data;
 	private IStructuredSelection selection;
 	private Text profileNameField;
 	private Text profileNamespaceField;
@@ -28,8 +28,8 @@ public class EMFProfileProjectNewPage extends WizardNewProjectCreationPage {
         }
     };
 
-	public EMFProfileProjectNewPage(String pageName,
-			EMFProfileProjectData data, IStructuredSelection selection) {
+	public ProfileProjectNewPage(String pageName,
+			ProfileProjectData data, IStructuredSelection selection) {
 		super(pageName);
 		this.selection = selection;
 		this.data = data;

@@ -9,7 +9,7 @@
       </category>
       <wizard
             category="org.modelversioning.emfprofile.category.wizards"
-            class="org.modelversioning.emfprofile.project.ui.wizard.EMFProfileProjectNewWizard"
+            class="org.modelversioning.emfprofile.project.ui.wizard.ProfileProjectNewWizard"
             icon="icons/profile.png"
             id="org.modelversioning.emfprofile.project.wizard.new"
             name="EMF Profile Project"

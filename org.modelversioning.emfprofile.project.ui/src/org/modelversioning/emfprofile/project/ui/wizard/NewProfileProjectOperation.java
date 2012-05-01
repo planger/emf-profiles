@@ -29,17 +29,17 @@ import org.modelversioning.emfprofile.diagram.part.EMFProfileDiagramEditorUtil;
 import org.modelversioning.emfprofile.project.EMFProfileProjectNature;
 import org.modelversioning.emfprofile.project.EMFProfileProjectNatureUtil;
 
-public class NewEMFProfileProjectOperation extends WorkspaceModifyOperation {
+public class NewProfileProjectOperation extends WorkspaceModifyOperation {
 
 	private static final String BUILD_PROP_FILE_NAME = "build.properties";
 	private static final String DEFAULT_VERSION = "1.0.0.qualifier";
 	private static final String PDE_PLUGIN_NATURE = "org.eclipse.pde.PluginNature";
 
-	private EMFProfileProjectData projectData;
+	private ProfileProjectData projectData;
 	private IProject project;
 	private Resource profileDiagramResource;
 
-	public NewEMFProfileProjectOperation(EMFProfileProjectData projectData) {
+	public NewProfileProjectOperation(ProfileProjectData projectData) {
 		super();
 		this.projectData = projectData;
 		this.project = projectData.getProjectHandle();

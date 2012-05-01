@@ -22,23 +22,23 @@ import org.modelversioning.emfprofile.ui.EMFProfileUIPlugin;
  * @author <a href="mailto:langer@big.tuwien.ac.at">Philip Langer</a>
  * 
  */
-public class EMFProfileProjectNewWizard extends Wizard implements INewWizard {
+public class ProfileProjectNewWizard extends Wizard implements INewWizard {
 
-	private EMFProfileProjectData projectData;
+	private ProfileProjectData projectData;
 	private IWorkbench workbench;
 
-	protected EMFProfileProjectNewPage mainPage;
+	protected ProfileProjectNewPage mainPage;
 
-	public EMFProfileProjectNewWizard() {
+	public ProfileProjectNewWizard() {
 		setWindowTitle("New EMF Profile Project");
 		setNeedsProgressMonitor(true);
-		projectData = new EMFProfileProjectData();
+		projectData = new ProfileProjectData();
 	}
 
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
-		mainPage = new EMFProfileProjectNewPage("main", projectData, selection); //$NON-NLS-1$
+		mainPage = new ProfileProjectNewPage("main", projectData, selection); //$NON-NLS-1$
 		mainPage.setTitle("EMF Profile Project");
 		mainPage.setDescription("Create a new EMF Profile project.");
 		this.addPage(mainPage);
@@ -63,7 +63,7 @@ public class EMFProfileProjectNewWizard extends Wizard implements INewWizard {
 	private void createEMFProfileProject() throws InvocationTargetException,
 			InterruptedException {
 		getContainer().run(false, true,
-				new NewEMFProfileProjectOperation(projectData));
+				new NewProfileProjectOperation(projectData));
 	}
 
 	private void addToWorkingSets() {

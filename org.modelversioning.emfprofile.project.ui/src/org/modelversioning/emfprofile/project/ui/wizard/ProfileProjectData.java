@@ -3,7 +3,7 @@ package org.modelversioning.emfprofile.project.ui.wizard;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 
-public class EMFProfileProjectData {
+public class ProfileProjectData {
 	
 	private String projectName;
 	private String profileNamespace;
