@@ -21,6 +21,10 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class EMFProfileProjectNatureUtil {
 
+	private static final String PLATFORM_RESOURCE_PREFIX = "platform:/resource"; //$NON-NLS-1$
+	private static final String EXTENSION_POINT_PROFILE_RESOURCE_ATT_NAME = "profile_resource"; //$NON-NLS-1$
+	private static final String EXTENSION_POINT_PROFILE_ELEM_NAME = "profile"; //$NON-NLS-1$
+
 	public static void addNature(IProject project) throws CoreException {
 		IProjectDescription description = project.getDescription();
 		String[] prevNatures = description.getNatureIds();
@@ -69,8 +73,8 @@ public class EMFProfileProjectNatureUtil {
 		Collection<String> profileDiagramFileNames = getProfileDiagramFileNames(project);
 		Collection<URI> profileDiagramURIs = new ArrayList<URI>();
 		for (String profileDiagramFileName : profileDiagramFileNames) {
-			URI uri = URI.createURI("platform:/resource" //$NON-NLS-1$
-					+ project.getName() + "/" + profileDiagramFileName);
+			URI uri = URI.createURI(PLATFORM_RESOURCE_PREFIX
+					+ project.getName() + "/" + profileDiagramFileName); //$NON-NLS-1$
 			profileDiagramURIs.add(uri);
 		}
 		return profileDiagramURIs;
@@ -79,7 +83,7 @@ public class EMFProfileProjectNatureUtil {
 	public static URI getDefaultProfileDiagramURI(IProject project) {
 		IFile profileDiagramFile = project
 				.getFile(EMFProfileProjectNature.DEFAULT_PROFILE_DIAGRAM_FILE_NAME);
-		URI uri = URI.createURI("platform:/resource" //$NON-NLS-1$
+		URI uri = URI.createURI(PLATFORM_RESOURCE_PREFIX
 				+ profileDiagramFile.getFullPath().toString());
 		return uri;
 	}
@@ -96,8 +100,9 @@ public class EMFProfileProjectNatureUtil {
 		public void startElement(String uri, String localName, String qName,
 				Attributes attributes) throws SAXException {
 			super.startElement(uri, localName, qName, attributes);
-			if ("profile".equals(qName)) { //$NON-NLS-1$
-				String attributeValue = attributes.getValue("profile_resource"); //$NON-NLS-1$
+			if (EXTENSION_POINT_PROFILE_ELEM_NAME.equals(qName)) {
+				String attributeValue = attributes
+						.getValue(EXTENSION_POINT_PROFILE_RESOURCE_ATT_NAME);
 				if (attributeValue != null) {
 					profileDiagramFileNames.add(attributeValue);
 				}
