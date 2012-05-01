@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.modelversioning.emfprofile.Profile;
-import org.modelversioning.emfprofile.registry.internal.EMFProfileRegistry;
+import org.modelversioning.emfprofile.registry.internal.ProfileRegistry;
 
 /**
  * Registry for all available {@link Profile profiles}.
@@ -13,7 +13,7 @@ import org.modelversioning.emfprofile.registry.internal.EMFProfileRegistry;
  * @author <a href="mailto:langer@big.tuwien.ac.at">Philip Langer</a>
  * 
  */
-public interface IEMFProfileRegistry {
+public interface IProfileRegistry {
 
 	public static final String PROFILE_EXTENSION_POINT_ID = "org.modelversioning.emfprofile.profile"; //$NON-NLS-1$
 	public static final String PROFILE_EXTENSION_POINT_RESOURCE_NAME = "profile_resource"; //$NON-NLS-1$
@@ -21,7 +21,7 @@ public interface IEMFProfileRegistry {
 	/**
 	 * The singleton instance.
 	 */
-	public static final IEMFProfileRegistry eINSTANCE = new EMFProfileRegistry();
+	public static final IProfileRegistry eINSTANCE = new ProfileRegistry();
 
 	/**
 	 * Returns an unmodifiable collection of all registered profiles.

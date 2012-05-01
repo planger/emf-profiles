@@ -23,9 +23,9 @@ import org.modelversioning.emfprofile.project.EMFProfileProjectNatureUtil;
 public class ProfileProjectSynchronizer implements IResourceChangeListener {
 
 	private ResourceSet resourceSet;
-	private EMFProfileRegistry registry;
+	private ProfileRegistry registry;
 
-	public ProfileProjectSynchronizer(EMFProfileRegistry registry,
+	public ProfileProjectSynchronizer(ProfileRegistry registry,
 			ResourceSet resourceSet) {
 		this.registry = registry;
 		this.resourceSet = resourceSet;

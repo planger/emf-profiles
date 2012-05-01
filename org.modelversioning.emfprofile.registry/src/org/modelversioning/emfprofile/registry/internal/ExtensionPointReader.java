@@ -13,7 +13,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.modelversioning.emfprofile.EMFProfilePlugin;
-import org.modelversioning.emfprofile.registry.IEMFProfileRegistry;
+import org.modelversioning.emfprofile.registry.IProfileRegistry;
 import org.osgi.framework.Bundle;
 
 public class ExtensionPointReader {
@@ -30,7 +30,7 @@ public class ExtensionPointReader {
 	private void loadBundleProfileProvidersFromExtensionPoint() {
 		IConfigurationElement[] config = Platform.getExtensionRegistry()
 				.getConfigurationElementsFor(
-						IEMFProfileRegistry.PROFILE_EXTENSION_POINT_ID);
+						IProfileRegistry.PROFILE_EXTENSION_POINT_ID);
 		loadProfiles(config);
 	}
 
@@ -49,7 +49,7 @@ public class ExtensionPointReader {
 			IConfigurationElement configElement) {
 		IContributor contributor = configElement.getContributor();
 		String profileResourceName = configElement
-				.getAttribute(IEMFProfileRegistry.PROFILE_EXTENSION_POINT_RESOURCE_NAME);
+				.getAttribute(IProfileRegistry.PROFILE_EXTENSION_POINT_RESOURCE_NAME);
 		Bundle bundle = Platform.getBundle(contributor.getName());
 		Resource profileResource = resourceSet.getResource(
 				createProfileURI(contributor, profileResourceName), true);

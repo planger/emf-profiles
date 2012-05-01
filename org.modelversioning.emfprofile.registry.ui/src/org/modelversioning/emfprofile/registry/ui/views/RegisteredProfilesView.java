@@ -25,7 +25,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.modelversioning.emfprofile.registry.IEMFProfileRegistry;
+import org.modelversioning.emfprofile.registry.IProfileRegistry;
 import org.modelversioning.emfprofile.registry.ui.EMFProfileRegistryUIPlugin;
 import org.modelversioning.emfprofile.registry.ui.provider.ProfileProviderContentAdapter;
 import org.modelversioning.emfprofile.registry.ui.provider.ProfileProviderLabelAdapter;
@@ -40,10 +40,10 @@ public class RegisteredProfilesView extends ViewPart implements Observer {
 	private Action action2;
 	private Action doubleClickAction;
 
-	private IEMFProfileRegistry profileRegistry;
+	private IProfileRegistry profileRegistry;
 
 	public RegisteredProfilesView() {
-		profileRegistry = IEMFProfileRegistry.eINSTANCE;
+		profileRegistry = IProfileRegistry.eINSTANCE;
 		profileRegistry.addObserver(this);
 	}
 

@@ -13,11 +13,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.modelversioning.emfprofile.Profile;
-import org.modelversioning.emfprofile.registry.IEMFProfileRegistry;
+import org.modelversioning.emfprofile.registry.IProfileRegistry;
 import org.modelversioning.emfprofile.registry.IProfileProvider;
 
-public class EMFProfileRegistry extends Observable implements
-		IEMFProfileRegistry {
+public class ProfileRegistry extends Observable implements
+		IProfileRegistry {
 
 	private final ResourceSet resourceSet = new ResourceSetImpl();
 	private final Map<String, IProfileProvider> registeredProfileProviders = new HashMap<String, IProfileProvider>();
@@ -25,7 +25,7 @@ public class EMFProfileRegistry extends Observable implements
 
 	private ProfileProjectSynchronizer projectSynchronizer;
 
-	public EMFProfileRegistry() {
+	public ProfileRegistry() {
 		loadProfileProvidersFromExtensionPoint();
 		setUpProfileProjectSynchronizer();
 		notifyObservers();
