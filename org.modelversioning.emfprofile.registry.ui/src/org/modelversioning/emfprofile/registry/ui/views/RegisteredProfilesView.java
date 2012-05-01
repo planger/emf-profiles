@@ -26,6 +26,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.modelversioning.emfprofile.registry.IEMFProfileRegistry;
+import org.modelversioning.emfprofile.registry.ui.EMFProfileRegistryUIPlugin;
 import org.modelversioning.emfprofile.registry.ui.provider.ProfileProviderContentAdapter;
 import org.modelversioning.emfprofile.registry.ui.provider.ProfileProviderLabelAdapter;
 
@@ -156,6 +157,14 @@ public class RegisteredProfilesView extends ViewPart implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		viewer.refresh(true);
+		refreshViewer();
+	}
+
+	private void refreshViewer() {
+		EMFProfileRegistryUIPlugin.getDisplay().syncExec(new Runnable() {
+			public void run() {
+				viewer.refresh(true);
+			}
+		});
 	}
 }
