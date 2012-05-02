@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -127,45 +128,29 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 	 *            to use.
 	 * @param profileApplicationFile
 	 *            to save profile application in.
-	 * @param profileFile
-	 *            the profile.
+	 * @param profiles
+	 *            the profiles to load.
 	 */
 	public void addNewProfileApplication(IWorkbenchPart workbenchPart,
-			IFile profileApplicationFile, IFile profileFile) {
+			IFile profileApplicationFile, Collection<Profile> profiles) {
 		try {
-			ResourceSet resourceSet = getResourceSet(workbenchPart);
-
-			Resource profileResource = resourceSet.getResource(
-					URI.createFileURI(profileFile.getLocation().toString()),
-					true);
-
 			profileApplicationFile.refreshLocal(1, new NullProgressMonitor());
 
-			if (profileResource != null
-					&& profileResource.getContents().size() > 0) {
-				IProfileFacade facade = createNewProfileFacade(workbenchPart,
+			IProfileFacade facade = createNewProfileFacade(workbenchPart,
+					profileApplicationFile);
+			for (Profile profile : profiles) {
+				facade.loadProfile(profile);
+			}
+			if (workbenchPart instanceof DiagramEditor) {
+				DiagramEditor diagramEditor = (DiagramEditor) workbenchPart;
+				DiagramEditPart diagramEditPart = diagramEditor
+						.getDiagramEditPart();
+				RootEditPart rootEditPart = diagramEditPart.getRoot();
+				getProfileApplicationView().addToView(rootEditPart, facade,
 						profileApplicationFile);
-				loadProfilesFromResource(facade, profileResource);
-				if (workbenchPart instanceof DiagramEditor) {
-					DiagramEditor diagramEditor = (DiagramEditor) workbenchPart;
-					DiagramEditPart diagramEditPart = diagramEditor
-							.getDiagramEditPart();
-					RootEditPart rootEditPart = diagramEditPart.getRoot();
-					getProfileApplicationView().addToView(rootEditPart, facade,
-							profileApplicationFile);
-				} else {
-					getProfileApplicationView().addToView(workbenchPart,
-							facade, profileApplicationFile);
-				}
 			} else {
-				ErrorDialog
-						.openError(
-								workbenchPart.getSite().getShell(),
-								"No Profile File",
-								"You did not select a valid profile file.",
-								new Status(IStatus.ERROR,
-										EMFProfileUIPlugin.PLUGIN_ID,
-										"Resource was null or did not contain a profile!"));
+				getProfileApplicationView().addToView(workbenchPart, facade,
+						profileApplicationFile);
 			}
 		} catch (Exception e) {
 			IStatus status = new Status(IStatus.ERROR, PLUGIN_ID,
@@ -173,15 +158,6 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 			ErrorDialog.openError(workbenchPart.getSite().getShell(),
 					"Error While Applying Profile", e.getMessage(), status);
 			getLog().log(status);
-		}
-	}
-
-	private void loadProfilesFromResource(IProfileFacade facade,
-			Resource profileResource) {
-		for (EObject eObject : profileResource.getContents()) {
-			if (eObject instanceof Profile) {
-				facade.loadProfile((Profile) eObject);
-			}
 		}
 	}
 
@@ -311,14 +287,13 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 			});
 		}
 	}
-	
+
 	public static void log(IStatus status) {
 		ResourcesPlugin.getPlugin().getLog().log(status);
 	}
 
 	public static void logErrorMessage(String message) {
-		log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, message,
-				null));
+		log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, message, null));
 	}
 
 	public static void logException(Throwable e, final String title,
@@ -334,8 +309,8 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 				message = e.getMessage();
 			if (message == null)
 				message = e.toString();
-			status = new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK,
-					message, e);
+			status = new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, message,
+					e);
 		}
 		ResourcesPlugin.getPlugin().getLog().log(status);
 		Display display = getStandardDisplay();

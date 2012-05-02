@@ -33,7 +33,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.gmf.runtime.draw2d.ui.render;bundle-version="1.4.1",
  org.eclipse.gmf.runtime.draw2d.ui.render.awt;bundle-version="1.4.1",
  org.eclipse.gmf.runtime.emf.ui.properties;bundle-version="1.4.0",
- org.modelversioning.emfprofile.diagram;bundle-version="1.0.0"
+ org.modelversioning.emfprofile.diagram;bundle-version="1.0.0",
+ org.modelversioning.emfprofile.registry;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.modelversioning.emfprofile.ui

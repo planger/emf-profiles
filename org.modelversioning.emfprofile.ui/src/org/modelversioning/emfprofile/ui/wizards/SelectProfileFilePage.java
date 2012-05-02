@@ -12,20 +12,25 @@
 
 package org.modelversioning.emfprofile.ui.wizards;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.modelversioning.emfprofile.Profile;
+import org.modelversioning.emfprofile.registry.IProfileRegistry;
 
 /**
  * {@link WizardPage} for selecting the profile file.
@@ -35,15 +40,7 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class SelectProfileFilePage extends WizardPage {
 
-	private static final String PROFILE_FILE = "PROFILE_FILE";
-	/**
-	 * The file selection field.
-	 */
-	private FileFieldEditor fileFieldEditor;
-	/**
-	 * The selection.
-	 */
-	private ISelection selection = null;
+	private Collection<Profile> selectedProfiles = new ArrayList<Profile>();
 
 	/**
 	 * Constructs a new page.
@@ -68,61 +65,103 @@ public class SelectProfileFilePage extends WizardPage {
 	@Override
 	public void createControl(Composite parent) {
 		// create overall container
-		Composite container = new Composite(parent, SWT.NULL);
-		setControl(container);
-		fileFieldEditor = new FileFieldEditor(PROFILE_FILE, "EMF Profile File",
-				container);
-		if (selection != null
-				&& !selection.isEmpty()
-				&& selection instanceof IStructuredSelection
-				&& ((IStructuredSelection) selection).getFirstElement() instanceof IFile) {
-			Object object = ((IStructuredSelection) selection)
-					.getFirstElement();
-			File file = new File(((IFile) object).getParent().getLocationURI());
-			fileFieldEditor.setFilterPath(file);
-		} else {
-			fileFieldEditor.setFilterPath(new File(ResourcesPlugin
-					.getWorkspace().getRoot().getLocationURI()));
-		}
-		((FileFieldEditor) fileFieldEditor).setFileExtensions(new String[] {
-				"*.emfprofile_diagram", "*.emfprofile" }); //$NON-NLS-1$ //$NON-NLS-2$
-		fileFieldEditor.getTextControl(container).addModifyListener(
-				new ModifyListener() {
-					@Override
-					public void modifyText(ModifyEvent e) {
-						updatePageCompleteState();
+		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayout(new GridLayout());
+		container
+				.setLayoutData(new GridData(GridData.FILL_BOTH
+						| GridData.VERTICAL_ALIGN_FILL
+						| GridData.HORIZONTAL_ALIGN_FILL));
+
+		final ListViewer profileList = new ListViewer(container, SWT.H_SCROLL
+				| SWT.V_SCROLL | SWT.MULTI | SWT.BORDER);
+		profileList.getList().setLayoutData(new GridData(GridData.FILL_BOTH));
+		profileList.setContentProvider(new ITreeContentProvider() {
+
+			@Override
+			public void inputChanged(Viewer viewer, Object oldInput,
+					Object newInput) {
+				if (newInput instanceof Collection<?>) {
+					for (Object element : ((Collection<?>) newInput)) {
+						profileList.add(element);
 					}
-				});
-		fileFieldEditor.setEmptyStringAllowed(false);
+				}
+			}
+
+			@Override
+			public void dispose() {
+			}
+
+			@Override
+			public boolean hasChildren(Object element) {
+				if (element instanceof Collection<?>) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			@Override
+			public Object getParent(Object element) {
+				return null;
+			}
+
+			@Override
+			public Object[] getElements(Object inputElement) {
+				if (inputElement instanceof Collection<?>) {
+					return ((Collection<?>) inputElement).toArray();
+				}
+				return null;
+			}
+
+			@Override
+			public Object[] getChildren(Object parentElement) {
+				if (parentElement instanceof Collection<?>) {
+					return ((Collection<?>) parentElement).toArray();
+				}
+				return null;
+			}
+		});
+		profileList.getList().addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IStructuredSelection selection = (IStructuredSelection) profileList
+						.getSelection();
+				selectedProfiles.clear();
+				for (Iterator<Object> iterator = selection.iterator(); iterator
+						.hasNext();) {
+					Object next = iterator.next();
+					if (next instanceof Profile) {
+						selectedProfiles.add((Profile) next);
+					}
+				}
+				updatePageCompleteState();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+		profileList.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof Profile) {
+					Profile profile = (Profile) element;
+					return profile.getName() + " (" + profile.getNsURI() + ")";
+				}
+				return super.getText(element);
+			}
+		});
+		profileList
+				.setInput(IProfileRegistry.eINSTANCE.getRegisteredProfiles());
+
+		setControl(container);
 	}
 
-	/**
-	 * Returns the selected profile file.
-	 * 
-	 * @return the selected profile file.
-	 */
-	public IFile getSelectedFile() {
-		IFile file = null;
-		if (fileFieldEditor != null) {
-			file = ResourcesPlugin
-					.getWorkspace()
-					.getRoot()
-					.getFileForLocation(
-							new Path(fileFieldEditor.getStringValue()));
-		}
-		return file;
-	}
-
-	/**
-	 * Sets the {@link #setPageComplete(boolean)} value.
-	 */
 	private void updatePageCompleteState() {
-		IFile file = getSelectedFile();
-		if (file == null) {
-			this.setErrorMessage("Select profile file.");
-			setPageComplete(false);
-		} else if (!file.exists()) {
-			this.setErrorMessage("Selected file does not exist");
+		if (getSelectedProfiles().size() < 1) {
+			this.setErrorMessage("Select at least one profile to be applied.");
 			setPageComplete(false);
 		} else {
 			this.setErrorMessage(null);
@@ -130,14 +169,8 @@ public class SelectProfileFilePage extends WizardPage {
 		}
 	}
 
-	/**
-	 * Sets the selection.
-	 * 
-	 * @param selection
-	 *            to set.
-	 */
-	public void setSelection(ISelection selection) {
-		this.selection = selection;
+	public Collection<Profile> getSelectedProfiles() {
+		return selectedProfiles;
 	}
 
 }

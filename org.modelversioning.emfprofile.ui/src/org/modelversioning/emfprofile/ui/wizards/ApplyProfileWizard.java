@@ -16,10 +16,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.wizards.newresource.BasicNewFileResourceWizard;
@@ -55,13 +51,12 @@ public class ApplyProfileWizard extends BasicNewFileResourceWizard {
 	 */
 	@Override
 	public boolean performFinish() {
-		IFile profileFile = profileFilePage.getSelectedFile();
 		IPath appContainerFullPath = profileAppFilePage.getContainerFullPath();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IFile profileApplicationFile = root.getFile(appContainerFullPath
 				.append(profileAppFilePage.getFileName()));
 		EMFProfileUIPlugin.getDefault().addNewProfileApplication(targetPart,
-				profileApplicationFile, profileFile);
+				profileApplicationFile, profileFilePage.getSelectedProfiles());
 		return true;
 	}
 
@@ -84,36 +79,7 @@ public class ApplyProfileWizard extends BasicNewFileResourceWizard {
 		// add selectProfileFilePage
 		profileFilePage = new SelectProfileFilePage(SELECT_PROFILE_PAGE_NAME,
 				"Select Profile File", null);
-		profileFilePage.setSelection(getNewSelection());
 		super.addPage(profileFilePage);
-	}
-
-	/**
-	 * Sets the initial selection.
-	 * 
-	 * @param selection
-	 *            to set.
-	 */
-	private IStructuredSelection getNewSelection() {
-		if (selection instanceof IStructuredSelection) {
-			IStructuredSelection iStructuredSelection = (IStructuredSelection) selection;
-			if (iStructuredSelection.getFirstElement() != null
-					&& iStructuredSelection.getFirstElement() instanceof EObject) {
-				EObject eObject = (EObject) iStructuredSelection
-						.getFirstElement();
-				if (eObject.eResource() != null) {
-					IFile file = ResourcesPlugin
-							.getWorkspace()
-							.getRoot()
-							.getFile(
-									new Path(eObject.eResource().getURI()
-											.toPlatformString(true)));
-					return new StructuredSelection(file);
-				}
-			}
-			return (IStructuredSelection) selection;
-		}
-		return new StructuredSelection();
 	}
 
 	/**
