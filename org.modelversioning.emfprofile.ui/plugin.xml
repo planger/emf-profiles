@@ -3,28 +3,6 @@
 <plugin>
    <extension
          point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            adaptable="false"
-            id="org.modelversioning.emfprofile.ui.register.emfprofile_diagram"
-            nameFilter="*.emfprofile_diagram"
-            objectClass="org.eclipse.core.resources.IFile">
-         <action
-               class="org.modelversioning.emfprofile.ui.actions.RegisterProfileAction"
-               id="org.modelversioning.emfprofile.ui.registerProfile.diagram"
-               label="Register EMF Profile">
-         </action>
-      </objectContribution>
-      <objectContribution
-            adaptable="false"
-            id="org.modelversioning.emfprofile.ui.register.emfprofile"
-            nameFilter="*.emfprofile"
-            objectClass="org.eclipse.core.resources.IFile">
-         <action
-               class="org.modelversioning.emfprofile.ui.actions.RegisterProfileAction"
-               id="org.modelversioning.emfprofile.ui.registerProfile.diagram"
-               label="Register EMF Profile">
-         </action>
-      </objectContribution>
       
       <objectContribution
             adaptable="false"
