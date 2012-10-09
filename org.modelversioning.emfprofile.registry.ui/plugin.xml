@@ -4,6 +4,10 @@
 
    <extension
          point="org.eclipse.ui.views">
+      <category
+            name="EMF Profiles"
+            id="org.modelversioning.emfprofile">
+      </category>
       <view
             name="Registered EMF Profiles"
             icon="icons/profile.png"
