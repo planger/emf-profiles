@@ -14,11 +14,16 @@ public class DiagramEditorPerspective implements IPerspectiveFactory {
 	public void createInitialLayout(IPageLayout layout) {
 		layout.setEditorAreaVisible(true);
 		layout.addPerspectiveShortcut(DiagramEditorWorkbenchAdvisor.PERSPECTIVE_ID);
-		IFolderLayout right = layout.createFolder(
-				"right", IPageLayout.RIGHT, 0.6f, layout.getEditorArea()); //$NON-NLS-1$
-		right.addView(IPageLayout.ID_OUTLINE);
+		IFolderLayout left = layout.createFolder(
+				"left", IPageLayout.LEFT, 0.15f, layout.getEditorArea());//$NON-NLS-1$
+		left.addView(IPageLayout.ID_PROJECT_EXPLORER);
+//		IFolderLayout right = layout.createFolder(
+//				"right", IPageLayout.RIGHT, 0.6f, layout.getEditorArea()); //$NON-NLS-1$
+		IFolderLayout bottomLeft = layout.createFolder(
+				"bottomLeft", IPageLayout.BOTTOM, 0.5f, "left");//$NON-NLS-1$
+		bottomLeft.addView(IPageLayout.ID_OUTLINE);
 		IFolderLayout bottomRight = layout.createFolder(
-				"bottomRight", IPageLayout.BOTTOM, 0.6f, "right"); //$NON-NLS-1$	 //$NON-NLS-2$
+				"bottomRight", IPageLayout.BOTTOM, 0.7f, layout.getEditorArea()); //$NON-NLS-1$	 //$NON-NLS-2$
 		bottomRight.addView(IPageLayout.ID_PROP_SHEET);
 	}
 }

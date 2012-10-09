@@ -90,10 +90,6 @@
    </extension>
    <extension
          point="org.eclipse.ui.views">
-      <category
-            id="org.modelversioning.emfprofile"
-            name="EMF Profiles">
-      </category>
       <view
             category="org.modelversioning.emfprofile"
             class="org.modelversioning.emfprofile.ui.views.ProfileApplicationsView"
