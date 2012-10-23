@@ -5,8 +5,8 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="EMF Profile Applications NEW"
-            icon="icons/sample.gif"
+            name="EMF Profile Applications"
+            icon="icons/profile.png"
             category="org.modelversioning.emfprofile"
             class="org.modelversioning.emfprofile.application.registry.ui.views.EMFProfileApplicationsView"
             id="org.modelversioning.emfprofile.application.registry.ui.views.EMFProfileApplicationsView">
@@ -41,6 +41,163 @@
       <contexts
             file="contexts.xml">
       </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.applyloadunload"
+            name="Category Apply Load Unload">
+      </category>
+      <command
+            categoryId="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.applyloadunload"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.applayprofile"
+            name="Applay Profile">
+      </command>
+      <command
+            categoryId="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.applyloadunload"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.loadprofileapplication"
+            name="Load Profile Application">
+      </command>
+      <command
+            categoryId="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.applyloadunload"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.unloadprofileapplication"
+            name="Unload Profile Application">
+      </command>
+      <category
+            id="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.tooglebuttons"
+            name="Toogle Buttons">
+      </category>
+      <command
+            categoryId="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.tooglebuttons"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.profileapplicationonelement"
+            name="Profile Application on Element">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.tooglebuttons"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.stickyselection"
+            name="Sticky Selection">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+	  <category
+            id="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.save"
+            name="Save Profile Applications Category">
+      </category>
+      <command
+            categoryId="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.save"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.saveprofileapplication"
+            name="Save Profile Application">
+      </command>
+      <command
+            categoryId="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.save"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.saveallprofileapplications"
+            name="Save All Profile Applications">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.modelversioning.emfprofile.application.registry.ui.views.EMFProfileApplicationsView">
+         <command
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.applayprofile"
+               icon="icons/new_wiz.gif"
+               label="Apply Profile "
+               style="push"
+               tooltip="Apply Profile">
+         </command>
+         <separator
+               name="org.modelversioning.emfprofile.application.registry.ui.separator1"
+               visible="false">
+         </separator>
+         <command
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.loadprofileapplication"
+               icon="icons/add_obj.gif"
+               label="Load Profile Application"
+               style="push"
+               tooltip="Load Profile Application">
+         </command>
+         <command
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.unloadprofileapplication"
+               icon="icons/remove_correction.gif"
+               label="Unload Profile Application"
+               style="push"
+               tooltip="Unload Profile Application">
+         </command>
+         <separator
+               name="org.modelversioning.emfprofile.application.registry.ui.separator2"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.profileapplicationonelement"
+               icon="icons/elements_obj.gif"
+               label="Profile Applications on selected Element"
+               style="toggle"
+               tooltip="Show profile applications on selected element.">
+         </command>
+         <command
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.stickyselection"
+               icon="icons/pin_view.gif"
+               label="Pin to Selection"
+               style="toggle"
+               tooltip="Pin to selection">
+         </command>
+         <separator
+               name="org.modelversioning.emfprofile.application.registry.ui.separator3"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.saveprofileapplication"
+               icon="icons/save_edit.gif"
+               label="Save Profile Application"
+               style="push"
+               tooltip="Save Profile Application">
+         </command>
+         <command
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.saveallprofileapplications"
+               icon="icons/saveall_edit.gif"
+               label="Save All Profile Applications"
+               style="push"
+               tooltip="Save All Profile Applications">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.ApplayProfileHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.applayprofile">
+      </handler>
+      <handler
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.LoadProfileApplicationHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.loadprofileapplication">
+      </handler>
+      <handler
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.UnloadProfileApplicationHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.unloadprofileapplication">
+      </handler>
+      <handler
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.ProfileApplicationsOnSelectedElementHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.profileapplicationonelement">
+      </handler>
+      <handler
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.PinToSelectionHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.stickyselection">
+      </handler>
+      <handler
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.SaveProfileApplicationHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.saveprofileapplication">
+      </handler>
+      <handler
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.SaveAllProfileApplicationsHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.saveallprofileapplications">
+      </handler>
    </extension>
 
 </plugin>

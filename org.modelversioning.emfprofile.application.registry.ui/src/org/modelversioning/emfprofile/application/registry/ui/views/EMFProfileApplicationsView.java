@@ -193,11 +193,11 @@ public class EMFProfileApplicationsView extends ViewPart {
 		viewer.setInput(getViewSite());
 
 		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.modelversioning.emfprofile.application.registry.ui.viewer");
-		makeActions();
-		hookContextMenu();
-		hookDoubleClickAction();
-		contributeToActionBars();
+//		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.modelversioning.emfprofile.application.registry.ui.viewer");
+//		makeActions();
+//		hookContextMenu();
+//		hookDoubleClickAction();
+//		contributeToActionBars();
 	}
 
 	private void hookContextMenu() {
