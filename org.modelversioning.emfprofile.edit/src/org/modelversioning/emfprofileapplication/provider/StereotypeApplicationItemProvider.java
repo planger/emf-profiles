@@ -25,10 +25,8 @@ import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
- * This is the item provider adapter for a
- * {@link org.modelversioning.emfprofileapplication.StereotypeApplication}
- * object. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ * This is the item provider adapter for a {@link org.modelversioning.emfprofileapplication.StereotypeApplication} object.
+ * <!-- begin-user-doc --> <!-- end-user-doc -->
  * @generated
  */
 public class StereotypeApplicationItemProvider extends ItemProviderAdapter
@@ -68,17 +66,19 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 	 * @generated
 	 */
 	protected void addAppliedToPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(
-						((ComposeableAdapterFactory) adapterFactory)
-								.getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_StereotypeApplication_appliedTo_feature"),
-						getString("_UI_PropertyDescriptor_description",
-								"_UI_StereotypeApplication_appliedTo_feature",
-								"_UI_StereotypeApplication_type"),
-						EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICATION__APPLIED_TO,
-						true, false, true, null, null, null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_StereotypeApplication_appliedTo_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_StereotypeApplication_appliedTo_feature", "_UI_StereotypeApplication_type"),
+				 EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICATION__APPLIED_TO,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -88,17 +88,19 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 	 * @generated
 	 */
 	protected void addExtensionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(
-						((ComposeableAdapterFactory) adapterFactory)
-								.getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_StereotypeApplication_extension_feature"),
-						getString("_UI_PropertyDescriptor_description",
-								"_UI_StereotypeApplication_extension_feature",
-								"_UI_StereotypeApplication_type"),
-						EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICATION__EXTENSION,
-						true, false, true, null, null, null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_StereotypeApplication_extension_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_StereotypeApplication_extension_feature", "_UI_StereotypeApplication_type"),
+				 EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICATION__EXTENSION,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -138,11 +140,10 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to
-	 * update any cached children and by creating a viewer notification, which
-	 * it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!--
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

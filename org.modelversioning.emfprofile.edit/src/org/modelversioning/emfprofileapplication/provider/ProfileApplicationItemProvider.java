@@ -79,7 +79,6 @@ public class ProfileApplicationItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(EMFProfileApplicationPackage.Literals.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS);
-			childrenFeatures.add(EMFProfileApplicationPackage.Literals.PROFILE_APPLICATION__IMPORTED_PROFILES);
 		}
 		return childrenFeatures;
 	}
@@ -131,8 +130,10 @@ public class ProfileApplicationItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(ProfileApplication.class)) {
-			case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
 			case EMFProfileApplicationPackage.PROFILE_APPLICATION__IMPORTED_PROFILES:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case EMFProfileApplicationPackage.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -154,11 +155,6 @@ public class ProfileApplicationItemProvider
 			(createChildParameter
 				(EMFProfileApplicationPackage.Literals.PROFILE_APPLICATION__STEREOTYPE_APPLICATIONS,
 				 EMFProfileApplicationFactory.eINSTANCE.createStereotypeApplication()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(EMFProfileApplicationPackage.Literals.PROFILE_APPLICATION__IMPORTED_PROFILES,
-				 EMFProfileApplicationFactory.eINSTANCE.createProfileImport()));
 	}
 
 	/**

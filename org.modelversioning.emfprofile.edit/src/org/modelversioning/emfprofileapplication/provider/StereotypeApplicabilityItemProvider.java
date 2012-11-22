@@ -25,10 +25,8 @@ import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 
 /**
- * This is the item provider adapter for a
- * {@link org.modelversioning.emfprofileapplication.StereotypeApplicability}
- * object. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ * This is the item provider adapter for a {@link org.modelversioning.emfprofileapplication.StereotypeApplicability} object.
+ * <!-- begin-user-doc --> <!-- end-user-doc -->
  * @generated
  */
 public class StereotypeApplicabilityItemProvider extends ItemProviderAdapter
@@ -68,18 +66,19 @@ public class StereotypeApplicabilityItemProvider extends ItemProviderAdapter
 	 * @generated
 	 */
 	protected void addStereotypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(
-						((ComposeableAdapterFactory) adapterFactory)
-								.getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_StereotypeApplicability_stereotype_feature"),
-						getString(
-								"_UI_PropertyDescriptor_description",
-								"_UI_StereotypeApplicability_stereotype_feature",
-								"_UI_StereotypeApplicability_type"),
-						EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICABILITY__STEREOTYPE,
-						true, false, true, null, null, null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_StereotypeApplicability_stereotype_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_StereotypeApplicability_stereotype_feature", "_UI_StereotypeApplicability_type"),
+				 EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICABILITY__STEREOTYPE,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -89,32 +88,30 @@ public class StereotypeApplicabilityItemProvider extends ItemProviderAdapter
 	 * @generated
 	 */
 	protected void addExtensionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(
-						((ComposeableAdapterFactory) adapterFactory)
-								.getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_StereotypeApplicability_extension_feature"),
-						getString(
-								"_UI_PropertyDescriptor_description",
-								"_UI_StereotypeApplicability_extension_feature",
-								"_UI_StereotypeApplicability_type"),
-						EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICABILITY__EXTENSION,
-						true, false, true, null, null, null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_StereotypeApplicability_extension_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_StereotypeApplicability_extension_feature", "_UI_StereotypeApplicability_type"),
+				 EMFProfileApplicationPackage.Literals.STEREOTYPE_APPLICABILITY__EXTENSION,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
-	 * This returns StereotypeApplicability.gif. <!-- begin-user-doc --> <!--
+	 * This returns StereotypeApplicability.gif.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(
-				object,
-				getResourceLocator().getImage(
-						"full/obj16/StereotypeApplicability"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/StereotypeApplicability"));
 	}
 
 	/**
@@ -142,11 +139,10 @@ public class StereotypeApplicabilityItemProvider extends ItemProviderAdapter
 	}
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to
-	 * update any cached children and by creating a viewer notification, which
-	 * it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!--
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
