@@ -31,6 +31,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
@@ -223,11 +224,13 @@ public class EMFProfileApplicationsView extends ViewPart {
 		});
 		Menu menu = menuManager.createContextMenu(viewer.getControl());
 		viewer.getControl().setMenu(menu);
+		
 		getSite().registerContextMenu(menuManager, viewer);
-		menuManager.add(new Separator());
-		drillDownAdapter.addNavigationActions(menuManager);
 		// Other plug-ins can contribute there actions here
-//		menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		drillDownAdapter.addNavigationActions(menuManager);
+		drillDownAdapter.addNavigationActions(getViewSite().getActionBars().getToolBarManager());
+		getViewSite().getActionBars().getToolBarManager().add(new Separator());
 	}
 
 	private void hookContextMenu() {

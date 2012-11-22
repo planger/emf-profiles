@@ -2,6 +2,7 @@ package org.modelversioning.emfprofile.application.registry.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.modelversioning.emfprofile.registry.IProfileRegistry;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -28,6 +29,8 @@ public class EMFProfileApplicationRegistryUIPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		// load the emf profile registry plugin
+		IProfileRegistry.eINSTANCE.getClass();
 	}
 
 	/*
