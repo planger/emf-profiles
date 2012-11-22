@@ -13,6 +13,7 @@
 package org.modelversioning.emfprofile.impl;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -730,6 +731,16 @@ public class ProfileFacadeImpl implements IProfileFacade {
 		Map<String, EObject> context = new HashMap<String, EObject>();
 		context.put("MODEL_OBJECT", currentlySelectedEObject);
 		return context;
+	}
+
+	@Override
+	public Resource getProfileApplicationResource() {
+		return profileApplicationResource;
+	}
+
+	@Override
+	public EList<ProfileApplication> getProfileApplications() {
+		return getProfileApplications(profileApplicationResource);
 	}
 
 }

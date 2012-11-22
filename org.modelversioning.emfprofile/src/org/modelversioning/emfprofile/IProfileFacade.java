@@ -13,6 +13,7 @@
 package org.modelversioning.emfprofile;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -366,4 +367,7 @@ public interface IProfileFacade {
 	 */
 	Diagnostic validateAll(EObject currentlySelectedEObject);
 
+	Resource getProfileApplicationResource();
+
+	EList<ProfileApplication> getProfileApplications();
 }
