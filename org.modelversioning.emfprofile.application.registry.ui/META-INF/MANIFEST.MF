@@ -6,6 +6,14 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.modelversioning.emfprofile.application.registry.ui.EMFProfileApplicationRegistryUIPlugin
 Bundle-Vendor: modelversioning.org
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources;bundle-version="3.8.0",
+ org.eclipse.ui.ide;bundle-version="3.8.0",
+ org.modelversioning.emfprofile;bundle-version="1.1.0",
+ org.modelversioning.emfprofile.edit;bundle-version="1.0.0",
+ org.eclipse.emf.edit.ui;bundle-version="2.8.0",
+ org.modelversioning.emfprofile.application.registry;bundle-version="1.0.0",
+ org.modelversioning.emfprofile.registry;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
+Export-Package: org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator

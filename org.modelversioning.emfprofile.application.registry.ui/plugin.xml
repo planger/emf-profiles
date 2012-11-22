@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator" name="EMF Profile Application Decorator" schema="schema/org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.exsd"/>
 
    <extension
          point="org.eclipse.ui.views">
@@ -181,9 +182,23 @@
       <handler
             class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.UnloadProfileApplicationHandler"
             commandId="org.modelversioning.emfprofile.application.registry.ui.commands.unloadprofileapplication">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator">
+                  </instanceof>
+               </iterate>
+               <count
+                     value="1">
+               </count>
+            </with></enabledWhen>
       </handler>
       <handler
-            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.ProfileApplicationsOnSelectedElementHandler"
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.ProfileApplicationsOfSelectedElementHandler"
             commandId="org.modelversioning.emfprofile.application.registry.ui.commands.profileapplicationonelement">
       </handler>
       <handler
@@ -193,11 +208,56 @@
       <handler
             class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.SaveProfileApplicationHandler"
             commandId="org.modelversioning.emfprofile.application.registry.ui.commands.saveprofileapplication">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator">
+                  </instanceof>
+               </iterate>
+               <count
+                     value="1">
+               </count>
+            </with>
+         </enabledWhen>
       </handler>
       <handler
             class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.SaveAllProfileApplicationsHandler"
             commandId="org.modelversioning.emfprofile.application.registry.ui.commands.saveallprofileapplications">
       </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="org.modelversioning.emfprofile.application.registry.ui.popupmenu"
+            objectClass="org.modelversioning.emfprofile.Profile">
+         <action
+               class="org.modelversioning.emfprofile.application.registry.ui.views.actions.SAmpleAction"
+               id="ActionForProfileObjectInMenu.action1"
+               label="ClickMe"
+               menubarPath="org.modelversioning.emfprofile.application.registry.ui.views.EMFProfileApplicationsView">
+         </action>
+         <menu
+               id="org.modelversioning.emfprofile.application.registry.ui.menu1"
+               label="Sub Menu"
+               path="org.modelversioning.emfprofile.application.registry.ui.views.EMFProfileApplicationsView">
+            <groupMarker
+                  name="org.modelversioning.emfprofile.application.registry.ui.groupMarker1">
+            </groupMarker>
+            <separator
+                  name="additions">
+            </separator>
+         </menu>
+         <action
+               class="org.modelversioning.emfprofile.application.registry.ui.views.actions.SAmpleAction"
+               id="ActionForProfileObjectInMenu.action2"
+               label="ClickMeInSubMenu"
+               menubarPath="org.modelversioning.emfprofile.application.registry.ui.menu1/org.modelversioning.emfprofile.application.registry.ui.groupMarker1">
+         </action>
+      </objectContribution>
    </extension>
 
 </plugin>

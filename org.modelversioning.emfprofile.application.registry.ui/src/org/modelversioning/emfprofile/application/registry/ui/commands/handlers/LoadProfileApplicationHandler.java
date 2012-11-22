@@ -12,7 +12,12 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.handler.EMFProfileApplicationDecoratorHandler;
+import org.modelversioning.emfprofile.application.registry.ui.wizards.LoadProfileApplicationWizard;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -26,9 +31,57 @@ public class LoadProfileApplicationHandler extends AbstractHandler implements
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		// TODO Auto-generated method stub
-		MessageDialog.openInformation(HandlerUtil.getActiveWorkbenchWindow(event).getShell(), "Info", "Load Profile Application!");
+		IEditorPart activeEditor = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getActiveEditor();
+		if(activeEditor == null){
+			MessageDialog.openError(HandlerUtil.getActiveWorkbenchWindow(event).getShell(), "No model resource is opened!", "Before you can load profile application you have to open a model resource in an editor.");
+		}else{
+			if(EMFProfileApplicationDecoratorHandler.getInstance().hasDecoratorForEditorPart(activeEditor)){
+				LoadProfileApplicationWizard wizard = new LoadProfileApplicationWizard();
+				wizard.setWorkbenchPart(activeEditor);
+				
+//				wizard.setSelection(realSelection);
+				wizard.setSelection(HandlerUtil.getCurrentSelection(event));
+				
+//				wizard.init(PlatformUI.getWorkbench(), (IStructuredSelection)HandlerUtil.getActivePart(event).getSite().getSelectionProvider().getSelection());
+				WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
+				wizardDialog.open();
+			}else{
+				MessageDialog.openError(HandlerUtil.getActiveWorkbenchWindow(event).getShell(), "Can not load a profile application!", 
+						"You can not load a profile application to the resource opened in current active editor:\n" + activeEditor.getTitle());
+			}
+		}
+
 		return null;
 	}
 
+	
+	// TODO Remove. This is the code from LoadProfileApplicationAction
+//	/**
+//	 * @see IActionDelegate#selectionChanged(IAction, ISelection)
+//	 */
+//	public void selectionChanged(IAction action, ISelection selection) {
+//		if (targetPart == null) {
+//			action.setEnabled(false);
+//			return;
+//		}
+//		realSelection = targetPart.getSite().getSelectionProvider()
+//				.getSelection();
+//		if (realSelection instanceof StructuredSelection) {
+//			StructuredSelection structuredSelection = (StructuredSelection) realSelection;
+//			Object selectedObject = structuredSelection.getFirstElement();
+//			if (selectedObject instanceof EObject) {
+//				action.setEnabled(true);
+//				return;
+//			} else if (selectedObject instanceof EditPart) {
+//				EditPart editPart = (EditPart) selectedObject;
+//				Object model = editPart.getModel();
+//				if (model instanceof Node) {
+//					action.setEnabled(true);
+//					return;
+//				}
+//			}
+//
+//		}
+//		action.setEnabled(false);
+//	}
 }
