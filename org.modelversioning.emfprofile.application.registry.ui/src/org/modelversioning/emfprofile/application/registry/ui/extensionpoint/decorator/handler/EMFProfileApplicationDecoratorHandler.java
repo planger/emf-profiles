@@ -15,18 +15,20 @@ import java.util.Map;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
-import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.ApplyStereotypeListener;
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.EMFProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
 
 /**
+ * This handler class looks in platforms extension registry for 
+ * {@link EMFProfileApplicationDecorator} extension points and
+ * manages a map of editor part id to decorators that can decorate
+ * the elements of that editor.
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
  * 
  */
-public class EMFProfileApplicationDecoratorHandler implements ApplyStereotypeListener{
+public class EMFProfileApplicationDecoratorHandler {
 	
 	private static EMFProfileApplicationDecoratorHandler INSTANCE;
 	
@@ -59,7 +61,7 @@ public class EMFProfileApplicationDecoratorHandler implements ApplyStereotypeLis
 					String[] supportedEditorIDs = null;
 					try {
 						supportedEditorIDs = decorator.canDecorateEditorParts();
-						decorator.setApplyStereotypeListener(this);
+						decorator.setPluginExtensionOperationsListener(ActiveEditorObserver.INSTANCE);
 						for (String id : supportedEditorIDs) {
 							if( ! decorators.containsKey(id)){
 								decorators.put(id, new ArrayList<EMFProfileApplicationDecorator>());
@@ -86,12 +88,6 @@ public class EMFProfileApplicationDecoratorHandler implements ApplyStereotypeLis
 		}
 		return false;
 	}
-
-	@Override
-	public void applyStereotype(EObject eObject) {
-		ActiveEditorObserver.INSTANCE.applyStereotype(eObject);
-	}
-
 
 //	public void execute(IExtensionRegistry registry) {
 //		evaluate(registry);

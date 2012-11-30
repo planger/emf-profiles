@@ -74,7 +74,7 @@ public class SelectProfileFilePage extends WizardPage {
 						| GridData.HORIZONTAL_ALIGN_FILL));
 
 		final ListViewer profileList = new ListViewer(container, SWT.H_SCROLL
-				| SWT.V_SCROLL | SWT.MULTI | SWT.BORDER);
+				| SWT.V_SCROLL | SWT.SINGLE | SWT.BORDER);
 		profileList.getList().setLayoutData(new GridData(GridData.FILL_BOTH));
 		profileList.setContentProvider(new ITreeContentProvider() {
 
@@ -162,7 +162,7 @@ public class SelectProfileFilePage extends WizardPage {
 
 	private void updatePageCompleteState() {
 		if (getSelectedProfiles().size() < 1) {
-			this.setErrorMessage("Select at least one profile to be applied.");
+			this.setErrorMessage("Select a profile to be applied.");
 			setPageComplete(false);
 		} else {
 			this.setErrorMessage(null);

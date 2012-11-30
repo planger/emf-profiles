@@ -11,8 +11,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.modelversioning.emfprofile.EMFProfilePackage;
+import org.modelversioning.emfprofile.provider.EMFProfileItemProviderAdapterFactory;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
-import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.provider.EMFProfileApplicationItemProviderAdapterFactory;
 
 public class ProfileProviderContentAdapter implements ITreeContentProvider {
@@ -20,7 +20,9 @@ public class ProfileProviderContentAdapter implements ITreeContentProvider {
 	private AdapterFactoryContentProvider provider;
 
 	public ProfileProviderContentAdapter() {
-		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory();
+		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory
+				.addAdapterFactory(new EMFProfileItemProviderAdapterFactory());
 		adapterFactory
 				.addAdapterFactory(new EMFProfileApplicationItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
@@ -57,24 +59,7 @@ public class ProfileProviderContentAdapter implements ITreeContentProvider {
 		if (parentElement instanceof Collection<?>) {
 			return ((Collection<?>) parentElement).toArray();
 		} 
-//		else if (parentElement instanceof IProfileProvider) {
-//			return ((IProfileProvider) parentElement).getProfile()
-//					.getStereotypes().toArray();
-//		}
-//		
-//		ArrayList<Object> result = new ArrayList<>();
-//		result.add(parentElement);
-//		
-//		return result.toArray(); 
-		if (parentElement instanceof ProfileApplication){
-//			return ((ProfileApplication)parentElement).getStereotypeApplications().toArray();
-//			return ((ProfileApplicationDecorator)parentElement).getStereotypeApplications().toArray();
-//			return getTreeContentProvider( ((ProfileApplicationDecorator)parentElement).getProfileApplication()).getChildren( ((ProfileApplicationDecorator)parentElement).getProfileApplication());
-		}
 		return getTreeContentProvider(parentElement).getChildren(parentElement);
-		
-//		return filter(getTreeContentProvider(parentElement).getChildren(
-//				parentElement));
 	}
 
 	private Object[] filter(Object[] contents) {

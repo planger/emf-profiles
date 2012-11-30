@@ -27,6 +27,7 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ui.EMFProfileApplicationRegistryUIPlugin;
+import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -55,13 +56,16 @@ public class SaveProfileApplicationHandler extends AbstractHandler implements
 							showError(
 									"Error while saving profile application resource",
 									e);
-						} 
+						}finally {
+							ActiveEditorObserver.INSTANCE.updateViewer(profileApplication);
+						}
 					}
 				};
 				try {
 					new ProgressMonitorDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()).run(true, false,
 							operation);
 				} catch (Exception e) {
+					e.printStackTrace();
 					showError("Error while saving profile application resource", e);
 				}
 			}else {

@@ -131,6 +131,7 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 	 * @param profiles
 	 *            the profiles to load.
 	 */
+	// DONE
 	public void addNewProfileApplication(IWorkbenchPart workbenchPart,
 			IFile profileApplicationFile, Collection<Profile> profiles) {
 		try {
@@ -169,6 +170,7 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 	 * @param profileApplicationFile
 	 *            to load.
 	 */
+	// DONE
 	public void loadProfileApplication(IWorkbenchPart workbenchPart,
 			IFile profileApplicationFile) {
 		try {
@@ -198,14 +200,15 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 			getLog().log(status);
 		}
 	}
-
+	// DONE
 	private IProfileFacade createNewProfileFacade(IWorkbenchPart workbenchPart,
 			IFile profileApplicationFile) throws IOException {
 		ResourceSet resourceSet = getResourceSet(workbenchPart);
 		Resource profileApplicationResource = createProfileApplicationResource(
 				profileApplicationFile, resourceSet);
 		IProfileFacade facade = new ProfileFacadeImpl();
-		facade.setProfileApplicationResource(profileApplicationResource);
+		//facade.setProfileApplicationResourceAndFile(profileApplicationResource);
+		facade.setProfileApplicationFileAndInitializeResource(profileApplicationFile, resourceSet);
 		return facade;
 	}
 
@@ -220,6 +223,7 @@ public class EMFProfileUIPlugin extends AbstractUIPlugin {
 	 * @throws IOException
 	 *             if location not writable.
 	 */
+	// DONE
 	private Resource createProfileApplicationResource(
 			IFile profileApplicationFile, ResourceSet resourceSet)
 			throws IOException {

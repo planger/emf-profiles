@@ -14,7 +14,6 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkingSet;
-import org.modelversioning.emfprofile.ui.EMFProfileUIPlugin;
 
 /**
  * Wizard for creating new EMF Profile projects.
@@ -53,7 +52,8 @@ public class ProfileProjectNewWizard extends Wizard implements INewWizard {
 			addToWorkingSets();
 			return true;
 		} catch (InvocationTargetException e) {
-			EMFProfileUIPlugin.logException(e);
+			System.err.println(e.getMessage());
+//			EMFProfileUIPlugin.logException(e);
 		} catch (InterruptedException e) {
 		}
 

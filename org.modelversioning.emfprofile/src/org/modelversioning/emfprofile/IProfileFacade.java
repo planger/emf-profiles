@@ -13,8 +13,8 @@
 package org.modelversioning.emfprofile;
 
 import java.io.IOException;
-import java.util.Collection;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationFactory;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
@@ -127,19 +128,15 @@ public interface IProfileFacade {
 	EList<Profile> getLoadedProfiles();
 
 	/**
-	 * Sets the {@link Resource} containing the profile application.
+	 * Sets the {@link IFile} containing the profile application and initializes
+	 * a resource.
 	 * 
-	 * <p>
-	 * The specified <code>resource</code> can be empty, if you want to create a
-	 * new profile application.
-	 * </p>
-	 * 
-	 * @param resource
-	 *            to set.
+	 * @param profileApplicationFile
+	 * 			  
 	 * @throws IOException
 	 *             if loading to resource fails.
 	 */
-	void setProfileApplicationResource(Resource resource) throws IOException;
+	void setProfileApplicationFileAndInitializeResource(IFile profileApplicationFile, ResourceSet resourceSet) throws IOException;
 
 	/**
 	 * Returns the list of applicable stereotype for the specified type in
@@ -168,7 +165,7 @@ public interface IProfileFacade {
 	 * <p>
 	 * This method creates a new instance of the specified {@link Stereotype}
 	 * and adds it to the currently set profile application resource (cf.
-	 * {@link #setProfileApplicationResource(Resource)}). If no resource is
+	 * {@link #setProfileApplicationResourceAndFile(Resource)}). If no resource is
 	 * currently set, this method throws an {@link IllegalStateException}.
 	 * </p>
 	 * 
@@ -187,7 +184,7 @@ public interface IProfileFacade {
 	 * <p>
 	 * This method creates a new instance of the specified {@link Stereotype}
 	 * and adds it to the currently set profile application resource (cf.
-	 * {@link #setProfileApplicationResource(Resource)}). If no resource is
+	 * {@link #setProfileApplicationResourceAndFile(Resource)}). If no resource is
 	 * currently set, this method throws an {@link IllegalStateException}.
 	 * </p>
 	 * 
@@ -369,5 +366,36 @@ public interface IProfileFacade {
 
 	Resource getProfileApplicationResource();
 
+	/**
+	 * When loading profile application resource, this method is used to get a reference to
+	 * {@link ProfileApplication} 
+	 * @return
+	 */
 	EList<ProfileApplication> getProfileApplications();
+
+	/**
+	 * Finds or creates a profile application for the specified
+	 * <code>profile</code>.
+	 * 
+	 * @param profile
+	 *            to find or create {@link ProfileApplication} for.
+	 * @return found or created {@link ProfileApplication}.
+	 * @param profile
+	 * @return
+	 */
+	ProfileApplication findOrCreateProfileApplication(Profile profile);
+
+	
+	/**
+	 * Sets the {@link Resource} containing the profile application.
+	 * 
+	 * @param resource
+	 * 				which contains a profile application
+	 * 			  
+	 * @throws IOException
+	 *             if loading to resource fails.
+	 * 
+	 * @throws IOException
+	 */
+	void setProfileApplicationResource(Resource resource) throws IOException;
 }

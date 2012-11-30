@@ -4,7 +4,7 @@
    <extension
          point="org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator">
       <decorator
-            class="org.modelversioning.emfprofile.application.decorator.gmf.Decorator">
+            class="org.modelversioning.emfprofile.application.decorator.gmf.EcoreDiagramEditorDecorator">
       </decorator>
    </extension>
    <extension

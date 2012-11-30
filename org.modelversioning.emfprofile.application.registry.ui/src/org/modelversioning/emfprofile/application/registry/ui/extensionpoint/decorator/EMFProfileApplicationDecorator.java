@@ -7,7 +7,6 @@
  */
 package org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator;
 
-import org.eclipse.emf.ecore.EObject;
 
 
 /**
@@ -23,9 +22,9 @@ public interface EMFProfileApplicationDecorator {
 	String[] canDecorateEditorParts();
 	
 	/**
-	 * Sets the listener that can be notified if a stereotype should be
-	 * applied on {@link EObject}
+	 * Sets the listener for extension plug-in which can execute operations on
+	 * extended plug-in.
 	 * @param listener or <code>null</code> to remove a listener.
 	 */
-	void setApplyStereotypeListener(ApplyStereotypeListener listener);
+	void setPluginExtensionOperationsListener(PluginExtensionOperationsListener listener);
 }

@@ -13,15 +13,16 @@
 package org.modelversioning.emfprofile.impl;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -29,10 +30,12 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
@@ -70,6 +73,10 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * Currently loaded profile application resource.
 	 */
 	private Resource profileApplicationResource;
+	/**
+	 * is used to notify workspace when a resource is changed.
+	 */
+	private IFile profileApplicationFile;
 
 	/**
 	 * {@inheritDoc}
@@ -109,7 +116,9 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			public IStatus runInWorkspace(IProgressMonitor monitor)
 					throws CoreException {
 				try {
-					profileApplicationResource.save(saveOptions);					
+					profileApplicationResource.save(saveOptions);	
+//					profileApplicationFile.touch(new NullProgressMonitor());
+					profileApplicationFile.refreshLocal(IFile.DEPTH_ONE, new NullProgressMonitor());
 				} catch (IOException e) {
 					return new Status(IStatus.ERROR, EMFProfilePlugin.ID,
 							e.getMessage(), e);
@@ -169,8 +178,44 @@ public class ProfileFacadeImpl implements IProfileFacade {
 
 	/**
 	 * {@inheritDoc}
+	 */
+	@Override
+	public void setProfileApplicationFileAndInitializeResource(
+			IFile profileApplicationFile, ResourceSet resourceSet) throws IOException {
+		setProfileApplicationResource(createProfileApplicationResource(profileApplicationFile, resourceSet));
+		this.profileApplicationFile = profileApplicationFile;
+		try {
+			profileApplicationFile.touch(null);
+		} catch (CoreException e) {
+		}
+	}
+
+	/**
+	 * Creates the profile application resource.
 	 * 
+	 * @param profileApplicationFile
+	 *            specifying the location.
+	 * @param resourceSet
+	 *            {@link ResourceSet} to use.
+	 * @return the created resource.
 	 * @throws IOException
+	 *             if location not writable.
+	 */
+	private Resource createProfileApplicationResource(
+			IFile profileApplicationFile, ResourceSet resourceSet)
+			throws IOException {
+		Resource profileApplicationResource = resourceSet
+				.createResource(URI.createFileURI(profileApplicationFile
+						.getLocation().toString()));
+		if (!profileApplicationFile.exists()) {
+			profileApplicationResource.save(Collections.emptyMap());
+		}
+		profileApplicationResource.load(Collections.emptyMap());
+		return profileApplicationResource;
+	}
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setProfileApplicationResource(Resource resource)
@@ -211,6 +256,7 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			this.profileApplicationResource.getResourceSet()
 					.getPackageRegistry().put(profile.getNsURI(), profile);
 		}
+		// TODO
 	}
 
 	/**
@@ -408,14 +454,10 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	}
 
 	/**
-	 * Finds or creates a profile application for the specified
-	 * <code>profile</code>.
-	 * 
-	 * @param profile
-	 *            to find or create {@link ProfileApplication} for.
-	 * @return found or created {@link ProfileApplication}.
+	 * {@inheritDoc}
 	 */
-	private ProfileApplication findOrCreateProfileApplication(
+	@Override
+	public ProfileApplication findOrCreateProfileApplication(
 			final Profile profile) {
 		boolean found = false;
 		ProfileApplication profileApplication = null;
@@ -540,7 +582,7 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * 
 	 * @exception IllegalArgumentException
 	 *                if {@link #profileApplicationResource} is not
-	 *                {@link #setProfileApplicationResource(Resource) set}.
+	 *                {@link #setProfileApplicationResourceAndFile(Resource) set}.
 	 */
 	protected void addToResource(final EObject eObject) {
 		if (profileApplicationResource == null

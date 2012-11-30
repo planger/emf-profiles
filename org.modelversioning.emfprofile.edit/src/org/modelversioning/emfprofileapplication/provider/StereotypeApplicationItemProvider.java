@@ -13,6 +13,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -21,6 +23,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.modelversioning.emfprofile.Extension;
+import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
@@ -125,15 +129,21 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 	public String getText(Object object) {
 		if (object instanceof StereotypeApplication) {
 			StereotypeApplication stereotypeApplication = (StereotypeApplication) object;
+			Stereotype stereotype = (stereotypeApplication).getStereotype();
+			EObject eObject = stereotypeApplication.getAppliedTo();
+			if(eObject instanceof ENamedElement){
+				ENamedElement namedElement = (ENamedElement) eObject;
+				return stereotype.getName() + " -> " + namedElement.getName();
+			}
 			return getString("_UI_Stereotype_Prefix")
-					+ stereotypeApplication.getStereotype().getName()
-					+ getString("_UI_Stereotype_Postfix")
-					+ " ("
-					+ stereotypeApplication.getExtension().getSource()
-							.getName()
-					+ " -> "
-					+ stereotypeApplication.getExtension().getTarget()
-							.getName() + ")";
+			+ stereotypeApplication.getStereotype().getName()
+			+ getString("_UI_Stereotype_Postfix")
+			+ " ("
+			+ stereotypeApplication.getExtension().getSource()
+					.getName()
+			+ " -> "
+			+ stereotypeApplication.getExtension().getTarget()
+					.getName() + ")";
 		} else {
 			return getString("_UI_StereotypeApplication_type");
 		}

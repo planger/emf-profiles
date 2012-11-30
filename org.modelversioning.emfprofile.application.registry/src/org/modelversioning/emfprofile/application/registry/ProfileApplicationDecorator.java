@@ -39,4 +39,6 @@ public interface ProfileApplicationDecorator extends ProfileApplication {
 //			Stereotype stereotype);
 //	EList<EObject> getAnnotatedObjects();
 	Resource getProfileApplicationResource();
+	void delete(EObject object);
+	String getFirstProfileName();
 }

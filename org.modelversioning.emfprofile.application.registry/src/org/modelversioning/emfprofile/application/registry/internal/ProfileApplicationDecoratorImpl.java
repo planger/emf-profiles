@@ -10,7 +10,6 @@ package org.modelversioning.emfprofile.application.registry.internal;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.core.resources.IFile;
@@ -21,7 +20,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -42,19 +40,23 @@ import org.modelversioning.emfprofileapplication.impl.ProfileApplicationImpl;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
- *
+ * 
  */
-public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl implements
-		ProfileApplicationDecorator {
-	
-	private ResourceSet resourceSet;
-	private IProfileFacade facade;
-	private ProfileApplication profileApplication;
-	private IFile profileApplicationFile;
+public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
+		implements ProfileApplicationDecorator {
+
+	private final ResourceSet resourceSet;
+	private final IProfileFacade facade;
+	private final ProfileApplication profileApplication;
+	private final IFile profileApplicationFile;
 	private boolean dirty = false;
-	
+	private final Collection<Profile> profiles;
+
 	/**
-	 * Creates new profile application which will be saved into file.
+	 * Creates new profiles application which will be saved into file. At the
+	 * current state of implementation there will be only one profiles
+	 * application file pro applied profiles.
+	 * 
 	 * @param profileApplicationFile
 	 * @param profiles
 	 * @param resourceSet
@@ -62,73 +64,68 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl impl
 	 * @throws IOException
 	 */
 	public ProfileApplicationDecoratorImpl(IFile profileApplicationFile,
-			Collection<Profile> profiles, ResourceSet resourceSet) throws CoreException, IOException {
+			Collection<Profile> profiles, ResourceSet resourceSet)
+			throws CoreException, IOException {
 		this.profileApplicationFile = profileApplicationFile;
-		this.resourceSet = resourceSet; 
-		this.facade = createAndInitializeProfileFacade(profileApplicationFile, profiles);
+		this.profiles = profiles;
+		this.resourceSet = resourceSet;
+		this.facade = createAndInitializeProfileFacade(profileApplicationFile,
+				profiles);
 		this.dirty = true;
-		if(!facade.getProfileApplications().isEmpty())
-			this.profileApplication = facade.getProfileApplications().get(0);
+		this.profileApplication = facade
+				.findOrCreateProfileApplication(profiles.iterator().next());
 	}
 
-
 	/**
-	 * Loads a profile application from file.
+	 * Loads a profiles application from file.
+	 * 
 	 * @param profileApplicationFile
 	 * @param resourceSet
 	 * @throws CoreException
 	 * @throws IOException
 	 */
 	public ProfileApplicationDecoratorImpl(IFile profileApplicationFile,
-			ResourceSet resourceSet) throws CoreException, IOException{
+			ResourceSet resourceSet) throws CoreException, IOException {
 		this.profileApplicationFile = profileApplicationFile;
 		this.resourceSet = resourceSet;
 		this.facade = loadProfileApplication(profileApplicationFile);
+		this.profiles = facade.getLoadedProfiles();
 		this.dirty = false;
-		if(!facade.getProfileApplications().isEmpty())
-			this.profileApplication = facade.getProfileApplications().get(0);
+		this.profileApplication = facade.getProfileApplications().get(0);
 	}
 
-	private ProfileApplication getProfileaApplication(){
-		if(this.profileApplication == null){
-			if(!facade.getProfileApplications().isEmpty()){
-				this.profileApplication = facade.getProfileApplications().get(0);
-				return this.profileApplication;
-			}
-			return this;
-		}
-		return this.profileApplication;
-	}
-	
 	@Override
 	public boolean isDirty() {
 		return this.dirty;
 	}
-	
+
 	public IFile getProfileApplicationFile() {
 		return profileApplicationFile;
 	}
-	
+
 	/**
-	 * Creates new profile application
+	 * Creates new profiles application
+	 * 
 	 * @param profileApplicationFile
 	 * @param profiles
 	 * @return
 	 * @throws CoreException
 	 * @throws IOException
 	 */
-	private IProfileFacade createAndInitializeProfileFacade(IFile profileApplicationFile, Collection<Profile> profiles) throws CoreException, IOException{
+	private IProfileFacade createAndInitializeProfileFacade(
+			IFile profileApplicationFile, Collection<Profile> profiles)
+			throws CoreException, IOException {
 
 		IProfileFacade facade = createNewProfileFacade(profileApplicationFile);
 		for (Profile profile : profiles) {
 			facade.loadProfile(profile);
 		}
-		profileApplicationFile.getParent().refreshLocal(1, new NullProgressMonitor());
+		profileApplicationFile.refreshLocal(IFile.DEPTH_ZERO, new NullProgressMonitor());
 		return facade;
 	}
-	
+
 	/**
-	 * Loads an existing profile application.
+	 * Loads an existing profiles application.
 	 * 
 	 * @param workbenchPart
 	 *            to use.
@@ -136,302 +133,223 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl impl
 	 *            to load.
 	 */
 	/**
-	 * Loads an existing profile application.
+	 * Loads an existing profiles application.
 	 * 
-	 * @param profileApplicationFile to load.
+	 * @param profileApplicationFile
+	 *            to load.
 	 * @return
 	 * @throws CoreException
 	 * @throws IOException
 	 */
-	private IProfileFacade loadProfileApplication(IFile profileApplicationFile) throws CoreException, IOException{
+	private IProfileFacade loadProfileApplication(IFile profileApplicationFile)
+			throws CoreException, IOException {
+//		profileApplicationFile.refreshLocal(IFile.DEPTH_ONE,
+//				new NullProgressMonitor());
 		IProfileFacade facade = createNewProfileFacade(profileApplicationFile);
-		profileApplicationFile.getParent().refreshLocal(1, new NullProgressMonitor());
+		
 		return facade;
 	}
-	
-	
-	
+
 	/**
 	 * Creates new instance of {@link IProfileFacade}
+	 * 
 	 * @param profileApplicationFile
 	 * @return
 	 * @throws IOException
 	 */
-	private IProfileFacade createNewProfileFacade(IFile profileApplicationFile) throws IOException {
-		Resource profileApplicationResource = createProfileApplicationResource(
-				profileApplicationFile, resourceSet);
+	private IProfileFacade createNewProfileFacade(IFile profileApplicationFile)
+			throws IOException {
 		IProfileFacade facade = new ProfileFacadeImpl();
-		facade.setProfileApplicationResource(profileApplicationResource);
+		facade.setProfileApplicationFileAndInitializeResource(profileApplicationFile, resourceSet);
 		return facade;
 	}
-	
-	/**
-	 * Creates the profile application resource.
-	 * 
-	 * @param profileApplicationFile
-	 *            specifying the location.
-	 * @param resourceSet
-	 *            {@link ResourceSet} to use.
-	 * @return the created resource.
-	 * @throws IOException
-	 *             if location not writable.
-	 */
-	private Resource createProfileApplicationResource(
-			IFile profileApplicationFile, ResourceSet resourceSet)
-			throws IOException {
-		Resource profileApplicationResource = resourceSet
-				.createResource(URI.createFileURI(profileApplicationFile
-						.getLocation().toString()));
-		if (!profileApplicationFile.exists()) {
-			profileApplicationResource.save(Collections.emptyMap());
-		}
-		profileApplicationResource.load(Collections.emptyMap());
-		return profileApplicationResource;
-	}
+
 
 
 	@Override
 	public String getName() {
-		String result = dirty ? "*": "" + "Profile Application - ";
+		String result = "";
 		Collection<Profile> profiles = facade.getLoadedProfiles();
 		Iterator<Profile> iter = profiles.iterator();
-		while(iter.hasNext()){
+		while (iter.hasNext()) {
 			result += iter.next().getName();
-			if(iter.hasNext())
+			if (iter.hasNext())
 				result += ", ";
 		}
-		return result + " - " + ResourcesPlugin.getWorkspace().getRoot().getFile(profileApplicationFile.getLocation()).getProjectRelativePath().toString();
+		return result
+				+ " - "
+				+ profileApplicationFile.getLocation().
+				makeRelativeTo(ResourcesPlugin.getWorkspace().getRoot().getLocation()).toString();
 	}
+	
+	@Override
+	public String getFirstProfileName() {
+		return profiles.iterator().next().getName();
+	}
+
 
 	public void unload() {
 		facade.unloadProfile(null);
 		facade.unload();
 	}
 
-
 	@Override
 	public void save() throws IOException, CoreException {
 		facade.save();
 		dirty = false;
-		profileApplicationFile.getParent().refreshLocal(1, new NullProgressMonitor());
 	}
-
 
 	@Override
 	public Collection<? extends StereotypeApplicability> getApplicableStereotypes(
 			EObject eObject) {
-		
+
 		return facade.getApplicableStereotypes(eObject.eClass());
 	}
 
-
 	@Override
 	public StereotypeApplication apply(
-			StereotypeApplicability stereotypeApplicability, EObject eObject) {
-		try {
-			StereotypeApplication result = facade.apply(stereotypeApplicability, eObject);
-			dirty = true;
-			return result;
-		} catch (Exception e) {
-			System.out.println("Stereotype not applicable: " + stereotypeApplicability.getStereotype().getName() + ", facade : " + facade);
+		StereotypeApplicability stereotypeApplicability, EObject eObject) {
+		StereotypeApplication result = facade.apply(
+				stereotypeApplicability, eObject);
+		dirty = true;
+		return result;
+	}
+	
+	@Override
+	public void delete(EObject eObject) {
+		dirty = true;
+		if(eObject instanceof StereotypeApplication){
+			facade.removeStereotypeApplication((StereotypeApplication)eObject);
 		}
-		return null;
 	}
 
 	@Override
 	public EList<StereotypeApplication> getStereotypeApplications() {
-		if(profileApplication == null)
-			return super.getStereotypeApplications();
-		return getProfileaApplication().getStereotypeApplications();
+		return profileApplication.getStereotypeApplications();
 	}
 
 	@Override
 	public EList<ProfileImport> getImportedProfiles() {
-		if(profileApplication == null)
-			return super.getImportedProfiles();
-		return getProfileaApplication().getImportedProfiles();
+		return profileApplication.getImportedProfiles();
 	}
 
 	@Override
 	public EList<StereotypeApplication> getStereotypeApplications(
 			EObject eObject) {
-		if(profileApplication == null)
-			return super.getStereotypeApplications(eObject);
-		return getProfileaApplication().getStereotypeApplications(eObject);
+		return profileApplication.getStereotypeApplications(eObject);
 	}
 
 	@Override
 	public EList<StereotypeApplication> getStereotypeApplications(
 			EObject eObject, Stereotype stereotype) {
-		if(profileApplication == null)
-			return super.getStereotypeApplications(eObject, stereotype);
-		return getProfileaApplication().getStereotypeApplications(eObject, stereotype);
+		return profileApplication
+				.getStereotypeApplications(eObject, stereotype);
 	}
 
 	@Override
 	public EList<EObject> getAnnotatedObjects() {
-		if(profileApplication == null)
-			return super.getAnnotatedObjects();
-		return getProfileaApplication().getAnnotatedObjects();
+		return profileApplication.getAnnotatedObjects();
 	}
-
 
 	@Override
 	public Resource getProfileApplicationResource() {
 		return facade.getProfileApplicationResource();
 	}
 
-
 	@Override
 	public EClass eClass() {
-		if(profileApplication == null)
-			return super.eClass();
-		return getProfileaApplication().eClass();
+		return profileApplication.eClass();
 	}
-
 
 	@Override
 	public Resource eResource() {
-		if(profileApplication == null)
-			return super.eResource();
-		return getProfileaApplication().eResource();
+		return profileApplication.eResource();
 	}
-
 
 	@Override
 	public EObject eContainer() {
-		if(profileApplication == null)
-			return super.eContainer();
-		return getProfileaApplication().eContainer();
+		return profileApplication.eContainer();
 	}
-
 
 	@Override
 	public EStructuralFeature eContainingFeature() {
-		if(profileApplication == null)
-			return super.eContainingFeature();
-		return getProfileaApplication().eContainingFeature();
+		return profileApplication.eContainingFeature();
 	}
-
 
 	@Override
 	public EReference eContainmentFeature() {
-		if(profileApplication == null)
-			return super.eContainmentFeature();
-		return getProfileaApplication().eContainmentFeature();
+		return profileApplication.eContainmentFeature();
 	}
-
 
 	@Override
 	public EList<EObject> eContents() {
-		if(profileApplication == null)
-			return super.eContents();
-		return getProfileaApplication().eContents();
+		return profileApplication.eContents();
 	}
-
 
 	@Override
 	public TreeIterator<EObject> eAllContents() {
-		if(profileApplication == null)
-			return super.eAllContents();
-		return getProfileaApplication().eAllContents();
+		return profileApplication.eAllContents();
 	}
-
 
 	@Override
 	public boolean eIsProxy() {
-		if(profileApplication == null)
-			return super.eIsProxy();
-		return getProfileaApplication().eIsProxy();
+		return profileApplication.eIsProxy();
 	}
-
 
 	@Override
 	public EList<EObject> eCrossReferences() {
-		if(profileApplication == null)
-			return super.eCrossReferences();
-		return getProfileaApplication().eCrossReferences();
+		return profileApplication.eCrossReferences();
 	}
-
 
 	@Override
 	public Object eGet(EStructuralFeature feature) {
-		if(profileApplication == null)
-			return super.eGet(feature);
-		return getProfileaApplication().eGet(feature);
+		return profileApplication.eGet(feature);
 	}
-
 
 	@Override
 	public Object eGet(EStructuralFeature feature, boolean resolve) {
-		if(profileApplication == null)
-			return super.eGet(feature, resolve);
-		return getProfileaApplication().eGet(feature, resolve);
+		return profileApplication.eGet(feature, resolve);
 	}
-
 
 	@Override
 	public void eSet(EStructuralFeature feature, Object newValue) {
-		if(profileApplication == null)
-			super.eSet(feature, newValue);
-		getProfileaApplication().eSet(feature, newValue);
+		profileApplication.eSet(feature, newValue);
 	}
-
 
 	@Override
 	public boolean eIsSet(EStructuralFeature feature) {
-		if(profileApplication == null)
-			return super.eIsSet(feature);
-		return getProfileaApplication().eIsSet(feature);
+		return profileApplication.eIsSet(feature);
 	}
-
 
 	@Override
 	public void eUnset(EStructuralFeature feature) {
-		if(profileApplication == null)
-			super.eUnset(feature);
-		getProfileaApplication().eUnset(feature);
+		profileApplication.eUnset(feature);
 	}
-
 
 	@Override
 	public Object eInvoke(EOperation operation, EList<?> arguments)
 			throws InvocationTargetException {
-		if(profileApplication == null)
-			return super.eInvoke(operation, arguments);
-		return getProfileaApplication().eInvoke(operation, arguments);
+		return profileApplication.eInvoke(operation, arguments);
 	}
-
 
 	@Override
 	public EList<Adapter> eAdapters() {
-		if(profileApplication == null)
-			return super.eAdapters();
-		return getProfileaApplication().eAdapters();
+		return profileApplication.eAdapters();
 	}
-
 
 	@Override
 	public boolean eDeliver() {
-		if(profileApplication == null)
-			return super.eDeliver();
-		return getProfileaApplication().eDeliver();
+		return profileApplication.eDeliver();
 	}
-
 
 	@Override
 	public void eSetDeliver(boolean deliver) {
-		if(profileApplication == null)
-			super.eSetDeliver(deliver);
-		getProfileaApplication().eSetDeliver(deliver);
+		profileApplication.eSetDeliver(deliver);
 	}
-
 
 	@Override
 	public void eNotify(Notification notification) {
-		if(profileApplication == null)
-			super.eNotify(notification);
-		getProfileaApplication().eNotify(notification);
+		profileApplication.eNotify(notification);
 	}
 
 }

@@ -13,7 +13,20 @@ import org.eclipse.emf.ecore.EObject;
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
  *
  */
-public interface ApplyStereotypeListener {
+public interface PluginExtensionOperationsListener {
 	
+	/**
+	 * Executes the operation of applying stereotypes on 
+	 * given {@link EObject}
+	 * @param eObject
+	 */
 	void applyStereotype(EObject eObject);
+	
+	/**
+	 * Notifies the extended plug-in that the 
+	 * new selection on an instance of {@link EObject} 
+	 * was registered. 
+	 * @param eObject
+	 */
+	void eObjectSelected(EObject eObject);
 }

@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -20,7 +24,10 @@ import org.eclipse.jface.resource.DeviceResourceException;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -33,11 +40,15 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.contexts.IContextActivation;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileProviderContentAdapter;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileProviderLabelAdapter;
+import org.modelversioning.emfprofile.provider.EMFProfileItemProviderAdapterFactory;
+import org.modelversioning.emfprofileapplication.provider.EMFProfileApplicationItemProviderAdapterFactory;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -198,8 +209,10 @@ public class EMFProfileApplicationsView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		drillDownAdapter = new DrillDownAdapter(viewer);
-		viewer.setContentProvider(new ProfileProviderContentAdapter());
 		viewer.setLabelProvider(new ProfileProviderLabelAdapter());
+//		viewer.setLabelProvider(new AdapterFactoryLabelProvider(getAdapterFactory()));
+		viewer.setContentProvider(new ProfileProviderContentAdapter());
+		
 		viewer.setSorter(new ViewerSorter());
 		viewer.setAutoExpandLevel(2);
 		getSite().setSelectionProvider(viewer);
@@ -231,6 +244,23 @@ public class EMFProfileApplicationsView extends ViewPart {
 		drillDownAdapter.addNavigationActions(menuManager);
 		drillDownAdapter.addNavigationActions(getViewSite().getActionBars().getToolBarManager());
 		getViewSite().getActionBars().getToolBarManager().add(new Separator());
+		viewer.addDoubleClickListener(new IDoubleClickListener() {
+			
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				TreeViewer viewer = (TreeViewer) event.getViewer();
+			    IStructuredSelection thisSelection = (IStructuredSelection) event.getSelection(); 
+			    Object selectedNode = thisSelection.getFirstElement(); 
+			    viewer.setExpandedState(selectedNode,
+			        !viewer.getExpandedState(selectedNode));
+			}
+		});
+		// To enable key binding we need to activate context
+		// The reason why, is because this context overrides
+		// default key binding of workbench, e.g. key DEL
+		IContextService contextService = (IContextService) getSite()
+				  .getService(IContextService.class);
+				IContextActivation contextActivation = contextService.activateContext("org.modelversioning.emfprofile.application.registry.ui.keybindingcontext");
 	}
 
 	private void hookContextMenu() {
@@ -338,7 +368,7 @@ public class EMFProfileApplicationsView extends ViewPart {
 			if(EMFProfileApplicationsView.resourceManager != null)
 				return EMFProfileApplicationsView.resourceManager.createImage(imageDescriptor);
 		} catch (DeviceResourceException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return null;
 	}

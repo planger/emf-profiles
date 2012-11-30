@@ -17,7 +17,7 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.modelversioning.emfprofile.application.decorator.gmf.Decorator;
+import org.modelversioning.emfprofile.application.decorator.gmf.EcoreDiagramEditorDecorator;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -34,7 +34,7 @@ public class ApplyStereotypeHandler extends AbstractHandler implements
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if(Decorator.getApplyStereotypeListener() != null){
+		if(EcoreDiagramEditorDecorator.getApplyStereotypeListener() != null){
 			ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 			if(currentSelection != null && currentSelection instanceof IStructuredSelection){
 				IStructuredSelection structuredSelection = (IStructuredSelection) currentSelection;
@@ -45,7 +45,7 @@ public class ApplyStereotypeHandler extends AbstractHandler implements
 					EObject selectedEObject = node.getElement();
 					
 					System.out.println("Sending apply stereotype notification!");
-					Decorator.getApplyStereotypeListener().applyStereotype(selectedEObject);
+					EcoreDiagramEditorDecorator.getApplyStereotypeListener().applyStereotype(selectedEObject);
 				} else {
 					System.err.println("model from edit part is not an instance of Node!");
 				}	
