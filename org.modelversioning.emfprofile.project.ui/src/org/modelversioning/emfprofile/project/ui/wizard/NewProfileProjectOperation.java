@@ -38,11 +38,21 @@ public class NewProfileProjectOperation extends WorkspaceModifyOperation {
 	private ProfileProjectData projectData;
 	private IProject project;
 	private Resource profileDiagramResource;
+	private boolean openDiagram;
 
 	public NewProfileProjectOperation(ProfileProjectData projectData) {
 		super();
 		this.projectData = projectData;
 		this.project = projectData.getProjectHandle();
+		this.openDiagram = true;
+	}
+
+	public NewProfileProjectOperation(ProfileProjectData projectData,
+			boolean openDiagram) {
+		super();
+		this.projectData = projectData;
+		this.project = projectData.getProjectHandle();
+		this.openDiagram = openDiagram;
 	}
 
 	@Override
@@ -64,8 +74,10 @@ public class NewProfileProjectOperation extends WorkspaceModifyOperation {
 		configureBinBuildProperties();
 		monitor.worked(1);
 
-		monitor.subTask("Open profile");
-		openEMFProfileDiagram();
+		if (openDiagram) {
+			monitor.subTask("Open profile");
+			openEMFProfileDiagram();
+		}
 		monitor.worked(1);
 	}
 

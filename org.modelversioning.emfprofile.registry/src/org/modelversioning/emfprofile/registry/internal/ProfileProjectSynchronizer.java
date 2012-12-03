@@ -83,11 +83,8 @@ public class ProfileProjectSynchronizer implements IResourceChangeListener {
 	}
 
 	private URI createProfileURI(IFile profileDiagramFile) {
-		return URI.createURI("platform:/resource/" //$NON-NLS-1$
-				+ profileDiagramFile.getProject().getName()
-				+ "/" //$NON-NLS-1$
-				+ profileDiagramFile.getProjectRelativePath()
-						.toPortableString());
+		return URI.createPlatformResourceURI(profileDiagramFile.getFullPath()
+				.toString(), true);
 	}
 
 	public void startSynchronizing() {

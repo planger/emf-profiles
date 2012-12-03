@@ -28,12 +28,21 @@ public class ProjectProfileProvider implements IProfileProvider {
 		if (profileResource.getContents().size() < 0) {
 			throw new IllegalArgumentException("Resource is emtpy");
 		}
-		EObject eObject = profileResource.getContents().get(0);
-		if (eObject instanceof Profile) {
-			initialize((Profile) eObject);
+		Profile profile = obtainProfileFromResource();
+		if (profile != null) {
+			initialize(profile);
 		} else {
 			throw new IllegalArgumentException("Resource contains no profile");
 		}
+	}
+
+	private Profile obtainProfileFromResource() {
+		for (EObject eObject : profileResource.getContents()) {
+			if (eObject instanceof Profile) {
+				return (Profile) eObject;
+			}
+		}
+		return null;
 	}
 
 	private void initialize(Profile profile) {
