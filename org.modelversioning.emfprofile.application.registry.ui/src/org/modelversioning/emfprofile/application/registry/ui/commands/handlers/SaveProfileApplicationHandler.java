@@ -35,6 +35,9 @@ import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEdi
  */
 public class SaveProfileApplicationHandler extends AbstractHandler implements
 		IHandler {
+	
+	public static final String COMMAND_ID = "org.modelversioning.emfprofile.application.registry.ui.commands.saveprofileapplication";
+	
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
@@ -62,6 +65,8 @@ public class SaveProfileApplicationHandler extends AbstractHandler implements
 					}
 				};
 				try {
+//					new ProgressMonitorDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()).run(true, false,
+//							operation);
 					new ProgressMonitorDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()).run(true, false,
 							operation);
 				} catch (Exception e) {

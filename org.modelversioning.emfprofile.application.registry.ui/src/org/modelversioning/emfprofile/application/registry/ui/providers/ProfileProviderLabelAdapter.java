@@ -1,6 +1,5 @@
 package org.modelversioning.emfprofile.application.registry.ui.providers;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;

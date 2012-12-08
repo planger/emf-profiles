@@ -7,10 +7,12 @@
  */
 package org.modelversioning.emfprofile.application.registry.ui.observer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -20,10 +22,15 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -31,16 +38,19 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.services.ISourceProviderService;
+import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationRegistry;
 import org.modelversioning.emfprofile.application.registry.ui.EMFProfileApplicationRegistryUIPlugin;
 import org.modelversioning.emfprofile.application.registry.ui.commands.handlers.StereotypeApplicationsOnSelectedElementHandler;
 import org.modelversioning.emfprofile.application.registry.ui.commands.sourceprovider.ToolbarCommandEnabledState;
 import org.modelversioning.emfprofile.application.registry.ui.dialogs.ApplyStereotypeOnEObjectDialog;
+import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.EMFProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.PluginExtensionOperationsListener;
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.handler.EMFProfileApplicationDecoratorHandler;
 import org.modelversioning.emfprofile.application.registry.ui.views.filters.StereotypesOfEObjectViewerFilter;
 import org.modelversioning.emfprofileapplication.StereotypeApplicability;
+import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
  * It manages mapping of opened editors of interest to 
@@ -53,8 +63,9 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 	
 	public static ActiveEditorObserver INSTANCE = new ActiveEditorObserver();
 	
-	private Map<IWorkbenchPart, String> editorPartToModelIdMap = Collections.synchronizedMap(new HashMap<IWorkbenchPart, String>());
-	private IWorkbenchPart lastActiveEditorPart = null;
+	private Map<IWorkbenchPart, String> editorPartToModelIdMap = new HashMap<>();
+	private Map<IWorkbenchPart, ViewerState> editorPartToViewerStateMap = new HashMap<>();
+	
 	
 	private IWorkbenchPage activePage;
 	private EMFProfileApplicationDecoratorHandler decoratorHandler;
@@ -62,13 +73,15 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 	private ToolbarCommandEnabledState toolbarCommandEnabeldStateService;
 	private StereotypesOfEObjectViewerFilter viewerFilter = new StereotypesOfEObjectViewerFilter(null);
 	private boolean viewerFilterActivated = false;
+
+	private DecoratableEditorPartListener decoratableEditorPartListener;
 	
 	// hide default constructor
 	private ActiveEditorObserver(){
 	}
 	
 	public IWorkbenchPart getLastActiveEditorPart(){
-		return lastActiveEditorPart;
+		return decoratableEditorPartListener.getLastActiveEditPart();
 	}
 	
 	/**
@@ -80,13 +93,15 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 	 * @param viewer
 	 */
 	public void setViewer(TreeViewer viewer){
-		
+		// TODO remove comment
+		System.out.println("Setting TREE VIEWER");
 		decoratorHandler = EMFProfileApplicationDecoratorHandler.getInstance();
+		decoratorHandler.setPluginExtensionOperationsListener(ActiveEditorObserver.INSTANCE);
 		
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if(window == null)
 			throw new RuntimeException("could not locate workbench active window!");
-
+		
 		 // Get the source provider service
 	    ISourceProviderService sourceProviderService = (ISourceProviderService) window.getService(ISourceProviderService.class);
 	    // Now get the service for enabling/disenabling menu commands in viewer toolbar 
@@ -98,52 +113,78 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		
 		this.viewer = viewer;
 				
-		// getting the value of the view command for activating/deactivating view filter 
+		// getting the value of the viewer command for activating/deactivating viewer tree filter 
 	    ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
 	    Command cmd = commandService.getCommand(StereotypeApplicationsOnSelectedElementHandler.COMMAND_ID);
 	    setActivateViewFilter((Boolean)cmd.getState(RegistryToggleState.STATE_ID).getValue());
 	    
 //		When the plug-in starts, we should check if there is an active editor and if it can be decorated
 		IEditorPart editorPart = activePage.getActiveEditor();
+		IWorkbenchPart lastActiveEditorPart = null;
 		if(editorPart != null){
 			if(decoratorHandler.hasDecoratorForEditorPart(editorPart)){
 				// Create an id for workbench part and put it into map
 				editorPartToModelIdMap.put(editorPart, UUID.randomUUID().toString());
 				lastActiveEditorPart = editorPart;
-				// if there is editor of interest active, then enable commands of the view toolbar
-				if(lastActiveEditorPart == null)
-					toolbarCommandEnabeldStateService.setEnabled(false); 
-				else
-					toolbarCommandEnabeldStateService.setEnabled(true);
+				toolbarCommandEnabeldStateService.setEnabled(true);
 				// TODO remove
 				System.out.println("part opened at the start, size: "+editorPartToModelIdMap.size());
 			}
 		}
+		// listener that gets notified for workbench changes and registers editor parts of interest
+		decoratableEditorPartListener = new DecoratableEditorPartListener(decoratorHandler, editorPartToModelIdMap, lastActiveEditorPart, viewer, toolbarCommandEnabeldStateService, editorPartToViewerStateMap);
+		activePage.addPartListener(decoratableEditorPartListener);
 		
-		// listener that registers editors of interest
-		activePage.addPartListener(new DecoratableEditorPartListener(decoratorHandler, editorPartToModelIdMap, lastActiveEditorPart, viewer, toolbarCommandEnabeldStateService));
-
+		// when workbench is about to close, we have to perform clean-up for all 
+		// editors of interest and their profile applications
+		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
+			
+			@Override
+			public boolean preShutdown(IWorkbench workbench, boolean forced) {
+				cleanUp();
+				decoratableEditorPartListener.cleanUpForAllEditorParts();
+				return true;
+			}
+			
+			@Override
+			public void postShutdown(IWorkbench workbench) {
+				// nothing to do here
+			}
+		});
 	}
 	
+	/**
+	 * Complete refresh of the viewer tree if needed.
+	 */
 	public void refreshViewer() {
-		if(viewer.getInput().equals(Collections.emptyList())){
-			// TODO remove comment
-			System.out.println("VIEWER INPUT WAS EMPTY");
-			viewer.setInput(ProfileApplicationRegistry.INSTANCE.getProfileApplications(editorPartToModelIdMap.get(lastActiveEditorPart)));
-		}else{
-			// TODO remove comment
-			System.out.println("VIEWER REFRESHES INPUT");
-			viewer.refresh();
-		}
-		viewer.expandToLevel(2);
+		if(viewer == null || viewer.getTree().isDisposed()) // viewer was disposed
+			return;
+		viewer.getTree().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if(viewer.getInput().equals(Collections.emptyList())){
+					// TODO remove comment
+					System.out.println("VIEWER INPUT WAS EMPTY");
+					viewer.setInput(ProfileApplicationRegistry.INSTANCE.getProfileApplications(editorPartToModelIdMap.get(decoratableEditorPartListener.getLastActiveEditPart())));
+				}else{
+					// TODO remove comment
+					System.out.println("VIEWER REFRESHES INPUT");
+					viewer.refresh();
+					viewer.expandToLevel(2);
+				}
+				
+			}
+		});
 	}
 	
 	/**
 	 * Collection can be provided as parameter.
 	 * Refresh will be executed asynchronously for whole group of collection items in one runnable.
-	 * @param object
+	 * @param object an viewer tree element or a collection of them.
 	 */
 	public void refreshViewer(final Object object){
+		if(viewer == null || viewer.getTree().isDisposed())
+			return;
 		viewer.getTree().getDisplay().asyncExec(new Runnable() {
 			
 			@Override
@@ -162,17 +203,19 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 	}
 	
 	/**
-	 * Updates the element of the viewer in a new UI thread.
-	 * @param element
+	 * Updates the element of the viewer.
+	 * @param element of the tree in question.
 	 */
 	public void updateViewer(final Object element){
+		if(viewer == null || viewer.getTree().isDisposed())
+			return;
 		viewer.getTree().getDisplay().asyncExec(new Runnable() {
+			
 			@Override
 			public void run() {
 				viewer.update(element, null);
 			}
 		});
-		
 	}
 	
 	public String getModelIdForWorkbenchPart(IWorkbenchPart part) {
@@ -187,7 +230,7 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		Assert.isNotNull(eObject);
 		// we are looking in all loaded profiles if there are any stereotypes applicable on eObject 
 		final Map<ProfileApplicationDecorator, Collection<StereotypeApplicability>> profileToStereotypeApplicabilityForEObjectMap = new HashMap<>();
-		for (ProfileApplicationDecorator profileApplication : ProfileApplicationRegistry.INSTANCE.getProfileApplications(editorPartToModelIdMap.get(lastActiveEditorPart))) {
+		for (ProfileApplicationDecorator profileApplication : ProfileApplicationRegistry.INSTANCE.getProfileApplications(editorPartToModelIdMap.get(decoratableEditorPartListener.getLastActiveEditPart()))) {
 			// TODO REmove comment
 			System.out.println("Loaded Profile: "+profileApplication.getFirstProfileName() + ", applicable stereotypes count: " + profileApplication.getImportedProfiles().get(0).getProfile().getStereotypes());
 			profileToStereotypeApplicabilityForEObjectMap.put(profileApplication, (Collection<StereotypeApplicability>) profileApplication.getApplicableStereotypes(eObject));
@@ -200,8 +243,8 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 			}
 		}
 		if (mayApplyStereotype) {
-			ApplyStereotypeOnEObjectDialog helper = new ApplyStereotypeOnEObjectDialog(profileToStereotypeApplicabilityForEObjectMap);
-			helper.openApplyStereotypeDialog(eObject);
+			ApplyStereotypeOnEObjectDialog applySteretypeDialog = new ApplyStereotypeOnEObjectDialog(profileToStereotypeApplicabilityForEObjectMap);
+			applySteretypeDialog.openApplyStereotypeDialog(eObject);
 		} else {
 			MessageDialog.openInformation(viewer.getControl().getShell(), "Info", "Can not apply any stereotype to EObject with name: " + ((ENamedElement)eObject).getName() );
 		}
@@ -225,6 +268,10 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		}
 	}
 	
+	/**
+	 * Called by {@link StereotypeApplicationsOnSelectedElementHandler}
+	 * @param activateFilter <code>true</code> or <code>false</code>
+	 */
 	public void setActivateViewFilter(boolean activateFilter) {
 		this.viewerFilterActivated = activateFilter;
 		if(activateFilter)
@@ -242,10 +289,101 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 	
 
 	private void showError(String message, Throwable throwable) {
-		ErrorDialog.openError(viewer.getControl().getShell(), "Error Occured",
+		ErrorDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error Occured",
 				message, new Status(IStatus.ERROR,
 						EMFProfileApplicationRegistryUIPlugin.PLUGIN_ID, throwable.getMessage(),
 						throwable));
 	}
+
+
+	/**
+	 * It calls the {@link #refreshDecoration(EObject)} for each {@link EObject}. </br>
+	 * <b>Note:</b> This method can be used to refresh decorations when loading or unloading
+	 * profile applications.
+	 * @param eObjects collection of {@link EObject}s for which decorations must be refreshed.
+	 */
+	public void refreshDecorations(Collection<EObject> eObjects) {
+		for (EObject eObject : eObjects) {
+			refreshDecoration(eObject);
+		}
+	}
+
+
+	
+	/**
+	 * The method collects all stereotypes applied to <code>eObject</code>
+	 * from profile applications that can be found for this model in {@link ProfileApplicationRegistry}
+	 * and then informs active editor decorator to decorate the eObject. 
+	 * @param eObject
+	 * 			that has stereotype applications
+	 */
+	public void refreshDecoration(final EObject eObject) {
+		
+		final EMFProfileApplicationDecorator decorator;
+		if(decoratableEditorPartListener.getCleaningUpForEditorPart() != null){
+			// if editor is disposed then there is no need to refresh decorations
+			if(decoratableEditorPartListener.isCleaningUpForClosedEditorPart()){
+				return;
+			}
+			decorator = decoratorHandler.getDecoratorForEditorPart(decoratableEditorPartListener.getCleaningUpForEditorPart());
+		}else {
+			decorator = decoratorHandler.getDecoratorForEditorPart(decoratableEditorPartListener.getLastActiveEditPart());			
+		}
+		final List<Image> images = new ArrayList<>();
+		final List<String> toolTipTexts = new ArrayList<>();
+		for (ProfileApplicationDecorator profileApplication : ProfileApplicationRegistry.INSTANCE.getProfileApplications(getModelIdForWorkbenchPart(decoratableEditorPartListener.getLastActiveEditPart()))) {
+			Collection<StereotypeApplication> stereotypeApplications = profileApplication.getStereotypeApplications(eObject);
+			for (StereotypeApplication stereotypeApplication : stereotypeApplications) {
+				images.add(((ILabelProvider)viewer.getLabelProvider()).getImage(stereotypeApplication));
+				toolTipTexts.add(getStereotypeLabel(stereotypeApplication));
+			}
+		}
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				try {
+					TransactionUtil.getEditingDomain(eObject.eResource())
+							.runExclusive(new Runnable() {
+								public void run() {
+									decorator.decorate(eObject, images, toolTipTexts);
+								}
+							});
+				} catch (Exception e) {
+					e.printStackTrace();
+					showError("Calling decorate method on decorator for editor id: " + decoratableEditorPartListener.getLastActiveEditPart().getSite().getId() 
+							+ " throw an exception:", e);
+				}
+			}
+		});
+	}
+
+	/**
+	 * Returns the tool tip text for the supplied
+	 * <code>stereotypeApplication</code>.
+	 * 
+	 * @param stereotypeApplication
+	 *            to get tool tip text for.
+	 * @return the tool tip text.
+	 */
+	private String getStereotypeLabel(StereotypeApplication stereotypeApplication) {
+		if (stereotypeApplication.eClass() instanceof Stereotype) {
+			return "<<" + ((Stereotype) stereotypeApplication.eClass()).getName() + ">>"; //$NON-NLS-1$ $NON-NLS-2$
+		}
+		return "Stereotype application"; //$NON-NLS-1$
+	}
+
+	/**
+	 * The cleanup is executed if the profile application view in workbench is closing,
+	 * but not the Workbench.
+	 * If the workbench is closing, then the clean-up will be executed in {@link IWorkbenchListener#preShutdown(IWorkbench, boolean)}
+	 * which calls clean-up for all profile applications in {@link DecoratableEditorPartListener#cleanUpForAllEditorParts()}.
+	 */
+	public void cleanUp() {
+		decoratorHandler.unsetPluginExtensionOperationsListener();
+		activePage.removePartListener(decoratableEditorPartListener);
+		if(PlatformUI.getWorkbench().isClosing() == false){
+			decoratableEditorPartListener.cleanUpForAllEditorParts();
+		}
+	}
+
 
 }

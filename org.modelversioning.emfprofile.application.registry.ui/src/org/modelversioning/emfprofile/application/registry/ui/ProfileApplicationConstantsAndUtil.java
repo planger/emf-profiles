@@ -15,9 +15,9 @@ import org.eclipse.ui.IWorkbenchPart;
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
  *
  */
-public final class ProfileApplicationConstsAndUtil {
+public final class ProfileApplicationConstantsAndUtil {
 	// hides default constructor
-	private ProfileApplicationConstsAndUtil() {	}
+	private ProfileApplicationConstantsAndUtil() {	}
 
 	public static final String EMF_PROFILE_APPLICATION_FILE_EXTENSION = "pa.xmi";
 	
@@ -39,4 +39,5 @@ public final class ProfileApplicationConstsAndUtil {
 			return null;
 		}
 	}
+
 }

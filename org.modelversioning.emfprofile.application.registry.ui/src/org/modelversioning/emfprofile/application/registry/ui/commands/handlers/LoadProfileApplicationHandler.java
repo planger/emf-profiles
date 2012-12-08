@@ -39,8 +39,7 @@ public class LoadProfileApplicationHandler extends AbstractHandler implements
 				LoadProfileApplicationWizard wizard = new LoadProfileApplicationWizard();
 				wizard.setWorkbenchPart(activeEditor);
 				
-//				wizard.setSelection(realSelection);
-				wizard.setSelection(HandlerUtil.getCurrentSelection(event));
+//				wizard.setSelection(HandlerUtil.getCurrentSelection(event));
 				
 //				wizard.init(PlatformUI.getWorkbench(), (IStructuredSelection)HandlerUtil.getActivePart(event).getSite().getSelectionProvider().getSelection());
 				WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
@@ -53,35 +52,4 @@ public class LoadProfileApplicationHandler extends AbstractHandler implements
 
 		return null;
 	}
-
-	
-	// TODO Remove. This is the code from LoadProfileApplicationAction
-//	/**
-//	 * @see IActionDelegate#selectionChanged(IAction, ISelection)
-//	 */
-//	public void selectionChanged(IAction action, ISelection selection) {
-//		if (targetPart == null) {
-//			action.setEnabled(false);
-//			return;
-//		}
-//		realSelection = targetPart.getSite().getSelectionProvider()
-//				.getSelection();
-//		if (realSelection instanceof StructuredSelection) {
-//			StructuredSelection structuredSelection = (StructuredSelection) realSelection;
-//			Object selectedObject = structuredSelection.getFirstElement();
-//			if (selectedObject instanceof EObject) {
-//				action.setEnabled(true);
-//				return;
-//			} else if (selectedObject instanceof EditPart) {
-//				EditPart editPart = (EditPart) selectedObject;
-//				Object model = editPart.getModel();
-//				if (model instanceof Node) {
-//					action.setEnabled(true);
-//					return;
-//				}
-//			}
-//
-//		}
-//		action.setEnabled(false);
-//	}
 }

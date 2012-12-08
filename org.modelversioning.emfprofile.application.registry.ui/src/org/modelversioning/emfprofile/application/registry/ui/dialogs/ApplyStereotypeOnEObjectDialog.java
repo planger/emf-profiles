@@ -52,7 +52,7 @@ public class ApplyStereotypeOnEObjectDialog {
 	/**
 	 * Opens this dialog, in which the stereotypes that can be applied
 	 * on the given {@link EObject} can be selected.
-	 * @param eObject
+	 * @param eObject in question.
 	 */
 	public void openApplyStereotypeDialog(EObject eObject) {
 		Collection<TreeParent> parents = new ArrayList<>();
@@ -71,7 +71,7 @@ public class ApplyStereotypeOnEObjectDialog {
 		dialog.setMessage("Select one or more Stereotypes to apply");
 		
 		dialog.setInput(parents);
-		dialog.setDoubleClickSelects(false);
+		dialog.setDoubleClickSelects(true);
 		dialog.setValidator(new ISelectionStatusValidator() {
 			
 			@Override
@@ -87,11 +87,11 @@ public class ApplyStereotypeOnEObjectDialog {
 		});
 		int result = dialog.open();
 		if (Dialog.OK == result) {
-			Object[] objects = dialog.getResult();
+			Object[] treeObjects = dialog.getResult();
 			StringBuilder strBuilder = new StringBuilder();
 			boolean hasNotApplicableStereotypes = false;
 			Collection<ProfileApplicationDecorator> profileApplicationDecoratorToBeRefreshedInView = new ArrayList<>();
-			for (Object object : objects) {
+			for (Object object : treeObjects) {
 				if(!(object instanceof TreeParent)){
 					TreeObject child = (TreeObject) object;
 					StereotypeApplicability stereotypeApplicability = ((StereotypeApplicability)child.getElement());
@@ -100,7 +100,7 @@ public class ApplyStereotypeOnEObjectDialog {
 					System.out.println("Appling stereotype: " + stereotypeApplicability.getStereotype().getName() 
 							+ ", from profile: " + profileApplicationDecorator.getName());
 					try {
-						profileApplicationDecorator.apply(stereotypeApplicability, eObject);
+						profileApplicationDecorator.applyStereotype(stereotypeApplicability, eObject);
 						profileApplicationDecoratorToBeRefreshedInView.add(profileApplicationDecorator);
 					} catch (IllegalArgumentException e) {
 						hasNotApplicableStereotypes = true;
@@ -110,6 +110,7 @@ public class ApplyStereotypeOnEObjectDialog {
 			}
 			if( ! profileApplicationDecoratorToBeRefreshedInView.isEmpty()){
 				ActiveEditorObserver.INSTANCE.refreshViewer(profileApplicationDecoratorToBeRefreshedInView);
+				ActiveEditorObserver.INSTANCE.refreshDecoration(eObject);
 			}
 			if(hasNotApplicableStereotypes){
 				strBuilder.insert(0, "Not applicable stereotype(s)  to object: "+ (((ENamedElement)eObject == null) ? "" : ((ENamedElement)eObject).getName())+"\n");

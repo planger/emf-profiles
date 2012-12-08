@@ -26,7 +26,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
-import org.modelversioning.emfprofile.application.registry.ui.ProfileApplicationConstsAndUtil;
+import org.modelversioning.emfprofile.application.registry.ui.ProfileApplicationConstantsAndUtil;
 
 /**
  * {@link WizardPage} for selecting the profile application file.
@@ -86,7 +86,7 @@ public class SelectProfileApplicationFilePage extends WizardPage {
 					.getWorkspace().getRoot().getLocationURI()));
 		}
 		((FileFieldEditor) fileFieldEditor)
-				.setFileExtensions(new String[] { "*." + ProfileApplicationConstsAndUtil.EMF_PROFILE_APPLICATION_FILE_EXTENSION }); //$NON-NLS-1$
+				.setFileExtensions(new String[] { "*." + ProfileApplicationConstantsAndUtil.EMF_PROFILE_APPLICATION_FILE_EXTENSION }); //$NON-NLS-1$
 		fileFieldEditor.getTextControl(container).addModifyListener(
 				new ModifyListener() {
 					@Override

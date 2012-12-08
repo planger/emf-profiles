@@ -9,6 +9,8 @@ package org.modelversioning.emfprofile.application.registry.ui.commands.handlers
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -21,6 +23,7 @@ import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
+import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -45,20 +48,30 @@ public class RemoveStereotypeApplicationOrNestedClassHandler extends
 		if(selection != null && selection instanceof ITreeSelection){
 			ITreeSelection treeSelection = (ITreeSelection) selection;
 			Collection<ProfileApplicationDecorator> profileApplicationsToRefreshInView = new ArrayList<>();
+			Set<EObject> eObjectsToRefreshTheirDecorations = new HashSet<>();
 			for (TreePath path : treeSelection.getPaths()) {
 					EObject eObject = (EObject)path.getLastSegment();
 					if( ! (eObject instanceof ProfileApplicationDecorator)){
 						ProfileApplicationDecorator profileApplicationDecorator = findProfileApplicationDecorator(path);
 						if(profileApplicationDecorator == null)
 							throw new RuntimeException("Could not find a profile application element as parent of selected element: " + eObject.toString());
-						profileApplicationDecorator.delete(eObject);
-						profileApplicationsToRefreshInView.add(profileApplicationDecorator);
+						if(eObject instanceof StereotypeApplication){
+							StereotypeApplication stereotypeApplication = (StereotypeApplication) eObject;
+							profileApplicationDecorator.removeStereotypeApplication(stereotypeApplication);
+							eObjectsToRefreshTheirDecorations.add(stereotypeApplication.getAppliedTo());
+							profileApplicationsToRefreshInView.add(profileApplicationDecorator);
+						}
+						// TODO code for removing nested objects, not only Stereotypes
+						
 					}
 					// TODO Consider removing the resource of profile application with this handler
 				
 				
 			}
 			ActiveEditorObserver.INSTANCE.refreshViewer(profileApplicationsToRefreshInView);
+			for (EObject eObject : eObjectsToRefreshTheirDecorations) {
+				ActiveEditorObserver.INSTANCE.refreshDecoration(eObject);
+			}
 		}
 		return null;
 	}

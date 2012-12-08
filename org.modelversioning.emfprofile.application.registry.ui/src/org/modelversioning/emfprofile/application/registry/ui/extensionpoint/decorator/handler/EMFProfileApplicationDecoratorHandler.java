@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.EMFProfileApplicationDecorator;
-import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
+import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.PluginExtensionOperationsListener;
 
 /**
  * This handler class looks in platforms extension registry for 
@@ -61,7 +61,7 @@ public class EMFProfileApplicationDecoratorHandler {
 					String[] supportedEditorIDs = null;
 					try {
 						supportedEditorIDs = decorator.canDecorateEditorParts();
-						decorator.setPluginExtensionOperationsListener(ActiveEditorObserver.INSTANCE);
+//						decorator.setPluginExtensionOperationsListener(ActiveEditorObserver.INSTANCE);
 						for (String id : supportedEditorIDs) {
 							if( ! decorators.containsKey(id)){
 								decorators.put(id, new ArrayList<EMFProfileApplicationDecorator>());
@@ -87,6 +87,26 @@ public class EMFProfileApplicationDecoratorHandler {
 			return decorators.containsKey(part.getSite().getId());
 		}
 		return false;
+	}
+	
+	public EMFProfileApplicationDecorator getDecoratorForEditorPart(IWorkbenchPart part){
+		return decorators.get(part.getSite().getId()).iterator().next();
+	}
+	
+	public void setPluginExtensionOperationsListener(PluginExtensionOperationsListener listener){
+		for (Collection<EMFProfileApplicationDecorator> _decorators : decorators.values()) {
+			for (EMFProfileApplicationDecorator emfProfileApplicationDecorator : _decorators) {
+				emfProfileApplicationDecorator.setPluginExtensionOperationsListener(listener);
+			}
+		}
+	}
+	
+	public void unsetPluginExtensionOperationsListener(){
+		for (Collection<EMFProfileApplicationDecorator> _decorators : decorators.values()) {
+			for (EMFProfileApplicationDecorator emfProfileApplicationDecorator : _decorators) {
+				emfProfileApplicationDecorator.setPluginExtensionOperationsListener(null);
+			}
+		}
 	}
 
 //	public void execute(IExtensionRegistry registry) {

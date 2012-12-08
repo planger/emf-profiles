@@ -7,6 +7,12 @@
  */
 package org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator;
 
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.graphics.Image;
+import org.modelversioning.emfprofile.Stereotype;
+
 
 
 /**
@@ -27,4 +33,17 @@ public interface EMFProfileApplicationDecorator {
 	 * @param listener or <code>null</code> to remove a listener.
 	 */
 	void setPluginExtensionOperationsListener(PluginExtensionOperationsListener listener);
+	
+	/**
+	 * Decorating graphical representation of element holding {@link EObject}. 
+	 * Graphical element will be decorated with images and tool tip texts
+	 * that represent applied {@link Stereotype}s on this {@link EObject}. 
+	 * @param eObject
+	 * 		{@link EObject} in question.
+	 * @param images
+	 * 		Image representation of applied {@link Stereotype}s on {@link EOjbect}.
+	 * @param toolTipTexts
+	 * 		Names of {@link Stereotype}s applied on {@link EObject}.
+	 */
+	void decorate(EObject eObject, List<Image> images, List<String> toolTipTexts);
 }

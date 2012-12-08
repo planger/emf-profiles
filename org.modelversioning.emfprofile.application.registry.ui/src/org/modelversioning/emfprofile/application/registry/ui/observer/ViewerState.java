@@ -17,6 +17,10 @@ import org.eclipse.jface.viewers.TreeViewer;
 public final class ViewerState {
 	
 	private final Object input;
+	public final Object getInput() {
+		return input;
+	}
+
 	private final Object[] viewerExpandedElements;
 	private final ISelection selection;
 

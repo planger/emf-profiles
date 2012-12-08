@@ -13,22 +13,22 @@
 package org.modelversioning.emfprofile.application.registry.ui.wizards;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IWorkbenchPart;
+import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationRegistry;
 import org.modelversioning.emfprofile.application.registry.ui.EMFProfileApplicationRegistryUIPlugin;
-import org.modelversioning.emfprofile.application.registry.ui.ProfileApplicationConstsAndUtil;
+import org.modelversioning.emfprofile.application.registry.ui.ProfileApplicationConstantsAndUtil;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
+import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
 /**
  * Wizard for collecting necessary information to import a
@@ -44,7 +44,7 @@ public class LoadProfileApplicationWizard extends Wizard {
 
 	private IWorkbenchPart targetPart = null;
 	private SelectProfileApplicationFilePage profileAppFilePage = null;
-	private ISelection selection;
+//	private ISelection selection;
 
 	/**
 	 * The default constructor
@@ -55,29 +55,50 @@ public class LoadProfileApplicationWizard extends Wizard {
 	}
 
 	/**
-	 * Calls the {@link ProfileApplicationRegistry} to load the profile application.
+	 * Calls the {@link ProfileApplicationRegistry} to load the profile
+	 * application.
 	 */
 	@Override
 	public boolean performFinish() {
 		IFile profileApplicationFile = profileAppFilePage.getSelectedFile();
 		try {
-			String modelId = ActiveEditorObserver.INSTANCE.getModelIdForWorkbenchPart(targetPart);
-			if(modelId == null)
-				throw new RuntimeException("Could not find modelId for a part: " + targetPart);
-			boolean success = ProfileApplicationRegistry.INSTANCE.loadProfileApplicationForModel(modelId, profileApplicationFile, ProfileApplicationConstsAndUtil.getResourceSet(targetPart));
-			if(! success){
-				org.eclipse.jface.dialogs.MessageDialog.openInformation(targetPart.getSite().getShell(), "Profile Application already loaded", "Profile Application already loaded from file: " 
-						+ profileApplicationFile.getLocation().toString());
+			String modelId = ActiveEditorObserver.INSTANCE
+					.getModelIdForWorkbenchPart(targetPart);
+			if (modelId == null)
+				throw new RuntimeException(
+						"Could not find modelId for a part: " + targetPart);
+			ProfileApplicationDecorator profileApplication = ProfileApplicationRegistry.INSTANCE
+					.loadProfileApplicationForModel(modelId,
+							profileApplicationFile,
+							ProfileApplicationConstantsAndUtil
+									.getResourceSet(targetPart));
+			if (profileApplication == null) {
+				MessageDialog.openInformation(
+						targetPart.getSite().getShell(),
+						"Profile Application already loaded",
+						"Profile Application already loaded from file: "
+								+ profileApplicationFile.getLocation()
+										.toString());
 				return false;
 			}
 			ActiveEditorObserver.INSTANCE.refreshViewer();
+			EList<EObject> eObjects = new BasicEList<>();
+			for (StereotypeApplication stereotypeApplication : profileApplication.getStereotypeApplications()) {
+				eObjects.add(stereotypeApplication.getAppliedTo());
+			}
+			ActiveEditorObserver.INSTANCE.refreshDecorations(eObjects);
 		} catch (Exception e) {
-			IStatus status = new Status(IStatus.ERROR, EMFProfileApplicationRegistryUIPlugin.PLUGIN_ID,
+			IStatus status = new Status(IStatus.ERROR,
+					EMFProfileApplicationRegistryUIPlugin.PLUGIN_ID,
 					e.getMessage(), e);
-			ErrorDialog.openError(targetPart.getSite().getShell(),
-					"Error Loading Profile Application", e.getMessage(), status);
-			EMFProfileApplicationRegistryUIPlugin.getDefault().getLog().log(status);
-		}		
+			ErrorDialog
+					.openError(targetPart.getSite().getShell(),
+							"Error Loading Profile Application",
+							e.getMessage(), status);
+			EMFProfileApplicationRegistryUIPlugin.getDefault().getLog()
+					.log(status);
+			return false;
+		}
 		return true;
 	}
 
@@ -91,46 +112,8 @@ public class LoadProfileApplicationWizard extends Wizard {
 		profileAppFilePage = new SelectProfileApplicationFilePage(
 				PROFILE_APPLICATION_PAGE_NAME,
 				"Select Profile Application File", null);
-//		profileAppFilePage.setSelection(getNewSelection());
+		// profileAppFilePage.setSelection(getNewSelection());
 		super.addPage(profileAppFilePage);
-	}
-
-	/**
-	 * Sets the initial selection.
-	 * 
-	 * @param selection
-	 *            to set.
-	 */
-	private IStructuredSelection getNewSelection() {
-		if (selection instanceof IStructuredSelection) {
-			IStructuredSelection iStructuredSelection = (IStructuredSelection) selection;
-			if (iStructuredSelection.getFirstElement() != null
-					&& iStructuredSelection.getFirstElement() instanceof EObject) {
-				EObject eObject = (EObject) iStructuredSelection
-						.getFirstElement();
-				if (eObject.eResource() != null) {
-					IFile file = ResourcesPlugin
-							.getWorkspace()
-							.getRoot()
-							.getFile(
-									new Path(eObject.eResource().getURI()
-											.toPlatformString(true)));
-					return new StructuredSelection(file);
-				}
-			}
-			return (IStructuredSelection) selection;
-		}
-		return new StructuredSelection();
-	}
-
-	/**
-	 * Sets the initial selection.
-	 * 
-	 * @param selection
-	 *            to set.
-	 */
-	public void setSelection(ISelection selection) {
-		this.selection = selection;
 	}
 
 	/**

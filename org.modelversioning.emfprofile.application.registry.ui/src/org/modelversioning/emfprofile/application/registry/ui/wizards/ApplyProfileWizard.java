@@ -25,7 +25,7 @@ import org.eclipse.ui.wizards.newresource.BasicNewFileResourceWizard;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationRegistry;
 import org.modelversioning.emfprofile.application.registry.ui.EMFProfileApplicationRegistryUIPlugin;
-import org.modelversioning.emfprofile.application.registry.ui.ProfileApplicationConstsAndUtil;
+import org.modelversioning.emfprofile.application.registry.ui.ProfileApplicationConstantsAndUtil;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
 //import org.modelversioning.emfprofile.ui.EMFProfileUIPlugin;
 
@@ -70,7 +70,7 @@ public class ApplyProfileWizard extends BasicNewFileResourceWizard {
 			String modelId = ActiveEditorObserver.INSTANCE.getModelIdForWorkbenchPart(targetPart);
 			if(modelId == null)
 				throw new RuntimeException("Could not find modelId for a part: " + targetPart);
-			ProfileApplicationRegistry.INSTANCE.applyProfileToModel(modelId, profileApplicationFile, profileFilePage.getSelectedProfiles(), ProfileApplicationConstsAndUtil.getResourceSet(targetPart));
+			ProfileApplicationRegistry.INSTANCE.applyProfileToModel(modelId, profileApplicationFile, profileFilePage.getSelectedProfiles(), ProfileApplicationConstantsAndUtil.getResourceSet(targetPart));
 			ActiveEditorObserver.INSTANCE.refreshViewer();
 		} catch (Exception e) {
 			IStatus status = new Status(IStatus.ERROR, EMFProfileApplicationRegistryUIPlugin.PLUGIN_ID,
@@ -96,7 +96,7 @@ public class ApplyProfileWizard extends BasicNewFileResourceWizard {
 		profileAppFilePage
 				.setTitle("Select location and file name for the profile application file.");
 		profileAppFilePage
-				.setFileExtension(ProfileApplicationConstsAndUtil.EMF_PROFILE_APPLICATION_FILE_EXTENSION);
+				.setFileExtension(ProfileApplicationConstantsAndUtil.EMF_PROFILE_APPLICATION_FILE_EXTENSION);
 		profileAppFilePage.setFileName("application"); //$NON-NLS-1$
 		// add selectProfileFilePage
 		profileFilePage = new SelectProfileFilePage(SELECT_PROFILE_PAGE_NAME,
