@@ -4,7 +4,7 @@
    <extension
          point="org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator">
       <decorator
-            class="org.modelversioning.emfprofile.application.decorator.gmf.EcoreDiagramEditorDecorator">
+            class="org.modelversioning.emfprofile.application.decorator.gmf.EMFProfileApplicationDecoratorImpl">
       </decorator>
    </extension>
    <extension
@@ -32,7 +32,7 @@
       <handler
             class="org.modelversioning.emfprofile.application.decorator.gmf.commands.handlers.ApplyStereotypeHandler"
             commandId="org.modelversioning.emfprofile.application.decorator.gmf.commands.ApplyStereotype">
-         <activeWhen>
+         <enabledWhen>
             <with
                   variable="selection">
                <iterate
@@ -52,7 +52,7 @@
                      value="1">
                </count>
             </with>
-         </activeWhen>
+         </enabledWhen>
       </handler>
    </extension>
    <extension
@@ -64,6 +64,15 @@
             properties="selectionContainsModel"
             type="org.eclipse.gef.EditPart">
       </propertyTester>
+   </extension>
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
+      <decoratorProvider
+            class="org.modelversioning.emfprofile.application.decorator.gmf.decoration.provider.GMFProfileDecoratorProvider">
+         <Priority
+               name="High">
+         </Priority>
+      </decoratorProvider>
    </extension>
 
 </plugin>

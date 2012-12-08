@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: EMF Profile Applicaton Registry - GMF Decorator
 Bundle-SymbolicName: org.modelversioning.emfprofile.application.decorator.gmf;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.modelversioning.emfprofile.application.decorator.gmf.EMFProfileApplicationRegistryGMFDecoratorPlugin
+Bundle-Activator: org.modelversioning.emfprofile.application.decorator.gmf.EMFProfileApplicationGMFDecoratorPlugin
 Bundle-Vendor: modelversioning.org
 Require-Bundle: org.eclipse.core.runtime,
  org.modelversioning.emfprofile.application.registry.ui;bundle-version="1.0.0",

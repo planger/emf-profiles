@@ -14,10 +14,11 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.Node;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.modelversioning.emfprofile.application.decorator.gmf.EcoreDiagramEditorDecorator;
+import org.modelversioning.emfprofile.application.decorator.gmf.EMFProfileApplicationDecoratorImpl;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -34,7 +35,7 @@ public class ApplyStereotypeHandler extends AbstractHandler implements
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if(EcoreDiagramEditorDecorator.getApplyStereotypeListener() != null){
+		if(EMFProfileApplicationDecoratorImpl.getPluginExtensionOperationsListener() != null){
 			ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 			if(currentSelection != null && currentSelection instanceof IStructuredSelection){
 				IStructuredSelection structuredSelection = (IStructuredSelection) currentSelection;
@@ -44,14 +45,15 @@ public class ApplyStereotypeHandler extends AbstractHandler implements
 					Node node = (Node) model;
 					EObject selectedEObject = node.getElement();
 					
-					System.out.println("Sending apply stereotype notification!");
-					EcoreDiagramEditorDecorator.getApplyStereotypeListener().applyStereotype(selectedEObject);
+					EMFProfileApplicationDecoratorImpl.getPluginExtensionOperationsListener().applyStereotype(selectedEObject);
 				} else {
 					System.err.println("model from edit part is not an instance of Node!");
 				}	
 			}
 		}else {
-			System.err.println("There is no Apply Stereotype Listener registered");
+			MessageDialog.openError(HandlerUtil.getActiveShell(event), "Missing Component", 
+					"There is no Plugin Extension Operations Listener registered!");
+			System.err.println("There is no Plugin Extension Operations Listener registered!");
 		}
 		return null;
 	}

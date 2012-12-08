@@ -3,7 +3,7 @@ package org.modelversioning.emfprofile.application.decorator.gmf;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-public class EMFProfileApplicationRegistryGMFDecoratorPlugin implements BundleActivator {
+public class EMFProfileApplicationGMFDecoratorPlugin implements BundleActivator {
 
 	private static BundleContext context;
 
@@ -16,7 +16,7 @@ public class EMFProfileApplicationRegistryGMFDecoratorPlugin implements BundleAc
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		EMFProfileApplicationRegistryGMFDecoratorPlugin.context = bundleContext;
+		EMFProfileApplicationGMFDecoratorPlugin.context = bundleContext;
 	}
 
 	/*
@@ -24,7 +24,7 @@ public class EMFProfileApplicationRegistryGMFDecoratorPlugin implements BundleAc
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		EMFProfileApplicationRegistryGMFDecoratorPlugin.context = null;
+		EMFProfileApplicationGMFDecoratorPlugin.context = null;
 	}
 
 }

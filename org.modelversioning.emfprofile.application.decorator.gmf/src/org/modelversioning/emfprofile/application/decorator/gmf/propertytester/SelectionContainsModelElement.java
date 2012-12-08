@@ -10,6 +10,7 @@ package org.modelversioning.emfprofile.application.decorator.gmf.propertytester;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.Node;
+import org.modelversioning.emfprofile.application.decorator.gmf.EMFProfileApplicationDecoratorImpl;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -29,6 +30,8 @@ public class SelectionContainsModelElement extends PropertyTester {
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
+		if(EMFProfileApplicationDecoratorImpl.getPluginExtensionOperationsListener() == null)
+			return false;
 		if(receiver instanceof EditPart){
 			EditPart editPart = (EditPart) receiver;
 			Object model = editPart.getModel();
