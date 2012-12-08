@@ -29,8 +29,8 @@ public interface ProfileApplicationDecorator extends ProfileApplication {
 	void save() throws IOException, CoreException;
 	Collection<? extends StereotypeApplicability> getApplicableStereotypes(
 			EObject eObject);
-	StereotypeApplication apply(
-			StereotypeApplicability firstResult, EObject eObject);
+	StereotypeApplication applyStereotype(
+			StereotypeApplicability stereotypeApplicability, EObject eObject);
 //	ProfileApplication getProfileApplication();
 //	EList<StereotypeApplication> getStereotypeApplications();
 //	EList<ProfileImport> getImportedProfiles();
@@ -39,6 +39,6 @@ public interface ProfileApplicationDecorator extends ProfileApplication {
 //			Stereotype stereotype);
 //	EList<EObject> getAnnotatedObjects();
 	Resource getProfileApplicationResource();
-	void delete(EObject object);
+	void removeStereotypeApplication(EObject object);
 	String getFirstProfileName();
 }

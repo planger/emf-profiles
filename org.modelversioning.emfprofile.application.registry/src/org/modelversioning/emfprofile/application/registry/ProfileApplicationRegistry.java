@@ -44,10 +44,10 @@ public interface ProfileApplicationRegistry {
 	 * @param modelId
 	 * @param profileApplicationFile
 	 * @param resourceSet is optional. If it's not provided, the registry's default resource set will be used instead.
-	 * @return <code>false</code> if already loaded, <code>true</code> otherwise.
+	 * @return <code>null</code> if already loaded, otherwise the loaded profile application.
 	 * @throws Exception
 	 */
-	boolean loadProfileApplicationForModel(String modelId,	IFile profileApplicationFile, ResourceSet resourceSet) throws Exception;
+	ProfileApplicationDecorator loadProfileApplicationForModel(String modelId,	IFile profileApplicationFile, ResourceSet resourceSet) throws Exception;
 	
 	/**
 	 * Unloads profile application for a model.

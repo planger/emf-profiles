@@ -61,7 +61,7 @@ public class ProfileApplicationRegistryImpl implements
 	}
 	
 	@Override
-	public boolean loadProfileApplicationForModel(String modelId,
+	public ProfileApplicationDecorator loadProfileApplicationForModel(String modelId,
 			IFile profileApplicationFile, ResourceSet resourceSet) throws Exception {
 		ProfileApplicationManager pam;
 		if(! modelledResourceProfilesApplicationsManagerMap.containsKey(modelId)){
@@ -79,10 +79,9 @@ public class ProfileApplicationRegistryImpl implements
 		for (ProfileApplicationDecorator element : elements) {
 			ProfileApplicationDecoratorImpl elementImpl = (ProfileApplicationDecoratorImpl) element;
 			if(profileApplicationFile.getLocation().toString().equals(elementImpl.getProfileApplicationFile().getLocation().toString()))
-				return false;
+				return null;
 		}
-		pam.loadProfileApplication(profileApplicationFile);
-		return true;
+		return pam.loadProfileApplication(profileApplicationFile);
 	}
 
 	@Override

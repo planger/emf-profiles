@@ -60,10 +60,12 @@ public class ProfileApplicationManager {
 	 *            to use.
 	 * @param profileApplicationFile
 	 *            to load.
+	 * @return profile application decorator
 	 */
-	public void loadProfileApplication(IFile profileApplicationFile) throws CoreException, IOException{
+	public ProfileApplicationDecorator loadProfileApplication(IFile profileApplicationFile) throws CoreException, IOException{
 		ProfileApplicationDecorator profileApplication = new ProfileApplicationDecoratorImpl(profileApplicationFile, resourceSet);
 		profileApplications.add(profileApplication);
+		return profileApplication;
 	}
 
 	public void removeProfileApplication(

@@ -91,6 +91,8 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 		this.facade = loadProfileApplication(profileApplicationFile);
 		this.profiles = facade.getLoadedProfiles();
 		this.dirty = false;
+		if(facade.getProfileApplications().isEmpty())
+			throw new IOException("The file: " + profileApplicationFile.getName() + ", does not contain any profile applications.");
 		this.profileApplication = facade.getProfileApplications().get(0);
 	}
 
@@ -143,8 +145,8 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	 */
 	private IProfileFacade loadProfileApplication(IFile profileApplicationFile)
 			throws CoreException, IOException {
-//		profileApplicationFile.refreshLocal(IFile.DEPTH_ONE,
-//				new NullProgressMonitor());
+		profileApplicationFile.refreshLocal(IFile.DEPTH_ONE,
+				new NullProgressMonitor());
 		IProfileFacade facade = createNewProfileFacade(profileApplicationFile);
 		
 		return facade;
@@ -207,7 +209,7 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	}
 
 	@Override
-	public StereotypeApplication apply(
+	public StereotypeApplication applyStereotype(
 		StereotypeApplicability stereotypeApplicability, EObject eObject) {
 		StereotypeApplication result = facade.apply(
 				stereotypeApplicability, eObject);
@@ -216,7 +218,7 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	}
 	
 	@Override
-	public void delete(EObject eObject) {
+	public void removeStereotypeApplication(EObject eObject) {
 		dirty = true;
 		if(eObject instanceof StereotypeApplication){
 			facade.removeStereotypeApplication((StereotypeApplication)eObject);
