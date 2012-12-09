@@ -9,6 +9,10 @@ package org.modelversioning.emfprofile.application.registry.ui.views;
 
 import java.util.Collections;
 
+import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -32,9 +36,14 @@ import org.eclipse.ui.contexts.IContextActivation;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
+import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileApplicationDecoratorReflectiveItemProviderAdapterFactory;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileProviderContentAdapter;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileProviderLabelAdapter;
+import org.modelversioning.emfprofile.provider.EMFProfileItemProviderAdapterFactory;
+import org.modelversioning.emfprofileapplication.provider.EMFProfileApplicationItemProviderAdapterFactory;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -49,7 +58,10 @@ public class EMFProfileApplicationsView extends ViewPart {
 
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
+
+	private PropertySheetPage propertySheetPage;
 	private static LocalResourceManager resourceManager;
+	private static ComposedAdapterFactory adapterFactory;
 	
 	/**
 	 * The constructor.
@@ -66,9 +78,9 @@ public class EMFProfileApplicationsView extends ViewPart {
 		System.out.println("CEATING VIEW");
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		drillDownAdapter = new DrillDownAdapter(viewer);
-		viewer.setLabelProvider(new ProfileProviderLabelAdapter());
+		viewer.setLabelProvider(new ProfileProviderLabelAdapter(getAdapterFactory()));
 //		viewer.setLabelProvider(new AdapterFactoryLabelProvider(getAdapterFactory()));
-		viewer.setContentProvider(new ProfileProviderContentAdapter());
+		viewer.setContentProvider(new ProfileProviderContentAdapter(getAdapterFactory()));
 		
 		viewer.setSorter(new ViewerSorter());
 		viewer.setAutoExpandLevel(2);
@@ -122,6 +134,53 @@ public class EMFProfileApplicationsView extends ViewPart {
 		// registers it self for notification when this view is closed
 		// so that the clean-up may be done
 //		getSite().getPage().addPartListener(this); TODO remove
+	}
+	
+	/**
+	 * Provides the adapters.
+	 * 
+	 * In particular this is the property sheet. The rest is handed over to
+	 * super.
+	 * 
+	 * @param adapter
+	 *            to get.
+	 * @return the adapter.
+	 */
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+		if (adapter.equals(IPropertySheetPage.class)) {
+			return getPropertySheetPage();
+		} else {
+			return super.getAdapter(adapter);
+		}
+	}
+
+	public static ComposedAdapterFactory getAdapterFactory() {
+		if(adapterFactory != null)
+			return adapterFactory;
+		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory
+				.addAdapterFactory(new EMFProfileItemProviderAdapterFactory());
+		adapterFactory
+				.addAdapterFactory(new EMFProfileApplicationItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
+		adapterFactory
+				.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+		return adapterFactory;
+	}
+	
+	/**
+	 * This accesses a cached version of the property sheet.
+	 */
+	public IPropertySheetPage getPropertySheetPage() {
+		if (propertySheetPage == null) {
+			propertySheetPage = new PropertySheetPage();
+			// only set the reflective adapter factory
+			propertySheetPage
+					.setPropertySourceProvider(new AdapterFactoryContentProvider(
+							new ProfileApplicationDecoratorReflectiveItemProviderAdapterFactory()));
+		}
+		return propertySheetPage;
 	}
 
 	private void hookContextMenu() {
@@ -237,6 +296,15 @@ public class EMFProfileApplicationsView extends ViewPart {
 	@Override
 	public void dispose() {
 		ActiveEditorObserver.INSTANCE.cleanUp();
+		
+		if(propertySheetPage != null){
+			propertySheetPage.dispose();
+		}
+		
+		if(adapterFactory != null){
+			adapterFactory.dispose();
+			adapterFactory = null;	
+		}
 		// dispose our resource manager for images
 		EMFProfileApplicationsView.resourceManager.dispose();
 		super.dispose();

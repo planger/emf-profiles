@@ -34,6 +34,7 @@ import org.modelversioning.emfprofile.application.registry.ProfileApplicationDec
 import org.modelversioning.emfprofile.application.registry.ui.EMFProfileApplicationRegistryUIPlugin;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileProviderLabelAdapter;
+import org.modelversioning.emfprofile.application.registry.ui.views.EMFProfileApplicationsView;
 import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 
 /**
@@ -42,7 +43,7 @@ import org.modelversioning.emfprofileapplication.StereotypeApplicability;
  */
 public class ApplyStereotypeOnEObjectDialog {
 
-	private ProfileProviderLabelAdapter labelAdapter = new ProfileProviderLabelAdapter();
+	private ProfileProviderLabelAdapter labelAdapter = new ProfileProviderLabelAdapter(EMFProfileApplicationsView.getAdapterFactory());
 	
 	private final Map<ProfileApplicationDecorator, Collection<StereotypeApplicability>> profileToStereotypeApplicabilityForEObjectMap;
 	public ApplyStereotypeOnEObjectDialog(Map<ProfileApplicationDecorator, Collection<StereotypeApplicability>> profileToStereotypeApplicabilityForEObjectMap) {
