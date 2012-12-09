@@ -2,9 +2,7 @@ package org.modelversioning.emfprofile.application.registry.ui.providers;
 
 import java.net.URL;
 
-import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -13,24 +11,14 @@ import org.eclipse.swt.graphics.Image;
 import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ui.views.EMFProfileApplicationsView;
-import org.modelversioning.emfprofile.provider.EMFProfileItemProviderAdapterFactory;
 import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
-import org.modelversioning.emfprofileapplication.provider.EMFProfileApplicationItemProviderAdapterFactory;
 
 public class ProfileProviderLabelAdapter implements ILabelProvider {
 
 	private AdapterFactoryLabelProvider provider;
 
-	public ProfileProviderLabelAdapter() {
-		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		adapterFactory
-				.addAdapterFactory(new EMFProfileItemProviderAdapterFactory());
-		adapterFactory
-				.addAdapterFactory(new EMFProfileApplicationItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
-		adapterFactory
-				.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+	public ProfileProviderLabelAdapter(ComposedAdapterFactory adapterFactory) {
 		provider = new AdapterFactoryLabelProvider(adapterFactory);
 	}
 

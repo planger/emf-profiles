@@ -4,30 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.modelversioning.emfprofile.EMFProfilePackage;
-import org.modelversioning.emfprofile.provider.EMFProfileItemProviderAdapterFactory;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
-import org.modelversioning.emfprofileapplication.provider.EMFProfileApplicationItemProviderAdapterFactory;
 
 public class ProfileProviderContentAdapter implements ITreeContentProvider {
 
 	private AdapterFactoryContentProvider provider;
 
-	public ProfileProviderContentAdapter() {
-		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		adapterFactory
-				.addAdapterFactory(new EMFProfileItemProviderAdapterFactory());
-		adapterFactory
-				.addAdapterFactory(new EMFProfileApplicationItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
-		adapterFactory
-				.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+	public ProfileProviderContentAdapter(ComposedAdapterFactory adapterFactory) {
 		provider = new AdapterFactoryContentProvider(adapterFactory);
 	}
 

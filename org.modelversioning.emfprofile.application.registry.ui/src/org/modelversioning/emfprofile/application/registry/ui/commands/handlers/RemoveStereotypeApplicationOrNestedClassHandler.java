@@ -52,7 +52,7 @@ public class RemoveStereotypeApplicationOrNestedClassHandler extends
 			for (TreePath path : treeSelection.getPaths()) {
 					EObject eObject = (EObject)path.getLastSegment();
 					if( ! (eObject instanceof ProfileApplicationDecorator)){
-						ProfileApplicationDecorator profileApplicationDecorator = findProfileApplicationDecorator(path);
+						ProfileApplicationDecorator profileApplicationDecorator = ActiveEditorObserver.INSTANCE.findProfileApplicationDecorator(path);
 						if(profileApplicationDecorator == null)
 							throw new RuntimeException("Could not find a profile application element as parent of selected element: " + eObject.toString());
 						if(eObject instanceof StereotypeApplication){
@@ -76,14 +76,4 @@ public class RemoveStereotypeApplicationOrNestedClassHandler extends
 		return null;
 	}
 
-	private ProfileApplicationDecorator findProfileApplicationDecorator(TreePath treePath) {
-		TreePath parentPath = treePath.getParentPath();
-		if(parentPath == null)
-			return null;
-		EObject element = (EObject)parentPath.getLastSegment();
-		if(element instanceof ProfileApplicationDecorator)
-			return (ProfileApplicationDecorator) element;
-		else
-			return findProfileApplicationDecorator(parentPath);
-	}
 }

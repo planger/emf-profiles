@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.management.RuntimeErrorException;
+
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
@@ -26,6 +28,9 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
@@ -48,6 +53,7 @@ import org.modelversioning.emfprofile.application.registry.ui.dialogs.ApplyStere
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.EMFProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.PluginExtensionOperationsListener;
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.handler.EMFProfileApplicationDecoratorHandler;
+import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileApplicationDecoratorReflectiveItemProviderAdapterFactory;
 import org.modelversioning.emfprofile.application.registry.ui.views.filters.StereotypesOfEObjectViewerFilter;
 import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
@@ -385,5 +391,41 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		}
 	}
 
-
+	/**
+	 * This method will be called from {@link ProfileApplicationDecoratorReflectiveItemProviderAdapterFactory}
+	 * when notification is fired that an attribute is changed in properties view.
+	 * Notifications will be fired for every change, but we are here only interested in scenario
+	 * when only one tree element is selected and we can find profile application decorator from
+	 * its tree path, otherwise this method will do nothing.
+	 */
+	public void setProfileApplicationChanged(){
+		// we have to find current selection in the view tree, 
+		// then traverse to profile application decorator
+		// and set it to dirty and update the view tree
+		ISelection selection = viewer.getSelection();
+		if(selection != null && selection instanceof ITreeSelection){
+			ITreeSelection treeSelection = (ITreeSelection) selection;
+			TreePath[] paths = treeSelection.getPaths();
+			if(paths.length != 1){
+				// this should not happen because properties view shows attributes only if one element is selected in tree view, but ...
+				return;
+			}
+			ProfileApplicationDecorator profileApplication = findProfileApplicationDecorator(paths[0]);
+			if(profileApplication == null) // could not find it, do nothing
+				return;
+			profileApplication.setDirty(true);
+			updateViewer(profileApplication);
+		}
+	}
+	
+	public ProfileApplicationDecorator findProfileApplicationDecorator(TreePath treePath) {
+		TreePath parentPath = treePath.getParentPath();
+		if(parentPath == null)
+			return null;
+		EObject element = (EObject)parentPath.getLastSegment();
+		if(element instanceof ProfileApplicationDecorator)
+			return (ProfileApplicationDecorator) element;
+		else
+			return findProfileApplicationDecorator(parentPath);
+	}
 }
