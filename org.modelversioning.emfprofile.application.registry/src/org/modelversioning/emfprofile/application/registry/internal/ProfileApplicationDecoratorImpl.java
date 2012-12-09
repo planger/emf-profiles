@@ -100,6 +100,11 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	public boolean isDirty() {
 		return this.dirty;
 	}
+	
+	@Override
+	public void setDirty(boolean dirty){
+		this.dirty = dirty;
+	}
 
 	public IFile getProfileApplicationFile() {
 		return profileApplicationFile;

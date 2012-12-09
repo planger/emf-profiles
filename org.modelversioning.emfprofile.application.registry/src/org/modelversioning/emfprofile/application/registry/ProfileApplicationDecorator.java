@@ -23,9 +23,25 @@ import org.modelversioning.emfprofileapplication.StereotypeApplication;
  */
 public interface ProfileApplicationDecorator extends ProfileApplication {
 
+	/**
+	 * Is this profile application changed
+	 * and if it needs to be saved
+	 * @return
+	 */
 	boolean isDirty();
+	/**
+	 * To set if profile application has changed or not
+	 * @param dirty
+	 */
+	void setDirty(boolean dirty);
+
 	String getName();
 //	Collection<StereotypeApplication> getStereotypeApplications();
+	/**
+	 * To save this profile application
+	 * @throws IOException
+	 * @throws CoreException
+	 */
 	void save() throws IOException, CoreException;
 	Collection<? extends StereotypeApplicability> getApplicableStereotypes(
 			EObject eObject);
