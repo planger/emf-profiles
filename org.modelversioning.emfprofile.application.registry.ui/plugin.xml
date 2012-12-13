@@ -100,6 +100,10 @@
             id="org.modelversioning.emfprofile.application.registry.ui.commands.removestereotypeapplicationornestedclass"
             name="Remove Stereotype Application Or Nested Class">
       </command>
+      <command
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.showproperteisview"
+            name="Show Properties View">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -173,6 +177,12 @@
                label="Remove"
                style="push"
                tooltip="Remove">
+         </command>
+         <command
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showproperteisview"
+               label="Properties"
+               style="push"
+               tooltip="Properties">
          </command>
       </menuContribution>
    </extension>
@@ -290,6 +300,10 @@
             </with>
          </enabledWhen>
       </handler>
+      <handler
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.ShowPropertiesViewHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showproperteisview">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -298,6 +312,12 @@
             contextId="org.modelversioning.emfprofile.application.registry.ui.keybindingcontext"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="DEL">
+      </key>
+      <key
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showproperteisview"
+            contextId="org.modelversioning.emfprofile.application.registry.ui.keybindingcontext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="ALT+ENTER">
       </key>
    </extension>
    <extension

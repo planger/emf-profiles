@@ -131,9 +131,6 @@ public class EMFProfileApplicationsView extends ViewPart {
 				  .getService(IContextService.class);
 		IContextActivation contextActivation = contextService.activateContext("org.modelversioning.emfprofile.application.registry.ui.keybindingcontext");
 		
-		// registers it self for notification when this view is closed
-		// so that the clean-up may be done
-//		getSite().getPage().addPartListener(this); TODO remove
 	}
 	
 	/**
@@ -309,24 +306,5 @@ public class EMFProfileApplicationsView extends ViewPart {
 		EMFProfileApplicationsView.resourceManager.dispose();
 		super.dispose();
 	}
-
 		
-//	// when view is closed we have to do a clean-up before 
-//	// SWT widgets are disposed
-//	@Override
-//	public void partClosed(IWorkbenchPart part) {
-//		if(part.getSite().getId().equals(EMFProfileApplicationsView.ID)){
-//			ActiveEditorObserver.INSTANCE.cleanUp();
-//			getSite().getPage().removePartListener(this);
-//		}
-//	}
-//	// ignore other events
-//	@Override
-//	public void partActivated(IWorkbenchPart part) {}
-//	@Override
-//	public void partBroughtToTop(IWorkbenchPart part) {}
-//	@Override
-//	public void partDeactivated(IWorkbenchPart part) {}
-//	@Override
-//	public void partOpened(IWorkbenchPart part) {}
 }
