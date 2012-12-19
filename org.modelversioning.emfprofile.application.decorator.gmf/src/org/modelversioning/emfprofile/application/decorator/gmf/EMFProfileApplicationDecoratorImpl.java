@@ -136,14 +136,10 @@ public class EMFProfileApplicationDecoratorImpl implements EMFProfileApplication
 	}
 
 	public static void registerDecoratorForEObject(EObject eObject, IDecorator decorator){
-		// TODO remove comment
-				System.out.println("Activate decorator for eObject: " + eObject);
 		EMFProfileApplicationDecoratorImpl.eObjectToDecoratorMap.put(eObject, decorator);
 	}
 	
 	public static void unregisterDecoratorForEObject(EObject eObject){
-		// TODO remove comment
-				System.out.println("Deactivate decorator for eObject: " + eObject);
 		EMFProfileApplicationDecoratorImpl.eObjectToDecoratorMap.remove(eObject);
 	}
 
@@ -153,8 +149,6 @@ public class EMFProfileApplicationDecoratorImpl implements EMFProfileApplication
 		if(eObject == null || images == null || toolTipTexts == null)
 			throw new IllegalArgumentException("Parametrs can not have null value.");
 		if(EMFProfileApplicationDecoratorImpl.eObjectToDecoratorMap.containsKey(eObject)){
-			// TODO remove comment
-			System.out.println("Decorating eObject: " + eObject);
 			EMFProfileDecorator decorator = (EMFProfileDecorator) EMFProfileApplicationDecoratorImpl.eObjectToDecoratorMap.get(eObject);
 			decorator.refresh(images, toolTipTexts);
 		}
