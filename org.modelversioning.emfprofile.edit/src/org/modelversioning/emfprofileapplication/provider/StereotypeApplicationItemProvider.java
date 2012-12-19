@@ -7,14 +7,21 @@
  */
 package org.modelversioning.emfprofileapplication.provider;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -23,7 +30,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
@@ -186,4 +192,37 @@ public class StereotypeApplicationItemProvider extends ItemProviderAdapter
 		return EMFProfileApplicationEditPlugin.INSTANCE;
 	}
 
+	 /**
+	  * @generated NOT
+	   */
+	  @Override
+	  protected Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	  {
+	    // if (childrenFeatures == null)
+	    {
+	      childrenFeatures = new ArrayList<EStructuralFeature>();
+	      EObject eObject = (EObject)object;
+	      EClass eClass = eObject.eClass();
+	      if (ExtendedMetaData.INSTANCE.getContentKind(eClass) != ExtendedMetaData.MIXED_CONTENT)
+	      {
+	        for (EReference eReference : eClass.getEAllReferences())
+	        {
+	          if (eReference.isContainment() && ExtendedMetaData.INSTANCE.getGroup(eReference) == null)
+	          {
+	            childrenFeatures.add(eReference);
+	          }
+	        }
+	      }
+	      for (EAttribute eAttribute : eClass.getEAllAttributes())
+	      {
+	        if (ExtendedMetaData.INSTANCE.getGroup(eAttribute) == null && 
+	              eAttribute.getEType().getInstanceClass() == FeatureMap.Entry.class &&
+	              !eAttribute.isDerived())
+	        {
+	          childrenFeatures.add(eAttribute);
+	        }
+	      }
+	    }
+	    return childrenFeatures;
+	  }
 }
