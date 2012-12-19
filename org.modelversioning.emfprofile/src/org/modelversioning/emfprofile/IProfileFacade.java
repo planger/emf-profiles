@@ -398,4 +398,21 @@ public interface IProfileFacade {
 	 * @throws IOException
 	 */
 	void setProfileApplicationResource(Resource resource) throws IOException;
+
+	/**
+	 * Removes the specified {@link EObject} from 
+	 * managed {@link ProfileApplication}
+	 * @param eObject
+	 */
+	void removeEObject(EObject eObject);
+
+	/**
+	 * Adds an instance of nested object to the reference
+	 * of the container.
+	 * @param container
+	 * @param eReference
+	 * @param eObject
+	 */
+	void addNestedEObject(EObject container, EReference eReference,
+			EObject eObject);
 }

@@ -15,6 +15,7 @@ package org.modelversioning.emfprofile.impl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -33,6 +34,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -256,7 +258,6 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			this.profileApplicationResource.getResourceSet()
 					.getPackageRegistry().put(profile.getNsURI(), profile);
 		}
-		// TODO
 	}
 
 	/**
@@ -783,6 +784,45 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	@Override
 	public EList<ProfileApplication> getProfileApplications() {
 		return getProfileApplications(profileApplicationResource);
+	}
+
+	@Override
+	public void removeEObject(final EObject eObject) {
+		if (requireTransaction()) {
+			TransactionalEditingDomain domain = getTransactionalEditingDomain();
+			domain.getCommandStack().execute(new RecordingCommand(domain) {
+				@Override
+				protected void doExecute() {
+					EcoreUtil.remove(eObject);
+				}
+			});
+		} else {
+			EcoreUtil.remove(eObject);
+		}
+	}
+
+	@Override
+	public void addNestedEObject(final EObject container, final EReference eReference,
+			final EObject eObject) {
+		if (requireTransaction()) {
+			TransactionalEditingDomain domain = getTransactionalEditingDomain();
+			domain.getCommandStack().execute(new RecordingCommand(domain) {
+				@Override
+				protected void doExecute() {
+					if(eReference.isMany()){
+						((List) container.eGet(eReference)).add(eObject);
+					}else{
+						container.eSet(eReference, eObject);
+					}
+				}
+			});
+		} else {
+			if(eReference.isMany()){
+				((List) container.eGet(eReference)).add(eObject);
+			}else{
+				container.eSet(eReference, eObject);
+			}
+		}
 	}
 
 }
