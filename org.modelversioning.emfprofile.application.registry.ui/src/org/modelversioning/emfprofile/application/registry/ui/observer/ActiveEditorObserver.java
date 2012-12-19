@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.management.RuntimeErrorException;
-
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
@@ -29,8 +27,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
@@ -55,6 +52,7 @@ import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.dec
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.handler.EMFProfileApplicationDecoratorHandler;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileApplicationDecoratorReflectiveItemProviderAdapterFactory;
 import org.modelversioning.emfprofile.application.registry.ui.views.filters.StereotypesOfEObjectViewerFilter;
+import org.modelversioning.emfprofileapplication.ProfileApplication;
 import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
 
@@ -94,13 +92,11 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 	 * To set the Tree Viewer from outside.
 	 * After calling this method a part listener will be added on active page
 	 * which registers activation of editors that can be decorated. </br>
-	 * <b>Note:</b> without setting a tree viewer none of the services of this
+	 * <b>Note:</b> without setting a tree viewer the services of this
 	 * class implementation will work properly. 
 	 * @param viewer
 	 */
 	public void setViewer(TreeViewer viewer){
-		// TODO remove comment
-		System.out.println("Setting TREE VIEWER");
 		decoratorHandler = EMFProfileApplicationDecoratorHandler.getInstance();
 		decoratorHandler.setPluginExtensionOperationsListener(ActiveEditorObserver.INSTANCE);
 		
@@ -133,8 +129,6 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 				editorPartToModelIdMap.put(editorPart, UUID.randomUUID().toString());
 				lastActiveEditorPart = editorPart;
 				toolbarCommandEnabeldStateService.setEnabled(true);
-				// TODO remove
-				System.out.println("part opened at the start, size: "+editorPartToModelIdMap.size());
 			}
 		}
 		// listener that gets notified for workbench changes and registers editor parts of interest
@@ -169,12 +163,8 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 			@Override
 			public void run() {
 				if(viewer.getInput().equals(Collections.emptyList())){
-					// TODO remove comment
-					System.out.println("VIEWER INPUT WAS EMPTY");
 					viewer.setInput(ProfileApplicationRegistry.INSTANCE.getProfileApplications(editorPartToModelIdMap.get(decoratableEditorPartListener.getLastActiveEditPart())));
 				}else{
-					// TODO remove comment
-					System.out.println("VIEWER REFRESHES INPUT");
 					viewer.refresh();
 					viewer.expandToLevel(2);
 				}
@@ -224,6 +214,17 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		});
 	}
 	
+	public void revealElement(final Object element){
+		if(viewer == null || viewer.getTree().isDisposed())
+			return;
+		viewer.getTree().getDisplay().asyncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				viewer.reveal(element);
+			}
+		});
+	}
 	public String getModelIdForWorkbenchPart(IWorkbenchPart part) {
 		return editorPartToModelIdMap.get(part);
 	}
@@ -237,8 +238,6 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		// we are looking in all loaded profiles if there are any stereotypes applicable on eObject 
 		final Map<ProfileApplicationDecorator, Collection<StereotypeApplicability>> profileToStereotypeApplicabilityForEObjectMap = new HashMap<>();
 		for (ProfileApplicationDecorator profileApplication : ProfileApplicationRegistry.INSTANCE.getProfileApplications(editorPartToModelIdMap.get(decoratableEditorPartListener.getLastActiveEditPart()))) {
-			// TODO REmove comment
-			System.out.println("Loaded Profile: "+profileApplication.getFirstProfileName() + ", applicable stereotypes count: " + profileApplication.getImportedProfiles().get(0).getProfile().getStereotypes());
 			profileToStereotypeApplicabilityForEObjectMap.put(profileApplication, (Collection<StereotypeApplicability>) profileApplication.getApplicableStereotypes(eObject));
 		}
 		boolean mayApplyStereotype = false;
@@ -287,13 +286,6 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		viewer.expandToLevel(2);
 	}
 	
-	private void showError(String message) {
-		ErrorDialog.openError(viewer.getControl().getShell(), "Error Occured",
-				message, new Status(IStatus.ERROR,
-						EMFProfileApplicationRegistryUIPlugin.PLUGIN_ID, message));
-	}
-	
-
 	private void showError(String message, Throwable throwable) {
 		ErrorDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error Occured",
 				message, new Status(IStatus.ERROR,
@@ -395,37 +387,41 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 	 * This method will be called from {@link ProfileApplicationDecoratorReflectiveItemProviderAdapterFactory}
 	 * when notification is fired that an attribute is changed in properties view.
 	 * Notifications will be fired for every change, but we are here only interested in scenario
-	 * when only one tree element is selected and we can find profile application decorator from
-	 * its tree path, otherwise this method will do nothing.
+	 * when only one tree element is selected and we can find profile application decorator from it,
+	 * otherwise this method will do nothing.
 	 */
 	public void setProfileApplicationChanged(){
-		// we have to find current selection in the view tree, 
-		// then traverse to profile application decorator
-		// and set it to dirty and update the view tree
-		ISelection selection = viewer.getSelection();
-		if(selection != null && selection instanceof ITreeSelection){
-			ITreeSelection treeSelection = (ITreeSelection) selection;
-			TreePath[] paths = treeSelection.getPaths();
-			if(paths.length != 1){
-				// this should not happen because properties view shows attributes only if one element is selected in tree view, but ...
-				return;
+		viewer.getTree().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				// we have to find current selection in the view tree, 
+				// then traverse to profile application decorator
+				// and set it to dirty and update the view tree
+				ISelection selection = viewer.getSelection();
+				if(selection != null && selection instanceof IStructuredSelection){
+					EObject eObject = (EObject) ((IStructuredSelection)selection).getFirstElement();
+					if(eObject == null) // probably was deleted, so nothing to do
+						return;
+					ProfileApplicationDecorator profileApplication = findProfileApplicationDecorator(eObject);
+					if(profileApplication == null) // could not find it, do nothing
+						return;
+					profileApplication.setDirty(true);
+					updateViewer(profileApplication);
+				}
 			}
-			ProfileApplicationDecorator profileApplication = findProfileApplicationDecorator(paths[0]);
-			if(profileApplication == null) // could not find it, do nothing
-				return;
-			profileApplication.setDirty(true);
-			updateViewer(profileApplication);
-		}
+		});
+		
 	}
 	
-	public ProfileApplicationDecorator findProfileApplicationDecorator(TreePath treePath) {
-		TreePath parentPath = treePath.getParentPath();
-		if(parentPath == null)
-			return null;
-		EObject element = (EObject)parentPath.getLastSegment();
-		if(element instanceof ProfileApplicationDecorator)
-			return (ProfileApplicationDecorator) element;
-		else
-			return findProfileApplicationDecorator(parentPath);
+	/**
+	 * If we need {@link ProfileApplicationDecorator} because of its extended functionalities, and 
+	 * calling {@link EObject#eContainer()} will eventually return {@link ProfileApplication}
+	 * but we cannot cast it to {@link ProfileApplicationDecorator}. Thus, the easiest way
+	 * to get it is to ask the {@link ProfileApplicationRegistry}, which this method does for you.
+	 * @param eObject
+	 * @return
+	 */
+	public ProfileApplicationDecorator findProfileApplicationDecorator(EObject eObject){
+		return ProfileApplicationRegistry.INSTANCE.getProfileApplicationDecoratorOfContainedEObject(editorPartToModelIdMap.get(decoratableEditorPartListener.getLastActiveEditPart()), eObject);
 	}
 }

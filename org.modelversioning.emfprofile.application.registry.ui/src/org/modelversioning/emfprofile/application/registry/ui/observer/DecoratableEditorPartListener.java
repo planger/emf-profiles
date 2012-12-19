@@ -100,12 +100,8 @@ public final class DecoratableEditorPartListener implements IPartListener {
 				cleaningUpForClosedEditor = true;
 				cleanUp(part);
 				cleaningUpForClosedEditor = false;
-				// TODO remove
-				System.out.println("closing part id: " + editorPartToModelIdMap.get(part));
 				editorPartToViewerStateMap.remove(part);
 				editorPartToModelIdMap.remove(part);
-				// TODO remove						
-				System.out.println("part closed, editor parts size: "+editorPartToModelIdMap.size() + ", viewer state size: " + editorPartToViewerStateMap.size());
 			}
 		}
 	}
@@ -129,14 +125,10 @@ public final class DecoratableEditorPartListener implements IPartListener {
 					if(lastActiveEditorPart != null){
 						editorPartToViewerStateMap.put(lastActiveEditorPart, new ViewerState(viewer));
 					}
-					System.out.println(editorPartToModelIdMap.get(lastActiveEditorPart));
-					System.out.println(editorPartToModelIdMap.get(part));
 					// restore viewer part for already known part
 					editorPartToViewerStateMap.get(part).restoreTreeViewerState(viewer);
 					// remove viewer state from map for this part
 					editorPartToViewerStateMap.remove(part);
-					// TODO remove
-					System.out.println("part accessed, size: "+editorPartToModelIdMap.size() + ", viewer state size: " + editorPartToViewerStateMap.size());
 				}
 			}else{
 				// editor part first time accessed or editor opened with double click on resource file,
@@ -195,15 +187,11 @@ public final class DecoratableEditorPartListener implements IPartListener {
 	}
 	
 	private void cleanUp(IWorkbenchPart editorPart){
-		// TODO remove comment
-		System.out.println("Cleaning up for editor id: " + editorPart.getSite().getId());
 		cleaningUpForEditorPart = editorPart;
 		ExecutionEvent executionEvent;
 		String modelId = editorPartToModelIdMap.get(editorPart);
 		Collection<ProfileApplicationDecorator> profileApplications = new ArrayList<>(ProfileApplicationRegistry.INSTANCE.getProfileApplications(modelId));
 		for (ProfileApplicationDecorator profileApplication : profileApplications) {
-			// TODO remove comment
-			System.out.println("cleaning profile application: " + profileApplication.getName());
 			// Create an ExecutionEvent and specify the profile application associated
 			executionEvent = handlerService.createExecutionEvent(unloadCmd, new Event());
 			((IEvaluationContext) executionEvent.getApplicationContext()).addVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME, new StructuredSelection(profileApplication));

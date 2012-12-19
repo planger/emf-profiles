@@ -95,8 +95,8 @@ public class LoadProfileApplicationWizard extends Wizard {
 					.openError(targetPart.getSite().getShell(),
 							"Error Loading Profile Application",
 							e.getMessage(), status);
-			EMFProfileApplicationRegistryUIPlugin.getDefault().getLog()
-					.log(status);
+//			EMFProfileApplicationRegistryUIPlugin.getDefault().getLog()
+//					.log(status);
 			return false;
 		}
 		return true;

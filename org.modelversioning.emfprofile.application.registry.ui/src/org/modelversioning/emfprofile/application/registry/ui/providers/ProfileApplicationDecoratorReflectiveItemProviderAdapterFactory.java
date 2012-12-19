@@ -7,6 +7,7 @@
  */
 package org.modelversioning.emfprofile.application.registry.ui.providers;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
 
@@ -27,6 +28,18 @@ public class ProfileApplicationDecoratorReflectiveItemProviderAdapterFactory
 	@Override
 	public void fireNotifyChanged(org.eclipse.emf.common.notify.Notification notification) {
 		super.fireNotifyChanged(notification);
-		ActiveEditorObserver.INSTANCE.setProfileApplicationChanged();
+		int eventType = notification.getEventType();
+		if(eventType == Notification.ADD 
+				|| eventType == Notification.ADD_MANY
+				|| eventType == Notification.MOVE
+				|| eventType == Notification.REMOVE
+				|| eventType == Notification.REMOVE_MANY
+				|| eventType == Notification.SET
+				|| eventType == Notification.UNSET
+		)
+		{
+			ActiveEditorObserver.INSTANCE.setProfileApplicationChanged();
+		}
+		
 	}
 }

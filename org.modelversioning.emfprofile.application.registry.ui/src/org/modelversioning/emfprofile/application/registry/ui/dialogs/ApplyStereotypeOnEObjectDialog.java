@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
@@ -66,7 +67,7 @@ public class ApplyStereotypeOnEObjectDialog {
 		}
 		
 		StereotypeTreeSelectionDialog dialog = new StereotypeTreeSelectionDialog(
-				EMFProfileApplicationRegistryUIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
 				new ViewLabelProvider(), new ViewContentProvider());
 		dialog.setTitle("Stereotype Selection");
 		dialog.setMessage("Select one or more Stereotypes to apply");
@@ -97,15 +98,12 @@ public class ApplyStereotypeOnEObjectDialog {
 					TreeObject child = (TreeObject) object;
 					StereotypeApplicability stereotypeApplicability = ((StereotypeApplicability)child.getElement());
 					ProfileApplicationDecorator profileApplicationDecorator = (ProfileApplicationDecorator)child.getParent().getElement();
-					// TODO remove comments
-					System.out.println("Appling stereotype: " + stereotypeApplicability.getStereotype().getName() 
-							+ ", from profile: " + profileApplicationDecorator.getName());
 					try {
 						profileApplicationDecorator.applyStereotype(stereotypeApplicability, eObject);
 						profileApplicationDecoratorToBeRefreshedInView.add(profileApplicationDecorator);
 					} catch (IllegalArgumentException e) {
 						hasNotApplicableStereotypes = true;
-						strBuilder.append(stereotypeApplicability.getStereotype().getName() + ", from profile: " + profileApplicationDecorator.getFirstProfileName() + "\n");
+						strBuilder.append(stereotypeApplicability.getStereotype().getName() + ", from profile: " + profileApplicationDecorator.getProfileName() + "\n");
 					}
 				}
 			}
@@ -115,7 +113,7 @@ public class ApplyStereotypeOnEObjectDialog {
 			}
 			if(hasNotApplicableStereotypes){
 				strBuilder.insert(0, "Not applicable stereotype(s)  to object: "+ (((ENamedElement)eObject == null) ? "" : ((ENamedElement)eObject).getName())+"\n");
-				MessageBox messageBox = new MessageBox(EMFProfileApplicationRegistryUIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.ICON_ERROR | SWT.OK);
+				MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.ICON_ERROR | SWT.OK);
 				messageBox.setText("Could not be applied!");
 				messageBox.setMessage(strBuilder.toString());
 				messageBox.open();
@@ -230,7 +228,7 @@ public class ApplyStereotypeOnEObjectDialog {
 		@Override
 		protected Control createDialogArea(Composite parent) {
 			Control control = super.createDialogArea(parent);
-			// setting auto expand was the reason why a sub type was needed :)
+			// setting auto expand was the reason why a sub-type was needed :)
 			getTreeViewer().setAutoExpandLevel(2);
 			getTreeViewer().setInput(getTreeViewer().getInput());
 			return control;

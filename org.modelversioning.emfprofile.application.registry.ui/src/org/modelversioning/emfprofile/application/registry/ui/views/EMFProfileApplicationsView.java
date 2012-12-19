@@ -9,9 +9,9 @@ package org.modelversioning.emfprofile.application.registry.ui.views;
 
 import java.util.Collections;
 
-import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -39,6 +39,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.modelversioning.emfprofile.application.registry.ui.observer.ActiveEditorObserver;
+import org.modelversioning.emfprofile.application.registry.ui.observer.NestingCommonModelElementsInStereotypeApplications;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileApplicationDecoratorReflectiveItemProviderAdapterFactory;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileProviderContentAdapter;
 import org.modelversioning.emfprofile.application.registry.ui.providers.ProfileProviderLabelAdapter;
@@ -58,6 +59,7 @@ public class EMFProfileApplicationsView extends ViewPart {
 
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
+	private NestingCommonModelElementsInStereotypeApplications nestingCommonModelElements;
 
 	private PropertySheetPage propertySheetPage;
 	private static LocalResourceManager resourceManager;
@@ -67,6 +69,7 @@ public class EMFProfileApplicationsView extends ViewPart {
 	 * The constructor.
 	 */
 	public EMFProfileApplicationsView() {
+		adapterFactory = EMFProfileApplicationsView.getAdapterFactory();
 	}
 
 	/**
@@ -74,28 +77,19 @@ public class EMFProfileApplicationsView extends ViewPart {
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
-		// TODO remove comment
-		System.out.println("CEATING VIEW");
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		drillDownAdapter = new DrillDownAdapter(viewer);
 		viewer.setLabelProvider(new ProfileProviderLabelAdapter(getAdapterFactory()));
-//		viewer.setLabelProvider(new AdapterFactoryLabelProvider(getAdapterFactory()));
 		viewer.setContentProvider(new ProfileProviderContentAdapter(getAdapterFactory()));
 		
 		viewer.setSorter(new ViewerSorter());
-		viewer.setAutoExpandLevel(2);
+		viewer.setAutoExpandLevel(4);
 		getSite().setSelectionProvider(viewer);
 		EMFProfileApplicationsView.resourceManager = new LocalResourceManager(JFaceResources.getResources());
 		viewer.setInput(Collections.emptyList());
 		ActiveEditorObserver.INSTANCE.setViewer(viewer);
 		
-		// Create the help context id for the viewer's control
-//		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.modelversioning.emfprofile.application.registry.ui.viewer");
-//		makeActions();
-//		hookContextMenu();
-//		hookDoubleClickAction();
-//		contributeToActionBars();
-		
+		new AdapterFactoryTreeEditor(viewer.getTree(), adapterFactory);
 		
 		MenuManager menuManager = new MenuManager("profileApplicationsPopupMenu");
 		menuManager.setRemoveAllWhenShown(true);
@@ -108,6 +102,8 @@ public class EMFProfileApplicationsView extends ViewPart {
 		viewer.getControl().setMenu(menu);
 		
 		getSite().registerContextMenu(menuManager, viewer);
+		// To this group come New Child/Sibling contributions
+		menuManager.add(new Separator("edit"));
 		// Other plug-ins can contribute there actions here
 		menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		drillDownAdapter.addNavigationActions(menuManager);
@@ -124,6 +120,12 @@ public class EMFProfileApplicationsView extends ViewPart {
 			        !viewer.getExpandedState(selectedNode));
 			}
 		});
+		
+		nestingCommonModelElements = new NestingCommonModelElementsInStereotypeApplications();
+		nestingCommonModelElements.contributeToMenu(menuManager);
+		menuManager.addMenuListener(nestingCommonModelElements);
+		viewer.addSelectionChangedListener(nestingCommonModelElements);
+		
 		// To enable the key binding we need to activate context
 		// The reason why, is because this context overrides the
 		// default key binding of workbench, e.g. key DEL
@@ -155,14 +157,18 @@ public class EMFProfileApplicationsView extends ViewPart {
 	public static ComposedAdapterFactory getAdapterFactory() {
 		if(adapterFactory != null)
 			return adapterFactory;
-		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		adapterFactory
-				.addAdapterFactory(new EMFProfileItemProviderAdapterFactory());
-		adapterFactory
-				.addAdapterFactory(new EMFProfileApplicationItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
-		adapterFactory
-				.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+
+//		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE); 
+		// this made some problems because dynamically created objects (EObjectImpl) should have get reflective item provider, but they didn't.
+		// the provider that was supplied was EObjectItemProvider  from EcoreItemProviderAdapterFactory even if I didn't add it explicitly. 
+		// The cause was in providing the parameter for constructor -> new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE)
+		// This somehow added EcoreItemProviderAdapterFactory to the collection of Composed Adapter Factory.
+		
+		
+		adapterFactory = new ComposedAdapterFactory(); // this works as expected.
+		adapterFactory.addAdapterFactory(new EMFProfileItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new EMFProfileApplicationItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		return adapterFactory;
 	}
 	
@@ -180,90 +186,16 @@ public class EMFProfileApplicationsView extends ViewPart {
 		return propertySheetPage;
 	}
 
-	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				EMFProfileApplicationsView.this.fillContextMenu(manager);
-			}
-		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
-	}
-
-//	private void contributeToActionBars() {
-//		IActionBars bars = getViewSite().getActionBars();
-//		fillLocalPullDown(bars.getMenuManager());
-//		fillLocalToolBar(bars.getToolBarManager());
-//	}
-
-//	private void fillLocalPullDown(IMenuManager manager) {
-//		manager.add(action1);
-//		manager.add(new Separator());
-//		manager.add(action2);
-//	}
-
 	private void fillContextMenu(IMenuManager manager) {
-//		manager.add(action1);
-//		manager.add(action2);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
-		// Other plug-ins can contribute there actions here
-//		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(new Separator());
+		// To this group come New Child/Sibling contributions
+		manager.add(new Separator("edit"));
+//		 Other plug-ins can contribute there actions here
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 	
-//	private void fillLocalToolBar(IToolBarManager manager) {
-//		manager.add(action1);
-//		manager.add(action2);
-//		manager.add(new Separator());
-//		drillDownAdapter.addNavigationActions(manager);
-//	}
-//
-//	private void makeActions() {
-//		action1 = new Action() {
-//			public void run() {
-//				showMessage("Action 1 executed");
-//			}
-//		};
-//		action1.setText("Action 1");
-//		action1.setToolTipText("Action 1 tooltip");
-//		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-//			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-//		
-//		action2 = new Action() {
-//			public void run() {
-//				showMessage("Action 2 executed");
-//			}
-//		};
-//		action2.setText("Action 2");
-//		action2.setToolTipText("Action 2 tooltip");
-//		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-//				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-//		doubleClickAction = new Action() {
-//			public void run() {
-//				ISelection selection = viewer.getSelection();
-//				Object obj = ((IStructuredSelection)selection).getFirstElement();
-//				showMessage("Double-click detected on "+obj.toString());
-//			}
-//		};
-//	}
-//
-//	private void hookDoubleClickAction() {
-//		viewer.addDoubleClickListener(new IDoubleClickListener() {
-//			public void doubleClick(DoubleClickEvent event) {
-//				doubleClickAction.run();
-//			}
-//		});
-//	}
-	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"EMF Profile Applications View",
-			message);
-	}
-
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
@@ -272,7 +204,7 @@ public class EMFProfileApplicationsView extends ViewPart {
 	}
 	
 	/**
-	 * After the view has been initialized this method can be used to 
+	 * After the view has been initialized, this method can be used to 
 	 * create an image for the descriptor.
 	 * Images created in this way do not need to be extra disposed in the code.
 	 * Images are created with usage of {@link LocalResourceManager} which takes care of disposal

@@ -8,7 +8,6 @@
 package org.modelversioning.emfprofile.application.registry.ui.commands.handlers;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -41,7 +40,7 @@ public class SaveAllProfileApplicationsHandler extends AbstractHandler
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		if(ActiveEditorObserver.INSTANCE.getLastActiveEditorPart() != null){
-			EMFProfileApplicationRegistryUIPlugin.getDefault().getWorkbench().getDisplay().asyncExec(new Runnable() {
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 				
 				@Override
 				public void run() {

@@ -67,7 +67,6 @@ public class ProfileProviderLabelAdapter implements ILabelProvider {
 				
 			}
 		}
-	
 		return getLabelProvider(element).getImage(element);
 	}
 	

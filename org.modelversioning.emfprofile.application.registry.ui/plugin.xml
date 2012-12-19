@@ -38,12 +38,6 @@
       </perspectiveExtension>
    </extension>
    <extension
-         point="org.eclipse.help.contexts">
-      <contexts
-            file="contexts.xml">
-      </contexts>
-   </extension>
-   <extension
          point="org.eclipse.ui.commands">
       <category
             id="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.applyloadunload"
@@ -96,7 +90,7 @@
             name="Remove stereotype applications or nested classes">
       </category>
       <command
-            category="org.modelversioning.emfprofile.application.registry.ui.removeelementscategory"
+            categoryId="org.modelversioning.emfprofile.application.registry.ui.removeelementscategory"
             id="org.modelversioning.emfprofile.application.registry.ui.commands.removestereotypeapplicationornestedclass"
             name="Remove Stereotype Application Or Nested Class">
       </command>
