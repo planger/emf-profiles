@@ -190,7 +190,7 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	}
 	
 	@Override
-	public String getFirstProfileName() {
+	public String getProfileName() {
 		return profiles.iterator().next().getName();
 	}
 
@@ -223,11 +223,16 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	}
 	
 	@Override
-	public void removeStereotypeApplication(EObject eObject) {
+	public void addNestedEObject(EObject container, EReference eReference,
+			EObject eObject) {
+		facade.addNestedEObject(container, eReference, eObject);
 		dirty = true;
-		if(eObject instanceof StereotypeApplication){
-			facade.removeStereotypeApplication((StereotypeApplication)eObject);
-		}
+	}
+	
+	@Override
+	public void removeEObject(EObject eObject) {
+		dirty = true;
+		facade.removeEObject(eObject);
 	}
 
 	@Override
@@ -258,10 +263,6 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 		return profileApplication.getAnnotatedObjects();
 	}
 
-	@Override
-	public Resource getProfileApplicationResource() {
-		return facade.getProfileApplicationResource();
-	}
 
 	@Override
 	public EClass eClass() {
@@ -358,5 +359,18 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	public void eNotify(Notification notification) {
 		profileApplication.eNotify(notification);
 	}
-
+	
+	public ProfileApplication getProfileApplication(){
+		return profileApplication;
+	}
+	
+//	@Override
+//	public boolean equals(Object obj) {
+//		return profileApplication.equals(obj);
+//	}
+//	
+//	@Override
+//	public int hashCode() {
+//		return profileApplication.hashCode();
+//	}
 }

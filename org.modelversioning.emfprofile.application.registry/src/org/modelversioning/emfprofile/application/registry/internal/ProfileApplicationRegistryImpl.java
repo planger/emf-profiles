@@ -13,11 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationRegistry;
+import org.modelversioning.emfprofileapplication.ProfileApplication;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
@@ -52,10 +54,6 @@ public class ProfileApplicationRegistryImpl implements
 			}
 			modelledResourceProfilesApplicationsManagerMap.put(modelId, pam);
 		}
-		// TODO remove comment
-		System.out.println("Adding profile application to modelId: " + modelId 
-				+ "\ninto pa file: " + profileApplicationsFile.getLocationURI().getRawPath()
-				+ "and profiles amount: " + profiles.size());
 			pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
 			pam.createNewProfileApplication(profileApplicationsFile, profiles);
 	}
@@ -121,55 +119,33 @@ public class ProfileApplicationRegistryImpl implements
 		return pam.getProfileApplications();
 	}
 
-//	@Override
-//	// notifications that the currently used file in eclipse editor has changed 
-//	public void update(Observable o, Object notification) {
-//		
-//		if(notification == null){ // this means no file of interest is activated
-//			notifyObservers(getProfileApplications(null));
-//			// TODO remove
-//			System.out.println("Clearing the View!");
-//			return;
-//		}
-//		
-//		if(notification instanceof ResourceOpenedNotification){
-//			ResourceOpenedNotification ron = (ResourceOpenedNotification) notification;
-//			ProfileApplicationManager pam;
-//			if(ron.getResourceSet() == null){
-//				pam = new ProfileApplicationManager(this.resourceSet);
-//			}else{
-//				pam = new ProfileApplicationManager(ron.getResourceSet());
-//			}
-//			modelledResourceProfilesApplicationsManagerMap.put(ron.getId(), pam);
-//			notifyObservers(pam.getProfileApplicationElements());
-//			
-//			// TODO remove comment
-//			System.out.println("Resource opened: " + ((ResourceOpenedNotification)notification).getId());
-//		}else if(notification instanceof ResourceActivatedNotification){
-//			ResourceActivatedNotification ran = (ResourceActivatedNotification) notification;
-//			notifyObservers(modelledResourceProfilesApplicationsManagerMap.get(ran.getId()).getProfileApplicationElements());
-//			// TODO remove comment
-//			System.out.println("Resource activated: " + ((ResourceActivatedNotification)notification).getId());
-//		} else if(notification instanceof ResourceClosedNotification){
-//			// TODO maybe it is needed to clear resources before removing the reference from map?
-//			ResourceClosedNotification rcn = (ResourceClosedNotification) notification;
-//			modelledResourceProfilesApplicationsManagerMap.remove(rcn.getId());
-//			// notify observers only if lastActiveModelId is same as the id of the notification
-//			// TODO remove comment
-//			System.out.println("Resource closed: " + ((ResourceClosedNotification)notification).getId());
-//		}else{
-//			throw new RuntimeException("Notification is of unknown type: " + notification);
-//		}
-//	}
-//
-//	/**
-//	 * It sets that there is a change on this object and notifies observers.
-//	 * @see java.util.Observable#notifyObservers(java.lang.Object)
-//	 */
-//	@Override
-//	public void notifyObservers(Object arg) {
-//		super.setChanged();
-//		super.notifyObservers(arg);
-//	}
+	@Override
+	public ProfileApplicationDecorator getProfileApplicationDecoratorOfContainedEObject(
+			String modelId, EObject eObject) {
+		ProfileApplication profileApplication = null;
+		if(eObject instanceof ProfileApplication){
+			profileApplication = (ProfileApplication) eObject;
+		}else{
+			EObject parent = eObject.eContainer();
+			while(parent != null){
+				if(parent instanceof ProfileApplication){
+					profileApplication = (ProfileApplication) parent;
+					break;
+				}
+				
+				if(parent.eContainer() == null){
+					// this means that the parent was maybe removed, and that this eObject is removed also, so retun null
+					return null;
+				}
+				parent = parent.eContainer(); 
+			}
+		}
+		ProfileApplicationManager pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
+		for (ProfileApplicationDecorator pad : pam.getProfileApplications()) {
+			if(((ProfileApplicationDecoratorImpl)pad).getProfileApplication().equals(profileApplication))
+				return pad;
+		}
+		return null;
+	}
 
 }

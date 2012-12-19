@@ -10,6 +10,7 @@ package org.modelversioning.emfprofile.application.registry;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.application.registry.internal.ProfileApplicationRegistryImpl;
@@ -76,5 +77,18 @@ public interface ProfileApplicationRegistry {
 	 * @return
 	 */
 	Collection<ProfileApplicationDecorator> getProfileApplications(String modelId);
+	
+	/**
+	 * Gets the instance of the @link {@link ProfileApplicationDecorator} that 
+	 * is a parent of the provided {@link EObject} and it searches amongst all 
+	 * profile application decorators for the given model id.
+	 * 
+	 * @param modelId The string identification of the modelled resource.
+	 * @param eObject in question
+	 * @return {@link ProfileApplicationDecorator} if everything OK, <code>null</code> if 
+	 * could not find it or any of the parents was also <code>null</code> which would indicate
+	 * that the eObject was removed together with parent.
+	 */
+	ProfileApplicationDecorator getProfileApplicationDecoratorOfContainedEObject(String modelId, EObject eObject);
 	
 }
