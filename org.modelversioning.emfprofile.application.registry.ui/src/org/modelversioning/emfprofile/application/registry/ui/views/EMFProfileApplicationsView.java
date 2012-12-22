@@ -83,7 +83,7 @@ public class EMFProfileApplicationsView extends ViewPart {
 		viewer.setContentProvider(new ProfileProviderContentAdapter(getAdapterFactory()));
 		
 		viewer.setSorter(new ViewerSorter());
-		viewer.setAutoExpandLevel(4);
+		viewer.setAutoExpandLevel(2);
 		getSite().setSelectionProvider(viewer);
 		EMFProfileApplicationsView.resourceManager = new LocalResourceManager(JFaceResources.getResources());
 		viewer.setInput(Collections.emptyList());
