@@ -45,7 +45,7 @@
       </category>
       <command
             categoryId="org.modelversioning.emfprofile.application.registry.ui.toolbar.category.applyloadunload"
-            id="org.modelversioning.emfprofile.application.registry.ui.commands.applayprofile"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.applyprofile"
             name="Applay Profile">
       </command>
       <command
@@ -95,7 +95,7 @@
             name="Remove Stereotype Application Or Nested Class">
       </command>
       <command
-            id="org.modelversioning.emfprofile.application.registry.ui.commands.showproperteisview"
+            id="org.modelversioning.emfprofile.application.registry.ui.commands.showpropertiesview"
             name="Show Properties View">
       </command>
    </extension>
@@ -105,7 +105,7 @@
             allPopups="false"
             locationURI="toolbar:org.modelversioning.emfprofile.application.registry.ui.views.EMFProfileApplicationsView">
          <command
-               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.applayprofile"
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.applyprofile"
                icon="icons/new_wiz.gif"
                label="Apply Profile "
                style="push"
@@ -173,7 +173,7 @@
                tooltip="Remove">
          </command>
          <command
-               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showproperteisview"
+               commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showpropertiesview"
                label="Properties"
                style="push"
                tooltip="Properties">
@@ -183,8 +183,8 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.ApplayProfileHandler"
-            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.applayprofile">
+            class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.ApplyProfileHandler"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.applyprofile">
          <enabledWhen>
             <with
                   variable="org.modelversioning.emfprofile.application.registry.ui.commands.sourceprovider.active">
@@ -296,7 +296,7 @@
       </handler>
       <handler
             class="org.modelversioning.emfprofile.application.registry.ui.commands.handlers.ShowPropertiesViewHandler"
-            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showproperteisview">
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showpropertiesview">
       </handler>
    </extension>
    <extension
@@ -308,7 +308,7 @@
             sequence="DEL">
       </key>
       <key
-            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showproperteisview"
+            commandId="org.modelversioning.emfprofile.application.registry.ui.commands.showpropertiesview"
             contextId="org.modelversioning.emfprofile.application.registry.ui.keybindingcontext"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="ALT+ENTER">

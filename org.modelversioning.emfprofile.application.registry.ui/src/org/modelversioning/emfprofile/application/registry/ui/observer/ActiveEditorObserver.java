@@ -106,7 +106,7 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		
 		 // Get the source provider service
 	    ISourceProviderService sourceProviderService = (ISourceProviderService) window.getService(ISourceProviderService.class);
-	    // Now get the service for enabling/disenabling menu commands in viewer toolbar 
+	    // Now get the service for enabling/disabling menu commands in viewer toolbar 
 	    toolbarCommandEnabeldStateService = (ToolbarCommandEnabledState) sourceProviderService
 	        .getSourceProvider(ToolbarCommandEnabledState.MY_STATE);
 		activePage = window.getActivePage();

@@ -25,7 +25,7 @@ import org.modelversioning.emfprofile.application.registry.ui.wizards.ApplyProfi
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
  *
  */
-public class ApplayProfileHandler extends AbstractHandler implements IHandler {
+public class ApplyProfileHandler extends AbstractHandler implements IHandler {
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.commands.IHandler#execute(java.util.Map)

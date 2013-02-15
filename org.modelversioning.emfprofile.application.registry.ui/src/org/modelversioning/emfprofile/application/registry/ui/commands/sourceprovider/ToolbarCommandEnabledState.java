@@ -21,7 +21,7 @@ public class ToolbarCommandEnabledState extends AbstractSourceProvider {
 	public static final String MY_STATE = "org.modelversioning.emfprofile.application.registry.ui.commands.sourceprovider.active";
 	
 	public final static String ENABLED = "ENABLED";
-	  public final static String DISENABLED = "DISENABLED";
+	  public final static String DISABLED = "DISABLED";
 	  private boolean enabled = false;
 
 
@@ -39,14 +39,14 @@ public class ToolbarCommandEnabledState extends AbstractSourceProvider {
 	  @Override
 	  public Map<String,String> getCurrentState() {
 	    Map<String, String> map = new HashMap<>(1);
-	    String value = enabled ? ENABLED : DISENABLED;
+	    String value = enabled ? ENABLED : DISABLED;
 	    map.put(MY_STATE, value);
 	    return map;
 	  }
 
 	  public void setEnabled(boolean enabled){
 		  this.enabled = enabled;
-		  String value = enabled ? ENABLED : DISENABLED;
+		  String value = enabled ? ENABLED : DISABLED;
 		  fireSourceChanged(ISources.WORKBENCH, MY_STATE, value);
 	  }
 	  
