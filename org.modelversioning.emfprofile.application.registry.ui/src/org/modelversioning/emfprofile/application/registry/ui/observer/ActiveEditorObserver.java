@@ -251,7 +251,7 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 			ApplyStereotypeOnEObjectDialog applySteretypeDialog = new ApplyStereotypeOnEObjectDialog(profileToStereotypeApplicabilityForEObjectMap);
 			applySteretypeDialog.openApplyStereotypeDialog(eObject);
 		} else {
-			MessageDialog.openInformation(viewer.getControl().getShell(), "Info", "Can not apply any stereotype to EObject with name: " + ((ENamedElement)eObject).getName() );
+			MessageDialog.openInformation(viewer.getControl().getShell(), "Info", "Can not apply any stereotype to EObject: " + eObject.toString() );
 		}
 	}
 	
