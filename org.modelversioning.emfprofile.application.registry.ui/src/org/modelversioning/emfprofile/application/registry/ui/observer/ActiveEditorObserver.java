@@ -20,8 +20,8 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -339,12 +339,16 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				try {
-					TransactionUtil.getEditingDomain(eObject.eResource())
-							.runExclusive(new Runnable() {
+					TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(eObject.eResource());
+					if (editingDomain != null) {
+					editingDomain.runExclusive(new Runnable() {
 								public void run() {
 									decorator.decorate(eObject, images, toolTipTexts);
 								}
 							});
+					} else {
+						decorator.decorate(eObject, images, toolTipTexts);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					showError("Calling decorate method on decorator for editor id: " + decoratableEditorPartListener.getLastActiveEditPart().getSite().getId() 
