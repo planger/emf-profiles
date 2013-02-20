@@ -33,7 +33,6 @@
       <eSuperTypes xmi:type="emfprofile:Stereotype" href="#_H_skIDVvEeGu3fRZW9onUA"/>
       <eSuperTypes xmi:type="ecore:EClass" href="http://www.modelversioning.org/emfprofile/application/1.1#//StereotypeApplication"/>
     </eClassifiers>
-    <base xmi:type="ecore:EPackage" href="http://www.eclipse.org/emf/2002/Ecore#/"/>
   </emfprofile:Profile>
   <notation:Diagram xmi:id="_Bvq0sDVoEeGYg4ix0ehwmQ" type="EMFProfile" element="_BvRMEDVoEeGYg4ix0ehwmQ" name="default.emfprofile_diagram" measurementUnit="Pixel">
     <children xmi:type="notation:Node" xmi:id="_Cc3R4DVoEeGYg4ix0ehwmQ" type="2006" element="_CcpPcDVoEeGYg4ix0ehwmQ">

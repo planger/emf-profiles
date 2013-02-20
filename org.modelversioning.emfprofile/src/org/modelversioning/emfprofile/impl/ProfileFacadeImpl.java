@@ -321,7 +321,7 @@ public class ProfileFacadeImpl implements IProfileFacade {
 				stereotypeApplicabilities)) {
 			if (!isApplicable(stereotypeApplicability.getStereotype(), eObject,
 					stereotypeApplicability.getExtension())) {
-				stereotypeApplicabilities.remove(stereotypeApplicabilities);
+				stereotypeApplicabilities.remove(stereotypeApplicability);
 			}
 		}
 		return stereotypeApplicabilities;
