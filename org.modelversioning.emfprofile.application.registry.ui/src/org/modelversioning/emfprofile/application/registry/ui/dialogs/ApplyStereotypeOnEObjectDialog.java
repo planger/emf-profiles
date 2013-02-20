@@ -14,7 +14,6 @@ import java.util.Map;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -112,7 +111,7 @@ public class ApplyStereotypeOnEObjectDialog {
 				ActiveEditorObserver.INSTANCE.refreshDecoration(eObject);
 			}
 			if(hasNotApplicableStereotypes){
-				strBuilder.insert(0, "Not applicable stereotype(s)  to object: "+ (((ENamedElement)eObject == null) ? "" : ((ENamedElement)eObject).getName())+"\n");
+				strBuilder.insert(0, "Not applicable stereotype(s) to object: "+ (eObject == null ? "" : eObject.toString() +"\n"));
 				MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.ICON_ERROR | SWT.OK);
 				messageBox.setText("Could not be applied!");
 				messageBox.setMessage(strBuilder.toString());
