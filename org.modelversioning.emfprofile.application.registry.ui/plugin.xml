@@ -135,10 +135,10 @@
          </separator>
          <command
                commandId="org.modelversioning.emfprofile.application.registry.ui.commands.stereotypeapplicationsonelement"
-               icon="icons/elements_obj.gif"
-               label="Stereotype Applications on Selected Element"
+               icon="icons/pin_view.gif"
+               label="Pin View on Selected Element"
                style="toggle"
-               tooltip="Stereotype Applications on Selected Element">
+               tooltip="Pin View on Selected Element">
          </command>
          <separator
                name="org.modelversioning.emfprofile.application.registry.ui.separator3"
