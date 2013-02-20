@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator">
+      <decorator
+            class="org.modelversioning.emfprofile.application.decorator.reflective.EMFProfileApplicationDecoratorImpl">
+      </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.modelversioning.emfprofile.application.decorator.reflective.commands.ApplyStereotype"
+            name="Apply Stereotype">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="org.modelversioning.emfprofile.application.decorator.reflective.commands.ApplyStereotype"
+               label="Apply Stereotype"
+               style="push"
+               tooltip="Apply Stereotype">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.modelversioning.emfprofile.application.decorator.reflective.commands.handlers.ApplyStereotypeHandler"
+            commandId="org.modelversioning.emfprofile.application.decorator.reflective.commands.ApplyStereotype">
+         <enabledWhen>
+         <and>
+                <with variable="activeEditorId">
+                <or>
+      				<equals value="org.eclipse.emf.ecore.presentation.EcoreEditorID"/>
+      				<equals value="org.eclipse.emf.ecore.presentation.ReflectiveEditorID"/>
+      				</or>
+   				</with>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                     <instanceof
+                           value="org.eclipse.emf.ecore.EObject">
+                     </instanceof>
+               </iterate>
+               <count
+                     value="1">
+               </count>
+            </with>
+            </and>
+         </enabledWhen>
+      </handler>
+   </extension>
+</plugin>
