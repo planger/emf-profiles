@@ -209,8 +209,7 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	@Override
 	public Collection<? extends StereotypeApplicability> getApplicableStereotypes(
 			EObject eObject) {
-
-		return facade.getApplicableStereotypes(eObject.eClass());
+		return facade.getApplicableStereotypes(eObject);
 	}
 
 	@Override
