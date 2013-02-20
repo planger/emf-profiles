@@ -136,9 +136,9 @@
          <command
                commandId="org.modelversioning.emfprofile.application.registry.ui.commands.stereotypeapplicationsonelement"
                icon="icons/pin_view.gif"
-               label="Pin View on Selected Element"
+               label="Pin View with Selected Element"
                style="toggle"
-               tooltip="Pin View on Selected Element">
+               tooltip="Pin View with Selected Element">
          </command>
          <separator
                name="org.modelversioning.emfprofile.application.registry.ui.separator3"
