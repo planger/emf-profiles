@@ -1,15 +1,11 @@
 package org.modelversioning.emfprofile.application.registry.ui.providers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.modelversioning.emfprofile.EMFProfilePackage;
-import org.modelversioning.emfprofileapplication.EMFProfileApplicationPackage;
 
 public class ProfileProviderContentAdapter implements ITreeContentProvider {
 
@@ -39,7 +35,6 @@ public class ProfileProviderContentAdapter implements ITreeContentProvider {
 			return ((Collection<?>) inputElement).toArray();
 		}
 		return getTreeContentProvider(inputElement).getElements(inputElement);
-//		return getChildren(inputElement);
 	}
 
 	@Override
@@ -48,30 +43,6 @@ public class ProfileProviderContentAdapter implements ITreeContentProvider {
 			return ((Collection<?>) parentElement).toArray();
 		} 
 		return getTreeContentProvider(parentElement).getChildren(parentElement);
-	}
-
-	private Object[] filter(Object[] contents) {
-		ArrayList<Object> list = new ArrayList<Object>();
-		for (Object object : contents) {
-			if (!isStereotypeAppGenType(object)
-					&& !EMFProfilePackage.eINSTANCE.getExtension().equals(
-							object)) {
-				list.add(object);
-			}
-		}
-		return list.toArray();
-	}
-
-	private boolean isStereotypeAppGenType(Object object) {
-		if (object instanceof EGenericType) {
-			EGenericType eGenericType = (EGenericType) object;
-			if (EMFProfileApplicationPackage.eINSTANCE
-					.getStereotypeApplication().equals(
-							eGenericType.getEClassifier())) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override

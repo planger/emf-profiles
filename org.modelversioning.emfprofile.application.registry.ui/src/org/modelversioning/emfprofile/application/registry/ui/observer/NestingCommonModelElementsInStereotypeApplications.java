@@ -200,8 +200,8 @@ public class NestingCommonModelElementsInStereotypeApplications implements
 				}
 				
 			};
-			action.setText(type.getName());
-			action.setToolTipText(type.getName());
+			action.setText(reference.getName() + " " + type.getName());
+			action.setToolTipText(reference.getName() + " " + type.getName());
 			action.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 					getImageDescriptor(ISharedImages.IMG_OBJ_ELEMENT));
 			boolean isEnabled = false;
