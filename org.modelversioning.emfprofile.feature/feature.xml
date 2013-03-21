@@ -5,8 +5,8 @@
       version="1.0.0.qualifier"
       provider-name="modelversioning.org">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://code.google.com/a/eclipselabs.org/p/emf-profiles/">
+      EMF Profiles is an adaptation of the well-known UML profile concept to EMF-based DSMLs.
    </description>
 
    <copyright url="http://www.example.com/copyright">
@@ -23,6 +23,34 @@
 
    <plugin
          id="org.modelversioning.emfprofile"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.modelversioning.emfprofile.application.decorator.gmf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.modelversioning.emfprofile.application.decorator.reflective"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.modelversioning.emfprofile.application.registry"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.modelversioning.emfprofile.application.registry.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -50,14 +78,28 @@
          unpack="false"/>
 
    <plugin
-         id="org.modelversioning.emfprofile.tests"
+         id="org.modelversioning.emfprofile.project"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.modelversioning.emfprofile.ui"
+         id="org.modelversioning.emfprofile.project.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.modelversioning.emfprofile.registry"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.modelversioning.emfprofile.registry.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
