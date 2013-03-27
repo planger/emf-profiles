@@ -21,7 +21,7 @@ public interface IProfileRegistry {
 	/**
 	 * The singleton instance.
 	 */
-	public static final IProfileRegistry eINSTANCE = new ProfileRegistry();
+	public static final IProfileRegistry INSTANCE = new ProfileRegistry();
 
 	/**
 	 * Returns an unmodifiable collection of all registered profiles.
@@ -38,6 +38,16 @@ public interface IProfileRegistry {
 	Collection<IProfileProvider> getRegisteredProfileProviders();
 
 	/**
+	 * Returns the profile provider that provides the specified {@code profile}.
+	 * 
+	 * @param profile
+	 *            the {@link Profile}
+	 * @return the {@link IProfileProvider provider} that provides the
+	 *         {@code profile} or <code>null</code>.
+	 */
+	IProfileProvider getProfileProvider(Profile profile);
+
+	/**
 	 * Registers the specified profile.
 	 * 
 	 * @param profileProvider
@@ -52,7 +62,7 @@ public interface IProfileRegistry {
 	 *            provider for the profile to register.
 	 */
 	void unregisterProfile(IProfileProvider profileProvider);
-	
+
 	/**
 	 * @see Observable#addObserver(Observer)
 	 * @param observer

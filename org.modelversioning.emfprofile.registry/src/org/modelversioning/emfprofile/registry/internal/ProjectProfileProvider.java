@@ -3,6 +3,7 @@ package org.modelversioning.emfprofile.registry.internal;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.registry.IProfileProvider;
 
@@ -28,7 +29,7 @@ public class ProjectProfileProvider implements IProfileProvider {
 		if (profileResource.getContents().size() < 0) {
 			throw new IllegalArgumentException("Resource is emtpy");
 		}
-		Profile profile = obtainProfileFromResource();
+		Profile profile = obtainProfile();
 		if (profile != null) {
 			initialize(profile);
 		} else {
@@ -36,7 +37,11 @@ public class ProjectProfileProvider implements IProfileProvider {
 		}
 	}
 
-	private Profile obtainProfileFromResource() {
+	private Profile obtainProfile() {
+		return obtainProfileFromResource(profileResource);
+	}
+
+	private Profile obtainProfileFromResource(Resource resource) {
 		for (EObject eObject : profileResource.getContents()) {
 			if (eObject instanceof Profile) {
 				return (Profile) eObject;
@@ -73,6 +78,13 @@ public class ProjectProfileProvider implements IProfileProvider {
 	@Override
 	public ProfileLocationType getProfileLocationType() {
 		return ProfileLocationType.WORKSPACE;
+	}
+
+	@Override
+	public Profile loadProfile(ResourceSet resourceSet) {
+		Resource resource = resourceSet.getResource(profile.eResource()
+				.getURI(), true);
+		return obtainProfileFromResource(resource);
 	}
 
 }

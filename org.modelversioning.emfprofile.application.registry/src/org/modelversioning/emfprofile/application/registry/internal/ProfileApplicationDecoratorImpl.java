@@ -8,48 +8,35 @@
 package org.modelversioning.emfprofile.application.registry.internal;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.modelversioning.emfprofile.IProfileFacade;
 import org.modelversioning.emfprofile.Profile;
-import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
 import org.modelversioning.emfprofile.impl.ProfileFacadeImpl;
 import org.modelversioning.emfprofileapplication.ProfileApplication;
-import org.modelversioning.emfprofileapplication.ProfileImport;
 import org.modelversioning.emfprofileapplication.StereotypeApplicability;
 import org.modelversioning.emfprofileapplication.StereotypeApplication;
-import org.modelversioning.emfprofileapplication.impl.ProfileApplicationImpl;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
  * 
  */
-public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
-		implements ProfileApplicationDecorator {
+public class ProfileApplicationDecoratorImpl implements
+		ProfileApplicationDecorator {
 
 	private final ResourceSet resourceSet;
 	private final IProfileFacade facade;
-	private final ProfileApplication profileApplication;
 	private final IFile profileApplicationFile;
-	private boolean dirty = false;
 	private final Collection<Profile> profiles;
 
 	/**
@@ -67,13 +54,10 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 			Collection<Profile> profiles, ResourceSet resourceSet)
 			throws CoreException, IOException {
 		this.profileApplicationFile = profileApplicationFile;
-		this.profiles = profiles;
 		this.resourceSet = resourceSet;
 		this.facade = createAndInitializeProfileFacade(profileApplicationFile,
 				profiles);
-		this.dirty = true;
-		this.profileApplication = facade
-				.findOrCreateProfileApplication(profiles.iterator().next());
+		this.profiles = facade.getLoadedProfiles();
 	}
 
 	/**
@@ -89,21 +73,16 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 		this.profileApplicationFile = profileApplicationFile;
 		this.resourceSet = resourceSet;
 		this.facade = loadProfileApplication(profileApplicationFile);
+		if (facade.getProfileApplications().isEmpty())
+			throw new IOException("The file: "
+					+ profileApplicationFile.getName()
+					+ ", does not contain any profile applications.");
 		this.profiles = facade.getLoadedProfiles();
-		this.dirty = false;
-		if(facade.getProfileApplications().isEmpty())
-			throw new IOException("The file: " + profileApplicationFile.getName() + ", does not contain any profile applications.");
-		this.profileApplication = facade.getProfileApplications().get(0);
 	}
 
 	@Override
 	public boolean isDirty() {
-		return this.dirty;
-	}
-	
-	@Override
-	public void setDirty(boolean dirty){
-		this.dirty = dirty;
+		return facade.getProfileApplicationResource().isModified();
 	}
 
 	public IFile getProfileApplicationFile() {
@@ -122,12 +101,10 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	private IProfileFacade createAndInitializeProfileFacade(
 			IFile profileApplicationFile, Collection<Profile> profiles)
 			throws CoreException, IOException {
-
 		IProfileFacade facade = createNewProfileFacade(profileApplicationFile);
-		for (Profile profile : profiles) {
-			facade.loadProfile(profile);
-		}
-		profileApplicationFile.refreshLocal(IFile.DEPTH_ZERO, new NullProgressMonitor());
+		facade.loadProfiles(profiles);
+		profileApplicationFile.refreshLocal(IFile.DEPTH_ZERO,
+				new NullProgressMonitor());
 		return facade;
 	}
 
@@ -153,7 +130,6 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 		profileApplicationFile.refreshLocal(IFile.DEPTH_ONE,
 				new NullProgressMonitor());
 		IProfileFacade facade = createNewProfileFacade(profileApplicationFile);
-		
 		return facade;
 	}
 
@@ -167,11 +143,9 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 	private IProfileFacade createNewProfileFacade(IFile profileApplicationFile)
 			throws IOException {
 		IProfileFacade facade = new ProfileFacadeImpl();
-		facade.setProfileApplicationFileAndInitializeResource(profileApplicationFile, resourceSet);
+		facade.loadProfileApplication(profileApplicationFile, resourceSet);
 		return facade;
 	}
-
-
 
 	@Override
 	public String getName() {
@@ -185,25 +159,25 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 		}
 		return result
 				+ " - "
-				+ profileApplicationFile.getLocation().
-				makeRelativeTo(ResourcesPlugin.getWorkspace().getRoot().getLocation()).toString();
+				+ profileApplicationFile
+						.getLocation()
+						.makeRelativeTo(
+								ResourcesPlugin.getWorkspace().getRoot()
+										.getLocation()).toString();
 	}
-	
+
 	@Override
 	public String getProfileName() {
 		return profiles.iterator().next().getName();
 	}
 
-
 	public void unload() {
-		facade.unloadProfile(null);
 		facade.unload();
 	}
 
 	@Override
 	public void save() throws IOException, CoreException {
 		facade.save();
-		dirty = false;
 	}
 
 	@Override
@@ -214,162 +188,34 @@ public class ProfileApplicationDecoratorImpl extends ProfileApplicationImpl
 
 	@Override
 	public StereotypeApplication applyStereotype(
-		StereotypeApplicability stereotypeApplicability, EObject eObject) {
-		StereotypeApplication result = facade.apply(
-				stereotypeApplicability, eObject);
-		dirty = true;
-		return result;
+			StereotypeApplicability stereotypeApplicability, EObject eObject) {
+		return facade.apply(stereotypeApplicability, eObject);
 	}
-	
+
 	@Override
 	public void addNestedEObject(EObject container, EReference eReference,
 			EObject eObject) {
 		facade.addNestedEObject(container, eReference, eObject);
-		dirty = true;
 	}
-	
+
 	@Override
 	public void removeEObject(EObject eObject) {
-		dirty = true;
 		facade.removeEObject(eObject);
 	}
 
 	@Override
-	public EList<StereotypeApplication> getStereotypeApplications() {
-		return profileApplication.getStereotypeApplications();
+	public List<StereotypeApplication> getStereotypeApplications() {
+		return facade.getStereotypeApplications();
 	}
 
 	@Override
-	public EList<ProfileImport> getImportedProfiles() {
-		return profileApplication.getImportedProfiles();
+	public List<StereotypeApplication> getStereotypeApplications(EObject eObject) {
+		return facade.getAppliedStereotypes(eObject);
 	}
 
 	@Override
-	public EList<StereotypeApplication> getStereotypeApplications(
-			EObject eObject) {
-		return profileApplication.getStereotypeApplications(eObject);
+	public List<ProfileApplication> getProfileApplications() {
+		return facade.getProfileApplications();
 	}
 
-	@Override
-	public EList<StereotypeApplication> getStereotypeApplications(
-			EObject eObject, Stereotype stereotype) {
-		return profileApplication
-				.getStereotypeApplications(eObject, stereotype);
-	}
-
-	@Override
-	public EList<EObject> getAnnotatedObjects() {
-		return profileApplication.getAnnotatedObjects();
-	}
-
-
-	@Override
-	public EClass eClass() {
-		return profileApplication.eClass();
-	}
-
-	@Override
-	public Resource eResource() {
-		return profileApplication.eResource();
-	}
-
-	@Override
-	public EObject eContainer() {
-		return profileApplication.eContainer();
-	}
-
-	@Override
-	public EStructuralFeature eContainingFeature() {
-		return profileApplication.eContainingFeature();
-	}
-
-	@Override
-	public EReference eContainmentFeature() {
-		return profileApplication.eContainmentFeature();
-	}
-
-	@Override
-	public EList<EObject> eContents() {
-		return profileApplication.eContents();
-	}
-
-	@Override
-	public TreeIterator<EObject> eAllContents() {
-		return profileApplication.eAllContents();
-	}
-
-	@Override
-	public boolean eIsProxy() {
-		return profileApplication.eIsProxy();
-	}
-
-	@Override
-	public EList<EObject> eCrossReferences() {
-		return profileApplication.eCrossReferences();
-	}
-
-	@Override
-	public Object eGet(EStructuralFeature feature) {
-		return profileApplication.eGet(feature);
-	}
-
-	@Override
-	public Object eGet(EStructuralFeature feature, boolean resolve) {
-		return profileApplication.eGet(feature, resolve);
-	}
-
-	@Override
-	public void eSet(EStructuralFeature feature, Object newValue) {
-		profileApplication.eSet(feature, newValue);
-	}
-
-	@Override
-	public boolean eIsSet(EStructuralFeature feature) {
-		return profileApplication.eIsSet(feature);
-	}
-
-	@Override
-	public void eUnset(EStructuralFeature feature) {
-		profileApplication.eUnset(feature);
-	}
-
-	@Override
-	public Object eInvoke(EOperation operation, EList<?> arguments)
-			throws InvocationTargetException {
-		return profileApplication.eInvoke(operation, arguments);
-	}
-
-	@Override
-	public EList<Adapter> eAdapters() {
-		return profileApplication.eAdapters();
-	}
-
-	@Override
-	public boolean eDeliver() {
-		return profileApplication.eDeliver();
-	}
-
-	@Override
-	public void eSetDeliver(boolean deliver) {
-		profileApplication.eSetDeliver(deliver);
-	}
-
-	@Override
-	public void eNotify(Notification notification) {
-		profileApplication.eNotify(notification);
-	}
-	
-	public ProfileApplication getProfileApplication(){
-		return profileApplication;
-	}
-	
-//	@Override
-//	public boolean equals(Object obj) {
-//		return profileApplication.equals(obj);
-//	}
-//	
-//	@Override
-//	public int hashCode() {
-//		return profileApplication.hashCode();
-//	}
 }

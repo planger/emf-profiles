@@ -73,7 +73,7 @@ public class ApplyProfileWizard extends BasicNewFileResourceWizard {
 					e.getMessage(), e);
 			ErrorDialog.openError(targetPart.getSite().getShell(),
 					"Error While Applying Profile", e.getMessage(), status);
-//			EMFProfileApplicationRegistryUIPlugin.getDefault().getLog().log(status);
+			EMFProfileApplicationRegistryUIPlugin.getPlugin().getLog().log(status);
 		}
 		return true;
 	}

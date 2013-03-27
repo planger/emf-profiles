@@ -34,7 +34,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.contexts.IContextActivation;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
@@ -53,6 +52,8 @@ import org.modelversioning.emfprofileapplication.provider.EMFProfileApplicationI
  * 
  */
 public class EMFProfileApplicationsView extends ViewPart {
+
+	private static final String KEYBINDINGCONTEXT_ID = "org.modelversioning.emfprofile.application.registry.ui.keybindingcontext";
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -139,8 +140,7 @@ public class EMFProfileApplicationsView extends ViewPart {
 		// default key binding of workbench, e.g. key DEL
 		IContextService contextService = (IContextService) getSite()
 				.getService(IContextService.class);
-		IContextActivation contextActivation = contextService
-				.activateContext("org.modelversioning.emfprofile.application.registry.ui.keybindingcontext");
+		contextService.activateContext(KEYBINDINGCONTEXT_ID);
 
 	}
 
@@ -224,20 +224,7 @@ public class EMFProfileApplicationsView extends ViewPart {
 		if (adapterFactory != null)
 			return adapterFactory;
 
-		// adapterFactory = new
-		// ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		// this made some problems because dynamically created objects
-		// (EObjectImpl) should have get reflective item provider, but they
-		// didn't.
-		// the provider that was supplied was EObjectItemProvider from
-		// EcoreItemProviderAdapterFactory even if I didn't add it explicitly.
-		// The cause was in providing the parameter for constructor -> new
-		// ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE)
-		// This somehow added EcoreItemProviderAdapterFactory to the collection
-		// of Composed Adapter Factory.
-
-		adapterFactory = new ComposedAdapterFactory(); // this works as
-														// expected.
+		adapterFactory = new ComposedAdapterFactory(); 
 		adapterFactory
 				.addAdapterFactory(new EMFProfileItemProviderAdapterFactory());
 		adapterFactory

@@ -82,7 +82,7 @@ public final class EMFProfileApplicationRegistryUIPlugin extends EMFPlugin {
 		public Implementation() {
 			super();
 			// load the emf profile registry plugin
-			IProfileRegistry.eINSTANCE.getClass();
+			IProfileRegistry.INSTANCE.getClass();
 			// Remember the static instance.
 			//
 			plugin = this;

@@ -2,7 +2,6 @@ package org.modelversioning.emfprofileapplication.validation;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 
 import junit.framework.Assert;
 
@@ -84,12 +83,13 @@ public class UpperBoundConstraintValidatorTest {
 				profileApplication);
 		Assert.assertEquals(0, validator.getViolations().size());
 
-		applyStereotypeBypassingFacade(stereotype, getModelPersonFirstNameEAttribute());
+		applyStereotypeBypassingFacade(stereotype,
+				getModelPersonFirstNameEAttribute());
 
 		validator = new UpperBoundConstraintValidator(profileApplication);
 		Assert.assertEquals(1, validator.getViolations().size());
 	}
-	
+
 	@Test
 	public void testUpperBoundViolationWithMixedStereotype() throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
@@ -105,14 +105,16 @@ public class UpperBoundConstraintValidatorTest {
 				profileApplication);
 		Assert.assertEquals(0, validator.getViolations().size());
 
-		applyStereotypeBypassingFacade(stereotype, getModelPersonFirstNameEAttribute());
+		applyStereotypeBypassingFacade(stereotype,
+				getModelPersonFirstNameEAttribute());
 
 		validator = new UpperBoundConstraintValidator(profileApplication);
 		Assert.assertEquals(1, validator.getViolations().size());
 	}
-	
+
 	@Test
-	public void testUpperBoundViolationWithSubsettingStereotype() throws IOException {
+	public void testUpperBoundViolationWithSubsettingStereotype()
+			throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME);
 		Stereotype subsettingStereotype = getStereotype(SUBSETTING_STEREOTYPE_FOR_EATTRIBUTE_NAME);
@@ -126,17 +128,19 @@ public class UpperBoundConstraintValidatorTest {
 				profileApplication);
 		Assert.assertEquals(0, validator.getViolations().size());
 
-		applyStereotypeBypassingFacade(subsettingStereotype, getModelPersonFirstNameEAttribute());
+		applyStereotypeBypassingFacade(subsettingStereotype,
+				getModelPersonFirstNameEAttribute());
 
 		validator = new UpperBoundConstraintValidator(profileApplication);
 		Assert.assertEquals(1, validator.getViolations().size());
 	}
 
-	protected void applyStereotypeBypassingFacade(
-			Stereotype stereotype, EObject eObject) {
+	protected void applyStereotypeBypassingFacade(Stereotype stereotype,
+			EObject eObject) {
 		StereotypeApplication stereotypeApplication = (StereotypeApplication) stereotype
 				.getEPackage().getEFactoryInstance().create(stereotype);
-		stereotypeApplication.setExtension(stereotype.getAllExtensions().get(0));
+		stereotypeApplication
+				.setExtension(stereotype.getAllExtensions().get(0));
 		stereotypeApplication.setAppliedTo(eObject);
 		getProfileApplication().getStereotypeApplications().add(
 				stereotypeApplication);
@@ -148,27 +152,26 @@ public class UpperBoundConstraintValidatorTest {
 	}
 
 	private IProfileFacade createProfileFacade() throws IOException {
+		deleteProfileApplicationFileIfExists();
 		IProfileFacade profileFacade = new ProfileFacadeImpl();
 		profileFacade.loadProfile(profile);
-		profileApplicationResource = createProfileApplicationResource();
-		profileFacade.setProfileApplicationResource(profileApplicationResource);
+		profileApplicationResource = profileFacade.loadProfileApplication(
+				getProfileApplicationURI(), resourceSet);
 		return profileFacade;
+	}
+
+	private URI getProfileApplicationURI() {
+		String path = getAbsolutePath(profileApplicationPath);
+		return URI.createFileURI(path);
+	}
+
+	private void deleteProfileApplicationFileIfExists() {
+		String path = getAbsolutePath(profileApplicationPath);
+		deleteIfFileExists(path);
 	}
 
 	private Stereotype getStereotype(String stereotypeName) {
 		return profile.getStereotype(stereotypeName);
-	}
-
-	private Resource createProfileApplicationResource() throws IOException {
-		String absolutePath = getAbsolutePath(profileApplicationPath);
-		return createResource(absolutePath);
-	}
-
-	private Resource createResource(String path) throws IOException {
-		deleteIfFileExists(path);
-		Resource resource = resourceSet.createResource(URI.createFileURI(path));
-		resource.save(Collections.emptyMap());
-		return resource;
 	}
 
 	private EObject getModelEPackage() {

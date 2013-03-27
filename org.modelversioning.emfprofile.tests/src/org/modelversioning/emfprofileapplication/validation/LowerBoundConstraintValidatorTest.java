@@ -2,7 +2,6 @@ package org.modelversioning.emfprofileapplication.validation;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 
 import junit.framework.Assert;
 
@@ -261,7 +260,7 @@ public class LowerBoundConstraintValidatorTest {
 
 	private IProfileFacade createProfileFacadeForProfileWithRedefining()
 			throws IOException {
-		return createProfileFacade(profileWithSubset);
+		return createProfileFacade(profileWithRedefine);
 	}
 
 	private IProfileFacade createProfileFacade() throws IOException {
@@ -270,27 +269,26 @@ public class LowerBoundConstraintValidatorTest {
 
 	private IProfileFacade createProfileFacade(Profile profile)
 			throws IOException {
+		deleteProfileApplicationFileIfExists();
 		IProfileFacade profileFacade = new ProfileFacadeImpl();
+		profileApplicationResource = profileFacade.loadProfileApplication(
+				getProfileApplicationURI(), resourceSet);
 		profileFacade.loadProfile(profile);
-		profileApplicationResource = createProfileApplicationResource();
-		profileFacade.setProfileApplicationResource(profileApplicationResource);
 		return profileFacade;
+	}
+
+	private URI getProfileApplicationURI() {
+		String path = getAbsolutePath(profileApplicationPath);
+		return URI.createFileURI(path);
+	}
+
+	private void deleteProfileApplicationFileIfExists() {
+		String path = getAbsolutePath(profileApplicationPath);
+		deleteIfFileExists(path);
 	}
 
 	private Stereotype getStereotype(Profile profile, String stereotypeName) {
 		return profile.getStereotype(stereotypeName);
-	}
-
-	private Resource createProfileApplicationResource() throws IOException {
-		String absolutePath = getAbsolutePath(profileApplicationPath);
-		return createResource(absolutePath);
-	}
-
-	private Resource createResource(String path) throws IOException {
-		deleteIfFileExists(path);
-		Resource resource = resourceSet.createResource(URI.createFileURI(path));
-		resource.save(Collections.emptyMap());
-		return resource;
 	}
 
 	private EObject getModelEPackage() {

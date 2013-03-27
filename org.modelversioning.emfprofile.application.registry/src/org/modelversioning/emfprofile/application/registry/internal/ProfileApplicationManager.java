@@ -18,52 +18,37 @@ import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.application.registry.ProfileApplicationDecorator;
 
 /**
- * Profile application manager manages profiles' applications of modelled ecore resource. <br />
- * 
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
- *
+ * 
  */
 public class ProfileApplicationManager {
-	
-	
+
 	private ResourceSet resourceSet;
 	private Collection<ProfileApplicationDecorator> profileApplications = new ArrayList<>();
-	
+
 	public ProfileApplicationManager(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}
-	
-	public Collection<ProfileApplicationDecorator> getProfileApplications(){
+
+	public Collection<ProfileApplicationDecorator> getProfileApplications() {
 		return profileApplications;
 	}
-	
+
 	public boolean hasProfileApplications() {
-		return ! profileApplications.isEmpty();
+		return !profileApplications.isEmpty();
 	}
-	
-	/**
-	 * Creates new profile application
-	 * @param profileApplicationFile
-	 * @param profiles
-	 * @throws CoreException
-	 * @throws IOException
-	 */
-	public void createNewProfileApplication(IFile profileApplicationFile, Collection<Profile> profiles) throws CoreException, IOException{
-		ProfileApplicationDecorator element = new ProfileApplicationDecoratorImpl(profileApplicationFile, profiles, resourceSet);
+
+	public void createNewProfileApplication(IFile profileApplicationFile,
+			Collection<Profile> profiles) throws CoreException, IOException {
+		ProfileApplicationDecorator element = new ProfileApplicationDecoratorImpl(
+				profileApplicationFile, profiles, resourceSet);
 		profileApplications.add(element);
 	}
-	
-	/**
-	 * Loads an existing profile application.
-	 * 
-	 * @param workbenchPart
-	 *            to use.
-	 * @param profileApplicationFile
-	 *            to load.
-	 * @return profile application decorator
-	 */
-	public ProfileApplicationDecorator loadProfileApplication(IFile profileApplicationFile) throws CoreException, IOException{
-		ProfileApplicationDecorator profileApplication = new ProfileApplicationDecoratorImpl(profileApplicationFile, resourceSet);
+
+	public ProfileApplicationDecorator loadProfileApplication(
+			IFile profileApplicationFile) throws CoreException, IOException {
+		ProfileApplicationDecorator profileApplication = new ProfileApplicationDecoratorImpl(
+				profileApplicationFile, resourceSet);
 		profileApplications.add(profileApplication);
 		return profileApplication;
 	}
@@ -73,15 +58,14 @@ public class ProfileApplicationManager {
 		ProfileApplicationDecoratorImpl profileApplicationImpl = (ProfileApplicationDecoratorImpl) profileApplication;
 		profileApplicationImpl.unload();
 		profileApplications.remove(profileApplication);
-		
+
 	}
 
 	public void dispose() {
 		for (ProfileApplicationDecorator profileApplication : profileApplications) {
-			((ProfileApplicationDecoratorImpl)profileApplication).unload();
+			((ProfileApplicationDecoratorImpl) profileApplication).unload();
 		}
 		profileApplications.clear();
 	}
-	
-	
+
 }

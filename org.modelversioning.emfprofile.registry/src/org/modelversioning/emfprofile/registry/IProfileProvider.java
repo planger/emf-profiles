@@ -1,5 +1,6 @@
 package org.modelversioning.emfprofile.registry;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.modelversioning.emfprofile.Profile;
 
 public interface IProfileProvider {
@@ -35,5 +36,14 @@ public interface IProfileProvider {
 	 * @return the location type.
 	 */
 	ProfileLocationType getProfileLocationType();
+
+	/**
+	 * Loads the provided profile using the specified {@code resourceSet}.
+	 * 
+	 * @param resourceSet
+	 *            the {@link ResourceSet} to load the profile
+	 * @return the loaded {@link Profile}
+	 */
+	Profile loadProfile(ResourceSet resourceSet);
 
 }

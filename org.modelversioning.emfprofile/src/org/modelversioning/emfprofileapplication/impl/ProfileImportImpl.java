@@ -146,7 +146,7 @@ public class ProfileImportImpl extends EObjectImpl implements ProfileImport {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public Profile getProfile() {
 		if (profile != null && profile.eIsProxy()) {
@@ -178,6 +178,9 @@ public class ProfileImportImpl extends EObjectImpl implements ProfileImport {
 		Profile oldProfile = profile;
 		profile = newProfile;
 		setNsURI(profile.getNsURI());
+		if (profile.eResource() != null) {
+			setLocation(profile.eResource().getURI().toString());
+		}
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, EMFProfileApplicationPackage.PROFILE_IMPORT__PROFILE, oldProfile, profile));
 	}

@@ -30,7 +30,7 @@ public class RegisteredProfilesView extends ViewPart implements Observer {
 	private IProfileRegistry profileRegistry;
 
 	public RegisteredProfilesView() {
-		profileRegistry = IProfileRegistry.eINSTANCE;
+		profileRegistry = IProfileRegistry.INSTANCE;
 		profileRegistry.addObserver(this);
 	}
 

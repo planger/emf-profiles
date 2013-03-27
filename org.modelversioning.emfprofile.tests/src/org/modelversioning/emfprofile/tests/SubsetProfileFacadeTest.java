@@ -2,7 +2,6 @@ package org.modelversioning.emfprofile.tests;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 
 import junit.framework.Assert;
 
@@ -42,7 +41,6 @@ public class SubsetProfileFacadeTest {
 
 	private Profile profileWithSubset;
 	private Resource model;
-	private Resource profileApplicationResource;
 
 	@Before
 	public void loadProfileWithSubset() {
@@ -83,11 +81,11 @@ public class SubsetProfileFacadeTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testFailingApplicationOfSubsettedExtension() throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
-		
+
 		// check subsetting stereotype with subsetted extension
 		Extension subsettedExtension = getSubsettedExtension();
 		Stereotype subsettingStereotype = getSubsettingStereotype();
-		
+
 		// this should cause an exception
 		profileFacade.apply(subsettingStereotype,
 				getModelPersonFirstNameEAttribute(), subsettedExtension);
@@ -160,27 +158,26 @@ public class SubsetProfileFacadeTest {
 
 	private IProfileFacade createProfileFacade(Profile profile)
 			throws IOException {
+		deleteProfileApplicationFileIfExists();
 		IProfileFacade profileFacade = new ProfileFacadeImpl();
 		profileFacade.loadProfile(profile);
-		profileApplicationResource = createProfileApplicationResource();
-		profileFacade.setProfileApplicationResource(profileApplicationResource);
+		profileFacade.loadProfileApplication(getProfileApplicationURI(),
+				resourceSet);
 		return profileFacade;
+	}
+
+	private URI getProfileApplicationURI() {
+		String path = getAbsolutePath(profileApplicationPath);
+		return URI.createFileURI(path);
+	}
+
+	private void deleteProfileApplicationFileIfExists() {
+		String path = getAbsolutePath(profileApplicationPath);
+		deleteIfFileExists(path);
 	}
 
 	private Stereotype getStereotype(Profile profile, String stereotypeName) {
 		return profile.getStereotype(stereotypeName);
-	}
-
-	private Resource createProfileApplicationResource() throws IOException {
-		String absolutePath = getAbsolutePath(profileApplicationPath);
-		return createResource(absolutePath);
-	}
-
-	private Resource createResource(String path) throws IOException {
-		deleteIfFileExists(path);
-		Resource resource = resourceSet.createResource(URI.createFileURI(path));
-		resource.save(Collections.emptyMap());
-		return resource;
 	}
 
 	private EObject getModelEPackage() {

@@ -13,10 +13,13 @@
 package org.modelversioning.emfprofile;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -104,39 +107,56 @@ public interface IProfileFacade {
 	void unloadProfile(Profile profile);
 
 	/**
-	 * Loads all {@link Profile}s contained by the specified
-	 * <code>resource</code>.
-	 * 
-	 * @param resource
-	 *            containing the profiles to be loaded.
-	 */
-	void loadProfiles(Resource resource);
-
-	/**
 	 * Loads the specified <code>profiles</code>.
 	 * 
 	 * @param profiles
 	 *            the {@link Profile}s to be loaded.
 	 */
-	void loadProfiles(EList<Profile> profiles);
+	void loadProfiles(Collection<Profile> profiles);
 
 	/**
 	 * Returns the list of currently loaded {@link Profile}s.
 	 * 
 	 * @return the list of currently loaded {@link Profile}s.
 	 */
-	EList<Profile> getLoadedProfiles();
+	List<Profile> getLoadedProfiles();
 
 	/**
-	 * Sets the {@link IFile} containing the profile application and initializes
-	 * a resource.
+	 * Loads the {@link IFile} containing the profile application.
+	 * 
+	 * If the specified {@code profileApplicationFile} does not exist yet, it
+	 * will be created.
 	 * 
 	 * @param profileApplicationFile
-	 * 			  
+	 *            to load.
+	 * @param resourceSet
+	 *            {@link ResourceSet} to be used for loading.
+	 * 
 	 * @throws IOException
 	 *             if loading to resource fails.
+	 * @return the {@link Resource} containing the profile application.
 	 */
-	void setProfileApplicationFileAndInitializeResource(IFile profileApplicationFile, ResourceSet resourceSet) throws IOException;
+	Resource loadProfileApplication(IFile profileApplicationFile,
+			ResourceSet resourceSet) throws IOException;
+
+	/**
+	 * Loads the profile application with the specified @ uri} .
+	 * 
+	 * If the file with the specified {@code uri} does not exist yet, it will be
+	 * created.
+	 * 
+	 * @param uri
+	 *            URI identifying the file to load.
+	 * @param resourceSet
+	 *            {@link ResourceSet} to be used for loading.
+	 * 
+	 * @throws IOException
+	 *             if loading to resource fails.
+	 * 
+	 * @return the {@link Resource} containing the profile application.
+	 */
+	Resource loadProfileApplication(URI uri, ResourceSet resourceSet)
+			throws IOException;
 
 	/**
 	 * Returns the list of applicable stereotype for the specified type in
@@ -165,8 +185,8 @@ public interface IProfileFacade {
 	 * <p>
 	 * This method creates a new instance of the specified {@link Stereotype}
 	 * and adds it to the currently set profile application resource (cf.
-	 * {@link #setProfileApplicationResourceAndFile(Resource)}). If no resource is
-	 * currently set, this method throws an {@link IllegalStateException}.
+	 * {@link #setProfileApplicationResourceAndFile(Resource)}). If no resource
+	 * is currently set, this method throws an {@link IllegalStateException}.
 	 * </p>
 	 * 
 	 * @param stereotype
@@ -184,8 +204,8 @@ public interface IProfileFacade {
 	 * <p>
 	 * This method creates a new instance of the specified {@link Stereotype}
 	 * and adds it to the currently set profile application resource (cf.
-	 * {@link #setProfileApplicationResourceAndFile(Resource)}). If no resource is
-	 * currently set, this method throws an {@link IllegalStateException}.
+	 * {@link #setProfileApplicationResourceAndFile(Resource)}). If no resource
+	 * is currently set, this method throws an {@link IllegalStateException}.
 	 * </p>
 	 * 
 	 * @param stereotype
@@ -356,59 +376,38 @@ public interface IProfileFacade {
 	/**
 	 * Validates the entire profile application.
 	 * 
-	 * @param currentlySelectedEObject
-	 *            currently selected object. This is used for obtaining the
-	 *            annotated model in case no stereotype application has been
-	 *            created yet.
+	 * @param contextObject
+	 *            The context object for the validation.
 	 * @return the validation result.
 	 */
-	Diagnostic validateAll(EObject currentlySelectedEObject);
+	Diagnostic validateAll(EObject contextObject);
 
+	/**
+	 * Returns the {@link Resource} containing the profile aplications.
+	 * 
+	 * @return the profile application resource
+	 */
 	Resource getProfileApplicationResource();
 
 	/**
-	 * When loading profile application resource, this method is used to get a reference to
-	 * {@link ProfileApplication} 
-	 * @return
+	 * Returns all {@link ProfileApplication profile applications} maintained by
+	 * this facade.
+	 * 
+	 * @return all {@link ProfileApplication profile applications}
 	 */
 	EList<ProfileApplication> getProfileApplications();
 
 	/**
-	 * Finds or creates a profile application for the specified
-	 * <code>profile</code>.
+	 * Removes the specified {@link EObject} from managed
+	 * {@link ProfileApplication}
 	 * 
-	 * @param profile
-	 *            to find or create {@link ProfileApplication} for.
-	 * @return found or created {@link ProfileApplication}.
-	 * @param profile
-	 * @return
-	 */
-	ProfileApplication findOrCreateProfileApplication(Profile profile);
-
-	
-	/**
-	 * Sets the {@link Resource} containing the profile application.
-	 * 
-	 * @param resource
-	 * 				which contains a profile application
-	 * 			  
-	 * @throws IOException
-	 *             if loading to resource fails.
-	 * 
-	 * @throws IOException
-	 */
-	void setProfileApplicationResource(Resource resource) throws IOException;
-
-	/**
-	 * Removes the specified {@link EObject} from 
-	 * managed {@link ProfileApplication}
 	 * @param eObject
 	 */
 	void removeEObject(EObject eObject);
 
 	/**
-	 * Adds an instance of nested object to the reference
-	 * of the container.
+	 * Adds an instance of nested object to the reference of the container.
+	 * 
 	 * @param container
 	 * @param eReference
 	 * @param eObject

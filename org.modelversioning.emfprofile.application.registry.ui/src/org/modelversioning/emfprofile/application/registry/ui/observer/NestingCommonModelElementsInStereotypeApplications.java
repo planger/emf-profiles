@@ -135,11 +135,13 @@ public class NestingCommonModelElementsInStereotypeApplications implements
 
 		ISelection selection = event.getSelection();
 		if (selection instanceof IStructuredSelection && ((IStructuredSelection)selection).size() == 1) {
-			EObject eObject = (EObject) ((IStructuredSelection)selection).getFirstElement();
+			
 			// if selected object is ProfileApplicationDecorator then return
-			if(eObject instanceof ProfileApplicationDecorator){
+			if(((IStructuredSelection)selection).getFirstElement() instanceof ProfileApplicationDecorator){
 				return;				
 			}
+			
+			EObject eObject = (EObject) ((IStructuredSelection)selection).getFirstElement();
 			
 			ProfileApplicationDecorator profileApplication = ActiveEditorObserver.INSTANCE.findProfileApplicationDecorator(
 					eObject);

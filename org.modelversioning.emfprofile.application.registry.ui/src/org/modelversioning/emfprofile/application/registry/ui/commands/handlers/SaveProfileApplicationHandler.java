@@ -65,8 +65,6 @@ public class SaveProfileApplicationHandler extends AbstractHandler implements
 					}
 				};
 				try {
-//					new ProgressMonitorDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()).run(true, false,
-//							operation);
 					new ProgressMonitorDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()).run(true, false,
 							operation);
 				} catch (Exception e) {

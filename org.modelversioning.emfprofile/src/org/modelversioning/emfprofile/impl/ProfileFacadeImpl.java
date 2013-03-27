@@ -12,18 +12,22 @@
 
 package org.modelversioning.emfprofile.impl;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -37,9 +41,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -64,13 +75,18 @@ import org.modelversioning.emfprofileapplication.util.ProfileImportResolver;
  */
 public class ProfileFacadeImpl implements IProfileFacade {
 
+	private static final String PROFILE_EXTENSION = "emfprofile";
+	private static final String PROFILE_DIAGRAM_EXTENSION = "emfprofile_diagram";
+	private static final String XMI_EXTENSION = "xmi";
+	private static final String PROFILE_APPLICATION_EXTENSION = "pa.xmi";
 	private static final String STEREOTYPE_NOT_APPLICABLE = "Stereotype is not applicable to the object.";
 	private static final String STEREOTYPE_APP_RESOURCE_ERROR = "Specified resource for the "
 			+ "stereotype application is not set, null, or unloaded.";
+
 	/**
 	 * Currently loaded profiles.
 	 */
-	private EList<Profile> profiles = new BasicEList<Profile>();
+	private List<Profile> profiles = new ArrayList<Profile>();
 	/**
 	 * Currently loaded profile application resource.
 	 */
@@ -98,7 +114,7 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 */
 	@Override
 	public void save() throws IOException {
-		if (profileApplicationResource != null) {
+		if (haveProfileApplicationResource()) {
 			if (requireTransaction()) {
 				TransactionalEditingDomain domain = getTransactionalEditingDomain();
 				doProfileApplicationResourceSave();
@@ -110,24 +126,34 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	}
 
 	private void doProfileApplicationResourceSave() {
-		final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
-		saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED,
-				Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-		new WorkspaceJob("Saving Profile Application") {
-			@Override
-			public IStatus runInWorkspace(IProgressMonitor monitor)
-					throws CoreException {
-				try {
-					profileApplicationResource.save(saveOptions);	
-//					profileApplicationFile.touch(new NullProgressMonitor());
-					profileApplicationFile.refreshLocal(IFile.DEPTH_ONE, new NullProgressMonitor());
-				} catch (IOException e) {
-					return new Status(IStatus.ERROR, EMFProfilePlugin.ID,
-							e.getMessage(), e);
-				}
-				return new Status(IStatus.OK, EMFProfilePlugin.ID, "OK");
+		try {
+			profileApplicationResource.save(null);
+			refreshProfileApplicationFile();
+		} catch (IOException e) {
+			EMFProfilePlugin.getPlugin().log(
+					new Status(IStatus.ERROR, EMFProfilePlugin.ID, e
+							.getMessage(), e));
+		} catch (CoreException e) {
+			EMFProfilePlugin.getPlugin().log(
+					new Status(IStatus.ERROR, EMFProfilePlugin.ID, e
+							.getMessage(), e));
+		}
+	}
+
+	private void refreshProfileApplicationFile() throws CoreException {
+		if (profileApplicationFile != null) {
+			profileApplicationFile.refreshLocal(IFile.DEPTH_ONE,
+					new NullProgressMonitor());
+		}
+	}
+
+	private void touchProfileApplicationFile() {
+		if (profileApplicationFile != null) {
+			try {
+				profileApplicationFile.touch(new NullProgressMonitor());
+			} catch (CoreException e) {
 			}
-		}.schedule();
+		}
 	}
 
 	/**
@@ -135,11 +161,58 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 */
 	@Override
 	public void loadProfile(Profile profile) {
-		this.profiles.add(profile);
-		if (profileApplicationResource != null) {
-			profileApplicationResource.getResourceSet().getPackageRegistry()
-					.put(profile.getNsURI(), profile);
+		if (haveProfileApplicationResource()) {
+			if (isProfileLoadedInApplicationResourceSet(profile)) {
+				addProfile(profile);
+			} else {
+				profile = loadInProfileApplicationResourceSet(profile,
+						getApplicationResourceSet());
+				addProfile(profile);
+			}
+			if (isProfileApplicationResourceLoaded())
+				findOrCreateProfileApplication(profile);
+		} else {
+			addProfile(profile);
 		}
+	}
+
+	private void addProfile(Profile profile) {
+		removeProfile(profile);
+		profiles.add(profile);
+		addProfileToPackageRegistry(profile);
+	}
+
+	private void removeProfile(Profile profile) {
+		for (Profile currentProfile : new LinkedList<Profile>(profiles))
+			if (profile.getNsURI().equals(currentProfile.getNsURI()))
+				profiles.remove(profile);
+	}
+
+	private void addProfileToPackageRegistry(Profile profile) {
+		if (haveProfileApplicationResource()) {
+			getApplicationResourceSet().getPackageRegistry().put(
+					profile.getNsURI(), profile);
+		}
+	}
+
+	private boolean haveProfileApplicationResource() {
+		return getProfileApplicationResource() != null;
+	}
+
+	private boolean isProfileLoadedInApplicationResourceSet(Profile profile) {
+		return profile.eResource() != null
+				&& getApplicationResourceSet().equals(
+						profile.eResource().getResourceSet());
+	}
+
+	private ResourceSet getApplicationResourceSet() {
+		return profileApplicationResource.getResourceSet();
+	}
+
+	private Profile loadInProfileApplicationResourceSet(Profile profile,
+			ResourceSet resourceSet) {
+		return ProfileImportResolver.getProfile(profile.getNsURI(),
+				resourceSet.getResource(profile.eResource().getURI(), true));
 	}
 
 	/**
@@ -147,18 +220,16 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 */
 	@Override
 	public void unloadProfile(Profile profile) {
-		this.profiles.remove(profile);
+		removeProfile(profile);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void loadProfiles(Resource resource) {
-		for (EObject eObject : resource.getContents()) {
-			if (eObject instanceof Profile) {
-				this.loadProfile((Profile) eObject);
-			}
+	public void loadProfiles(Collection<Profile> profiles) {
+		for (Profile profile : profiles) {
+			loadProfile(profile);
 		}
 	}
 
@@ -166,109 +237,116 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void loadProfiles(EList<Profile> profiles) {
-		this.profiles.addAll(profiles);
+	public List<Profile> getLoadedProfiles() {
+		return Collections.unmodifiableList(profiles);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EList<Profile> getLoadedProfiles() {
-		return ECollections.unmodifiableEList(profiles);
+	public Resource loadProfileApplication(IFile file, ResourceSet resourceSet)
+			throws IOException {
+		this.profileApplicationFile = file;
+		doLoadProfileApplication(getURIFromIFile(file), resourceSet);
+		return getProfileApplicationResource();
+	}
+
+	private URI getURIFromIFile(IFile file) {
+		return URI.createPlatformResourceURI(file.getFullPath().toString(),
+				true);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setProfileApplicationFileAndInitializeResource(
-			IFile profileApplicationFile, ResourceSet resourceSet) throws IOException {
-		setProfileApplicationResource(createProfileApplicationResource(profileApplicationFile, resourceSet));
-		this.profileApplicationFile = profileApplicationFile;
+	public Resource loadProfileApplication(URI uri, ResourceSet resourceSet)
+			throws IOException {
+		this.profileApplicationFile = obtainIFileFromURI(uri);
+		doLoadProfileApplication(uri, resourceSet);
+		return getProfileApplicationResource();
+	}
+
+	private IFile obtainIFileFromURI(URI uri) {
 		try {
-			profileApplicationFile.touch(null);
-		} catch (CoreException e) {
+			return ResourcesPlugin.getWorkspace().getRoot()
+					.getFile(new Path(uri.toPlatformString(true)));
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
-	/**
-	 * Creates the profile application resource.
-	 * 
-	 * @param profileApplicationFile
-	 *            specifying the location.
-	 * @param resourceSet
-	 *            {@link ResourceSet} to use.
-	 * @return the created resource.
-	 * @throws IOException
-	 *             if location not writable.
-	 */
-	private Resource createProfileApplicationResource(
-			IFile profileApplicationFile, ResourceSet resourceSet)
+	private void doLoadProfileApplication(URI uri, ResourceSet resourceSet)
 			throws IOException {
-		Resource profileApplicationResource = resourceSet
-				.createResource(URI.createFileURI(profileApplicationFile
-						.getLocation().toString()));
-		if (!profileApplicationFile.exists()) {
-			profileApplicationResource.save(Collections.emptyMap());
-		}
-		profileApplicationResource.load(Collections.emptyMap());
-		return profileApplicationResource;
+		addSpecificResourceFactories(resourceSet);
+		createProfileApplicationResource(uri, resourceSet);
+		loadProfileApplicationResource();
+		reloadProfiles();
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setProfileApplicationResource(Resource resource)
-			throws IOException {
-		profileApplicationResource = resource;
-		if (!profileApplicationResource.isLoaded()) {
-			profileApplicationResource.load(Collections.emptyMap());
+
+	private void createProfileApplicationResource(URI uri,
+			ResourceSet resourceSet) {
+		profileApplicationResource = resourceSet.createResource(uri);
+		profileApplicationResource.setTrackingModification(true);
+	}
+
+	private void addSpecificResourceFactories(ResourceSet resourceSet) {
+		Registry resourceFactoryRegistry = resourceSet
+				.getResourceFactoryRegistry();
+		Map<String, Object> extensionToFactoryMap = resourceFactoryRegistry
+				.getExtensionToFactoryMap();
+		extensionToFactoryMap.put(XMI_EXTENSION,
+				new ProfileApplicationResourceFactoryImpl());
+		extensionToFactoryMap.put(PROFILE_DIAGRAM_EXTENSION,
+				new EcoreResourceFactoryImpl());
+		extensionToFactoryMap.put(PROFILE_EXTENSION,
+				new EcoreResourceFactoryImpl());
+	}
+
+	private void loadProfileApplicationResource() throws IOException {
+		if (!isProfileApplicationResourceExisting()) {
+			touchProfileApplicationFile();
+			profileApplicationResource.save(null);
+		} else {
+			readAndLoadImportedProfiles();
 		}
+		profileApplicationResource.load(null);
+	}
 
-		EcoreUtil.resolveAll(profileApplicationResource);
+	private boolean isProfileApplicationResourceExisting() {
+		if (profileApplicationFile != null) {
+			return profileApplicationFile.exists();
+		} else {
+			return new File(profileApplicationResource.getURI().toFileString())
+					.exists();
+		}
+	}
 
-		// resolve profile imports
-		EList<ProfileApplication> profileApplications = getProfileApplications(profileApplicationResource);
-		for (ProfileApplication application : profileApplications) {
-			for (final ProfileImport profileImport : application
-					.getImportedProfiles()) {
-				if (requireTransaction()) {
-					TransactionalEditingDomain domain = getTransactionalEditingDomain();
-					domain.getCommandStack().execute(
-							new RecordingCommand(domain) {
-								@Override
-								protected void doExecute() {
-									ProfileImportResolver.resolve(
-											profileImport,
-											profileApplicationResource
-													.getResourceSet());
-								}
-							});
-				} else {
-					ProfileImportResolver.resolve(profileImport,
-							profileApplicationResource.getResourceSet());
+	private void readAndLoadImportedProfiles() throws IOException {
+		Map<Object, Object> options = new HashMap<Object, Object>();
+		options.put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
+		profileApplicationResource.load(options);
+		loadImportedProfiles();
+		profileApplicationResource.unload();
+	}
+
+	private void loadImportedProfiles() {
+		for (EObject eObject : profileApplicationResource.getContents()) {
+			if (eObject instanceof ProfileApplication) {
+				ProfileApplication profileApplication = (ProfileApplication) eObject;
+				for (ProfileImport profileImport : profileApplication
+						.getImportedProfiles()) {
+					Profile profile = ProfileImportResolver.resolve(
+							profileImport, getApplicationResourceSet());
+					if (profile != null) {
+						loadProfile(profile);
+					}
 				}
-				profiles.add(profileImport.getProfile());
 			}
 		}
-
-		for (Profile profile : this.profiles) {
-			this.profileApplicationResource.getResourceSet()
-					.getPackageRegistry().put(profile.getNsURI(), profile);
-		}
 	}
 
-	/**
-	 * Returns a list of {@link ProfileApplication ProfileApplications}
-	 * contained by the specified <code>resource</code>.
-	 * 
-	 * @param resource
-	 *            to get contained {@link ProfileApplication
-	 *            ProfileApplications}.
-	 * @return the list of {@link ProfileApplication ProfileApplications}.
-	 */
 	private EList<ProfileApplication> getProfileApplications(Resource resource) {
 		EList<ProfileApplication> profileApplications = new BasicEList<ProfileApplication>();
 		for (EObject eObject : resource.getContents()) {
@@ -277,6 +355,12 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			}
 		}
 		return profileApplications;
+	}
+
+	private void reloadProfiles() {
+		for (Profile profile : new LinkedList<Profile>(profiles)) {
+			loadProfile(profile);
+		}
 	}
 
 	/**
@@ -315,8 +399,6 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			EObject eObject) {
 		EList<StereotypeApplicability> stereotypeApplicabilities = getApplicableStereotypes(eObject
 				.eClass());
-
-		// check applicability for each
 		for (StereotypeApplicability stereotypeApplicability : new BasicEList<StereotypeApplicability>(
 				stereotypeApplicabilities)) {
 			if (!isApplicable(stereotypeApplicability.getStereotype(), eObject,
@@ -434,8 +516,7 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 */
 	protected StereotypeApplication createStereotypeApplication(
 			Stereotype stereotype) {
-		final StereotypeApplication stereotypeInstance = (StereotypeApplication) stereotype
-				.getEPackage().getEFactoryInstance().create(stereotype);
+		final StereotypeApplication stereotypeInstance = instantiateStereotypeApplication(stereotype);
 		final ProfileApplication profileApplication = findOrCreateProfileApplication(stereotype
 				.getProfile());
 		if (requireTransaction()) {
@@ -454,11 +535,13 @@ public class ProfileFacadeImpl implements IProfileFacade {
 		return stereotypeInstance;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ProfileApplication findOrCreateProfileApplication(
+	private StereotypeApplication instantiateStereotypeApplication(
+			Stereotype stereotype) {
+		return (StereotypeApplication) stereotype.getEPackage()
+				.getEFactoryInstance().create(stereotype);
+	}
+
+	private ProfileApplication findOrCreateProfileApplication(
 			final Profile profile) {
 		boolean found = false;
 		ProfileApplication profileApplication = null;
@@ -520,12 +603,9 @@ public class ProfileFacadeImpl implements IProfileFacade {
 			Profile profile) {
 		for (ProfileImport profileImport : profileApplication
 				.getImportedProfiles()) {
-			try {
-				if (profileImport.getNsURI().equals(profile.getNsURI())) {
-					return true;
-				}
-			} catch (NullPointerException npe) {
-				return false;
+			if (profileImport.getNsURI() != null
+					&& profileImport.getNsURI().equals(profile.getNsURI())) {
+				return true;
 			}
 		}
 		return false;
@@ -583,11 +663,11 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	 * 
 	 * @exception IllegalArgumentException
 	 *                if {@link #profileApplicationResource} is not
-	 *                {@link #setProfileApplicationResourceAndFile(Resource) set}.
+	 *                {@link #setProfileApplicationResourceAndFile(Resource)
+	 *                set}.
 	 */
 	protected void addToResource(final EObject eObject) {
-		if (profileApplicationResource == null
-				|| !profileApplicationResource.isLoaded()) {
+		if (!isProfileApplicationResourceLoaded()) {
 			throw new IllegalArgumentException(STEREOTYPE_APP_RESOURCE_ERROR);
 		} else {
 			if (!profileApplicationResource.getContents().contains(eObject)) {
@@ -606,6 +686,11 @@ public class ProfileFacadeImpl implements IProfileFacade {
 				}
 			}
 		}
+	}
+
+	private boolean isProfileApplicationResourceLoaded() {
+		return profileApplicationResource != null
+				&& profileApplicationResource.isLoaded();
 	}
 
 	/**
@@ -783,7 +868,7 @@ public class ProfileFacadeImpl implements IProfileFacade {
 
 	@Override
 	public EList<ProfileApplication> getProfileApplications() {
-		return getProfileApplications(profileApplicationResource);
+		return getProfileApplications(getProfileApplicationResource());
 	}
 
 	@Override
@@ -802,27 +887,64 @@ public class ProfileFacadeImpl implements IProfileFacade {
 	}
 
 	@Override
-	public void addNestedEObject(final EObject container, final EReference eReference,
-			final EObject eObject) {
+	public void addNestedEObject(final EObject container,
+			final EReference eReference, final EObject eObject) {
 		if (requireTransaction()) {
 			TransactionalEditingDomain domain = getTransactionalEditingDomain();
 			domain.getCommandStack().execute(new RecordingCommand(domain) {
 				@Override
 				protected void doExecute() {
-					if(eReference.isMany()){
+					if (eReference.isMany()) {
 						((List) container.eGet(eReference)).add(eObject);
-					}else{
+					} else {
 						container.eSet(eReference, eObject);
 					}
 				}
 			});
 		} else {
-			if(eReference.isMany()){
+			if (eReference.isMany()) {
 				((List) container.eGet(eReference)).add(eObject);
-			}else{
+			} else {
 				container.eSet(eReference, eObject);
 			}
 		}
 	}
 
+	private final class ProfileApplicationResourceFactoryImpl extends
+			XMIResourceFactoryImpl {
+		@Override
+		public Resource createResource(URI uri) {
+			XMIResourceImpl result = new XMIResourceImpl(uri);
+			if (isProfileApplicationURI(uri)) {
+				Map<Object, Object> defaultOptions = result
+						.getDefaultSaveOptions();
+				addSpecificOptions(defaultOptions);
+			}
+			return result;
+		}
+
+		private boolean isProfileApplicationURI(URI uri) {
+			return uri.toString().contains(PROFILE_APPLICATION_EXTENSION);
+		}
+
+		private void addSpecificOptions(Map<Object, Object> defaultOptions) {
+			defaultOptions.put(XMIResource.OPTION_SAVE_ONLY_IF_CHANGED,
+					XMIResource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
+			defaultOptions
+					.put(XMIResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+			defaultOptions.put(XMLResource.OPTION_URI_HANDLER,
+					new URIHandlerImpl.PlatformSchemeAware() {
+						@Override
+						public URI deresolve(URI uri) {
+							URI deresolvedURI = super.deresolve(uri);
+							if (uri.isPlatform() && deresolvedURI.isRelative()) {
+								return uri;
+							} else {
+								return deresolvedURI;
+							}
+						}
+					});
+		}
+
+	}
 }

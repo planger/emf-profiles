@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
@@ -13,9 +12,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
-import org.modelversioning.emfprofile.Extension;
 import org.modelversioning.emfprofile.Profile;
-import org.modelversioning.emfprofile.Stereotype;
 import org.modelversioning.emfprofile.registry.IProfileProvider;
 import org.modelversioning.emfprofile.registry.IProfileRegistry;
 
@@ -71,31 +68,7 @@ public class ProfileRegistry extends Observable implements IProfileRegistry {
 			registeredProfileProviders.put(profileProvider.getProfileNsURI(),
 					profileProvider);
 			registeredProfiles.add(profile);
-			EPackage.Registry.INSTANCE
-					.remove(profileProvider.getProfileNsURI());
-			EPackage.Registry.INSTANCE.put(profileProvider.getProfileNsURI(),
-					profile);
-			registerExtendedPackages(profile);
 			setChanged();
-		}
-	}
-
-	private void registerExtendedPackages(Profile profile) {
-		List<EPackage> registeredPackages = new ArrayList<EPackage>();
-		for (Stereotype stereotype : profile.getStereotypes()) {
-			for (Extension extension : stereotype.getAllExtensions()) {
-				EPackage ePackage = extension.getTarget().getEPackage();
-				if (!registeredPackages.contains(ePackage)) {
-					EPackage.Registry.INSTANCE.put(ePackage.getNsURI(),
-							ePackage);
-					registeredPackages.add(ePackage);
-				}
-			}
-		}
-		for (EPackage subPackage : profile.getESubpackages()) {
-			if (subPackage instanceof Profile) {
-				registerExtendedPackages((Profile) subPackage);
-			}
 		}
 	}
 
@@ -107,6 +80,13 @@ public class ProfileRegistry extends Observable implements IProfileRegistry {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public IProfileProvider getProfileProvider(Profile profile) {
+		IProfileProvider profileProvider = registeredProfileProviders
+				.get(profile.getNsURI());
+		return profileProvider;
 	}
 
 	@Override

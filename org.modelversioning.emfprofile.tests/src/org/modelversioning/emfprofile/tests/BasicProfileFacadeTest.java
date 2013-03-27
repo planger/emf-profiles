@@ -13,7 +13,6 @@ package org.modelversioning.emfprofile.tests;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 
 import junit.framework.Assert;
 
@@ -55,7 +54,7 @@ public class BasicProfileFacadeTest {
 	private static final String profilePath = "model/basic/profile_for_ecore_models.emfprofile_diagram";
 	private static final String profileApplicationPath = "model/basic/annotation.emfprofile.xmi";
 
-	private final ResourceSet resourceSet = new ResourceSetImpl();
+	private ResourceSet resourceSet = new ResourceSetImpl();
 
 	private Profile profile;
 	private Resource model;
@@ -115,23 +114,22 @@ public class BasicProfileFacadeTest {
 	}
 
 	private IProfileFacade createProfileFacade() throws IOException {
+		deleteProfileApplicationFileIfExists();
 		IProfileFacade profileFacade = new ProfileFacadeImpl();
 		profileFacade.loadProfile(profile);
-		Resource profileApplicationRes = createProfileApplicationResource();
-		profileFacade.setProfileApplicationResource(profileApplicationRes);
+		profileFacade.loadProfileApplication(getProfileApplicationURI(),
+				resourceSet);
 		return profileFacade;
 	}
 
-	private Resource createProfileApplicationResource() throws IOException {
-		String absolutePath = getAbsolutePath(profileApplicationPath);
-		return createResource(absolutePath);
+	private URI getProfileApplicationURI() {
+		String path = getAbsolutePath(profileApplicationPath);
+		return URI.createFileURI(path);
 	}
 
-	private Resource createResource(String path) throws IOException {
+	private void deleteProfileApplicationFileIfExists() {
+		String path = getAbsolutePath(profileApplicationPath);
 		deleteIfFileExists(path);
-		Resource resource = resourceSet.createResource(URI.createFileURI(path));
-		resource.save(Collections.emptyMap());
-		return resource;
 	}
 
 	private void deleteIfFileExists(String path) {
@@ -171,7 +169,7 @@ public class BasicProfileFacadeTest {
 
 	@Test
 	public void testSavingAndReloadingExistingProfileApplication()
-			throws IOException {
+			throws IOException, InterruptedException {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASS_NAME);
 		EClass person = getModelPersonEClass();
@@ -182,12 +180,11 @@ public class BasicProfileFacadeTest {
 		profileFacade.setTaggedValue(application, taggedValue, "test");
 
 		profileFacade.save();
+		Thread.sleep(100); // wait for file to be written
 
 		profileFacade = new ProfileFacadeImpl();
-		profileFacade.loadProfile(profile);
-		String absolutePath = getAbsolutePath(profileApplicationPath);
-		Resource profileApplicationRes = loadResource(absolutePath);
-		profileFacade.setProfileApplicationResource(profileApplicationRes);
+		profileFacade.loadProfileApplication(getProfileApplicationURI(),
+				resourceSet);
 
 		EList<StereotypeApplication> appliedStereotypes = profileFacade
 				.getAppliedStereotypes(person);
@@ -203,7 +200,8 @@ public class BasicProfileFacadeTest {
 	}
 
 	@Test
-	public void testRemovingExistingProfileApplication() throws IOException {
+	public void testRemovingExistingProfileApplication() throws IOException,
+			InterruptedException {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype = getStereotype(CONCRETE_STEREOTYPE_FOR_ECLASS_NAME);
 		EClass person = getModelPersonEClass();
@@ -214,12 +212,12 @@ public class BasicProfileFacadeTest {
 		profileFacade.setTaggedValue(application, taggedValue, "test");
 
 		profileFacade.save();
+		Thread.sleep(100); // wait for file to be written
 
 		profileFacade = new ProfileFacadeImpl();
 		profileFacade.loadProfile(profile);
-		String absolutePath = getAbsolutePath(profileApplicationPath);
-		Resource profileApplicationRes = loadResource(absolutePath);
-		profileFacade.setProfileApplicationResource(profileApplicationRes);
+		profileFacade.loadProfileApplication(getProfileApplicationURI(),
+				resourceSet);
 
 		Assert.assertEquals(1, profileFacade.getAppliedStereotypes(person)
 				.size());
@@ -284,9 +282,10 @@ public class BasicProfileFacadeTest {
 		Assert.assertFalse(profileFacade.isApplicable(stereotype,
 				firstNameAttribute));
 	}
-	
+
 	@Test
-	public void testInapplicabilityCausedByUpperBoundWithMixedStereotypes() throws IOException {
+	public void testInapplicabilityCausedByUpperBoundWithMixedStereotypes()
+			throws IOException {
 		IProfileFacade profileFacade = createProfileFacade();
 		Stereotype stereotype1 = getStereotype(CONCRETE_STEREOTYPE_FOR_EATTRIBUTE_NAME);
 		Stereotype stereotype2 = getStereotype(SUB_STEREOTYPE_FOR_EATTRIBUTE_NAME);

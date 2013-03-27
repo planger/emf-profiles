@@ -14,26 +14,29 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
+import org.modelversioning.emfprofile.application.registry.ui.EMFProfileApplicationRegistryUIPlugin;
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.EMFProfileApplicationDecorator;
 import org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator.PluginExtensionOperationsListener;
 
 /**
- * This handler class looks in platforms extension registry for 
- * {@link EMFProfileApplicationDecorator} extension points and
- * manages a map of editor part id to decorators that can decorate
- * the elements of that editor.
+ * This handler class looks in platforms extension registry for
+ * {@link EMFProfileApplicationDecorator} extension points and manages a map of
+ * editor part id to decorators that can decorate the elements of that editor.
+ * 
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
  * 
  */
 public class EMFProfileApplicationDecoratorHandler {
-	
+
 	private static EMFProfileApplicationDecoratorHandler INSTANCE;
-	
+
 	public static EMFProfileApplicationDecoratorHandler getInstance() {
-		if(EMFProfileApplicationDecoratorHandler.INSTANCE == null)
+		if (EMFProfileApplicationDecoratorHandler.INSTANCE == null)
 			EMFProfileApplicationDecoratorHandler.INSTANCE = new EMFProfileApplicationDecoratorHandler();
 		return EMFProfileApplicationDecoratorHandler.INSTANCE;
 	}
@@ -47,102 +50,70 @@ public class EMFProfileApplicationDecoratorHandler {
 	private EMFProfileApplicationDecoratorHandler() {
 		IConfigurationElement[] config = Platform.getExtensionRegistry()
 				.getConfigurationElementsFor(DECORATOR_ID);
-		
-			for (IConfigurationElement e : config) {
-				System.out.println("Evaluating extension");
-				Object o = null;
+
+		for (IConfigurationElement e : config) {
+			System.out.println("Evaluating extension");
+			Object o = null;
+			try {
+				o = e.createExecutableExtension("class");
+			} catch (CoreException e2) {
+				e2.printStackTrace();
+			}
+			if (o != null) {
+				EMFProfileApplicationDecorator decorator = (EMFProfileApplicationDecorator) o;
+				String[] supportedEditorIDs = null;
 				try {
-					o = e.createExecutableExtension("class");
-				} catch (CoreException e2) {
-					e2.printStackTrace();
-				}
-				if(o != null){
-					EMFProfileApplicationDecorator decorator = (EMFProfileApplicationDecorator) o;
-					String[] supportedEditorIDs = null;
-					try {
-						supportedEditorIDs = decorator.canDecorateEditorParts();
-//						decorator.setPluginExtensionOperationsListener(ActiveEditorObserver.INSTANCE);
-						for (String id : supportedEditorIDs) {
-							if( ! decorators.containsKey(id)){
-								decorators.put(id, new ArrayList<EMFProfileApplicationDecorator>());
-							}
-							decorators.get(id).add(decorator);
+					supportedEditorIDs = decorator.canDecorateEditorParts();
+					for (String id : supportedEditorIDs) {
+						if (!decorators.containsKey(id)) {
+							decorators
+									.put(id,
+											new ArrayList<EMFProfileApplicationDecorator>());
 						}
-					} catch (Exception e2) {
-						e2.printStackTrace();
+						decorators.get(id).add(decorator);
 					}
+				} catch (Exception e2) {
+					EMFProfileApplicationRegistryUIPlugin
+							.getPlugin()
+							.log(new Status(
+									IStatus.WARNING,
+									EMFProfileApplicationRegistryUIPlugin.PLUGIN_ID,
+									e2.getLocalizedMessage(), e2));
 				}
-			
 			}
-			
-			System.out.println("DECORATOR HANDLER CONTAINS FOLLOWING DECORATORS:");
-			for (String id : decorators.keySet()) {
-				System.out.println("editor id: " +id + ", has decorators amount: " + decorators.get(id).size());
-			}
-		
+		}
 	}
 
-	public boolean hasDecoratorForEditorPart(IWorkbenchPart part){
-		if(part instanceof IEditorPart){
+	public boolean hasDecoratorForEditorPart(IWorkbenchPart part) {
+		if (part instanceof IEditorPart) {
 			return decorators.containsKey(part.getSite().getId());
 		}
 		return false;
 	}
-	
-	public EMFProfileApplicationDecorator getDecoratorForEditorPart(IWorkbenchPart part){
+
+	public EMFProfileApplicationDecorator getDecoratorForEditorPart(
+			IWorkbenchPart part) {
 		return decorators.get(part.getSite().getId()).iterator().next();
 	}
-	
-	public void setPluginExtensionOperationsListener(PluginExtensionOperationsListener listener){
-		for (Collection<EMFProfileApplicationDecorator> _decorators : decorators.values()) {
+
+	public void setPluginExtensionOperationsListener(
+			PluginExtensionOperationsListener listener) {
+		for (Collection<EMFProfileApplicationDecorator> _decorators : decorators
+				.values()) {
 			for (EMFProfileApplicationDecorator emfProfileApplicationDecorator : _decorators) {
-				emfProfileApplicationDecorator.setPluginExtensionOperationsListener(listener);
-			}
-		}
-	}
-	
-	public void unsetPluginExtensionOperationsListener(){
-		for (Collection<EMFProfileApplicationDecorator> _decorators : decorators.values()) {
-			for (EMFProfileApplicationDecorator emfProfileApplicationDecorator : _decorators) {
-				emfProfileApplicationDecorator.setPluginExtensionOperationsListener(null);
+				emfProfileApplicationDecorator
+						.setPluginExtensionOperationsListener(listener);
 			}
 		}
 	}
 
-//	public void execute(IExtensionRegistry registry) {
-//		evaluate(registry);
-//	}
-//
-//	private void evaluate(IExtensionRegistry registry) {
-//		IConfigurationElement[] config = registry
-//				.getConfigurationElementsFor(DECORATOR_ID);
-//		try {
-//			for (IConfigurationElement e : config) {
-//				System.out.println("Evaluating extension");
-//				final Object o = e.createExecutableExtension("class");
-//				if (o instanceof EMFProfileApplicationDecorator) {
-//					executeExtension(o);
-//				}
-//			}
-//		} catch (CoreException ex) {
-//			System.out.println(ex.getMessage());
-//		}
-//	}
-//
-//	private void executeExtension(final Object o) {
-//		ISafeRunnable runnable = new ISafeRunnable() {
-//			@Override
-//			public void handleException(Throwable e) {
-//				System.out.println("Exception in client");
-//			}
-//
-//			@Override
-//			public void run() throws Exception {
-//				String greet = ((EMFProfileApplicationDecorator) o).greet();
-//
-//				System.out.println("MELDUNG VOM DECORATOR: " + greet);
-//			}
-//		};
-//		SafeRunner.run(runnable);
-//	}
+	public void unsetPluginExtensionOperationsListener() {
+		for (Collection<EMFProfileApplicationDecorator> _decorators : decorators
+				.values()) {
+			for (EMFProfileApplicationDecorator emfProfileApplicationDecorator : _decorators) {
+				emfProfileApplicationDecorator
+						.setPluginExtensionOperationsListener(null);
+			}
+		}
+	}
 }

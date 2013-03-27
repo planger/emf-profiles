@@ -409,7 +409,6 @@ public class ActiveEditorObserver implements PluginExtensionOperationsListener {
 					ProfileApplicationDecorator profileApplication = findProfileApplicationDecorator(eObject);
 					if(profileApplication == null) // could not find it, do nothing
 						return;
-					profileApplication.setDirty(true);
 					updateViewer(profileApplication);
 				}
 			}

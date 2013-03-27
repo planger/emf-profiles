@@ -13,7 +13,6 @@ package org.modelversioning.emfprofile.tests;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 
 import junit.framework.Assert;
 
@@ -96,23 +95,22 @@ public class MetaProfileFacadeTest {
 	}
 
 	private IProfileFacade createProfileFacade() throws IOException {
+		deleteProfileApplicationFileIfExists();
 		IProfileFacade profileFacade = new ProfileFacadeImpl();
 		profileFacade.loadProfile(profile);
-		Resource profileApplicationRes = createProfileApplicationResource();
-		profileFacade.setProfileApplicationResource(profileApplicationRes);
+		profileFacade.loadProfileApplication(getProfileApplicationURI(),
+				resourceSet);
 		return profileFacade;
 	}
 
-	private Resource createProfileApplicationResource() throws IOException {
-		String absolutePath = getAbsolutePath(profileApplicationPath);
-		return createResource(absolutePath);
+	private URI getProfileApplicationURI() {
+		String path = getAbsolutePath(profileApplicationPath);
+		return URI.createFileURI(path);
 	}
 
-	private Resource createResource(String path) throws IOException {
+	private void deleteProfileApplicationFileIfExists() {
+		String path = getAbsolutePath(profileApplicationPath);
 		deleteIfFileExists(path);
-		Resource resource = resourceSet.createResource(URI.createFileURI(path));
-		resource.save(Collections.emptyMap());
-		return resource;
 	}
 
 	private void deleteIfFileExists(String path) {

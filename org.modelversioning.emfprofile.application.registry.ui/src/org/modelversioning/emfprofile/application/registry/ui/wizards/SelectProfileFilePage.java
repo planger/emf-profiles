@@ -155,7 +155,7 @@ public class SelectProfileFilePage extends WizardPage {
 			}
 		});
 		profileList
-				.setInput(IProfileRegistry.eINSTANCE.getRegisteredProfiles());
+				.setInput(IProfileRegistry.INSTANCE.getRegisteredProfiles());
 
 		setControl(container);
 	}

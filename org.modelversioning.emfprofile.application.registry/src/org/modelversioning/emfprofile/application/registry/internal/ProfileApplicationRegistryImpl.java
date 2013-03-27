@@ -23,99 +23,118 @@ import org.modelversioning.emfprofileapplication.ProfileApplication;
 
 /**
  * @author <a href="mailto:becirb@gmail.com">Becir Basic</a>
- *
+ * 
  */
 public class ProfileApplicationRegistryImpl implements
 		ProfileApplicationRegistry {
-	
+
 	public static final ProfileApplicationRegistry INSTANCE = new ProfileApplicationRegistryImpl();
-	
-		// hides default constructor
-	private ProfileApplicationRegistryImpl(){	}
-	
-	// every modelled resource (ID of a resource) has a profiles applications manager
-	private Map<String, ProfileApplicationManager> modelledResourceProfilesApplicationsManagerMap = new HashMap<>();
-	
+
+	// hides default constructor
+	private ProfileApplicationRegistryImpl() {
+	}
+
+	// model id to profile application manager map
+	private Map<String, ProfileApplicationManager> profileApplicationManagerIdMap = new HashMap<>();
+
 	/**
 	 * default resource set
 	 */
 	private ResourceSet resourceSet = new ResourceSetImpl();
-	
 
 	@Override
 	public void applyProfileToModel(String modelId,
-			IFile profileApplicationsFile, Collection<Profile> profiles, ResourceSet resourceSet) throws Exception {
-		ProfileApplicationManager pam;
-		if(! modelledResourceProfilesApplicationsManagerMap.containsKey(modelId)){
-			if(resourceSet == null){
-				pam = new ProfileApplicationManager(this.resourceSet);
-			}else{
-				pam = new ProfileApplicationManager(resourceSet);
-			}
-			modelledResourceProfilesApplicationsManagerMap.put(modelId, pam);
-		}
-			pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
-			pam.createNewProfileApplication(profileApplicationsFile, profiles);
+			IFile profileApplicationsFile, Collection<Profile> profiles,
+			ResourceSet resourceSet) throws Exception {
+		initializeProfileApplicationManagerIfNecessary(modelId, resourceSet);
+		ProfileApplicationManager pam = profileApplicationManagerIdMap
+				.get(modelId);
+		pam.createNewProfileApplication(profileApplicationsFile, profiles);
 	}
-	
+
 	@Override
-	public ProfileApplicationDecorator loadProfileApplicationForModel(String modelId,
-			IFile profileApplicationFile, ResourceSet resourceSet) throws Exception {
-		ProfileApplicationManager pam;
-		if(! modelledResourceProfilesApplicationsManagerMap.containsKey(modelId)){
-			if(resourceSet == null){
-				pam = new ProfileApplicationManager(this.resourceSet);
-			}else{
-				pam = new ProfileApplicationManager(resourceSet);
-			}
-			modelledResourceProfilesApplicationsManagerMap.put(modelId, pam);
+	public ProfileApplicationDecorator loadProfileApplicationForModel(
+			String modelId, IFile profileApplicationFile,
+			ResourceSet resourceSet) throws Exception {
+		initializeProfileApplicationManagerIfNecessary(modelId, resourceSet);
+		ProfileApplicationManager pam = profileApplicationManagerIdMap
+				.get(modelId);
+		if (hasLoadedProfileApplication(pam, profileApplicationFile)) {
+			return null;
+		} else {
+			return pam.loadProfileApplication(profileApplicationFile);
 		}
-	
-		pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
-		Collection<ProfileApplicationDecorator> elements = pam.getProfileApplications();
-		// checks if profile application element is already loaded
-		for (ProfileApplicationDecorator element : elements) {
+	}
+
+	private boolean hasLoadedProfileApplication(ProfileApplicationManager pam,
+			IFile profileApplicationFile) {
+		for (ProfileApplicationDecorator element : pam.getProfileApplications()) {
 			ProfileApplicationDecoratorImpl elementImpl = (ProfileApplicationDecoratorImpl) element;
-			if(profileApplicationFile.getLocation().toString().equals(elementImpl.getProfileApplicationFile().getLocation().toString()))
-				return null;
+			if (hasLoadedProfileApplicationFile(elementImpl,
+					profileApplicationFile))
+				return true;
 		}
-		return pam.loadProfileApplication(profileApplicationFile);
+		return false;
+	}
+
+	private boolean hasLoadedProfileApplicationFile(
+			ProfileApplicationDecoratorImpl profileApplication,
+			IFile profileApplicationFile) {
+		return profileApplicationFile
+				.getLocation()
+				.toString()
+				.equals(profileApplication.getProfileApplicationFile()
+						.getLocation().toString());
+	}
+
+	private void initializeProfileApplicationManagerIfNecessary(String modelId,
+			ResourceSet resourceSet) {
+		if (!profileApplicationManagerIdMap.containsKey(modelId)) {
+			ProfileApplicationManager pam = new ProfileApplicationManager(
+					resourceSet != null ? resourceSet : this.resourceSet);
+			profileApplicationManagerIdMap.put(modelId, pam);
+		}
 	}
 
 	@Override
 	public void unloadProfileApplicationForModel(String modelId,
 			ProfileApplicationDecorator profileApplication) {
-		if(modelledResourceProfilesApplicationsManagerMap.containsKey(modelId)){
-			ProfileApplicationManager pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
+		if (profileApplicationManagerIdMap.containsKey(modelId)) {
+			ProfileApplicationManager pam = profileApplicationManagerIdMap
+					.get(modelId);
 			pam.removeProfileApplication(profileApplication);
 		}
-		
-	}	
-	
+
+	}
+
 	@Override
 	public void unloadAllProfileApplicationsForModel(String modelId) {
-		if(modelledResourceProfilesApplicationsManagerMap.containsKey(modelId)){
-			ProfileApplicationManager pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
+		if (profileApplicationManagerIdMap.containsKey(modelId)) {
+			ProfileApplicationManager pam = profileApplicationManagerIdMap
+					.get(modelId);
 			pam.dispose();
-			modelledResourceProfilesApplicationsManagerMap.remove(modelId);
+			profileApplicationManagerIdMap.remove(modelId);
 		}
 	}
-	
+
 	@Override
 	public boolean hasProfileApplications(String modelId) {
-		if(modelledResourceProfilesApplicationsManagerMap.containsKey(modelId)){
-			ProfileApplicationManager pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
+		if (profileApplicationManagerIdMap.containsKey(modelId)) {
+			ProfileApplicationManager pam = profileApplicationManagerIdMap
+					.get(modelId);
 			return pam.hasProfileApplications();
 		}
-		
+
 		return false;
 	}
 
 	@Override
-	public Collection<ProfileApplicationDecorator> getProfileApplications(String modelId) {
-		if(modelId == null || ! hasProfileApplications(modelId))
+	public Collection<ProfileApplicationDecorator> getProfileApplications(
+			String modelId) {
+		if (modelId == null || !hasProfileApplications(modelId))
 			return Collections.emptyList();
-		ProfileApplicationManager pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
+		ProfileApplicationManager pam = profileApplicationManagerIdMap
+				.get(modelId);
 		return pam.getProfileApplications();
 	}
 
@@ -123,26 +142,28 @@ public class ProfileApplicationRegistryImpl implements
 	public ProfileApplicationDecorator getProfileApplicationDecoratorOfContainedEObject(
 			String modelId, EObject eObject) {
 		ProfileApplication profileApplication = null;
-		if(eObject instanceof ProfileApplication){
+		if (eObject instanceof ProfileApplication) {
 			profileApplication = (ProfileApplication) eObject;
-		}else{
+		} else {
 			EObject parent = eObject.eContainer();
-			while(parent != null){
-				if(parent instanceof ProfileApplication){
+			while (parent != null) {
+				if (parent instanceof ProfileApplication) {
 					profileApplication = (ProfileApplication) parent;
 					break;
 				}
-				
-				if(parent.eContainer() == null){
-					// this means that the parent was maybe removed, and that this eObject is removed also, so retun null
+
+				if (parent.eContainer() == null) {
+					// this means that the parent was maybe removed, and that
+					// this eObject is removed also, so return null
 					return null;
 				}
-				parent = parent.eContainer(); 
+				parent = parent.eContainer();
 			}
 		}
-		ProfileApplicationManager pam = modelledResourceProfilesApplicationsManagerMap.get(modelId);
+		ProfileApplicationManager pam = profileApplicationManagerIdMap
+				.get(modelId);
 		for (ProfileApplicationDecorator pad : pam.getProfileApplications()) {
-			if(((ProfileApplicationDecoratorImpl)pad).getProfileApplication().equals(profileApplication))
+			if (pad.getProfileApplications().contains(profileApplication))
 				return pad;
 		}
 		return null;

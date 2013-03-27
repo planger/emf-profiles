@@ -2,6 +2,7 @@ package org.modelversioning.emfprofile.registry.internal;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.modelversioning.emfprofile.Profile;
 import org.modelversioning.emfprofile.registry.IProfileProvider;
 import org.osgi.framework.Bundle;
@@ -28,12 +29,25 @@ public class BundleProfileProvider implements IProfileProvider {
 		if (profileResource.getContents().size() < 0) {
 			throw new IllegalArgumentException("Resource is emtpy");
 		}
-		EObject eObject = profileResource.getContents().get(0);
-		if (eObject instanceof Profile) {
-			initialize((Profile) eObject);
+		Profile profile = obtainProfile();
+		if (profile != null) {
+			initialize(profile);
 		} else {
 			throw new IllegalArgumentException("Resource contains no profile");
 		}
+	}
+
+	private Profile obtainProfile() {
+		return obtainProfileFromResource(profileResource);
+	}
+
+	private Profile obtainProfileFromResource(Resource resource) {
+		for (EObject eObject : profileResource.getContents()) {
+			if (eObject instanceof Profile) {
+				return (Profile) eObject;
+			}
+		}
+		return null;
 	}
 
 	private void initialize(Profile profile) {
@@ -64,6 +78,13 @@ public class BundleProfileProvider implements IProfileProvider {
 	@Override
 	public ProfileLocationType getProfileLocationType() {
 		return ProfileLocationType.BUNDLE;
+	}
+
+	@Override
+	public Profile loadProfile(ResourceSet resourceSet) {
+		Resource resource = resourceSet.getResource(profile.eResource()
+				.getURI(), true);
+		return obtainProfileFromResource(resource);
 	}
 
 }
