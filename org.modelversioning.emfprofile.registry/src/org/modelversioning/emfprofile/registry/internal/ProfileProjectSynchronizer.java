@@ -1,7 +1,9 @@
 package org.modelversioning.emfprofile.registry.internal;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -70,16 +72,24 @@ public class ProfileProjectSynchronizer implements IResourceChangeListener {
 		return false;
 	}
 
-	private void registerProfilesFromProject(IProject project) {
+	private void registerProfilesFromProject(IProject project)
+			throws IOException {
 		Collection<IFile> profileDiagramFiles = EMFProfileProjectNatureUtil
 				.getProfileDiagramFiles(project);
 		for (IFile profileDiagramFile : profileDiagramFiles) {
 			Resource profileResource = resourceSet.getResource(
 					createProfileURI(profileDiagramFile), true);
+			reload(profileResource);
 			ProjectProfileProvider profileProvider = new ProjectProfileProvider(
 					project, profileResource);
 			registry.doRegisterProfile(profileProvider);
 		}
+	}
+
+	private void reload(Resource profileResource) throws IOException {
+		if (profileResource.isLoaded())
+			profileResource.unload();
+		profileResource.load(Collections.emptyMap());
 	}
 
 	private URI createProfileURI(IFile profileDiagramFile) {
