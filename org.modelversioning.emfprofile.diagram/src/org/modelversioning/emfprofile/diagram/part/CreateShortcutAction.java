@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
@@ -42,11 +43,11 @@ public class CreateShortcutAction extends AbstractHandler {
 		EditPart selectedDiagramPart = (EditPart) ((IStructuredSelection) selection)
 				.getFirstElement();
 		final View view = (View) selectedDiagramPart.getModel();
-		//Resource resource = EMFProfileDiagramEditorUtil.openModel(shell,
-		//	Messages.CreateShortcutAction_OpenModelTitle, editingDomain);
-		//if (resource == null || resource.getContents().isEmpty()) {
-		//	return null;
-		//	}
+		// Resource resource = EMFProfileDiagramEditorUtil.openModel(shell,
+		// Messages.CreateShortcutAction_OpenModelTitle, editingDomain);
+		// if (resource == null || resource.getContents().isEmpty()) {
+		// return null;
+		// }
 
 		ElementListSelectionDialog dialog = new ElementListSelectionDialog(
 				shell, new LabelProvider() {
@@ -69,6 +70,14 @@ public class CreateShortcutAction extends AbstractHandler {
 
 			EPackage ePackage = EPackage.Registry.INSTANCE
 					.getEPackage(stringURI);
+
+			URI normalizedPackageResourceURI = editingDomain.getResourceSet()
+					.getURIConverter().normalize(ePackage.eResource().getURI());
+
+			if (normalizedPackageResourceURI.isPlatformResource()) {
+				URI nsURI = URI.createURI(ePackage.getNsURI());
+				ePackage.eResource().setURI(nsURI);
+			}
 
 			ShortcutCreationWizard wizard = new ShortcutCreationWizard(
 					ePackage, view, editingDomain);
