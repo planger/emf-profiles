@@ -52,7 +52,7 @@ public class EMFProfileApplicationDecoratorHandler {
 				.getConfigurationElementsFor(DECORATOR_ID);
 
 		for (IConfigurationElement e : config) {
-			System.out.println("Evaluating extension");
+//			System.out.println("Evaluating extension");
 			Object o = null;
 			try {
 				o = e.createExecutableExtension("class");
