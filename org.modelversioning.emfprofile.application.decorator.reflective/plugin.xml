@@ -16,9 +16,21 @@
    </extension>
    <extension
          point="org.eclipse.ui.menus">
+         <!-- it looks better if it is exactly specified for which editor to provide a context menu contribution. -->
+         <!-- locationURI="popup:org.eclipse.ui.popup.any?after=additions"> -->
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            locationURI="popup:org.eclipse.emf.ecore.presentation.EcoreEditorID?after=additions">
+         <command
+               commandId="org.modelversioning.emfprofile.application.decorator.reflective.commands.ApplyStereotype"
+               label="Apply Stereotype"
+               style="push"
+               tooltip="Apply Stereotype">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.emf.ecore.presentation.ReflectiveEditorID?after=additions">
          <command
                commandId="org.modelversioning.emfprofile.application.decorator.reflective.commands.ApplyStereotype"
                label="Apply Stereotype"
