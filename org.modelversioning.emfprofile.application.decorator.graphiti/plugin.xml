@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            name="Apply Stereotype"
+            id="org.modelversioning.emfprofile.application.decorator.graphiti.commands.ApplyStereotype">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.graphiti.ui.editor.DiagramEditor">
+         <command
+               commandId="org.modelversioning.emfprofile.application.decorator.graphiti.commands.ApplyStereotype"
+               label="Apply Stereotype"
+               style="push"
+               tooltip="Apply Stereotype">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.modelversioning.emfprofile.application.decorator.graphiti.commands.ApplyStereotype"
+            class="org.modelversioning.emfprofile.application.decorator.graphiti.handlers.ApplyStereotypeHandler">
+      	<enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <and>
+                     <instanceof
+                           value="org.eclipse.gef.EditPart">
+                     </instanceof>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.modelversioning.emfprofile.application.decorator.graphiti.propertyTester.selectionContainsModel">
+                     </test>
+                  </and>
+               </iterate>
+               <count
+                     value="1">
+               </count>
+            </with>
+         </enabledWhen>
+      </handler>
+   </extension>
+   
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.modelversioning.emfprofile.application.decorator.graphiti.propertytester.SelectionContainsModelElement"
+            id="org.modelversioning.emfprofile.application.decorator.graphiti.propertyTester.selectionContainsModel"
+            namespace="org.modelversioning.emfprofile.application.decorator.graphiti.propertyTester"
+            properties="selectionContainsModel"
+            type="org.eclipse.gef.EditPart">
+      </propertyTester>
+   </extension>   
+   <extension
+         point="org.modelversioning.emfprofile.application.registry.ui.extensionpoint.decorator">
+      <decorator
+            class="org.modelversioning.emfprofile.application.decorator.graphiti.EMFProfileApplicationDecoratorImpl">
+      </decorator>
+   </extension>
+
+</plugin>
